@@ -431,6 +431,7 @@ alias tml="tmux list-sessions"
 alias tma="tmux attach -t"
 alias grep="ggrep"
 alias bat="bat"
+alias db="dotbare"
 export BAT_THEME="ansi"
 addremote () {
   local REPO=${1:?"Repository name must be specified."}
