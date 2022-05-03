@@ -44,7 +44,6 @@ vim.cmd([[
   set t_ZR=^[[23m
 ]])
 
-
 -- Folding
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
