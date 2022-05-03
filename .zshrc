@@ -37,16 +37,14 @@ fpath+=${ZDOTDIR:-~}/.zsh_functions
 zinit wait lucid light-mode for \
   jeffreytse/zsh-vi-mode \
   Aloxaf/fzf-tab \
-  kazhala/dotbare \
+  atload'bindkey "^o" dotbare-fedit' \
+    kazhala/dotbare \
   atload'_zsh_autosuggest_start;
+  unset ZSH_AUTOSUGGEST_USE_ASYNC;
   bindkey -v "^ " autosuggest-accept' \
     zsh-users/zsh-autosuggestions \
   blockf atpull'zinit creinstall -q .' \
     zsh-users/zsh-completions \
-  atinit'zicompinit;
-  zicdreplay;
-  _dotbare_completion_cmd' \
-    zdharma-continuum/fast-syntax-highlighting \
   hlissner/zsh-autopair \
   urbainvaes/fzf-marks \
   OMZ::lib/git.zsh \
@@ -56,11 +54,14 @@ zinit wait lucid light-mode for \
   OMZP::web-search \
   OMZP::copydir \
   OMZP::copyfile \
-  OMZP::copybuffer \
   OMZP::dirhistory \
   OMZP::history \
   OMZP::jsontools \
-  kutsan/zsh-system-clipboard
+  kutsan/zsh-system-clipboard \
+  atinit'zicompinit;
+  zicdreplay;
+  _dotbare_completion_cmd' \
+    zdharma-continuum/fast-syntax-highlighting \
 
 # -- SETTINGS -----------------------------------------------------------------
 
@@ -118,7 +119,7 @@ alias fp="fzf-tmux -p -w 90% -h 90% -- --preview \
 alias fzf="fzf-tmux -p 70%"
 
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS
-  --height 40% --layout=reverse --border --cycle --info=inline
+  --height 40% --layout=reverse --border --cycle --info=inline --ansi
   --bind=ctrl-d:preview-page-down
   --bind=ctrl-u:preview-page-up"
 
