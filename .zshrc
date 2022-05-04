@@ -78,17 +78,19 @@ setopt nobeep
 
 # -- PATH ---------------------------------------------------------------------
 
-export PATH=$PATH:/Users/gustavkristensen/.ghcup/bin
+export PATH=$PATH:$HOME/.ghcup/bin
+export PATH=$PATH:$HOME/.npm-global-bin
+export PATH="$PATH:$HOME/.local/bin"
 
 # -- SYSTEM ENV ---------------------------------------------------------------
 
 export EDITOR='lvim'
-export TERMINFO="/Users/gustavkristensen/opt/anaconda3/share/terminfo"
-export LANG=en_US.UTF-8
+export LANG="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
-export AZ="20.91.130.183"
 export COLORTERM="truecolor"
-export LS_COLORS="$(vivid generate nord)"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
 
 # -- ALIASES ------------------------------------------------------------------
 
@@ -97,11 +99,9 @@ alias zshconf="lvim ~/.zshrc"
 alias mux="tmuxinator"
 alias tml="tmux list-sessions"
 alias tma="tmux attach -t"
-alias grep="ggrep"
 alias db="dotbare"
 alias py="python"
 alias ipy="ipython"
-alias grep="grep --color=auto"
 alias fgrep="fgrep --color"
 alias egrep="egrep --color"
 alias ls="gls --color"
@@ -176,19 +176,37 @@ export DOTBARE_KEY="
 
 # LUNAR/NEOVIM
 
-export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"/Users/gustavkristensen/.local/share/lunarvim"}"
-export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"/Users/gustavkristensen/.config/lvim"}"
-export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"/Users/gustavkristensen/.cache/nvim"}"
+export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"$HOME/.local/share/lunarvim"}"
+export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"$HOME/.config/lvim"}"
+export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"$HOME/.cache/nvim"}"
 export NVIM_LISTEN_ADDRESS='/tmp/nvimsocket'
 
 # MISCELLANIOUS
 
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 export ZVM_VI_INSERT_ESCAPE_BINDKEY="jk"
 export ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 export ZVM_INIT_MODE="sourcing"
 export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
 export BAT_THEME="ansi"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bddedc"
+export LS_COLORS="$(vivid generate nord)"
+
+# -- OS SPECIFIC --------------------------------------------------------------
+
+if [[ "$OSTYPE" == 'darwin'* ]]; then
+  alias grep="ggrep --color"
+  export TERMINFO="/Users/gustavkristensen/opt/anaconda3/share/terminfo"
+  export ANACONDA_PATH="/Users/gustavkristensen/opt/anaconda3"
+elif [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(lsb_release -ds) =~ "Ubuntu" ]]; then
+  if [[ "${WSL_DISTRO_NAME}" =~ Ubuntu-.* ]]; then
+    export TERM="xterm-256color"
+    alias grep="grep --color"
+    alias pbcopy="clip.exe"
+    alias pbpaste="powershell.exe -command 'Get-Clipboard' | head -n -1"
+    export ANACONDA_PATH="$HOME/anaconda3"
+  fi
+fi
 
 # -- FUNCTIONS ----------------------------------------------------------------
 
@@ -466,14 +484,15 @@ v() {
 
 # -- CONDA --------------------------------------------------------------------
 
-__conda_setup="$('/Users/gustavkristensen/opt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+# __conda_setup="$('${ANACONDA_PATH}/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$($ANACONDA_PATH'/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/gustavkristensen/opt/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/gustavkristensen/opt/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "$ANACONDA_PATH/etc/profile.d/conda.sh" ]; then
+        . "$ANACONDA_PATH/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/gustavkristensen/opt/anaconda3/bin:$PATH"
+        export PATH="$ANACONDA_PATH/bin:$PATH"
     fi
 fi
 unset __conda_setup
@@ -490,5 +509,7 @@ eval "$(fasd --init auto)"
 function zvm_after_init() {
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 }
+
+# -- FINAL --------------------------------------------------------------------
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

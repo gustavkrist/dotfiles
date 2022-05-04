@@ -1,0 +1,15 @@
+if [[ "$OSTYPE" == 'darwin'* ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  if [[ "${WSL_DISTRO_NAME}" =~ Ubuntu-.* ]]; then
+    export DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'` :0"
+  fi
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
+
+export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"/Users/gustavkristensen/.local/share/lunarvim"}"
+export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"/Users/gustavkristensen/.config/lvim"}"
+export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"/Users/gustavkristensen/.cache/nvim"}"
+export NVIM_LISTEN_ADDRESS='/tmp/nvimsocket'
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"

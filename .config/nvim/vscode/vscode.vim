@@ -128,5 +128,5 @@ function! s:insertSnippetInVisualMode()
 endfunction
 
 " nnoremap <silent> <C-B> :<C-u>call VSCodeNotify("editor.action.insertSnippet")<CR>
-vnoremap <silent> <C-B> :<C-u>call <SID>insertSnippetInVisualMode()<CR>
-xnoremap <silent> <C-B> :<C-u>call <SID>insertSnippetInVisualMode()<CR>
+vnoremap <silent> <C-]> :<C-u>call <SID>insertSnippetInVisualMode()<CR>
+xnoremap <silent> <C-]> :<C-u>call <SID>insertSnippetInVisualMode()<CR>
