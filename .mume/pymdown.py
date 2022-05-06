@@ -70,12 +70,12 @@ extension_configs = {
 
 extra_stylesheets = [
     "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css",
-    "https://cdn.jsdelivr.net/gh/gustavkrist/notesdocs@master/docs/stylesheets/katex.css",
+    "https://cdn.jsdelivr.net/gh/gustavkrist/notes@master/docs/stylesheets/katex.css",
 ]
 
 extra_javascripts = [
     "https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js",
-    "https://cdn.jsdelivr.net/gh/gustavkrist/dotfiles@aa97d644bd1c755e727fedafaf0cf926f23ebc07/md-preview/katex.js",
+    "https://cdn.jsdelivr.net/gh/gustavkrist/dotfiles@master/.mume/katex.js",
     "https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js",
 ]
 

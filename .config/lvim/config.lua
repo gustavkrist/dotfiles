@@ -311,10 +311,6 @@ lvim.plugins = {
     requires = 'vim-pandoc/vim-pandoc-syntax',
   },
   -- {
-  --   'vim-pandoc/vim-rmarkdown',
-  --   event = "BufWinEnter",
-  -- },
-  -- {
   --   'chrisbra/NrrwRgn',
   --   event = "BufWinEnter",
   -- },
@@ -337,6 +333,10 @@ lvim.plugins = {
   },
   {
     'edkolev/tmuxline.vim',
+    event = "BufWinEnter"
+  },
+  {
+    'wakatime/vim-wakatime',
     event = "BufWinEnter"
   }
 }
