@@ -55,6 +55,7 @@ lvim.keys.normal_mode = {
   -- Navigate Buffers
   ["<Tab>"] = ":bnext<CR>",
   ["<S-Tab>"] = ":bprevious<CR>",
+  ["gh"] = ":lua vim.lsp.buf.hover()<CR>"
 }
 lvim.keys.insert_mode = {
   ["<C-l>"] = "<Right>",
@@ -90,16 +91,16 @@ vim.cmd("vnoremap <C-s> :lua require('to_sage').to_sage()<CR>")
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
 
---lvim.builtin.which_key.mappings["o"] = { "<cmd>Obsession<CR>", "Obsession" }
---lvim.builtin.which_key.mappings["t"] = {
---  name = "+Trouble",
---  r = { "<cmd>Trouble lsp_references<cr>", "References" },
---  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
---  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
---  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
---  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
---  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
---}
+lvim.builtin.which_key.mappings["o"] = { "<cmd>Obsession<CR>", "Obsession" }
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+}
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -218,39 +219,42 @@ lvim.builtin.dap.active = true
 
 -- Additional Plugins
 lvim.plugins = {
-  { 'lervag/vimtex' },
+  {
+    'lervag/vimtex',
+    ft = { "latex", "tex" }
+  },
   { 'sainnhe/edge' },
   { 'joshdick/onedark.vim' },
   { 'arcticicestudio/nord-vim' },
-  { 'folke/tokyonight.nvim' },
-  { 'dracula/vim' },
+  -- { 'folke/tokyonight.nvim' },
+  -- { 'dracula/vim' },
   { 'tpope/vim-surround' },
   { 'tpope/vim-repeat' },
   { 'christoomey/vim-tmux-navigator' },
-  -- { 'karb94/neoscroll.nvim' },
+  {
+    "karb94/neoscroll.nvim",
+    event = "WinScrolled",
+    config = function()
+      require('neoscroll').setup({
+        -- All these keys will be mapped to their corresponding default scrolling animation
+        mappings = { '<C-u>', '<C-d>', '<C-b>', '<C-f>',
+          '<C-y>', '<C-e>', 'zt', 'zz', 'zb' },
+        hide_cursor = true, -- Hide cursor while scrolling
+        stop_eof = true, -- Stop at <EOF> when scrolling downwards
+        use_local_scrolloff = false, -- Use the local scope of scrolloff instead of the global scope
+        respect_scrolloff = false, -- Stop scrolling when the cursor reaches the scrolloff margin of the file
+        cursor_scrolls_alone = true, -- The cursor will keep on scrolling even if the window cannot scroll further
+        easing_function = nil, -- Default easing function
+        pre_hook = nil, -- Function to run before the scrolling animation starts
+        post_hook = nil, -- Function to run after the scrolling animation ends
+      })
+    end
+  },
   {
     "tzachar/cmp-tabnine",
     run = "./install.sh",
     requires = "hrsh7th/nvim-cmp",
     event = "InsertEnter",
-  },
-  {
-    "rmagatti/goto-preview",
-    config = function()
-      require('goto-preview').setup {
-        width = 120; -- Width of the floating window
-        height = 25; -- Height of the floating window
-        default_mappings = false; -- Bind default mappings
-        debug = false; -- Print debug information
-        opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        post_open_hook = nil -- A function taking two arguments, a buffer and a window to be ran as a hook.
-        -- You can use "default_mappings = true" setup option
-        -- Or explicitly set keybindings
-        -- vim.cmd("nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>")
-        -- vim.cmd("nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>")
-        -- vim.cmd("nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>")
-      }
-    end
   },
   {
     "ray-x/lsp_signature.nvim",
@@ -294,7 +298,7 @@ lvim.plugins = {
   },
   {
     'tpope/vim-obsession',
-    event = "BufWinEnter",
+    cmd = "Obsession"
   },
   {
     'dbakker/vim-paragraph-motion'
@@ -308,9 +312,10 @@ lvim.plugins = {
   {
     'rebelot/kanagawa.nvim'
   },
-  { 'vim-pandoc/vim-pandoc',
-    event = "BufWinEnter",
+  {
+    'vim-pandoc/vim-pandoc',
     requires = 'vim-pandoc/vim-pandoc-syntax',
+    ft = "markdown"
   },
   -- {
   --   'chrisbra/NrrwRgn',
@@ -318,8 +323,8 @@ lvim.plugins = {
   -- },
   {
     'coachshea/vim-textobj-markdown',
-    event = "BufWinEnter",
     requires = 'kana/vim-textobj-user',
+    ft = { "markdown", "Rmd" }
   },
   -- {
   --   'hkupty/iron.nvim',
@@ -331,7 +336,7 @@ lvim.plugins = {
   },
   {
     'jamespeapen/Nvim-R',
-    event = "BufWinEnter"
+    ft = { "Rmd", "R" }
   },
   {
     'edkolev/tmuxline.vim',
@@ -340,6 +345,111 @@ lvim.plugins = {
   {
     'wakatime/vim-wakatime',
     event = "BufWinEnter"
+  },
+  {
+    "folke/lsp-colors.nvim",
+    event = "BufRead",
+  },
+  {
+    "norcalli/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup({ "*" }, {
+        RGB = true, -- #RGB hex codes
+        RRGGBB = true, -- #RRGGBB hex codes
+        RRGGBBAA = true, -- #RRGGBBAA hex codes
+        rgb_fn = true, -- CSS rgb() and rgba() functions
+        hsl_fn = true, -- CSS hsl() and hsla() functions
+        css = true, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
+        css_fn = true, -- Enable all CSS *functions*: rgb_fn, hsl_fn
+      })
+    end,
+    event = "BufWinEnter",
+  },
+  {
+    "rmagatti/goto-preview",
+    config = function()
+      require('goto-preview').setup {
+        width = 120; -- Width of the floating window
+        height = 25; -- Height of the floating window
+        default_mappings = false; -- Bind default mappings
+        debug = false; -- Print debug information
+        opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
+        post_open_hook = nil -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        -- You can use "default_mappings = true" setup option
+        -- Or explicitly set keybindings
+        -- vim.cmd("nnoremap gpd <cmd>lua require('goto-preview').goto_preview_definition()<CR>")
+        -- vim.cmd("nnoremap gpi <cmd>lua require('goto-preview').goto_preview_implementation()<CR>")
+        -- vim.cmd("nnoremap gP <cmd>lua require('goto-preview').close_all_win()<CR>")
+      }
+    end,
+    event = "BufWinEnter",
+  },
+  {
+    "Pocco81/AutoSave.nvim",
+    config = function()
+      require("autosave").setup({
+        conditions = {
+          filename_is_not = { "config.lua" }
+        }
+      })
+    end,
+  },
+  {
+    "monaqa/dial.nvim",
+    event = "BufWinEnter",
+    config = function()
+      local augend = require("dial.augend")
+      vim.cmd [[
+          nmap <C-a> <Plug>(dial-increment)
+          nmap <C-x> <Plug>(dial-decrement)
+          vmap <C-a> <Plug>(dial-increment)
+          vmap <C-x> <Plug>(dial-decrement)
+          vmap g<C-a> <Plug>(dial-increment-additional)
+          vmap g<C-x> <Plug>(dial-decrement-additional)
+        ]]
+      require("dial.config").augends:register_group {
+        default = {
+          augend.constant.new {
+            elements = { "and", "or" },
+            word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
+            cyclic = true, -- "or" is incremented into "and".
+          },
+          augend.constant.new {
+            elements = { "&&", "||" },
+            word = false,
+            cyclic = true,
+          },
+          augend.constant.new {
+            elements = { "true", "false" },
+            word = true,
+            cyclic = true
+          },
+          augend.constant.new {
+            elements = { "True", "False" },
+            word = true,
+            cyclic = true
+          }
+        },
+      }
+    end,
+  },
+  {
+    "folke/todo-comments.nvim",
+    event = "BufRead",
+    config = function()
+      require("todo-comments").setup()
+    end,
+  },
+  {
+    'simrat39/rust-tools.nvim',
+    config = function()
+      require("rust-tools").setup({
+        hover_actions = {
+          auto_focus = true,
+        }
+      })
+    end,
+    ft = "rust"
   }
 }
 -- require('neoscroll').setup()
@@ -415,52 +525,52 @@ require('luasnip').filetype_extend("rmd", { "tex" })
 
 -- CMP Tab behaviour
 
--- local status_cmp_ok, cmp = pcall(require, "cmp")
--- if not status_cmp_ok then
---   return
--- end
--- local status_luasnip_ok, luasnip = pcall(require, "luasnip")
--- if not status_luasnip_ok then
---   return
--- end
+local status_cmp_ok, cmp = pcall(require, "cmp")
+if not status_cmp_ok then
+  return
+end
+local status_luasnip_ok, luasnip = pcall(require, "luasnip")
+if not status_luasnip_ok then
+  return
+end
 
--- local jumpable = require('lvim.core.cmp').methods.jumpable
--- local check_backspace = require('lvim.core.cmp').methods.check_backspace
--- local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
+local jumpable = require('lvim.core.cmp').methods.jumpable
+local check_backspace = require('lvim.core.cmp').methods.check_backspace
+local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
 
 
--- lvim.builtin.cmp.mapping = {
---   ["<Tab>"] = cmp.mapping(function(fallback)
---     if luasnip.expandable() then
---       luasnip.expand()
---     elseif jumpable() then
---       luasnip.jump(1)
---     elseif cmp.visible() then
---       cmp.select_next_item()
---     elseif check_backspace() then
---       fallback()
---     elseif is_emmet_active() then
---       return vim.fn["cmp#complete"]()
---     else
---       fallback()
---     end
---   end, {
---     "i",
---     "s",
---   }),
---   ["<S-Tab>"] = cmp.mapping(function(fallback)
---     if jumpable(-1) then
---       luasnip.jump(-1)
---     elseif cmp.visible() then
---       cmp.select_prev_item()
---     else
---       fallback()
---     end
---   end, {
---     "i",
---     "s",
---   }),
--- }
+lvim.builtin.cmp.mapping = {
+  ["<Tab>"] = cmp.mapping(function(fallback)
+    if luasnip.expandable() then
+      luasnip.expand()
+    elseif jumpable() then
+      luasnip.jump(1)
+    elseif cmp.visible() then
+      cmp.select_next_item()
+    elseif check_backspace() then
+      fallback()
+    elseif is_emmet_active() then
+      return vim.fn["cmp#complete"]()
+    else
+      fallback()
+    end
+  end, {
+    "i",
+    "s",
+  }),
+  ["<S-Tab>"] = cmp.mapping(function(fallback)
+    if jumpable(-1) then
+      luasnip.jump(-1)
+    elseif cmp.visible() then
+      cmp.select_prev_item()
+    else
+      fallback()
+    end
+  end, {
+    "i",
+    "s",
+  }),
+}
 
 require("luasnip.loaders.from_vscode").lazy_load {
   paths = { "~/.local/share/lunarvim/site/pack/packer/start/friendly-snippets" }
