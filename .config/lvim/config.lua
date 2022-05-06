@@ -88,16 +88,18 @@ vim.cmd("vnoremap <C-s> :lua require('to_sage').to_sage()<CR>")
 
 -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["o"] = { "<cmd>Obsession<CR>", "Obsession" }
-lvim.builtin.which_key.mappings["t"] = {
-  name = "+Trouble",
-  r = { "<cmd>Trouble lsp_references<cr>", "References" },
-  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
-  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
-}
+
+
+--lvim.builtin.which_key.mappings["o"] = { "<cmd>Obsession<CR>", "Obsession" }
+--lvim.builtin.which_key.mappings["t"] = {
+--  name = "+Trouble",
+--  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+--  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+--  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+--  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+--  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+--  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+--}
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
@@ -413,18 +415,18 @@ require('luasnip').filetype_extend("rmd", { "tex" })
 
 -- CMP Tab behaviour
 
-local status_cmp_ok, cmp = pcall(require, "cmp")
-if not status_cmp_ok then
-  return
-end
-local status_luasnip_ok, luasnip = pcall(require, "luasnip")
-if not status_luasnip_ok then
-  return
-end
+-- local status_cmp_ok, cmp = pcall(require, "cmp")
+-- if not status_cmp_ok then
+--   return
+-- end
+-- local status_luasnip_ok, luasnip = pcall(require, "luasnip")
+-- if not status_luasnip_ok then
+--   return
+-- end
 
-local jumpable = require('lvim.core.cmp').methods.jumpable
-local check_backspace = require('lvim.core.cmp').methods.check_backspace
-local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
+-- local jumpable = require('lvim.core.cmp').methods.jumpable
+-- local check_backspace = require('lvim.core.cmp').methods.check_backspace
+-- local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
 
 
 -- lvim.builtin.cmp.mapping = {
@@ -464,5 +466,5 @@ require("luasnip.loaders.from_vscode").lazy_load {
   paths = { "~/.local/share/lunarvim/site/pack/packer/start/friendly-snippets" }
 }
 
-package.path = package.path .. ";" .. os.getenv("LUNARVIM_CONFIG_DIR") .. "/packages/to_sage.lua"
-require("to_sage")
+-- package.path = package.path .. ";" .. os.getenv("LUNARVIM_CONFIG_DIR") .. "/packages/to_sage.lua"
+-- require("to_sage")
