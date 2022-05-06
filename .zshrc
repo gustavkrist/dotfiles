@@ -104,7 +104,6 @@ alias py="python"
 alias ipy="ipython"
 alias fgrep="fgrep --color"
 alias egrep="egrep --color"
-alias ls="gls --color"
 alias rvim="nvr --remote"
 alias r="radian"
 alias lg="lazygit"
@@ -196,15 +195,19 @@ export LS_COLORS="$(vivid generate nord)"
 
 if [[ "$OSTYPE" == 'darwin'* ]]; then
   alias grep="ggrep --color"
+  alias ls="gls --color"
   export TERMINFO="/Users/gustavkristensen/opt/anaconda3/share/terminfo"
   export ANACONDA_PATH="/Users/gustavkristensen/opt/anaconda3"
+  export FZF_PATH="/opt/homebrew/opt/fzf/"
 elif [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(lsb_release -ds) =~ "Ubuntu" ]]; then
   if [[ "${WSL_DISTRO_NAME}" =~ Ubuntu-.* ]]; then
     export TERM="xterm-256color"
     alias grep="grep --color"
     alias pbcopy="clip.exe"
     alias pbpaste="powershell.exe -command 'Get-Clipboard' | head -n -1"
+    alias ls="ls --color"
     export ANACONDA_PATH="$HOME/anaconda3"
+    export FZF_PATH="/home/linuxbrew/.linuxbrew/opt/fzf/"
   fi
 fi
 
