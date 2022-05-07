@@ -55,7 +55,8 @@ lvim.keys.normal_mode = {
   -- Navigate Buffers
   ["<Tab>"] = ":bnext<CR>",
   ["<S-Tab>"] = ":bprevious<CR>",
-  ["gh"] = ":lua vim.lsp.buf.hover()<CR>"
+  ["gh"] = ":lua vim.lsp.buf.hover()<CR>",
+  ["gl"] = ":lua vim.diagnostic.open_float()<CR>"
 }
 lvim.keys.insert_mode = {
   ["<C-l>"] = "<Right>",
@@ -448,6 +449,7 @@ lvim.plugins = {
           auto_focus = true,
         }
       })
+      vim.cmd("nnoremap  <cmd>RustRun<CR>")
     end,
     ft = "rust"
   }
