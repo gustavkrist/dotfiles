@@ -200,7 +200,7 @@ if [[ "$OSTYPE" == 'darwin'* ]]; then
   export ANACONDA_PATH="/Users/gustavkristensen/opt/anaconda3"
   export FZF_PATH="/opt/homebrew/opt/fzf/"
 elif [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(lsb_release -ds) =~ "Ubuntu" ]]; then
-  if [[ "${WSL_DISTRO_NAME}" =~ Ubuntu-.* ]]; then
+  if [[ "${WSL_DISTRO_NAME}" =~ Ubuntu.* ]]; then
     export TERM="xterm-256color"
     alias grep="grep --color"
     alias pbcopy="clip.exe"

@@ -24,7 +24,7 @@ end
 
 -- general
 lvim.log.level = "warn"
-lvim.format_on_save = true
+lvim.format_on_save = false
 lvim.colorscheme = "onedarker"
 vim.g.tokyonight_style = 'storm'
 vim.opt.foldmethod = 'expr'
@@ -449,7 +449,7 @@ lvim.plugins = {
           auto_focus = true,
         }
       })
-      vim.cmd("nnoremap  <cmd>RustRun<CR>")
+      vim.cmd("nnoremap <C-_> <cmd>RustRun<CR>")
     end,
     ft = "rust"
   }
@@ -541,7 +541,12 @@ local check_backspace = require('lvim.core.cmp').methods.check_backspace
 local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
 
 
-lvim.builtin.cmp.mapping = {
+lvim.builtin.cmp.mapping = cmp.mapping.preset.insert {
+  ["<C-k>"] = cmp.mapping.select_prev_item(),
+  ["<C-j>"] = cmp.mapping.select_next_item(),
+  ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+  ["<C-f>"] = cmp.mapping.scroll_docs(4),
+  -- TODO: potentially fix emmet nonsense
   ["<Tab>"] = cmp.mapping(function(fallback)
     if luasnip.expandable() then
       luasnip.expand()
@@ -572,6 +577,28 @@ lvim.builtin.cmp.mapping = {
     "i",
     "s",
   }),
+  ["<C-Space>"] = cmp.mapping.complete(),
+  ["<C-e>"] = cmp.mapping.abort(),
+  ["<CR>"] = cmp.mapping(function(fallback)
+    if cmp.visible() and cmp.confirm(lvim.builtin.cmp.confirm_opts) then
+      if jumpable() then
+        luasnip.jump(1)
+      else
+        cmp.mapping.confirm({ select = false })
+      end
+      return
+    end
+
+    if jumpable() then
+      if not luasnip.jump(1) then
+        fallback()
+      end
+    elseif cmp.visible() then
+      cmp.mapping.confirm({ select = false })
+    else
+      fallback()
+    end
+  end),
 }
 
 require("luasnip.loaders.from_vscode").lazy_load {
