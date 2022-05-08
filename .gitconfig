@@ -24,3 +24,11 @@ email = gustavkrist@gmail.com
 
 [diff]
     colorMoved = default
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[init]
+	defaultBranch = main
