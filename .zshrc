@@ -95,6 +95,10 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # -- ALIASES ------------------------------------------------------------------
 
 alias ..="cd .."
+alias cd="z"
+alias zz="z -"
+alias ls="exa"
+alias ll="exa -l"
 alias zshconf="lvim ~/.zshrc"
 alias mux="tmuxinator"
 alias tml="tmux list-sessions"
@@ -195,7 +199,6 @@ export LS_COLORS="$(vivid generate nord)"
 
 if [[ "$OSTYPE" == 'darwin'* ]]; then
   alias grep="ggrep --color"
-  alias ls="gls --color"
   export TERMINFO="/Users/gustavkristensen/opt/anaconda3/share/terminfo"
   export ANACONDA_PATH="/Users/gustavkristensen/opt/anaconda3"
   export FZF_PATH="/opt/homebrew/opt/fzf/"
@@ -205,7 +208,6 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(lsb_release -ds) =~ "Ubuntu" ]]; th
     alias grep="grep --color"
     alias pbcopy="clip.exe"
     alias pbpaste="powershell.exe -command 'Get-Clipboard' | head -n -1"
-    alias ls="ls --color"
     export ANACONDA_PATH="$HOME/anaconda3"
     export FZF_PATH="/home/linuxbrew/.linuxbrew/opt/fzf/"
     export DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0"
@@ -393,20 +395,20 @@ uninstall() {
 }
 
 # Interactive cd if no argument is provided
-function cd() {
+function icd() {
     if [[ "$#" != 0 ]]; then
         builtin cd "$@";
         return
     fi
     while true; do
-        local lsd=$(echo ".." && ls -p | grep '/$' | sed 's;/$;;')
+        local lsd=$(echo ".." && exa -F | grep '/$' | sed 's;/$;;')
         local dir="$(printf '%s\n' "${lsd[@]}" |
             fzf-tmux -p -w 80% -h 70% -- --reverse --preview '
                 __cd_nxt="$(echo {})";
                 __cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
                 echo $__cd_path;
                 echo;
-                ls -p -FG "${__cd_path}";
+                exa -FG "${__cd_path}";
         ')"
         [[ ${#dir} != 0 ]] || return 0
         builtin cd "$dir" &> /dev/null
@@ -473,12 +475,12 @@ lp() {
   lpass show -c --password $(lpass ls  | fzf-tmux | awk '{print $(NF)}' | sed 's/\]//g')
 }
 
-# fasd & fzf change directory - jump using `fasd` if given argument, filter output of `fasd` using `fzf` else
-z() {
-    [ $# -gt 0 ] && fasd_cd -d "$*" && return
-    local dir
-    dir="$(fasd -Rdl "$1" | fzf-tmux -1 -0 --no-sort +m)" && cd "${dir}" || return 1
-}
+# # fasd & fzf change directory - jump using `fasd` if given argument, filter output of `fasd` using `fzf` else
+# z() {
+#     [ $# -gt 0 ] && fasd_cd -d "$*" && return
+#     local dir
+#     dir="$(fasd -Rdl "$1" | fzf-tmux -1 -0 --no-sort +m)" && cd "${dir}" || return 1
+# }
 
 # Find file and open in lvim
 v() {
@@ -508,10 +510,9 @@ fi
 
 # -- MISC ---------------------------------------------------------------------
 
-eval "$(fasd --init auto)"
-
 function zvm_after_init() {
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  eval "$(zoxide init zsh)"
 }
 
 # -- FINAL --------------------------------------------------------------------
