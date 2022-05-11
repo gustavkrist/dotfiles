@@ -593,8 +593,8 @@ lvim.builtin.cmp.mapping = cmp.mapping.preset.insert {
       if not luasnip.jump(1) then
         fallback()
       end
-    elseif cmp.visible() then
-      cmp.mapping.confirm({ select = false })
+    -- elseif cmp.visible() then
+    --   cmp.mapping.confirm({ select = false })
     else
       fallback()
     end
