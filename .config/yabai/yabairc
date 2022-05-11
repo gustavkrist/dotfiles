@@ -10,16 +10,15 @@ yabai -m config mouse_action2 move
 
 # -- Window -------------------------------------------------------------------
 
-yabai -m config window_border off
+yabai -m config window_border on
+yabai -m config window_border_width 3
+yabai -m config active_window_border_color 0x8081a1c1
+yabai -m config normal_window_border_color 0x00ffffff
+yabai -m config window_placement second_child
+yabai -m config insert_feedback_color 0xaad75f5f
 ## With SIP disabled
-# yabai -m config window_border on
-# yabai -m config window_border_width 4
-# yabai -m config active_window_border_color 0x8081a1c1
-# yabai -m config normal_window_border_color 0x00ffffff
-# yabai -m config window_placement second_child
 # yabai -m config window_topmost on
 # yabai -m config window_shadow on
-# yabai -m config insert_feedback_color 0xaad75f5f
 yabai -m config window_topmost off
 yabai -m config split_ratio 0.50
 yabai -m config auto_balance off
@@ -33,10 +32,10 @@ yabai -m config normal_window_opacity 0.90
 yabai -m config layout bsp
 yabai -m config --space 1 layout float
 yabai -m config --space 2 layout stack
-yabai -m config top_padding 2
-yabai -m config bottom_padding 2
-yabai -m config left_padding 2
-yabai -m config right_padding 2
+yabai -m config top_padding 3
+yabai -m config bottom_padding 3
+yabai -m config left_padding 3
+yabai -m config right_padding 3
 yabai -m config window_gap 0
 
 ## With SIP disabled and external status bar
@@ -59,8 +58,7 @@ yabai -m rule --add app="^Notes$" manage=off
 
 # -- Misc ---------------------------------------------------------------------
 
-#Limelight addon (Kill it and start it each time Yabai starts)
-killall limelight &>/dev/null
-limelight &>/dev/null &
+## If I close the active window, focus on any other visible window.
+yabai -m signal --add event=window_destroyed action="bash $XDG_CONFIG_HOME/yabai/scripts/window-focus-on-destroy.sh"
 
 echo "yabai configuration loaded.."
