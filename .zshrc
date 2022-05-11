@@ -55,7 +55,6 @@ zinit wait lucid light-mode for \
   OMZP::copydir \
   OMZP::copyfile \
   OMZP::dirhistory \
-  OMZP::history \
   OMZP::jsontools \
   kutsan/zsh-system-clipboard \
   atinit'zicompinit;
@@ -194,6 +193,7 @@ export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
 export BAT_THEME="ansi"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bddedc"
 export LS_COLORS="$(vivid generate nord)"
+export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
 
 # -- OS SPECIFIC --------------------------------------------------------------
 
