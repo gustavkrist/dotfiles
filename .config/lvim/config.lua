@@ -25,7 +25,7 @@ end
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = false
-lvim.colorscheme = "onedarker"
+lvim.colorscheme = "nord"
 vim.g.tokyonight_style = 'storm'
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
@@ -35,8 +35,8 @@ vim.o.foldminlines = 5
 vim.o.foldlevel = 3
 vim.o.cc = "80"
 vim.o.relativenumber = true
--- lvim.transparent_window = true
-vim.opt.termguicolors = false
+lvim.transparent_window = true
+vim.opt.termguicolors = true
 
 -- Italic
 vim.cmd([[
@@ -464,7 +464,7 @@ lvim.autocommands.custom_groups = {
   { "BufWinEnter", "*", "highlight TSComment cterm=italic gui=italic" },
   { "BufAdd", "*.tex", "setlocal syntax=tex | setlocal conceallevel=2" },
   { "BufEnter", "*.tex", "setlocal conceallevel=2 | setlocal syntax=tex | colorscheme edge | hi! link IndentBlanklineChar Comment | hi! clear Conceal" },
-  { "BufHidden", "*.tex", "colorscheme onedarker" },
+  { "BufHidden", "*.tex", "colorscheme nord" },
   { "BufWinEnter", "*.Rmd", "nmap <buffer>  \\cd|nmap <buffer> <C-CR> \\cd|inoremap <M-Tab> ```{r}<CR><CR>```<UP>|inoremap <C-Tab> ```{r}<CR><CR>```<UP>" },
   { "VimLeave", "*", "if exists('g:SendCmdToR') && string(g:SendCmdToR) != 'function(''SendCmdToR_fake'')' | call RQuit('nosave') | endif" },
   { "BufWritePost", "*.Rmd", "execute \"normal \\<plug>RMakeRmd(\\\"pdf_document\\\")\"" },

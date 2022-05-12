@@ -10,7 +10,8 @@
  ;; quick define "layers" or "state" feature(use set_variable)
  ;; can use as conditions in rule list
  ;; {:<layer name> {:from <froms>}}
- :simlayers {:o-mode {:key :o}}
+ :simlayers {:o-mode {:key :o}
+             :i-mode {:key :i}}
 
  ;; main list
  :main
@@ -40,7 +41,10 @@
    :rules [:o-mode
            [:c [:open "Visual Studio Code.app"]]
            [:t [:open "alacritty.app"]]
-           [:g [:open "Google Chrome"]]]}]
+           [:g [:open "Google Chrome"]]]}
+  {:des "i-mode insert"
+   :rules [:i-mode
+           [:tab [:spacebar :spacebar :spacebar :spacebar]]]}]
 
  ;; code won't read cheatsheet section
  ;; ! stand for mandatory

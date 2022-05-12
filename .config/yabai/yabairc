@@ -32,14 +32,14 @@ yabai -m config normal_window_opacity 0.90
 yabai -m config layout bsp
 yabai -m config --space 1 layout float
 yabai -m config --space 2 layout stack
-yabai -m config top_padding 3
-yabai -m config bottom_padding 3
-yabai -m config left_padding 3
-yabai -m config right_padding 3
-yabai -m config window_gap 0
+yabai -m config top_padding 8
+yabai -m config bottom_padding 8
+yabai -m config left_padding 8
+yabai -m config right_padding 8
+yabai -m config window_gap 8
 
 ## With SIP disabled and external status bar
-# yabai -m config external_bar main:34:0
+yabai -m config external_bar main:25:0
 
 # -- Rules --------------------------------------------------------------------
 
@@ -55,10 +55,12 @@ yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Spotify$" manage=off
 yabai -m rule --add app="^iTerm2$" manage=off
 yabai -m rule --add app="^Notes$" manage=off
+yabai -m rule --add app="^NordVPN$" manage=off
 
 # -- Misc ---------------------------------------------------------------------
 
 ## If I close the active window, focus on any other visible window.
 yabai -m signal --add event=window_destroyed action="bash $XDG_CONFIG_HOME/yabai/scripts/window-focus-on-destroy.sh"
+yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
 
 echo "yabai configuration loaded.."

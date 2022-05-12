@@ -49,7 +49,7 @@ zinit wait lucid light-mode for \
   urbainvaes/fzf-marks \
   OMZ::lib/git.zsh \
   atload"unalias grv" OMZ::plugins/git/git.plugin.zsh \
-  OMZP::colored-man-pages \
+  ael-code/zsh-colored-man-pages \
   OMZP::sudo \
   OMZP::web-search \
   OMZP::copydir \

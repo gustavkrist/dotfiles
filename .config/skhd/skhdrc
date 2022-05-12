@@ -37,10 +37,15 @@ shift + alt - p : yabai -m window --focus stack.prev || yabai -m window --focus 
 shift + alt - n : yabai -m window --focus stack.next || yabai -m window --focus next || yabai -m window --focus first
 
 # send window to space
-hyper - 1 : yabai -m window --space 1
-hyper - 2 : yabai -m window --space 2
-hyper - 3 : yabai -m window --space 3
-hyper - 4 : yabai -m window --space 4
+hyper - 1 : bash -c "SPACE=1 ~/.config/skhd/scripts/move_and_follow.sh"
+hyper - 2 : bash -c "SPACE=2 ~/.config/skhd/scripts/move_and_follow.sh"
+hyper - 3 : bash -c "SPACE=3 ~/.config/skhd/scripts/move_and_follow.sh"
+hyper - 4 : bash -c "SPACE=4 ~/.config/skhd/scripts/move_and_follow.sh"
+hyper - 5 : bash -c "SPACE=5 ~/.config/skhd/scripts/move_and_follow.sh"
+
+# send window to display
+shift + lalt + lcmd + ctrl + ralt - 1 : yabai -m window --display 1
+shift + lalt + lcmd + ctrl + ralt - 2 : yabai -m window --display 2
 
 # -- Size ---------------------------------------------------------------------
 
@@ -85,6 +90,9 @@ hyper - t : yabai -m window --toggle split
 
 ## toggle window fullscreen zoom
 hyper - f : yabai -m window --toggle zoom-fullscreen
+
+## toggle padding
+hyper - p : /Users/gustavkristensen/.config/skhd/scripts/toggle_padding.sh
 
 ## Move active window to next space on current display
 shift + lalt + lcmd + ctrl + ralt - tab : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '1' ]]; then yabai -m window --space 2; elif [[ '{}' = '2' ]]; then yabai -m window --space 3; elif [[ '{}' = '3' ]]; then yabai -m window --space 4; elif [[ '{}' = '4' ]]; then yabai -m window --space 1; fi"
