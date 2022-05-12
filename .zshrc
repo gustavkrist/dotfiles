@@ -31,11 +31,14 @@ zinit light-mode for \
 
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
-
+# zinit ice as"command" from"gh-r" \
+#           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
+#           atpull"%atclone" src"init.zsh"
+# zinit light starship/starship
+# $(starship init zsh)
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 zinit wait lucid light-mode for \
-  jeffreytse/zsh-vi-mode \
   Aloxaf/fzf-tab \
   atload'bindkey "^o" dotbare-fedit' \
     kazhala/dotbare \
@@ -52,11 +55,12 @@ zinit wait lucid light-mode for \
   ael-code/zsh-colored-man-pages \
   OMZP::sudo \
   OMZP::web-search \
-  OMZP::copydir \
+  OMZP::copypath \
   OMZP::copyfile \
   OMZP::dirhistory \
   OMZP::jsontools \
   kutsan/zsh-system-clipboard \
+  softmoth/zsh-vim-mode \
   atinit'zicompinit;
   zicdreplay;
   _dotbare_completion_cmd' \
@@ -115,6 +119,16 @@ alias fp="fzf-tmux -p -w 90% -h 90% -- --preview \
   'bat --theme ansi --style=numbers --color=always --line-range :500 {}'"
 
 # -- PLUGIN CONFIG ------------------------------------------------------------
+
+# VI MODE
+
+bindkey -M viins 'jk' vi-cmd-mode
+MODE_CURSOR_VIINS="#d8dee9 steady bar"
+MODE_CURSOR_REPLACE="$MODE_CURSOR_VIINS #ff0000"
+MODE_CURSOR_VICMD="white block"
+MODE_CURSOR_SEARCH="#ff00ff steady underline"
+MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady block"
+MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
 
 # FZF
 
@@ -186,9 +200,6 @@ export NVIM_LISTEN_ADDRESS='/tmp/nvimsocket'
 # MISCELLANIOUS
 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-export ZVM_VI_INSERT_ESCAPE_BINDKEY="jk"
-export ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
-export ZVM_INIT_MODE="sourcing"
 export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
 export BAT_THEME="ansi"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bddedc"
@@ -510,10 +521,8 @@ fi
 
 # -- MISC ---------------------------------------------------------------------
 
-function zvm_after_init() {
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-  eval "$(zoxide init zsh)"
-}
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(zoxide init zsh)"
 
 # -- FINAL --------------------------------------------------------------------
 
