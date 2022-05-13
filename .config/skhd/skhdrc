@@ -37,15 +37,19 @@ shift + alt - p : yabai -m window --focus stack.prev || yabai -m window --focus 
 shift + alt - n : yabai -m window --focus stack.next || yabai -m window --focus next || yabai -m window --focus first
 
 # send window to space
-hyper - 1 : bash -c "SPACE=1 ~/.config/skhd/scripts/move_and_follow.sh"
-hyper - 2 : bash -c "SPACE=2 ~/.config/skhd/scripts/move_and_follow.sh"
-hyper - 3 : bash -c "SPACE=3 ~/.config/skhd/scripts/move_and_follow.sh"
-hyper - 4 : bash -c "SPACE=4 ~/.config/skhd/scripts/move_and_follow.sh"
-hyper - 5 : bash -c "SPACE=5 ~/.config/skhd/scripts/move_and_follow.sh"
+hyper - 1 : bash -c "SPACE=1 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 2 : bash -c "SPACE=2 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 3 : bash -c "SPACE=3 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 4 : bash -c "SPACE=4 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 5 : bash -c "SPACE=5 ~/.config/skhd/scripts/move_space_and_follow.sh"
 
 # send window to display
-shift + lalt + lcmd + ctrl + ralt - 1 : yabai -m window --display 1
-shift + lalt + lcmd + ctrl + ralt - 2 : yabai -m window --display 2
+shift + alt + ctrl - 1 : bash -c "DISPLAY=1 ~/.config/skhd/scripts/move_display_and_follow.sh"
+shift + alt + ctrl - 2 : bash -c "DISPLAY=2 ~/.config/skhd/scripts/move_display_and_follow.sh"
+
+# focus display
+shift + alt - 1 : yabai -m display --focus 1
+shift + alt - 2 : yabai -m display --focus 2
 
 # -- Size ---------------------------------------------------------------------
 
