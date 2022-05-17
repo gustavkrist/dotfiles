@@ -18,6 +18,7 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
+
 # # Load a few important annexes, without Turbo
 # # (this is currently required for annexes)
 zinit light-mode for \
@@ -38,6 +39,12 @@ zinit light romkatv/powerlevel10k
 # $(starship init zsh)
 fpath+=${ZDOTDIR:-~}/.zsh_functions
 
+_zshrc_after_load() {
+  eval "$(zoxide init zsh)"
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  bindkey "^O" dotbare-fedit
+}
+
 zinit wait lucid light-mode for \
   Aloxaf/fzf-tab \
   atload'bindkey "^o" dotbare-fedit' \
@@ -48,6 +55,7 @@ zinit wait lucid light-mode for \
     zsh-users/zsh-autosuggestions \
   blockf atpull'zinit creinstall -q .' \
     zsh-users/zsh-completions \
+  softmoth/zsh-vim-mode \
   hlissner/zsh-autopair \
   urbainvaes/fzf-marks \
   OMZ::lib/git.zsh \
@@ -60,10 +68,10 @@ zinit wait lucid light-mode for \
   OMZP::dirhistory \
   OMZP::jsontools \
   kutsan/zsh-system-clipboard \
-  softmoth/zsh-vim-mode \
   atinit'zicompinit;
   zicdreplay;
-  _dotbare_completion_cmd' \
+  _dotbare_completion_cmd;
+  _zshrc_after_load' \
     zdharma-continuum/fast-syntax-highlighting \
 
 # -- SETTINGS -----------------------------------------------------------------
@@ -521,8 +529,8 @@ fi
 
 # -- MISC ---------------------------------------------------------------------
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # -- FINAL --------------------------------------------------------------------
 
