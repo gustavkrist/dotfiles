@@ -74,12 +74,22 @@ sketchybar -m --add space floats left \
                          background.drawing=off \
               --subscribe browser mouse.entered mouse.exited \
                                                                  \
-              --add space music left \
-              --set music associated_display=1 \
+              --add space vscode left \
+              --set vscode associated_display=1 \
                          associated_space=5 \
-                         icon= \
+                         icon=﬏ \
                          icon.font="FiraCode Nerd Font:Regular:13.0" \
                          click_script="yabai -m space --focus 5" \
+                         background.color=0xffD8DEE9 \
+                         background.drawing=off \
+              --subscribe vscode mouse.entered mouse.exited \
+                                                                 \
+              --add space music left \
+              --set music associated_display=1 \
+                         associated_space=6 \
+                         icon= \
+                         icon.font="FiraCode Nerd Font:Regular:13.0" \
+                         click_script="yabai -m space --focus 6" \
                          background.color=0xffD8DEE9 \
                          background.drawing=off \
               --subscribe music mouse.entered mouse.exited \
@@ -319,6 +329,7 @@ sketchybar -m --add item stats_logo right \
                                             stack \
                                             terminal \
                                             browser \
+                                            vscode \
                                             music \
   \
                --set primary_spaces background.color=0xff3B4252 \

@@ -7,10 +7,10 @@
 # -- Movement -----------------------------------------------------------------
 
 ## swap managed window
-hyper - j : yabai -m window --swap west # hyper + [
-hyper - l : yabai -m window --swap east # hyper + ]
-hyper - i : yabai -m window --swap north # hyper + '
-hyper - k : yabai -m window --swap south # hyper + \
+hyper - j : yabai -m window --swap west
+hyper - l : yabai -m window --swap east
+hyper - i : yabai -m window --swap north
+hyper - k : yabai -m window --swap south
 
 # insert managed window into stack
 hyper - a : yabai -m window --stack west
@@ -42,6 +42,7 @@ hyper - 2 : bash -c "SPACE=2 ~/.config/skhd/scripts/move_space_and_follow.sh"
 hyper - 3 : bash -c "SPACE=3 ~/.config/skhd/scripts/move_space_and_follow.sh"
 hyper - 4 : bash -c "SPACE=4 ~/.config/skhd/scripts/move_space_and_follow.sh"
 hyper - 5 : bash -c "SPACE=5 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 6 : bash -c "SPACE=6 ~/.config/skhd/scripts/move_space_and_follow.sh"
 
 # send window to display
 shift + alt + ctrl - 1 : bash -c "DISPLAY=1 ~/.config/skhd/scripts/move_display_and_follow.sh"
@@ -99,7 +100,7 @@ hyper - f : yabai -m window --toggle zoom-fullscreen
 hyper - p : /Users/gustavkristensen/.config/skhd/scripts/toggle_padding.sh
 
 ## Move active window to next space on current display
-shift + lalt + lcmd + ctrl + ralt - tab : yabai -m query --spaces --space | jq -re ".index" | xargs -I {} bash -c "if [[ '{}' = '1' ]]; then yabai -m window --space 2; elif [[ '{}' = '2' ]]; then yabai -m window --space 3; elif [[ '{}' = '3' ]]; then yabai -m window --space 4; elif [[ '{}' = '4' ]]; then yabai -m window --space 1; fi"
+shift + lalt + lcmd + ctrl + ralt - tab : /Users/gustavkristensen/.config/skhd/scripts/move_to_next_space.sh
 
 ## Focus next stack item
 ctrl + alt + cmd + lshift - return : yabai -m window --focus stack.next || yabai -m window --focus stack.first

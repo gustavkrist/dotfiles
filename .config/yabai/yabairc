@@ -61,7 +61,7 @@ yabai -m rule --add app="^NordVPN$" manage=off
 # -- Misc ---------------------------------------------------------------------
 
 ## If I close the active window, focus on any other visible window.
-yabai -m signal --add event=window_destroyed action="bash $XDG_CONFIG_HOME/yabai/scripts/window-focus-on-destroy.sh"
+yabai -m signal --add event=window_destroyed action="bash -c '~/.config/yabai/scripts/window-focus-on-destroy.sh'"
 yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
 
 echo "yabai configuration loaded.."
