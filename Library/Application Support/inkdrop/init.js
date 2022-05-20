@@ -12,4 +12,10 @@ inkdrop.onEditorLoad((editor) => {
     cm.setOption('cursorBlinkRate', 0);
   }
   cm.on('cursorActivity', showRelativeLines)
+  // inkdrop.commands.add(document.body, {
+  //   'user:vim-visual-cut': ()=> {
+  //     const inputField = cm.getInputField();
+  //     inkdrop.commands.dispatch(inputField, "vim:delete")
+  //   }
+  // })
 })

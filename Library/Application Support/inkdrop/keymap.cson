@@ -1,10 +1,14 @@
 '.CodeMirror.vim-mode.insert-mode textarea':
   'j k': 'vim:exit-insert-mode'
   'ctrl-l': 'vim:move-right'
-  'ctrl-c': 'vim:exit-insert-mode'
+  'ctrl-c': 'user:exit-insert-mode'
+
+'.CodeMirror.vim-mode.normal-mode textarea':
+  'cmd-v': 'vim:put-before'
 
 '.CodeMirror.vim-mode.visual-mode textarea':
   'ctrl-c': 'vim:exit-visual-mode'
+  'cmd-x': 'vim:delete'
 
 'body':
   'cmd-shift-p': 'view:toggle-preview'
