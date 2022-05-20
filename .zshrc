@@ -211,7 +211,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
 export BAT_THEME="ansi"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bddedc"
-export LS_COLORS="$(vivid generate nord)"
+export LS_COLORS="$(vivid generate nord):*.plist=0;38;2;180;142;173:*.cson=0;38;2;180;142;173"
 export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
 
 # -- OS SPECIFIC --------------------------------------------------------------
@@ -221,6 +221,7 @@ if [[ "$OSTYPE" == 'darwin'* ]]; then
   export TERMINFO="/Users/gustavkristensen/opt/anaconda3/share/terminfo"
   export ANACONDA_PATH="/Users/gustavkristensen/opt/anaconda3"
   export FZF_PATH="/opt/homebrew/opt/fzf/"
+  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 elif [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(lsb_release -ds) =~ "Ubuntu" ]]; then
   if [[ "${WSL_DISTRO_NAME}" =~ Ubuntu.* ]]; then
     export TERM="xterm-256color"

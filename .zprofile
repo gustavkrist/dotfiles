@@ -1,9 +1,9 @@
 if [[ "$OSTYPE" == 'darwin'* ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   if [[ "${WSL_DISTRO_NAME}" =~ Ubuntu-.* ]]; then
     export DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0"
   fi
-elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 

@@ -29,7 +29,7 @@ lvim.colorscheme = "nord"
 vim.g.tokyonight_style = 'storm'
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.guifont = 'MesloLGS NF:h14'
+vim.opt.guifont = 'FiraCode Nerd Font:h14'
 vim.g.python3_host_prog = "/Users/gustavkristensen/opt/anaconda3/bin/python"
 vim.o.foldminlines = 5
 vim.o.foldlevel = 3
@@ -201,7 +201,7 @@ formatters.setup {
 -- -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  { command = "flake8", filetypes = { "python" } },
+  { command = "flake8", filetypes = { "python" }, args = { "--ignore=E501" } },
   --  {
   --    exe = "shellcheck",
   ---@usage arguments to pass to the formatter
@@ -461,10 +461,10 @@ lvim.plugins = {
 -- vim.cmd("colorscheme edge")
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
 lvim.autocommands.custom_groups = {
-  { "BufWinEnter", "*", "highlight TSComment cterm=italic gui=italic" },
+  { "BufWinEnter", "*", "highlight Comment cterm=italic gui=italic" },
   { "BufAdd", "*.tex", "setlocal syntax=tex | setlocal conceallevel=2" },
-  { "BufEnter", "*.tex", "setlocal conceallevel=2 | setlocal syntax=tex | colorscheme edge | hi! link IndentBlanklineChar Comment | hi! clear Conceal" },
-  { "BufHidden", "*.tex", "colorscheme nord" },
+  { "BufEnter", "*.tex", "setlocal conceallevel=2 | setlocal syntax=tex | colorscheme edge | hi! link IndentBlanklineChar Comment | hi! clear Conceal | hi Normal ctermbg=NONE guibg=NONE | hi EndOfBuffer ctermbg=NONE guibg=NONE" },
+  { "BufHidden", "*.tex", "colorscheme nord | hi Normal ctermbg=NONE guibg=NONE" },
   { "BufWinEnter", "*.Rmd", "nmap <buffer>  \\cd|nmap <buffer> <C-CR> \\cd|inoremap <M-Tab> ```{r}<CR><CR>```<UP>|inoremap <C-Tab> ```{r}<CR><CR>```<UP>" },
   { "VimLeave", "*", "if exists('g:SendCmdToR') && string(g:SendCmdToR) != 'function(''SendCmdToR_fake'')' | call RQuit('nosave') | endif" },
   { "BufWritePost", "*.Rmd", "execute \"normal \\<plug>RMakeRmd(\\\"pdf_document\\\")\"" },
@@ -490,6 +490,9 @@ vim.api.nvim_set_keymap('i', '<C-^>', 'pumvisible() ? "<C-e><CR>" : "<CR>"', { n
 
 -- NeoVide
 
+if vim.g.neovide == true then
+  lvim.transparent_window = false
+end
 vim.g.neovide_cursor_animation_length = 0.01
 vim.g.neovide_cursor_trail_length = 0.1
 vim.g.neovide_floating_opacity = 0.8
@@ -537,69 +540,70 @@ if not status_luasnip_ok then
 end
 
 local jumpable = require('lvim.core.cmp').methods.jumpable
+local luasnip = require("luasnip")
 local check_backspace = require('lvim.core.cmp').methods.check_backspace
 local is_emmet_active = require("lvim.core.cmp").methods.is_emmet_active
 
-
 lvim.builtin.cmp.mapping = cmp.mapping.preset.insert {
-  ["<C-k>"] = cmp.mapping.select_prev_item(),
-  ["<C-j>"] = cmp.mapping.select_next_item(),
-  ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-  ["<C-f>"] = cmp.mapping.scroll_docs(4),
-  -- TODO: potentially fix emmet nonsense
-  ["<Tab>"] = cmp.mapping(function(fallback)
-    if luasnip.expandable() then
-      luasnip.expand()
-    elseif jumpable() then
-      luasnip.jump(1)
-    elseif cmp.visible() then
-      cmp.select_next_item()
-    elseif check_backspace() then
-      fallback()
-    elseif is_emmet_active() then
-      return vim.fn["cmp#complete"]()
-    else
-      fallback()
-    end
-  end, {
-    "i",
-    "s",
-  }),
-  ["<S-Tab>"] = cmp.mapping(function(fallback)
-    if jumpable(-1) then
-      luasnip.jump(-1)
-    elseif cmp.visible() then
-      cmp.select_prev_item()
-    else
-      fallback()
-    end
-  end, {
-    "i",
-    "s",
-  }),
-  ["<C-Space>"] = cmp.mapping.complete(),
-  ["<C-e>"] = cmp.mapping.abort(),
-  ["<CR>"] = cmp.mapping(function(fallback)
-    if cmp.visible() and cmp.confirm(lvim.builtin.cmp.confirm_opts) then
-      if jumpable() then
-        luasnip.jump(1)
-      else
-        cmp.mapping.confirm({ select = false })
-      end
-      return
-    end
+      ["<C-k>"] = cmp.mapping.select_prev_item(),
+      ["<C-j>"] = cmp.mapping.select_next_item(),
+      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      -- TODO: potentially fix emmet nonsense
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        -- if luasnip.expandable() then
+        --   luasnip.expand()
+        -- elseif jumpable() then
+        --   luasnip.jump(1)
+        if luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif cmp.visible() then
+          cmp.select_next_item()
+        elseif check_backspace() then
+          fallback()
+        elseif is_emmet_active() then
+          return vim.fn["cmp#complete"]()
+        else
+          fallback()
+        end
+      end, {
+        "i",
+        "s",
+      }),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        -- if jumpable(-1) then
+        --   luasnip.jump(-1)
+        if luasnip.jumpable(-1) then
+           luasnip.jump(-1)
+        elseif cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end, {
+        "i",
+        "s",
+      }),
 
-    if jumpable() then
-      if not luasnip.jump(1) then
-        fallback()
-      end
-    -- elseif cmp.visible() then
-    --   cmp.mapping.confirm({ select = false })
-    else
-      fallback()
-    end
-  end),
-}
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<CR>"] = cmp.mapping(function(fallback)
+        if cmp.visible() and cmp.confirm(lvim.builtin.cmp.confirm_opts) then
+          if jumpable() then
+            luasnip.jump(1)
+          end
+          return
+        end
+
+        if jumpable() then
+          if not luasnip.jump(1) then
+            fallback()
+          end
+        else
+          fallback()
+        end
+      end),
+    },
 
 require("luasnip.loaders.from_vscode").lazy_load {
   paths = { "~/.local/share/lunarvim/site/pack/packer/start/friendly-snippets" }
