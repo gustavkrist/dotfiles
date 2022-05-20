@@ -1,0 +1,50 @@
+"*":
+  core:
+    db:
+      backupPath: "/Users/gustavkristensen/Onedrive/Inkdrop"
+      machineId: "e60I_e665"
+    disabledPackages: [
+      "code-block-line-number"
+      "graphviz"
+    ]
+    lastNavigationState:
+      editingNoteId: "note:example"
+      queryContext:
+        bookId: "book:first"
+        filterKeyword: ""
+        includeChildren: false
+        mode: "book"
+      sidebar:
+        workspace:
+          bookId: ""
+          visible: false
+    mainWindow:
+      acrylicEnabled: true
+      distractionFreeEnabled: true
+      fullscreen: false
+      maximized: false
+      noteListBar:
+        w: 219
+      position:
+        x: 8
+        y: 33
+      sideBar:
+        visible: false
+      size:
+        h: 859
+        w: 1424
+    themes: [
+      "nord-syntax"
+      "nord-preview"
+      "nord-ui"
+    ]
+  editor:
+    fontFamily: "FiraCode Nerd Font,SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace"
+    inlineImageWidgets: false
+    lineNumbers: true
+    lineWrapping: false
+    styleActiveLine: true
+    unorderedListBullet: "-"
+    viewMode: "sideBySide"
+  snippets:
+    configNotes: "note:h9Zr_p8pS"

@@ -1,0 +1,12 @@
+'.CodeMirror.vim-mode.insert-mode textarea':
+  'j k': 'vim:exit-insert-mode'
+  'ctrl-l': 'vim:move-right'
+  'ctrl-c': 'vim:exit-insert-mode'
+
+'.CodeMirror.vim-mode.visual-mode textarea':
+  'ctrl-c': 'vim:exit-visual-mode'
+
+'body':
+  'cmd-shift-p': 'view:toggle-preview'
+  'cmd-t': 'sidetoc:sidetoc-toggle'
+  'cmd-e': 'view:toggle-sidebar'
