@@ -1,0 +1,16 @@
+#!/bin/sh
+
+export PATH="/Users/gustavkristensen/opt/anaconda3/bin:/Users/gustavkristensen/opt/anaconda3/condabin:/Users/gustavkristensen/.local/share/zinit/polaris/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/gustavkristensen/.emacs.d/bin:/Library/TeX/texbin:/Users/gustavkristensen/.cargo/bin:/Users/gustavkristensen/.ghcup/bin:/Users/gustavkristensen/.npm-global-bin:/Users/gustavkristensen/.local/bin:/Users/gustavkristensen/.local/share/zinit/plugins/kazhala---dotbare:/opt/homebrew/opt/fzf//bin"
+
+export EDITOR='lvim'
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export COLORTERM="truecolor"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"/Users/gustavkristensen/.local/share/lunarvim"}"
+export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"/Users/gustavkristensen/.config/lvim"}"
+export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"/Users/gustavkristensen/.cache/nvim"}"
+
+exec /opt/homebrew/bin/nvim -u "$LUNARVIM_RUNTIME_DIR/lvim/init.lua" "$@"

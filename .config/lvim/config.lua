@@ -109,6 +109,7 @@ lvim.builtin.alpha.active = true
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
+-- lvim.builtin.friendlysnippets.active = false
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.show_icons.git = 0
 
@@ -603,11 +604,13 @@ lvim.builtin.cmp.mapping = cmp.mapping.preset.insert {
           fallback()
         end
       end),
-    },
+  },
 
-require("luasnip.loaders.from_vscode").lazy_load {
-  paths = { "~/.local/share/lunarvim/site/pack/packer/start/friendly-snippets" }
-}
+print()
+
+-- require("luasnip.loaders.from_vscode").lazy_load {
+--   paths = { "~/.local/share/lunarvim/site/pack/packer/start/friendly-snippets" }
+-- }
 
 -- package.path = package.path .. ";" .. os.getenv("LUNARVIM_CONFIG_DIR") .. "/packages/to_sage.lua"
 -- require("to_sage")
