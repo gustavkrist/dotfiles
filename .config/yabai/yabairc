@@ -32,7 +32,7 @@ yabai -m config window_opacity off
 
 yabai -m config layout bsp
 yabai -m config --space 1 layout float
-yabai -m config --space 2 layout stack
+# yabai -m config --space 2 layout stack
 yabai -m config top_padding 8
 yabai -m config bottom_padding 8
 yabai -m config left_padding 8
@@ -54,7 +54,7 @@ yabai -m rule --add app="^Disk Utility$" sticky=on layer=above manage=off
 yabai -m rule --add app="^System Information$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Spotify$" manage=off
-yabai -m rule --add app="^iTerm2$" manage=off
+# yabai -m rule --add app="^iTerm2$" manage=off
 yabai -m rule --add app="^Notes$" manage=off
 yabai -m rule --add app="^NordVPN$" manage=off
 

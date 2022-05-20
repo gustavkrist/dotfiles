@@ -45,15 +45,15 @@ sketchybar -m --add space floats left \
                          background.drawing=off \
               --subscribe floats mouse.entered mouse.exited \
                                                                  \
-              --add space stack left \
-              --set stack associated_display=1 \
+              --add space notes left \
+              --set notes associated_display=1 \
                          associated_space=2 \
-                         icon= \
+                         icon=ﴬ \
                          icon.font="FiraCode Nerd Font:Regular:13.0" \
                          click_script="yabai -m space --focus 2" \
                          background.color=0xffD8DEE9 \
                          background.drawing=off \
-              --subscribe stack mouse.entered mouse.exited \
+              --subscribe notes mouse.entered mouse.exited \
                                                                  \
               --add space terminal left \
               --set terminal associated_display=1 \
@@ -211,8 +211,9 @@ sketchybar -m --add item volume_logo right \
 
 sketchybar -m --add item net right \
               --set net script="~/.config/sketchybar/plugins/net.sh" \
-                                background.color=0xff3B4252 \
-                                background.height=20
+                        background.color=0xff3B4252 \
+                        background.height=20 \
+                        update_freq=5 \
 
 sketchybar -m --add item net_logo right \
               --set net_logo icon= \
@@ -326,7 +327,7 @@ sketchybar -m --add item stats_logo right \
 
 ############## BRACKETS ##############
  sketchybar -m --add bracket primary_spaces floats \
-                                            stack \
+                                            notes \
                                             terminal \
                                             browser \
                                             vscode \
