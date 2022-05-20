@@ -4,14 +4,17 @@
         :held    50
         :delay   0
         :sim     30}}
- :templates {:open "open -a \"%s\""}
+ :templates {:open "open -a \"%s\""
+             :itermscript "/Applications/iTerm.app/Contents/Resources/it2run %s"}
 
  ;;;; helper function to generate things little bit quicker
  ;; quick define "layers" or "state" feature(use set_variable)
  ;; can use as conditions in rule list
  ;; {:<layer name> {:from <froms>}}
  :simlayers {:o-mode {:key :o}
-             :i-mode {:key :i}}
+             :i-mode {:key :i}
+             :w-mode {:key :w}
+             :e-mode {:key :e}}
 
  ;; main list
  :main
@@ -40,11 +43,23 @@
   {:des "o-mode launcher"
    :rules [:o-mode
            [:c [:open "Visual Studio Code.app"]]
-           [:t [:open "alacritty.app"]]
+           [:t [:open "iTerm.app"]]
            [:g [:open "Google Chrome"]]]}
   {:des "i-mode insert"
    :rules [:i-mode
-           [:tab [:spacebar :spacebar :spacebar :spacebar]]]}]
+           [:tab [:spacebar :spacebar :spacebar :spacebar]]]}
+  {:des "w-mode write language in vim"
+   :rules [:w-mode
+           [:l [:itermscript "popup_editor tex"]]
+           [:m [:itermscript "popup_editor markdown"]]
+           [:p [:itermscript "popup_editor python"]]
+           ]}
+  {:des "e-mode edit language in vim"
+   :rules [:e-mode
+           [:l [:itermscript "popup_editor tex modify"]]
+           [:m [:itermscript "popup_editor markdown modify"]]
+           [:p [:itermscript "popup_editor python modify"]]
+           ]}]
 
  ;; code won't read cheatsheet section
  ;; ! stand for mandatory
