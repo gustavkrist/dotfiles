@@ -9,6 +9,8 @@
 '.CodeMirror.vim-mode.visual-mode textarea':
   'ctrl-c': 'vim:exit-visual-mode'
   'cmd-x': 'vim:delete'
+  '>': 'core:indent'
+  '<': 'core:unindent'
 
 'body':
   'cmd-shift-p': 'view:toggle-preview'

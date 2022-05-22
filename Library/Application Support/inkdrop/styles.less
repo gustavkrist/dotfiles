@@ -1,6 +1,53 @@
-.cm-fat-cursor .CodeMirror-cursor {
-    background-color: #D8DEE9;
+:root {
+  --note-list-bar-background: rgba(46, 51, 63, 0.15);
+  --sidebar-background: rgba(46, 51, 63, 0.07);
+}
+body {
+  background: rgba(46, 51, 63, 0.1);
+}
+.cm-fat-cursor {
+    caret-color: #D8DEE9;
+    .CodeMirror-cursor {
+    background-color: rgba(216, 223, 233, 0.5);
+  }
 }
 .cm-animate-fat-cursor {
-    background-color: #D8DEE9;
+    background-color: rgba(216, 223, 233, 0.5);
+}
+// body[class*='nord-ui'] .mde-preview .highlight pre, body[class*='nord-ui'] .mde-preview pre {
+//     background-color: rgba(0, 0, 0, 0.1);
+// }
+.editor {
+  .mde-cm-wrapper .CodeMirror .CodeMirror-linewidget, .mde-preview {
+    img[alt$='#small'] {
+      max-width: 75% !important;
+      min-width: 200pt !important;
+    }
+
+    img[alt$='#x-small'] {
+      max-width: 50% !important;
+      min-width: 100pt !important;
+    }
+
+    img[alt$='#xx-small'] {
+      max-width: 25% !important;
+      min-width: 50pt !important;
+    }
+
+  }
+}
+.CodeMirror-gutter {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.CodeMirror-linenumber .CodeMirror-gutter-elt {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.CodeMirror-gutters {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+.CodeMirror-dialog {
+  background: rgba(56, 51, 63, 0.7);
 }

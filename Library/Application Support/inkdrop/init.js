@@ -10,6 +10,7 @@ inkdrop.onEditorLoad((editor) => {
     cm.setOption('lineNumberFormatter', l =>
       l === lineNum ? lineNum : Math.abs(lineNum - l));
     cm.setOption('cursorBlinkRate', 0);
+    cm.setOption('cursorScrollMargin', 170);
   }
   cm.on('cursorActivity', showRelativeLines)
   // inkdrop.commands.add(document.body, {
