@@ -37,6 +37,8 @@ vim.o.cc = "80"
 vim.o.relativenumber = true
 lvim.transparent_window = true
 vim.opt.termguicolors = true
+vim.ui.select = require"popui.ui-overrider"
+vim.ui.input = require"popui.input-overrider"
 
 -- Italic
 vim.cmd([[
@@ -402,15 +404,24 @@ lvim.plugins = {
     config = function()
       local augend = require("dial.augend")
       vim.cmd [[
-          nmap <C-a> <Plug>(dial-increment)
-          nmap <C-x> <Plug>(dial-decrement)
-          vmap <C-a> <Plug>(dial-increment)
-          vmap <C-x> <Plug>(dial-decrement)
-          vmap g<C-a> <Plug>(dial-increment-additional)
-          vmap g<C-x> <Plug>(dial-decrement-additional)
+          nmap  <C-a>  <Plug>(dial-increment)
+          nmap  <C-x>  <Plug>(dial-decrement)
+          vmap  <C-a>  <Plug>(dial-increment)
+          vmap  <C-x>  <Plug>(dial-decrement)
+          vmap g<C-a> g<Plug>(dial-increment-additional)
+          vmap g<C-x> g<Plug>(dial-decrement-additional)
         ]]
       require("dial.config").augends:register_group {
         default = {
+          augend.integer.alias.decimal,   -- nonnegative decimal number (0, 1, 2, 3, ...)
+          augend.integer.alias.hex,       -- nonnegative hex number  (0x01, 0x1a1f, etc.)
+          augend.date.alias["%Y/%m/%d"],  -- date (2022/02/19, etc.)
+          augend.date.alias["%Y-%m-%d"],
+          augend.date.alias["%m/%d"],
+          augend.date.alias["%H:%M"],
+          augend.hexcolor.new {
+            case = "lower"
+          },
           augend.constant.new {
             elements = { "and", "or" },
             word = true, -- if false, "sand" is incremented into "sor", "doctor" into "doctand", etc.
@@ -453,6 +464,10 @@ lvim.plugins = {
       vim.cmd("nnoremap <C-_> <cmd>RustRun<CR>")
     end,
     ft = "rust"
+  },
+  {
+    "hood/popui.nvim",
+    requires = {"RishabhRD/popfix"}
   }
 }
 -- require('neoscroll').setup()
