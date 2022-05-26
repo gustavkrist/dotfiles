@@ -51,13 +51,13 @@
   {:des "w-mode write language in vim"
    :rules [:w-mode
            [:l [:itermscript "popup_editor tex"]]
-           [:m [:itermscript "popup_editor markdown"]]
+           [:m [:itermscript "popup_editor pandoc"]]
            [:p [:itermscript "popup_editor python"]]
            ]}
   {:des "e-mode edit language in vim"
    :rules [:e-mode
            [:l [:itermscript "popup_editor tex modify"]]
-           [:m [:itermscript "popup_editor markdown modify"]]
+           [:m [:itermscript "popup_editor pandoc modify"]]
            [:p [:itermscript "popup_editor python modify"]]
            ]}]
 

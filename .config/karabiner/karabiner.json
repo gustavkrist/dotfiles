@@ -394,7 +394,7 @@
             "key_code" : "m"
           },
           "to" : [ {
-            "shell_command" : "/Applications/iTerm.app/Contents/Resources/it2run popup_editor markdown"
+            "shell_command" : "/Applications/iTerm.app/Contents/Resources/it2run popup_editor pandoc"
           } ],
           "conditions" : [ {
             "name" : "w-mode",
@@ -413,7 +413,7 @@
               "value" : 1
             }
           }, {
-            "shell_command" : "/Applications/iTerm.app/Contents/Resources/it2run popup_editor markdown"
+            "shell_command" : "/Applications/iTerm.app/Contents/Resources/it2run popup_editor pandoc"
           } ],
           "from" : {
             "simultaneous" : [ {
@@ -532,7 +532,7 @@
             "key_code" : "m"
           },
           "to" : [ {
-            "shell_command" : "/Applications/iTerm.app/Contents/Resources/it2run popup_editor markdown modify"
+            "shell_command" : "/Applications/iTerm.app/Contents/Resources/it2run popup_editor pandoc modify"
           } ],
           "conditions" : [ {
             "name" : "e-mode",
@@ -551,7 +551,7 @@
               "value" : 1
             }
           }, {
-            "shell_command" : "/Applications/iTerm.app/Contents/Resources/it2run popup_editor markdown modify"
+            "shell_command" : "/Applications/iTerm.app/Contents/Resources/it2run popup_editor pandoc modify"
           } ],
           "from" : {
             "simultaneous" : [ {
