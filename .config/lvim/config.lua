@@ -36,14 +36,14 @@ lvim.builtin.bufferline.options.show_close_icon = true
 
 -- NvimTree
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.icons.git = {
-    unstaged = "✗",
-    staged = "✓",
-    unmerged = "",
-    renamed = "➜",
-    untracked = "★",
-    deleted = "",
-}
+-- lvim.builtin.nvimtree.icons.git = {
+--     unstaged = "✗",
+--     staged = "✓",
+--     unmerged = "",
+--     renamed = "➜",
+--     untracked = "★",
+--     deleted = "",
+-- }
 lvim.builtin.nvimtree.setup.update_cwd = true
 lvim.builtin.nvimtree.setup.update_focused_file.enable = true
 lvim.builtin.nvimtree.setup.update_focused_file.update_cwd = true

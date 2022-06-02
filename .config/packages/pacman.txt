@@ -1,0 +1,11 @@
+zsh
+vivid
+exa
+zoxide
+tree
+bat
+lightdm-gtk-greeter
+lightdm-gtk-greeter-settings
+neofetch
+xclip
+alacritty
