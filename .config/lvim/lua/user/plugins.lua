@@ -165,5 +165,9 @@ lvim.plugins = {
   {
     "hood/popui.nvim",
     requires = {"RishabhRD/popfix"}
+  },
+  {
+    "kmonad/kmonad-vim",
+    ft = "kbd"
   }
 }
