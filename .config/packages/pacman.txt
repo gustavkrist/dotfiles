@@ -9,3 +9,6 @@ lightdm-gtk-greeter-settings
 neofetch
 xclip
 alacritty
+nodejs
+npm
+rustup
