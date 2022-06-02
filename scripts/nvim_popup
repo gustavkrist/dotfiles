@@ -1,6 +1,0 @@
-#!/bin/bash
-
-mkdir -p /tmp/popup
-~/.config/lvim/scripts/lunarvim_iterm /tmp/popup/$1.tmp +"set ft=$1"
-# cat /tmp/popup/$1.tmp | /opt/homebrew/bin/ghead -c-1 | pbcopy
-cat /tmp/popup/$1.tmp | pbcopy

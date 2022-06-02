@@ -95,6 +95,7 @@ export PATH="$PATH:$HOME/.local/bin"
 
 # -- SYSTEM ENV ---------------------------------------------------------------
 
+export TERM="xterm-256color"
 export EDITOR='lvim'
 export LANG="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
@@ -125,6 +126,9 @@ alias lg="lazygit"
 alias chrome="open -a 'Google Chrome'"
 alias fp="fzf-tmux -p -w 90% -h 90% -- --preview \
   'bat --theme ansi --style=numbers --color=always --line-range :500 {}'"
+alias grep="grep --color"
+alias pbcopy="xclip -selection clipboard"
+alias pbpaste="xclip -selection clipboard -o"
 
 # -- PLUGIN CONFIG ------------------------------------------------------------
 
@@ -213,26 +217,6 @@ export BAT_THEME="ansi"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bddedc"
 export LS_COLORS="$(vivid generate nord):*.plist=0;38;2;180;142;173:*.cson=0;38;2;180;142;173"
 export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
-
-# -- OS SPECIFIC --------------------------------------------------------------
-
-if [[ "$OSTYPE" == 'darwin'* ]]; then
-  alias grep="ggrep --color"
-  export TERMINFO="/Users/gustavkristensen/opt/anaconda3/share/terminfo"
-  export ANACONDA_PATH="/Users/gustavkristensen/opt/anaconda3"
-  export FZF_PATH="/opt/homebrew/opt/fzf/"
-  test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-elif [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(lsb_release -ds) =~ "Ubuntu" ]]; then
-  if [[ "${WSL_DISTRO_NAME}" =~ Ubuntu.* ]]; then
-    export TERM="xterm-256color"
-    alias grep="grep --color"
-    alias pbcopy="clip.exe"
-    alias pbpaste="powershell.exe -command 'Get-Clipboard' | head -n -1"
-    export ANACONDA_PATH="$HOME/anaconda3"
-    export FZF_PATH="/home/linuxbrew/.linuxbrew/opt/fzf/"
-    export DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0"
-  fi
-fi
 
 # -- FUNCTIONS ----------------------------------------------------------------
 
