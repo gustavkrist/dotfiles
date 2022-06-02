@@ -1,0 +1,2 @@
+kmonad-bin
+neovim-git
