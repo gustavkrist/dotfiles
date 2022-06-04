@@ -123,21 +123,22 @@ alias egrep="egrep --color"
 alias rvim="nvr --remote"
 alias r="radian"
 alias lg="lazygit"
-alias chrome="open -a 'Google Chrome'"
 alias fp="fzf-tmux -p -w 90% -h 90% -- --preview \
   'bat --theme ansi --style=numbers --color=always --line-range :500 {}'"
 alias grep="grep --color"
 alias pbcopy="xclip -selection clipboard"
 alias pbpaste="xclip -selection clipboard -o"
+alias chrome="google-chrome-stable"
+alias icat="kitty +kitten icat"
 
 # -- PLUGIN CONFIG ------------------------------------------------------------
 
 # VI MODE
 
 bindkey -M viins 'jk' vi-cmd-mode
-MODE_CURSOR_VIINS="#d8dee9 steady bar"
+MODE_CURSOR_VIINS="#81A1C1 steady bar"
 MODE_CURSOR_REPLACE="$MODE_CURSOR_VIINS #ff0000"
-MODE_CURSOR_VICMD="white block"
+MODE_CURSOR_VICMD="#81A1C1 block"
 MODE_CURSOR_SEARCH="#ff00ff steady underline"
 MODE_CURSOR_VISUAL="$MODE_CURSOR_VICMD steady block"
 MODE_CURSOR_VLINE="$MODE_CURSOR_VISUAL #00ffff"
@@ -256,7 +257,7 @@ fo() {
   key=$(head -1 <<< "$out")
   file=$(head -2 <<< "$out" | tail -1)
   if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
+    [ "$key" = ctrl-o ] && xdg-open "$file" || ${EDITOR:-vim} "$file"
   fi
 }
 
@@ -507,10 +508,10 @@ else
 fi
 unset __conda_setup
 
-if [[ $TMUX ]]; then
-    conda deactivate
-    conda activate base
-fi
+# if [[ $TMUX ]]; then
+#     conda deactivate
+#     conda activate base
+# fi
 
 # -- MISC ---------------------------------------------------------------------
 

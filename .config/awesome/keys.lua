@@ -27,10 +27,10 @@ local ctrl      = "Control" -- Contro button just in case.
 -- }}}
 
 -- {{{ Personal variables
-local browser           = "brave"
-local terminal          = "xfce4-terminal"
+local browser           = "google-chrome-stable"
+local terminal          = "kitty"
 local editor            = os.getenv("EDITOR") or "nano"
-local guiEditor         = "xed"
+local guiEditor         = "neovide"
 local filemanager       = "thunar"
 local lockscreen        = "light-locker-command -l"
 
@@ -117,7 +117,7 @@ end
 local globalKeys = myTable.join(
     -- {{{ Personal keybindings.
     -- Awesome menubar
-    awful.key({ modkey }, "d", function () menubar.show() end,
+    awful.key({ modkey }, "d", function () awful.spawn.with_shell( "rofi -show drun ") end,
         {description = "Show awesome menubar.", group = "Hotkeys"}),
     awful.key({ modkey }, "w", function () awful.util.rcMainMenu:show() end,
         {description = "Show the main menu.", group = "Hotkeys"}),
@@ -147,7 +147,7 @@ local globalKeys = myTable.join(
         {description = "Launch the text editor." , group = "Function keys" }),
     awful.key({ modkey }, "F3", function () awful.util.spawn( filemanager ) end,
         {description = "Launch the filemanager", group = "Function keys" }),
-    awful.key({ modkey }, "F4", function () awful.util.spawn( "xfce4-terminal --drop-down" ) end,
+    awful.key({ modkey }, "F4", function () awful.util.spawn( "tdrop -ma -w 70% -x 15% -y 20 -s dropdown kitty" ) end,
         {description = "Dropdown terminal.", group = "Function keys"}),
     awful.key({ modkey }, "Return", function () awful.util.spawn( terminal ) end,
         {description = "Launch the terminal.", group="Hotkeys"}),
@@ -159,7 +159,7 @@ local globalKeys = myTable.join(
         {description = "Launch graphical text editor.", group = "Hotkeys" }),
     awful.key({ modkey }, "t", function () awful.util.spawn( editor ) end,
         {description = "Launch default terminal editor.", group = "Hotkeys" }),
-    awful.key({ modkey }, "l", function () awful.util.spawn( lockscreen ) end,
+    awful.key({ modkey, ctrl, altkey }, "l", function () awful.util.spawn( lockscreen ) end,
         {description = "Locks the screen on demand.", group = "Hotkeys" }),
     awful.key({ modkey }, "c", function () awful.util.spawn( "code" ) end,
         {description = "Launches Visual Studio Code.", group = "Hotkeys" }),
@@ -200,31 +200,31 @@ local globalKeys = myTable.join(
    -- FUNCTION KEYS
    -- =========================================
 
-   -- Brightness
-   awful.key({}, "XF86MonBrightnessUp",
-      function()
-         awful.spawn("xbacklight -inc 10", false)
-      end,
-      {description = "+10%", group = "Hotkeys"}
-   ),
-   awful.key({}, "XF86MonBrightnessDown",
-      function()
-         awful.spawn("xbacklight -dec 10", false)
-      end,
-      {description = "-10%", group = "Hotkeys"}
-   ),
+   -- -- Brightness
+   -- awful.key({}, "XF86MonBrightnessUp",
+   --    function()
+   --       awful.spawn("~/.local/bin/brightness + 5", false)
+   --    end,
+   --    {description = "+5%", group = "Hotkeys"}
+   -- ),
+   -- awful.key({}, "XF86MonBrightnessDown",
+   --    function()
+   --       awful.spawn("~/.local/bin/brightness - 5", false)
+   --    end,
+   --    {description = "-5%", group = "Hotkeys"}
+   -- ),
 
    -- ALSA volume control
    awful.key({}, "XF86AudioRaiseVolume",
       function()
-         awful.spawn("amixer -D pulse sset Master 5%+", false)
+         awful.spawn("amixer -D pulse set Master 5%+", false)
          awesome.emit_signal("volume_change")
       end,
       {description = "volume up", group = "Hotkeys"}
    ),
    awful.key({}, "XF86AudioLowerVolume",
       function()
-         awful.spawn("amixer -D pulse sset Master 5%-", false)
+         awful.spawn("amixer -D pulse set Master 5%-", false)
          awesome.emit_signal("volume_change")
       end,
       {description = "volume down", group = "Hotkeys"}
@@ -522,6 +522,21 @@ local globalKeys = myTable.join(
             os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
             beautiful.volume.update() end,
             {description = "Volumn down.", group = "Audio"}),
+    awful.key({ modkey }, "equal",
+        function ()
+            os.execute("/home/gustav/.local/bin/brightness - 5")
+        end,
+        {description = "Brightness down", group = "Hotkeys"}),
+    awful.key({ modkey, "Shift" }, "equal",
+        function ()
+            os.execute("/home/gustav/.local/bin/brightness + 5")
+        end,
+        {description = "Brightness up", group = "Hotkeys"}),
+    awful.key({ modkey, ctrl }, "equal",
+        function ()
+            os.execute("/home/gustav/.local/bin/brightness toggle")
+        end,
+        {description = "Brightness toggle", group = "Hotkeys"}),
     awful.key({ modkey, altkey }, "m",
         function ()
             os.execute(string.format("amixer -q set %s toggle", beautiful.volume.togglechannel or beautiful.volume.channel))
@@ -591,7 +606,7 @@ local clientKeys = myTable.join(
             c:raise()
         end,
         {description = "Toggle fullscreen", group = "Client"}),
-    awful.key({ modkey }, "Backspace", function (c) c:kill() end,
+    awful.key({ modkey }, "q", function (c) c:kill() end,
               {description = "Close", group = "Hotkeys"}),
     awful.key({ modkey, "Shift" }, "f",  awful.client.floating.toggle,
               {description = "Toggle floating", group = "Client"}),

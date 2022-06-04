@@ -2,7 +2,6 @@ require "user.keymap"
 require "user.autocmds"
 require "user.os"
 require "user.plugins"
-require "user.neovide"
 require "user.null_ls"
 require "user.lsp"
 require "user.treesitter"
@@ -17,6 +16,7 @@ vim.cmd([[
 
 -- Lvim
 lvim.transparent_window = true
+require "user.neovide"
 lvim.log.level = "warn"
 lvim.format_on_save = false
 lvim.colorscheme = "nord"

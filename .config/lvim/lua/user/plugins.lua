@@ -171,3 +171,4 @@ lvim.plugins = {
     ft = "kbd"
   }
 }
+lvim.builtin.luasnip.sources.friendly_snippets = false

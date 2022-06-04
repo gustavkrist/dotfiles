@@ -10,13 +10,13 @@ window:
   dynamic_padding: true
 
   # Startup Mode (changes require restart)
-  startup_mode: Maximized
+  # startup_mode: Maximized
 
   opacity: 0.95
 
 # shell
 shell:
-  program: /opt/homebrew/bin/zsh
+  program: /bin/zsh
   args:
     - --login
 
@@ -143,15 +143,15 @@ bell:
   duration: 75
 
 # Keybinds
-key_bindings:
-  - { key: Return, mods: Shift, chars: "\x1e"}
-  - { key: Return, mods: Control, chars: "\x1f"}
-  - { key: K, mods: Command, chars: "\x63\x6f\x6e\x64\x61\x20\x64\x65\x61\x63\x74\x69\x76\x61\x74\x65\x0a\x63\x6f\x6e\x64\x61\x20\x61\x63\x74\x69\x76\x61\x74\x65\x20\x62\x61\x73\x65\x0a"}
-  - { key: C, mods: Alt, chars: "\x1bc"}
-  - { key: T, mods: Alt, chars: "\x1bt"}
-  - { key: S, mods: Alt, chars: "\x1bs"}
-  - { key: A, mods: Alt, chars: "\x1ba"}
-  - { key: 0, mods: Alt, chars: "\x1b0"}
-  - { key: J, mods: Alt, chars: "\x1bj"}
-  - { key: I, mods: Alt, chars: "\x1bi"}
-  - { key: Space, mods: Control, chars: "\x00" }
+# key_bindings:
+  # - { key: Return, mods: Shift, chars: "\x1e"}
+  # - { key: Return, mods: Control, chars: "\x1f"}
+  # - { key: K, mods: Command, chars: "\x63\x6f\x6e\x64\x61\x20\x64\x65\x61\x63\x74\x69\x76\x61\x74\x65\x0a\x63\x6f\x6e\x64\x61\x20\x61\x63\x74\x69\x76\x61\x74\x65\x20\x62\x61\x73\x65\x0a"}
+  # - { key: C, mods: Alt, chars: "\x1bc"}
+  # - { key: T, mods: Alt, chars: "\x1bt"}
+  # - { key: S, mods: Alt, chars: "\x1bs"}
+  # - { key: A, mods: Alt, chars: "\x1ba"}
+  # - { key: 0, mods: Alt, chars: "\x1b0"}
+  # - { key: J, mods: Alt, chars: "\x1bj"}
+  # - { key: I, mods: Alt, chars: "\x1bi"}
+  # - { key: Space, mods: Control, chars: "\x00" }

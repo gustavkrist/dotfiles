@@ -114,8 +114,8 @@ local ctrl      = "Control" -- Contro button just in case.
 -- }}}
 
 -- {{{ Personal variables
-local terminal          = "xfce4-terminal"
-local guiEditor         = "xed"
+local terminal          = "kitty"
+local guiEditor         = "neovide"
 local filemanager       = "thunar"
 
 -- {{{ Set the path to awesome config file
@@ -147,10 +147,8 @@ awful.layout.layouts = {
     lain.layout.termfair.center,
     lain.layout.termfair,
     --awful.layout.suit.tile.left,
-    --awful.layout.suit.tile.bottom,
     --awful.layout.suit.tile.top,
     --awful.layout.suit.fair,
-    --awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     --awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
@@ -162,6 +160,9 @@ awful.layout.layouts = {
     --awful.layout.suit.corner.se,
     --awful.layout.suit.floating,
     lain.layout.centerwork,
+    lain.layout.centerwork.horizontal,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.fair.horizontal,
 }
 
 lain.layout.termfair.nmaster = 3
@@ -299,8 +300,8 @@ awful.rules.rules = {
 
     -- Set applications to be maximized at startup.
     -- find class or role via xprop command
-    { rule = { class = guiEditor },
-        properties = { maximized = true } },
+    -- { rule = { class = guiEditor },
+    --     properties = { maximized = true } },
 
     -- Set applications to be maximized at startup with floating disabled.
     -- find class or role via xprop command
@@ -414,8 +415,19 @@ client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal(
+  "focus",
+  function(c)
+    c.border_color = beautiful.border_focus
+    c.opacity = 1.0
+  end)
+client.connect_signal("unfocus",
+  function(c)
+    c.border_color = beautiful.border_normal
+    c.opacity = 0.9
+  end)
+
+awful.screen.focus(screen.primary)
 
 -- }}}
 
@@ -429,6 +441,7 @@ local autoRunApps = {
     "dex --autostart --environment awesome",
     "sleep 1 && picom -b --config  $HOME/.config/picom/picom.conf",
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
+    "sleep 1 && kmonad $HOME/.config/kmonad/keychron_k8.kbd"
 }
 
 if autoRun then

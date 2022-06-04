@@ -12,3 +12,11 @@ alacritty
 nodejs
 npm
 rustup
+fd
+ripgrep
+htop
+mc
+tmux
+entr
+github-cli
+git-delta

@@ -38,5 +38,10 @@ elseif vim.g.vscode == 1 then
   vim.cmd([[execute "source " . $HOME . "/.config/nvim/vscode/vscode.vim"]])
   dofile(os.getenv("HOME") .. "/.config/nvim/vscode/plugins.lua")
 else
+  if not os.getenv("LUNARVIM_RUNTIME_DIR") then
+    vim.fn.setenv("LUNARVIM_RUNTIME_DIR", "/home/gustav/.local/share/lunarvim")
+    vim.fn.setenv("LUNARVIM_CONFIG_DIR", "/home/gustav/.config/lvim")
+    vim.fn.setenv("LUNARVIM_CACHE_DIR", "/home/gustav/.cache/nvim")
+  end
   dofile(os.getenv("LUNARVIM_RUNTIME_DIR") .. "/lvim/init.lua")
 end

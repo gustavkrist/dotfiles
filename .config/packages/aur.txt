@@ -1,2 +1,4 @@
 kmonad-bin
+google-chrome
 neovim-git
+neovide-git

@@ -39,18 +39,47 @@
 ;; Base layer
 
 (defalias
+  ae  A-esc
+
   cce (tap-hold-next-release 150 esc lctl)
+  spl (tap-hold-next-release 250 spc (layer-toggle space))
+
+  ;; Modifier keys on home row when held
+  sa  (tap-hold-next-release 200 a lsft)
+  ss  (tap-hold-next-release 200 s lctl)
+  sd  (tap-hold-next-release 200 d lalt)
+  sf  (tap-hold-next-release 200 f lmet)
+  s;  (tap-hold-next-release 200 ; rsft)
+  sl  (tap-hold-next-release 200 l rctl)
+  sk  (tap-hold-next-release 200 k ralt)
+  sj  (tap-hold-next-release 200 j rmet)
+
+  ;; Parenthesis when tapping shift keys
+  ls (tap-hold-next-release 250 \( lsft)
+  rs (tap-hold-next-release 250 \) rsft)
 )
 
 (deflayer base
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
-  @cce _    _    _    _    _    _    _    _    _    _    _    _
+  @cce @sa  @ss  @sd  @sf  _    _    _    _    _    _    _    _
+  @ls  _    _    _    _    _    _    _    _    _    _    _    @rs             _
+  _    _    _              @spl                _    _    _    _          _    _    _
+)
+
+(defalias
+  dts (cmd-button "tdrop -ma -w 70% -x 15% -y 20 -s dropdown kitty")
+)
+
+(deflayer space
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
+  _    _    _    _    _    @dts _    _    _    _    _    _    _    _     _    _    _
+  caps _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _               _
   _    _    _              _                   _    _    _    _          _    _    _
 )
-
 
 #| ----------------------------------------------------------------------------
 

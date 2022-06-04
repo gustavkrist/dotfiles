@@ -22,9 +22,6 @@ local theme                                     = {}
 -- Theme config folder
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/nord"
 
--- Theme wallpaper.
-theme.wallpaper                                 = os.getenv("HOME") .. "/.config/awesome/themes/nord/nord-wallpaper.jpg"
-
 -- Theme fonts.
 theme.font                                      = "Noto Sans Regular 10"
 theme.taglist_font                              = "Noto Sans Regular 10"
@@ -396,13 +393,32 @@ function theme.at_screen_connect(s)
 
     -- If wallpaper is a function, call it with the screen
     local wallpaper = theme.wallpaper
+
+    if s.geometry.width > s.geometry.height then
+        fair_layout = awful.layout.suit.fair
+        tile_layout = awful.layout.suit.tile
+        wallpaper   = theme.dir .. "/wild.png"
+    else
+        fair_layout = awful.layout.suit.fair.horizontal
+        tile_layout = lain.layout.centerwork.horizontal
+        wallpaper   = theme.dir .. "/nord-arctic-fox-vertical.png"
+    end
+
     if type(wallpaper) == "function" then
         wallpaper = wallpaper(s)
     end
     gears.wallpaper.maximized(wallpaper, s, true)
 
     -- All tags open with layout 1
-    awful.tag(awful.util.tagnames, s, awful.layout.layouts[1])
+    awful.tag.add("1",     {screen = s, layout = tile_layout, selected = true})
+    awful.tag.add("2", {screen = s, layout = tile_layout})
+    awful.tag.add("3",  {screen = s, layout = tile_layout})
+    awful.tag.add("4",     {screen = s, layout = tile_layout})
+    awful.tag.add("5",     {screen = s, layout = tile_layout})
+    awful.tag.add("6",   {screen = s, layout = tile_layout})
+    awful.tag.add("7",         {screen = s, layout = tile_layout})
+    awful.tag.add("8",         {screen = s, layout = tile_layout})
+    awful.tag.add("9",         {screen = s, layout = tile_layout})
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
