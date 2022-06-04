@@ -1,0 +1,20 @@
+#!/bin/bash
+
+X_LOC=$(xdotool getmouselocation --shell | awk -F= '/X/ {print $2}')
+
+if [[ $(($X_LOC > 3440)) = 1 ]]; then
+  DISPLAY=1
+else
+  DISPLAY=2
+fi
+
+if [[ "$1" = "+" || "$1" = "-" ]]; then
+  ddcutil --display $DISPLAY setvcp 10 $@
+elif [[ "$1" = "toggle" ]]; then
+  CURRENT=$(ddcutil --display $DISPLAY getvcp 10 | awk '{print $9}' | cut -d , -f 1)
+  if [[ $(($CURRENT < 25)) = 1 ]]; then
+    ddcutil --display $DISPLAY setvcp 10 25
+  else
+    ddcutil --display $DISPLAY setvcp 10 15
+  fi
+fi
