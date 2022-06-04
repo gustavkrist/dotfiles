@@ -45,14 +45,14 @@
   spl (tap-hold-next-release 250 spc (layer-toggle space))
 
   ;; Modifier keys on home row when held
-  sa  (tap-hold-next-release 200 a lsft)
-  ss  (tap-hold-next-release 200 s lctl)
-  sd  (tap-hold-next-release 200 d lalt)
-  sf  (tap-hold-next-release 200 f lmet)
-  s;  (tap-hold-next-release 200 ; rsft)
-  sl  (tap-hold-next-release 200 l rctl)
-  sk  (tap-hold-next-release 200 k ralt)
-  sj  (tap-hold-next-release 200 j rmet)
+  sa  (tap-hold-next-release 250 a lsft)
+  ss  (tap-hold-next-release 250 s lctl)
+  sd  (tap-hold-next-release 250 d lalt)
+  sf  (tap-hold-next-release 250 f lmet)
+  s;  (tap-hold-next-release 250 ; rsft)
+  sl  (tap-hold-next-release 250 l rctl)
+  sk  (tap-hold-next-release 250 k ralt)
+  sj  (tap-hold-next-release 250 j rmet)
 
   ;; Parenthesis when tapping shift keys
   ls (tap-hold-next-release 250 \( lsft)
@@ -63,8 +63,8 @@
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
-  @cce @sa  @ss  @sd  @sf  _    _    _    _    _    _    _    _
-  @ls  _    _    _    _    _    _    _    _    _    _    _    @rs             _
+  @cce _    @ss  @sd  @sf  _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _               _
   _    _    _              @spl                _    _    _    _          _    _    _
 )
 
