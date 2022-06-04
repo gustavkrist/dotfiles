@@ -49,6 +49,8 @@ local hotkeys_popup =   require("awful.hotkeys_popup").widget
 
 local myTable       =   awful.util.table or gears.table -- 4.{0,1} compatibility
 
+local bling = require("bling")
+
 local keys = require("keys")
 -- }}}
 
@@ -99,6 +101,10 @@ local themes = {
     --]]
     "eos-default", --1
     "nord", --2
+    "powerarrow-dark", --3
+    "holo", --4
+    "steamburn", --5
+    "vertex", --6
 }
 
 -- {{{ Choosing your theme.
@@ -146,6 +152,7 @@ awful.layout.layouts = {
     awful.layout.suit.tile,
     lain.layout.termfair.center,
     lain.layout.termfair,
+    lain.layout.centerwork,
     --awful.layout.suit.tile.left,
     --awful.layout.suit.tile.top,
     --awful.layout.suit.fair,
@@ -159,7 +166,6 @@ awful.layout.layouts = {
     --awful.layout.suit.corner.sw,
     --awful.layout.suit.corner.se,
     --awful.layout.suit.floating,
-    lain.layout.centerwork,
     lain.layout.centerwork.horizontal,
     awful.layout.suit.tile.bottom,
     awful.layout.suit.fair.horizontal,
@@ -318,6 +324,7 @@ awful.rules.rules = {
           "DTA",  -- Firefox addon DownThemAll.
           "copyq",  -- Includes session name in class.
           "yad", -- For yad windows.
+          "line.exe",
         },
         class = {
           "Galculator",
@@ -358,7 +365,7 @@ awful.rules.rules = {
 client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
-    -- if not awesome.startup then awful.client.setslave(c) end
+    if not awesome.startup then awful.client.setslave(c) end
 
     if awesome.startup and
       not c.size_hints.user_position
@@ -429,6 +436,29 @@ client.connect_signal("unfocus",
 
 awful.screen.focus(screen.primary)
 
+for s in screen do
+  if s.geometry.width == 3440 then
+    bling.module.wallpaper.setup {
+      set_function = bling.module.wallpaper.setters.random,
+      wallpaper = "/home/gustav/Pictures/nord-wallpapers",
+      change_timer = 601,
+      position = "fit",
+      background = "#2E3440",
+      screen = s
+    }
+  elseif s.geometry.height == 2560 then
+    bling.module.wallpaper.setup {
+      set_function = bling.module.wallpaper.setters.random,
+      wallpaper = "/home/gustav/Pictures/nord-wallpapers-vertical",
+      change_timer = 601,
+      position = "fit",
+      background = "#2E3440",
+      screen = s
+    }
+  end
+end
+
+
 -- }}}
 
 -- {{{ Autostart applications
@@ -438,7 +468,7 @@ local autoRunApps = {
     "nm-applet",
     "numlockx on",
     "$HOME/.screenlayout/monitor.sh", -- Use ArandR to create the monitor.sh file.
-    "dex --autostart --environment awesome",
+    "killall firewall-applet && dex --autostart --environment awesome",
     "sleep 1 && picom -b --config  $HOME/.config/picom/picom.conf",
     "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
     "sleep 1 && kmonad $HOME/.config/kmonad/keychron_k8.kbd"

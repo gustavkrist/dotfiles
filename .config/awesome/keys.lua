@@ -16,7 +16,9 @@ local hotkeys_popup =   require("awful.hotkeys_popup").widget
                         require("awful.hotkeys_popup.keys")
 
 -- Menubar
-local menubar = require("menubar")
+local menubar       = require("menubar")
+
+local bling         = require("bling")
 
 local myTable       =   awful.util.table or gears.table -- 4.{0,1} compatibility
 
@@ -263,28 +265,28 @@ local globalKeys = myTable.join(
    awful.key({modkey}, "j",
       function()
          awful.client.focus.bydirection("down")
-         raise_client()
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus down", group = "Client"}
    ),
    awful.key({modkey}, "k",
       function()
          awful.client.focus.bydirection("up")
-         raise_client()
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus up", group = "Client"}
    ),
    awful.key({modkey}, "h",
       function()
          awful.client.focus.bydirection("left")
-         raise_client()
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus left", group = "Client"}
    ),
    awful.key({modkey}, "l",
       function()
          awful.client.focus.bydirection("right")
-         raise_client()
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus right", group = "Client"}
    ),
@@ -293,28 +295,28 @@ local globalKeys = myTable.join(
    awful.key({modkey}, "Down",
       function()
          awful.client.focus.bydirection("down")
-         raise_client()
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus down", group = "Client"}
    ),
    awful.key({modkey}, "Up",
       function()
          awful.client.focus.bydirection("up")
-         raise_client()
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus up", group = "Client"}
    ),
    awful.key({modkey}, "Left",
       function()
          awful.client.focus.bydirection("left")
-         raise_client()
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus left", group = "Client"}
    ),
    awful.key({modkey}, "Right",
       function()
          awful.client.focus.bydirection("right")
-         raise_client()
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus right", group = "Client"}
    ),
@@ -323,12 +325,14 @@ local globalKeys = myTable.join(
    awful.key({modkey}, "Tab",
       function()
          awful.client.focus.byidx(1)
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus next by index", group = "Client"}
    ),
    awful.key({modkey, "Shift"}, "Tab",
       function()
          awful.client.focus.byidx(-1)
+         bling.module.flash_focus.flashfocus(client.focus)
       end,
       {description = "focus previous by index", group = "Client"}
    ),

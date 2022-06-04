@@ -392,22 +392,22 @@ function theme.at_screen_connect(s)
 
 
     -- If wallpaper is a function, call it with the screen
-    local wallpaper = theme.wallpaper
+    -- local wallpaper = theme.wallpaper
 
     if s.geometry.width > s.geometry.height then
         fair_layout = awful.layout.suit.fair
         tile_layout = awful.layout.suit.tile
-        wallpaper   = theme.dir .. "/wild.png"
+        -- wallpaper   = theme.dir .. "/wild.png"
     else
         fair_layout = awful.layout.suit.fair.horizontal
         tile_layout = lain.layout.centerwork.horizontal
-        wallpaper   = theme.dir .. "/nord-arctic-fox-vertical.png"
+        -- wallpaper   = theme.dir .. "/nord-arctic-fox-vertical.png"
     end
 
-    if type(wallpaper) == "function" then
-        wallpaper = wallpaper(s)
-    end
-    gears.wallpaper.maximized(wallpaper, s, true)
+    -- if type(wallpaper) == "function" then
+    --     wallpaper = wallpaper(s)
+    -- end
+    -- gears.wallpaper.maximized(wallpaper, s, true)
 
     -- All tags open with layout 1
     awful.tag.add("1",     {screen = s, layout = tile_layout, selected = true})
