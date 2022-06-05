@@ -8,9 +8,9 @@
       "graphviz"
     ]
     lastNavigationState:
-      editingNoteId: "note:9A9jZ5Fb0f"
+      editingNoteId: "note:h9Zr_p8pS"
       queryContext:
-        bookId: "book:hoz1b8o51o"
+        bookId: "book:first"
         filterKeyword: ""
         includeChildren: false
         mode: "book"
@@ -20,19 +20,19 @@
           visible: false
     mainWindow:
       acrylicEnabled: true
+      distractionFreeEnabled: true
       fullscreen: false
       maximized: false
       noteListBar:
         w: 219
       position:
-        x: 8
+        x: 46
         y: 33
       sideBar:
-        visible: false
         w: 200
       size:
         h: 859
-        w: 1424
+        w: 1386
     themes: [
       "vibrant-dark-ui"
       "nord-syntax"
@@ -40,6 +40,7 @@
     ]
   editor:
     fontFamily: "FiraCode Nerd Font,SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace"
+    fontSize: 15
     inlineImageWidgets: false
     lineNumbers: true
     lineWrapping: false
@@ -49,14 +50,29 @@
   math:
     macroNote: "note:QOrL5GG6p"
     macros:
-      "\\P": "\\operatorname{P}"
       "\\Xn": "X_1, \\ldots, X_n"
       "\\abs": "\\lvert #1 \\rvert"
+      "\\ber": "\\operatorname{Ber}"
+      "\\bin": "\\operatorname{Bin}"
+      "\\ceil": "\\lceil #1 \\rceil"
       "\\cov": "\\operatorname{Cov}"
+      "\\diff": "\\mathop{}\\!\\mathrm{d}"
+      "\\expdist": "\\operatorname{Exp}"
+      "\\expect": "\\operatorname{E}"
+      "\\floor": "\\lfloor #1 \\rfloor"
+      "\\geo": "\\operatorname{Geo}"
       "\\given": "\\,\\vert\\,"
+      "\\inv": "#1^{\\text{inv}}"
       "\\mean": "\\overline{#1}"
       "\\med": "\\operatorname{Med}"
+      "\\normdist": "\\operatorname{N}"
+      "\\prob": "\\operatorname{P}"
+      "\\unif": "\\operatorname{U}"
       "\\var": "\\operatorname{Var}"
       "\\xn": "x_1, \\ldots, x_n"
+  preview:
+    fontSize: 18
+  sidetoc:
+    width: 280
   snippets:
     configNotes: "note:h9Zr_p8pS"

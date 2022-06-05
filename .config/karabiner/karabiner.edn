@@ -44,7 +44,8 @@
    :rules [:o-mode
            [:c [:open "Visual Studio Code.app"]]
            [:t [:open "iTerm.app"]]
-           [:g [:open "Google Chrome"]]]}
+           [:g [:open "Google Chrome"]]
+           [:i [:open "Inkdrop.app"]]]}
   {:des "i-mode insert"
    :rules [:i-mode
            [:tab [:spacebar :spacebar :spacebar :spacebar]]]}
