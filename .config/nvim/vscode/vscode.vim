@@ -86,8 +86,27 @@ nmap k gk
 
 " Move visual text
 
-vnoremap <silent> J <Cmd>move .+1<CR>gv
-vnoremap <silent> K <Cmd>move .-2<CR>gv
+function! s:moveVisualTextDown()
+    normal! gv
+    let startLine = line("v")
+    let endLine = line(".")
+    call VSCodeCallRange("editor.action.moveLinesDownAction", startLine, endLine, 1)
+    sleep 10m
+    exec 'exec "norm! ojo"'
+endfunction
+
+function! s:moveVisualTextUp()
+    normal! gv
+    let startLine = line("v")
+    let endLine = line(".")
+    call VSCodeCallRange("editor.action.moveLinesUpAction", startLine, endLine, 1)
+    sleep 10m
+    exec 'exec "norm! ok"'
+endfunction
+
+
+xnoremap <silent> J :<C-u>call <SID>moveVisualTextDown()<CR>
+xnoremap <silent> K :<C-u>call <SID>moveVisualTextUp()<CR>
 
 " Stay in indent mode
 vnoremap <silent> > >gv
