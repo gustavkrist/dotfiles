@@ -4,8 +4,6 @@ exa
 zoxide
 tree
 bat
-lightdm-gtk-greeter
-lightdm-gtk-greeter-settings
 neofetch
 xclip
 alacritty
@@ -20,3 +18,4 @@ tmux
 entr
 github-cli
 git-delta
+lightdm-webkit2-greeter

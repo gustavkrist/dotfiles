@@ -339,6 +339,7 @@ awful.rules.rules = {
 
         name = {
           "Event Tester",  -- xev.
+          "dropdown",
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
@@ -440,7 +441,7 @@ for s in screen do
   if s.geometry.width == 3440 then
     bling.module.wallpaper.setup {
       set_function = bling.module.wallpaper.setters.random,
-      wallpaper = "/home/gustav/Pictures/nord-wallpapers",
+      wallpaper = "/home/gustav/Pictures/nord/nord-wallpapers",
       change_timer = 601,
       position = "fit",
       background = "#2E3440",
@@ -449,7 +450,7 @@ for s in screen do
   elseif s.geometry.height == 2560 then
     bling.module.wallpaper.setup {
       set_function = bling.module.wallpaper.setters.random,
-      wallpaper = "/home/gustav/Pictures/nord-wallpapers-vertical",
+      wallpaper = "/home/gustav/Pictures/nord/nord-wallpapers-vertical",
       change_timer = 601,
       position = "fit",
       background = "#2E3440",
