@@ -467,6 +467,7 @@ local autoRun = true -- Makes the if statment to run if set false it will stop.
 local autoRunApps = {
     -- List all the apps you need to run on WM startup.
     "nm-applet",
+    "light-locker",
     "numlockx on",
     "$HOME/.screenlayout/monitor.sh", -- Use ArandR to create the monitor.sh file.
     "killall firewall-applet && dex --autostart --environment awesome",

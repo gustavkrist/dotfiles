@@ -349,6 +349,11 @@ theme.volume = lain.widget.alsa({
         end
     end
 })
+theme.volume.widget:buttons(awful.util.table.join(
+  awful.button({}, 1, function()
+    awful.spawn.with_shell("/home/gustav/.config/rofi/bin/applet_volume")
+  end)
+))
 
 -- Net
 local neticon = wibox.widget.imagebox(theme.widget_net)

@@ -119,9 +119,13 @@ end
 local globalKeys = myTable.join(
     -- {{{ Personal keybindings.
     -- Awesome menubar
-    awful.key({ modkey }, "d", function () awful.spawn.with_shell( "rofi -show drun ") end,
+    awful.key({ modkey }, "d", function () awful.spawn.with_shell(
+        os.getenv("HOME") .. "/.config/rofi/bin/launcher_text"
+        ) end,
         {description = "Show awesome menubar.", group = "Hotkeys"}),
-    awful.key({ modkey }, "w", function () awful.util.rcMainMenu:show() end,
+    awful.key({ modkey }, "w", function () awful.spawn.with_shell(
+        os.getenv("HOME") .. "/.config/rofi/bin/launcher_window_text"
+        ) end,
         {description = "Show the main menu.", group = "Hotkeys"}),
 
     -- Awesome
@@ -252,7 +256,7 @@ local globalKeys = myTable.join(
    ),
    awful.key({}, "XF86AudioPlay",
       function()
-         awful.spawn("mpc toggle", false)
+         awful.spawn("echo test > /home/gustav/test.txt", false)
       end,
       {description = "play/pause music", group = "Hotkeys"}
    ),
@@ -526,12 +530,12 @@ local globalKeys = myTable.join(
             os.execute(string.format("amixer -q set %s 1%%-", beautiful.volume.channel))
             beautiful.volume.update() end,
             {description = "Volumn down.", group = "Audio"}),
-    awful.key({ modkey }, "equal",
+    awful.key({ }, "XF86MonBrightnessDown",
         function ()
             os.execute("/home/gustav/.local/bin/brightness - 5")
         end,
         {description = "Brightness down", group = "Hotkeys"}),
-    awful.key({ modkey, "Shift" }, "equal",
+    awful.key({ }, "XF86MonBrightnessUp",
         function ()
             os.execute("/home/gustav/.local/bin/brightness + 5")
         end,
