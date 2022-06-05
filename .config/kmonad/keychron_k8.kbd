@@ -42,7 +42,11 @@
   ae  A-esc
 
   cce (tap-hold-next-release 150 esc lctl)
-  spl (tap-hold-next-release 250 spc (layer-toggle space))
+  ;; spl (tap-hold-next-release 250 spc (layer-toggle space))
+  closewhk (cmd-button "killall zenity")
+  whk (around-next (layer-toggle whichkey-base))
+  rct (tap-macro @whk (cmd-button "/home/gustav/.config/kmonad/whichkey/whichkey.sh /home/gustav/.config/kmonad/whichkey/base.json"))
+  ;; rct (cmd-button "/home/gustav/.config/kmonad/whichkey/whichkey.sh /home/gustav/.config/kmonad/whichkey/base.json")
 
   ;; Modifier keys on home row when held
   sa  (tap-hold-next-release 250 a lsft)
@@ -65,20 +69,84 @@
   _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
   @cce _    @ss  @sd  @sf  _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _               _
-  _    _    _              @spl                _    _    _    _          _    _    _
+  _    _    _              _                   _    _    _    @rct       _    _    _
 )
 
 (defalias
-  dts (cmd-button "tdrop -ma -w 70% -x 15% -y 20 -s dropdown kitty")
+  cap (tap-macro @closewhk caps)
+  dts (tap-macro @closewhk (cmd-button "tdrop -ma -w 70% -x 15% -y 20 -s dropdown kitty"))
+  ;; Rofi menu for apps, backlight, quicklinks, screenshot, time and powermenu
+  map (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_apps"))
+  mbl (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_backlight"))
+  mql (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_quicklinks"))
+  msh (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_screenshot"))
+  mti (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_time"))
+  mop (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/launcher_files_text"))
+  pwm (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/powermenu"))
+  ext @closewhk
+
+  wkd (tap-macro @closewhk (around-next (layer-toggle wk-dotfiles)) (cmd-button "/home/gustav/.config/kmonad/whichkey/whichkey.sh /home/gustav/.config/kmonad/whichkey/dotfiles.json"))
 )
 
-(deflayer space
-  _    _    _    _    _    _    _    _    _    _    _    _    _
+(deflayer whichkey-base
+  @ext _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
-  _    _    _    _    _    @dts _    _    _    _    _    _    _    _     _    _    _
-  caps _    _    _    _    _    _    _    _    _    _    _    _
+  _    @mql _    _    _    @dts _    _    _    @mop @pwm _    _    _     _    _    _
+  @cap @map @msh @wkd _    _    _    _    _    _    _    _    _
+  _    _    _    _    @mti _    @mbl _    _    _    _    _    _               _
+  _    _    _              _                   _    _    _    @ext       _    _    _
+)
+
+(defalias
+  kmo (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/kmonad/keychron_k8.kbd"))
+  rpr (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.Rprofile"))
+  zsh (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.zshrc"))
+
+  wka (tap-macro @closewhk (around-next (layer-toggle wk-awesome)) (cmd-button "/home/gustav/.config/kmonad/whichkey/whichkey.sh /home/gustav/.config/kmonad/whichkey/awesome.json"))
+  wkl (tap-macro @closewhk (around-next (layer-toggle wk-lunarvim)) (cmd-button "/home/gustav/.config/kmonad/whichkey/whichkey.sh /home/gustav/.config/kmonad/whichkey/lunarvim.json"))
+)
+
+(deflayer wk-dotfiles
+  @ext _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
+  _    _    _    @rpr _    _    _    _    _    _    _    _    _    _     _    _    _
+  _    @wka _    _    _    _    _    _    @kmo @wkl _    _    _
+  _    _    @zsh _    _    _    _    _    _    _    _    _    _               _
+  _    _    _              _                   _    _    _    @ext       _    _    _
+)
+
+(defalias
+  arc (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/awesome/rc.lua"))
+  akb (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/awesome/keys.lua"))
+  ath (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/awesome/themes/nord/theme.lua"))
+)
+
+(deflayer wk-awesome
+  @ext _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
+  _    _    _    _    @arc @ath _    _    _    _    _    _    _    _     _    _    _
+  _    _    _    _    _    _    _    _    @akb _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _               _
-  _    _    _              _                   _    _    _    _          _    _    _
+  _    _    _              _                   _    _    _    @ext       _    _    _
+)
+
+(defalias
+  lcf (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/config.lua"))
+  lkb (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/keymap.lua"))
+  lau (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/autocmds.lua"))
+  lnv (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/neovide.lua"))
+  lop (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/options.lua"))
+  lpl (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/plugins.lua"))
+  lts (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/treesitter.lua"))
+)
+
+(deflayer wk-lunarvim
+  @ext _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
+  _    _    _    _    _    @lts _    _    _    @lop @lpl _    _    _     _    _    _
+  _    @lau _    _    _    _    _    _    @lkb _    _    _    _
+  _    _    _    _    @lcf _    _    @lnv _    _    _    _    _               _
+  _    _    _              _                   _    _    _    @ext       _    _    _
 )
 
 #| ----------------------------------------------------------------------------
