@@ -211,8 +211,11 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
 export BAT_THEME="ansi"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bddedc"
-export LS_COLORS="$(vivid generate nord):*.plist=0;38;2;180;142;173:*.cson=0;38;2;180;142;173"
+export LS_COLORS=$(echo "$(vivid generate nord):*.plist=0;38;2;180;142;173:*.cson=0;38;2;180;142;173:\
+  *.Rmd=0;38;2;180;142;173" | sed 's/ //g')
 export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
+mkdir -p $XDG_DATA_HOME/yabai
+echo 8 > $XDG_DATA_HOME/yabai/padding.txt
 
 # -- OS SPECIFIC --------------------------------------------------------------
 
@@ -506,6 +509,17 @@ lp() {
 v() {
   local file
   file="$(fasd -Rfl "$1" | fzf-tmux -1 -0 --no-sort +m)" && lvim "${file}" || return 1
+}
+
+# Set yabai padding
+ypad() {
+  yabai -m config top_padding $1
+  yabai -m config bottom_padding $1
+  yabai -m config left_padding $1
+  yabai -m config right_padding $1
+  yabai -m config window_gap $1
+  echo $1 > $XDG_DATA_HOME/yabai/padding.txt
+  ~/.config/yabai/scripts/refresh.sh
 }
 
 # -- CONDA --------------------------------------------------------------------
