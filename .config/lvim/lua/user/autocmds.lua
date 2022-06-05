@@ -23,6 +23,10 @@ local autocmd_dict = {
     {
       pattern = os.getenv("HOME") .. "/.zsh_functions/*",
       command = "setlocal ft=zsh"
+    },
+    {
+      pattern = "*.rasi",
+      command = "setlocal ft=css"
     }
   },
   BufHidden = {
