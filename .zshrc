@@ -79,6 +79,7 @@ zinit wait lucid light-mode for \
 HISTSIZE=50000
 SAVEHIST=10000
 HISTFILE=~/.cache/zsh/history
+[ -f ~/.cache/zsh/history ] || (mkdir -p ~/.cache/zsh && touch $_/history)
 setopt extended_history
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
