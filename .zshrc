@@ -222,7 +222,7 @@ echo 8 > $XDG_DATA_HOME/yabai/padding.txt
 
 if [[ "$OSTYPE" == 'darwin'* ]]; then
   alias grep="ggrep --color"
-  export TERMINFO="/Users/gustavkristensen/opt/anaconda3/share/terminfo"
+  # export TERMINFO="/Users/gustavkristensen/opt/anaconda3/share/terminfo"
   export ANACONDA_PATH="/Users/gustavkristensen/opt/anaconda3"
   export FZF_PATH="/opt/homebrew/opt/fzf/"
   test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
