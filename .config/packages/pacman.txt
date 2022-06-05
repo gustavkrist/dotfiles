@@ -1,3 +1,4 @@
+lightdm
 zsh
 vivid
 exa
@@ -20,3 +21,5 @@ entr
 github-cli
 git-delta
 lightdm-webkit2-greeter
+lazygit
+viewnior
