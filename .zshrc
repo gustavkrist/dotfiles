@@ -131,6 +131,11 @@ alias pbpaste="xclip -selection clipboard -o"
 alias chrome="google-chrome-stable"
 alias icat="kitty +kitten icat"
 
+# To commit, ass pathspec :/: the the end
+# cfg-global commit -m "message" :/:
+alias cfg-global="/bin/git --git-dir=$HOME/.cfg-global --work-tree=/"
+alias cfg-add="/bin/git --git-dir=$HOME/.cfg-global --work-tree=/ update-index --info-only --add"
+
 # -- PLUGIN CONFIG ------------------------------------------------------------
 
 # VI MODE
