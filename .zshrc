@@ -92,6 +92,7 @@ setopt nobeep
 export PATH=$PATH:$HOME/.ghcup/bin
 export PATH=$PATH:$HOME/.npm-global-bin
 export PATH="$PATH:$HOME/.local/bin"
+fpath=( ~/.zsh_functions "${fpath[@]}" )
 
 # -- SYSTEM ENV ---------------------------------------------------------------
 
@@ -226,6 +227,8 @@ export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
 
 # -- FUNCTIONS ----------------------------------------------------------------
 
+autoload -Uz ${fpath[1]}/*(.:t)
+
 # Rich print of file with less
 richer () {
   rich "$@" --force-terminal | less -R
@@ -254,18 +257,6 @@ fe() {
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 
-# Modified version where you can press
-#   - CTRL-O to open with `open` command,
-#   - CTRL-E or Enter key to open with the $EDITOR
-fo() {
-  IFS=$'\n' out=("$(fzf-tmux -p -w 90% -h 90% -- --query="$1" --exit-0 --expect=ctrl-o,ctrl-e --preview 'bat --theme ansi --style=numbers --color=always --line-range :500 {}')")
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && xdg-open "$file" || ${EDITOR:-vim} "$file"
-  fi
-}
-
 # find-in-file - usage: fif <searchTerm> or fif "string with spaces" or fif "regex"
 fif() {
     if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
@@ -273,229 +264,9 @@ fif() {
     file="$(rga --max-count=1 --ignore-case --files-with-matches --no-messages "$*" | fzf-tmux -p -w 80% -h 80% -- +m --preview="rga --ignore-case --pretty --context 10 '"$*"' {}")" && echo "opening $file" && lvim "$file" || return 1;
 }
 
-# cf - fuzzy cd from anywhere ex: cf word1 word2 ... (even part of a file name)
-cf() {
-  local file
-
-  file="$(locate -i0 $@ | grep -z -vE '~$' | fzf --read0 -0 -1)"
-
-  if [[ -n $file ]]
-  then
-     if [[ -d $file ]]
-     then
-        cd -- $file
-     else
-        cd -- ${file:h}
-     fi
-  fi
-}
-
-# cdp - cd to selected parent directory
-cdp() {
-  local declare dirs=()
-  get_parent_dirs() {
-    if [[ -d "${1}" ]]; then dirs+=("$1"); else return; fi
-    if [[ "${1}" == '/' ]]; then
-      for _dir in "${dirs[@]}"; do echo $_dir; done
-    else
-      get_parent_dirs $(dirname "$1")
-    fi
-  }
-  local DIR=$(get_parent_dirs $(realpath "${1:-$PWD}") | fzf-tmux --tac)
-  cd "$DIR"
-}
-
-# tm - create new tmux session, or switch to existing one. Works from within tmux too. (@bag-man)
-tm() {
-  [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
-  if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
-  fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
-}
-
-# ftpane - switch pane (@george-b)
-ftpane() {
-  local panes current_window current_pane target target_window target_pane
-  panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
-  current_pane=$(tmux display-message -p '#I:#P')
-  current_window=$(tmux display-message -p '#I')
-
-  target=$(echo "$panes" | grep -v "$current_pane" | fzf +m --reverse) || return
-
-  target_window=$(echo $target | awk 'BEGIN{FS=":|-"} {print$1}')
-  target_pane=$(echo $target | awk 'BEGIN{FS=":|-"} {print$2}' | cut -c 1)
-
-  if [[ $current_window -eq $target_window ]]; then
-    tmux select-pane -t ${target_window}.${target_pane}
-  else
-    tmux select-pane -t ${target_window}.${target_pane} &&
-    tmux select-window -t $target_window
-  fi
-}
-
-# Install selected application(s) | mnemonic [B]rew [I]nstall [P]ackage
-bip() {
-  local inst=$(brew search "$@" | fzf -m)
-
-  if [[ $inst ]]; then
-    for prog in $(echo $inst);
-    do; brew install $prog; done;
-  fi
-}
-
-# Update selected application(s) | mnemonic [B]rew [U]pdate [P]ackage
-bup() {
-  local upd=$(brew leaves | fzf -m)
-
-  if [[ $upd ]]; then
-    for prog in $(echo $upd);
-    do; brew upgrade $prog; done;
-  fi
-}
-
-# Delete selected application(s) | mnemonic [B]rew [C]lean [P]ackage
-bcp() {
-  local uninst=$(brew leaves | fzf -m)
-
-  if [[ $uninst ]]; then
-    for prog in $(echo $uninst);
-    do; brew uninstall $prog; done;
-  fi
-}
-
-# Install or open the webpage for the selected application 
-# using brew cask search as input source
-# and display an info quickview window for the currently marked application 
-install() {
-    local token
-    token=$(brew search --casks "$1" | fzf-tmux --query="$1" +m --preview 'brew info {}')
-                    
-    if [ "x$token" != "x" ]                                                                
-    then             
-        echo "(I)nstall or open the (h)omepage of $token"
-        read input                             
-        if [ $input = "i" ] || [ $input = "I" ]; then    
-            brew install --cask $token                   
-        fi                                                                                    
-        if [ $input = "h" ] || [ $input = "H" ]; then                                         
-            brew home $token                     
-        fi                                           
-    fi                             
-}                                              
-
-# Uninstall or open the webpage for the selected application 
-# using brew list as input source (all brew cask installed applications) 
-# and display an info quickview window for the currently marked application
-uninstall() {                                                                     
-    local token                                                                   
-    token=$(brew list --casks | fzf-tmux --query="$1" +m --preview 'brew info {}')
-                                                                                  
-    if [ "x$token" != "x" ]                                                       
-    then                                                                          
-        echo "(U)ninstall or open the (h)omepae of $token"                        
-        read input                                                                
-        if [ $input = "u" ] || [ $input = "U" ]; then                             
-            brew uninstall --cask $token                                          
-        fi                                                                        
-        if [ $input = "h" ] || [ $token = "h" ]; then                             
-            brew home $token                                                      
-        fi                                                                        
-    fi                                                                            
-}
-
-# Interactive cd if no argument is provided
-function icd() {
-    if [[ "$#" != 0 ]]; then
-        builtin cd "$@";
-        return
-    fi
-    while true; do
-        local lsd=$(echo ".." && exa -F | grep '/$' | sed 's;/$;;')
-        local dir="$(printf '%s\n' "${lsd[@]}" |
-            fzf-tmux -p -w 80% -h 70% -- --reverse --preview '
-                __cd_nxt="$(echo {})";
-                __cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
-                echo $__cd_path;
-                echo;
-                exa -FG "${__cd_path}";
-        ')"
-        [[ ${#dir} != 0 ]] || return 0
-        builtin cd "$dir" &> /dev/null
-    done
-}
-
-# chb - browse chrome bookmarks
-chb() {
-     bookmarks_path=~/Library/Application\ Support/Google/Chrome/Default/Bookmarks
-
-     jq_script='
-        def ancestors: while(. | length >= 2; del(.[-1,-2]));
-        . as $in | paths(.url?) as $key | $in | getpath($key) | {name,url, path: [$key[0:-2] | ancestors as $a | $in | getpath($a) | .name?] | reverse | join("/") } | .path + "/" + .name + "\t" + .url'
-
-    jq -r "$jq_script" < "$bookmarks_path" \
-        | sed -E $'s/(.*)\t(.*)/\\1\t\x1b[36m\\2\x1b[m/g' \
-        | fzf-tmux -p -w 70% -h 70% -- --ansi \
-        | cut -d$'\t' -f2 \
-        | xargs open
-}
-
-# chh - browse chrome history
-chh() {
-  local cols sep google_history open
-  cols=$(( COLUMNS / 3 ))
-  sep='{::}'
-
-  if [ "$(uname)" = "Darwin" ]; then
-    google_history="$HOME/Library/Application Support/Google/Chrome/Default/History"
-    open=open
-  else
-    google_history="$HOME/.config/google-chrome/Default/History"
-    open=xdg-open
-  fi
-  cp -f "$google_history" /tmp/h
-  sqlite3 -separator $sep /tmp/h \
-    "select substr(title, 1, $cols), url
-     from urls order by last_visit_time desc" |
-  awk -F $sep '{printf "%-'$cols's  \x1b[36m%s\x1b[m\n", $1, $2}' |
-  fzf-tmux -p -w 70% -h 70% --ansi --multi | sed 's#.*\(https*://\)#\1#' | xargs $open > /dev/null 2> /dev/null
-}
-
-# Search through bookmarks and cd to selected
-cdb() {
-   local dest_dir=$(cdscuts_glob_echo | fzf-tmux )
-   if [[ $dest_dir != '' ]]; then
-      dest_dir=$(echo "$dest_dir" | sed 's/#.*//')
-      cd $dest_dir
-   fi
-}
-
-# Add bookmark -- Usage: cdba <path> <description>
-cdba () {
-  if [ -z "$( cat ~/.cdb_paths | sed 's/#.*//' | sed 's/ $//' | grep -x "$PWD")" ]; then
-    echo "$PWD # $*" >> ~/.cdb_paths
-    echo "$PWD added to bookmarks."
-  else
-    echo "$PWD already bookmarked !"
-  fi
-}
-
 # Search though Lastpass vault and copy password
 lp() {
   lpass show -c --password $(lpass ls  | fzf-tmux | awk '{print $(NF)}' | sed 's/\]//g')
-}
-
-# # fasd & fzf change directory - jump using `fasd` if given argument, filter output of `fasd` using `fzf` else
-# z() {
-#     [ $# -gt 0 ] && fasd_cd -d "$*" && return
-#     local dir
-#     dir="$(fasd -Rdl "$1" | fzf-tmux -1 -0 --no-sort +m)" && cd "${dir}" || return 1
-# }
-
-# Find file and open in lvim
-v() {
-  local file
-  file="$(fasd -Rfl "$1" | fzf-tmux -1 -0 --no-sort +m)" && lvim "${file}" || return 1
 }
 
 # -- CONDA --------------------------------------------------------------------

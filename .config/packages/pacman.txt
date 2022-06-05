@@ -12,6 +12,7 @@ npm
 rustup
 fd
 ripgrep
+ripgrep-all
 htop
 mc
 tmux
