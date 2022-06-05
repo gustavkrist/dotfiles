@@ -18,15 +18,9 @@ active=""
 urgent=""
 
 if [[ $MUTE == *"off"* ]]; then
-    active="-a 1"
-else
     urgent="-u 1"
-fi
-
-if [[ $MUTE == *"off"* ]]; then
-    active="-a 1"
 else
-    urgent="-u 1"
+    active="-a 1"
 fi
 
 if [[ $MUTE == *"on"* ]]; then
