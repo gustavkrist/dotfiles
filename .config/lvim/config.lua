@@ -26,6 +26,9 @@ lvim.builtin.cmp.confirm_opts = {
   select = false
 }
 
+-- Luasnip
+lvim.builtin.luasnip.sources.friendly_snippets = false
+
 -- Terminal
 lvim.builtin.terminal.active = true
 
