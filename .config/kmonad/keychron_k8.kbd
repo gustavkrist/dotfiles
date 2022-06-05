@@ -81,6 +81,7 @@
   mql (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_quicklinks"))
   msh (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_screenshot"))
   mti (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_time"))
+  mvl (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_volume"))
   mop (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/launcher_files_text"))
   pwm (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/powermenu"))
   ext @closewhk
@@ -93,7 +94,7 @@
   _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
   _    @mql _    _    _    @dts _    _    _    @mop @pwm _    _    _     _    _    _
   @cap @map @msh @wkd _    _    _    _    _    _    _    _    _
-  _    _    _    _    @mti _    @mbl _    _    _    _    _    _               _
+  _    _    _    _    @mti @mvl @mbl _    _    _    _    _    _               _
   _    _    _              _                   _    _    _    @ext       _    _    _
 )
 
