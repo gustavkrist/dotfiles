@@ -1,0 +1,4 @@
+cmd     "xdg-open"
+oc-cmd  "neovide"
+oc-cmd  "code;name:VSCode"
+depth   2
