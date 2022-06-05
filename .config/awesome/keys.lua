@@ -32,7 +32,7 @@ local ctrl      = "Control" -- Contro button just in case.
 local browser           = "google-chrome-stable"
 local terminal          = "kitty"
 local editor            = os.getenv("EDITOR") or "nano"
-local guiEditor         = "neovide"
+local guiEditor         = "kitty lvim"
 local filemanager       = "thunar"
 local lockscreen        = "light-locker-command -l"
 
