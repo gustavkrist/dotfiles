@@ -17,4 +17,7 @@ elif [[ "$1" = "toggle" ]]; then
   else
     ddcutil --display $DISPLAY setvcp 10 15
   fi
+elif [[ "$1" = "query" ]]; then
+  CURRENT=$(ddcutil --display $DISPLAY getvcp 10 | awk '{print $9}' | cut -d , -f 1)
+  echo "$CURRENT"
 fi
