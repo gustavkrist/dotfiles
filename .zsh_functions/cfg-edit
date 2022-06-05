@@ -1,0 +1,9 @@
+cfg-edit() {
+  selected_files=$(/bin/git  --git-dir=/home/gustav/.cfg-global --work-tree=/ ls-tree -r --full-tree \
+      --name-only HEAD | awk -v slash="/" '{print slash $1}' | /bin/fzf --multi \
+      --cycle --reverse --height=100% --preview "/home/gustav/.zsh_functions/helper/preview.sh {}" | paste -s -d' ')
+  files=(${(@s: :)selected_files})
+  if [ ${#files[@]} -ne 0 ]; then
+    sudo /home/gustav/.local/bin/lvim ${files[@]}
+  fi
+}

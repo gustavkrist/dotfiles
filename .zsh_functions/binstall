@@ -1,0 +1,19 @@
+# Install or open the webpage for the selected application 
+# using brew cask search as input source
+# and display an info quickview window for the currently marked application 
+binstall() {
+    local token
+    token=$(brew search --casks "$1" | fzf-tmux --query="$1" +m --preview 'brew info {}')
+                    
+    if [ "x$token" != "x" ]                                                                
+    then             
+        echo "(I)nstall or open the (h)omepage of $token"
+        read input                             
+        if [ $input = "i" ] || [ $input = "I" ]; then    
+            brew install --cask $token                   
+        fi                                                                                    
+        if [ $input = "h" ] || [ $input = "H" ]; then                                         
+            brew home $token                     
+        fi                                           
+    fi                             
+}                                              
