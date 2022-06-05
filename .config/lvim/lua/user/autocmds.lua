@@ -19,6 +19,10 @@ local autocmd_dict = {
     {
       pattern = "*.tex",
       command = "setlocal conceallevel=2 | setlocal syntax=tex | colorscheme edge | hi! link IndentBlanklineChar Comment | hi! clear Conceal | hi Normal ctermbg=NONE guibg=NONE | hi EndOfBuffer ctermbg=NONE guibg=NONE"
+    },
+    {
+      pattern = os.getenv("HOME") .. "/.zsh_functions/*",
+      command = "setlocal ft=zsh"
     }
   },
   BufHidden = {
