@@ -10,9 +10,30 @@ local lain  = require("lain")
 local awful = require("awful")
 local wibox = require("wibox")
 
+local theme_assets = require("beautiful.theme_assets")
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
+
 local math, string, os = math, string, os
 local myTable = awful.util.table or gears.table -- 4.{0,1} compatibility
 -- }}}
+
+local helpers = require("helpers")
+local beautiful = require("beautiful")
+
+-- Helper function that updates a taglist item
+local update_taglist = function (item, tag, index)
+  if tag.selected then
+    item.markup = helpers.colorize_text(beautiful.taglist_text_focused[index], beautiful.taglist_fg_focus)
+  elseif tag.urgent then
+    item.markup = helpers.colorize_text(beautiful.taglist_text_urgent[index], beautiful.taglist_fg_urgent)
+  elseif #tag:clients() > 0 then
+    item.markup = helpers.colorize_text(beautiful.taglist_text_occupied[index], beautiful.taglist_fg_occupied)
+  else
+    item.markup = helpers.colorize_text(beautiful.taglist_text_empty[index], beautiful.taglist_fg_empty)
+  end
+end
+
 
 -- {{{ Initiating theme variable.
 local theme                                     = {}
@@ -24,7 +45,7 @@ theme.dir                                       = os.getenv("HOME") .. "/.config
 
 -- Theme fonts.
 theme.font                                      = "Noto Sans Regular 10"
-theme.taglist_font                              = "Noto Sans Regular 10"
+-- theme.taglist_font                              = "Noto Sans Regular 10"
 
 theme.nord0  = "#2E3440"
 theme.nord1  = "#3B4252"
@@ -50,7 +71,7 @@ theme.fg_urgent                                 = theme.nord11
 theme.bg_normal                                 = theme.nord1
 theme.bg_focus                                  = theme.nord9
 theme.bg_urgent                                 = theme.nord0
-theme.taglist_fg_focus                          = theme.nord6
+-- theme.taglist_fg_focus                          = theme.nord6
 theme.tasklist_bg_focus                         = theme.nord0
 theme.tasklist_fg_focus                         = theme.nord12
 theme.border_normal                             = theme.nord2
@@ -73,8 +94,8 @@ theme.lain_icons         = os.getenv("HOME") ..
 -- Icons for the theme.
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 theme.awesome_icon                              = theme.dir .. "/icons/awesome.png"
-theme.taglist_squares_sel                       = theme.dir .. "/icons/square_sel.png"
-theme.taglist_squares_unsel                     = theme.dir .. "/icons/square_unsel.png"
+-- theme.taglist_squares_sel                       = theme.dir .. "/icons/square_sel.png"
+-- theme.taglist_squares_unsel                     = theme.dir .. "/icons/square_unsel.png"
 theme.layout_tile                               = theme.dir .. "/icons/tile.png"
 theme.layout_tileleft                           = theme.dir .. "/icons/tileleft.png"
 theme.layout_tilebottom                         = theme.dir .. "/icons/tilebottom.png"
@@ -141,6 +162,40 @@ theme.titlebar_maximized_button_normal_active   = theme.dir .. "/icons/titlebar/
 theme.titlebar_maximized_button_focus_inactive  = theme.dir .. "/icons/titlebar/maximized_focus_inactive.png"
 theme.titlebar_maximized_button_normal_inactive = theme.dir .. "/icons/titlebar/maximized_normal_inactive.png"
 -- }}}
+
+-- Taglist
+
+theme.taglist_spacing = dpi(5)
+
+-- Generate taglist squares:
+local taglist_square_size = dpi(4)
+theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
+    taglist_square_size, theme.fg_normal
+)
+theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
+    taglist_square_size, theme.fg_normal
+)
+
+theme.taglist_text_font = "Fira Code Nerd Font Mono"
+-- theme.taglist_text_empty    =  {"","","","","","","","",""}
+-- theme.taglist_text_occupied =  {"","","","","","","","",""}
+-- theme.taglist_text_focused  = {"","","","","","","","",""}
+-- theme.taglist_text_urgent   = {"","","","","","","","",""}
+
+theme.taglist_text_empty    = {"", "", "", "", "", "", "", "", ""}
+theme.taglist_text_occupied = {"", "", "", "", "", "", "", "", ""}
+theme.taglist_text_focused  = {"", "", "", "", "", "", "", "", ""}
+theme.taglist_text_urgent   = {"", "", "", "", "", "", "", "", ""}
+
+-- theme.taglist_font = "Roboto 12"
+theme.taglist_bg_focus = theme.bg_normal
+theme.taglist_fg_focus = theme.nord13
+theme.taglist_bg_occupied = theme.bg_normal
+theme.taglist_fg_occupied = theme.nord14
+theme.taglist_bg_empty = theme.bg_normal
+theme.taglist_fg_empty = theme.nord9
+theme.taglist_bg_urgent = theme.bg_normal
+theme.taglist_fg_urgent = theme.nord11
 
 local markup = lain.util.markup
 local separators = lain.util.separators
@@ -436,10 +491,81 @@ function theme.at_screen_connect(s)
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
+    -- s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
+    s.mytaglist = wibox.container.margin(awful.widget.taglist {
+        screen  = s,
+        filter  = awful.widget.taglist.filter.all,
+        widget_template = {
+          widget = wibox.widget.textbox,
+          create_callback = function(self, tag, index, _)
+            self.align = "left"
+            self.valign = "center"
+            self.font = beautiful.taglist_text_font
+
+            update_taglist(self, tag, index)
+          end,
+          update_callback = function(self, tag, index, _)
+            update_taglist(self, tag, index)
+          end,
+        },
+        buttons = awful.util.taglist_buttons,
+    }, dpi(5), 0, 0, 0)
 
     -- Create a tasklist widget
-    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
+    s.mytasklist = awful.widget.tasklist {
+      screen = s,
+      filter = awful.widget.tasklist.filter.currenttags,
+      buttons = awful.util.tasklist_buttons,
+      layout   = {
+        spacing_widget = {
+            {
+                forced_width  = 5,
+                forced_height = 16,
+                thickness     = 1,
+                color         = '#777777',
+                widget        = wibox.widget.separator
+            },
+            valign = 'center',
+            halign = 'center',
+            widget = wibox.container.place,
+        },
+        spacing = 1,
+        layout  = wibox.layout.fixed.horizontal
+    },
+      widget_template = {
+        {
+          wibox.widget.base.make_widget(),
+          forced_height = 5,
+          id            = 'background_role',
+          widget        = wibox.container.background,
+        },
+        {
+          {
+            {
+              id     = 'clienticon',
+              widget = awful.widget.clienticon,
+            },
+            {
+              id     = 'clientname',
+              widget = wibox.widget.textbox
+            },
+            layout = wibox.layout.fixed.horizontal
+          },
+          left = 5,
+          bottom = 5,
+          top = 2,
+          widget  = wibox.container.margin
+        },
+        nil,
+---@diagnostic disable-next-line: unused-local
+        create_callback = function(self, c, index, objects)
+          self:get_children_by_id('clienticon')[1].client = c
+          local parts = helpers.splitstr(c.name, '-')
+          self:get_children_by_id('clientname')[1].text = parts[#parts]
+        end,
+        layout = wibox.layout.align.vertical,
+      },
+    }
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = 20, bg = theme.bg_normal, fg = theme.fg_normal })
@@ -454,7 +580,6 @@ function theme.at_screen_connect(s)
             s.mypromptbox,
             spr,
         },
-        --s.mytasklist, -- Middle widget
         nil,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
@@ -498,7 +623,7 @@ function theme.at_screen_connect(s)
     }
 
     -- Creating the bottom wibox.
-    s.mybottomwibox = awful.wibar({ position = "bottom", screen = s, border_width = 0, height = 20, bg = theme.bg_normal, fg = theme.fg_normal })
+    s.mybottomwibox = awful.wibar({ position = "bottom", screen = s, border_width = 0, height = 30, bg = theme.bg_normal, fg = theme.fg_normal })
 
     -- Adding widgets to the bottom wibox.
     s.mybottomwibox:setup {
@@ -506,7 +631,13 @@ function theme.at_screen_connect(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
         },
-        s.mytasklist, -- Middle widget
+        {
+          layout = wibox.container.place,
+          halign = 'center',
+          valign = 'center',
+          s.mytasklist,
+        },
+        -- s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             s.mylayoutbox,

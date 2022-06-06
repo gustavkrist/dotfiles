@@ -36,7 +36,7 @@ local guiEditor         = "kitty lvim"
 local filemanager       = "thunar"
 local lockscreen        = "light-locker-command -l"
 
--- {{{ Mosue bindings.
+-- {{{ Mouse bindings.
 root.buttons(myTable.join(
     awful.button({ }, 3, function () awful.util.rcMainMenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
@@ -113,7 +113,7 @@ local function raise_client()
 end
 
 
-
+activetags = {}
 
 -- {{{ Key bindings
 local globalKeys = myTable.join(
@@ -146,6 +146,26 @@ local globalKeys = myTable.join(
         end
     end,
     {description = "Toggle top wibox.", group = "Awesome"}),
+
+
+    awful.key({ modkey}, "0",
+      function()
+        local activetags = _ENV.activetags
+        local s = awful.screen.focused()
+        local h = require('helpers')
+        if activetags[s] == nil then
+          activetags[s] = h.copy(s.selected_tags)
+          awful.tag.viewmore(s.tags, s)
+        else
+          awful.tag.viewnone(s)
+          for _,tag in ipairs(activetags[s]) do
+            tag.selected = true
+          end
+          activetags[s] = nil
+        end
+      end,
+      {description = "Toggle all tags visibility", group = "custom"}
+    ),
 
 
     -- Launching applications

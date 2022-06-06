@@ -52,6 +52,8 @@ local myTable       =   awful.util.table or gears.table -- 4.{0,1} compatibility
 local bling = require("bling")
 
 local keys = require("keys")
+
+local helpers = require("helpers")
 -- }}}
 
 -- {{{ Error handling
@@ -138,7 +140,7 @@ awful.util.terminal     = terminal
 -- Tage names
 -- Use this for reference : https://fontawesome.com/cheatsheet
 
-awful.util.tagnames = {  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }
+-- awful.util.tagnames = {  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }
 --awful.util.tagnames = {  "➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒", "➓" }
 --awful.util.tagnames = { " DEV ", " WWW ", " SYS ", " DOC ", " VBOX ", " CHAT ", " MUS ", " VID ", " GFX " }
 --awful.util.tagnames = { "⠐", "⠡", "⠲", "⠵", "⠻", "⠿" }
