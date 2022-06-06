@@ -1,0 +1,9 @@
+{
+  "a": "Edit autocmds",
+  "c": "Edit config.lua",
+  "k": "Edit keybindings",
+  "n": "Edit Neovide settings",
+  "o": "Edit options",
+  "p": "Edit plugins",
+  "t": "Edit treesitter settings"
+}
