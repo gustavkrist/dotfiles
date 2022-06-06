@@ -1,3 +1,3 @@
 parser="$HOME/.config/kmonad/whichkey/parser.py"
 menufile="$1"
-zenity --info --no-wrap --text "$(python $parser $menufile)"
+yad --info --no-wrap --no-buttons --center --text "$(python $parser $menufile)"

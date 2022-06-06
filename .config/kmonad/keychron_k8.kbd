@@ -43,7 +43,7 @@
 
   cce (tap-hold-next-release 150 esc lctl)
   ;; spl (tap-hold-next-release 250 spc (layer-toggle space))
-  closewhk (cmd-button "killall zenity")
+  closewhk (cmd-button "killall yad")
   whk (around-next (layer-toggle whichkey-base))
   rct (tap-macro @whk (cmd-button "/home/gustav/.config/kmonad/whichkey/whichkey.sh /home/gustav/.config/kmonad/whichkey/base.json"))
   ;; rct (cmd-button "/home/gustav/.config/kmonad/whichkey/whichkey.sh /home/gustav/.config/kmonad/whichkey/base.json")
