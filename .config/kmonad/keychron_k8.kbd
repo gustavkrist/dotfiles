@@ -82,7 +82,7 @@
   msh (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_screenshot"))
   mti (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_time"))
   mvl (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_volume"))
-  mop (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/launcher_files_text"))
+  mfi (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/launcher_files_text"))
   pwm (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/powermenu"))
   ext @closewhk
 
@@ -92,8 +92,8 @@
 (deflayer whichkey-base
   @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext
   @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext  @ext @ext @ext
-  @ext @mql @ext @ext @ext @dts @ext @ext @ext @mop @pwm @ext @ext @ext  @ext @ext @ext
-  @cap @map @msh @wkd @ext @ext @ext @ext @ext @ext @ext @ext @ext
+  @ext @mql @ext @ext @ext @dts @ext @ext @ext @ext @pwm @ext @ext @ext  @ext @ext @ext
+  @cap @map @msh @wkd @mfi @ext @ext @ext @ext @ext @ext @ext @ext
   @ext @ext @ext @ext @mti @mvl @mbl @ext @ext @ext @ext @ext @ext            @ext
   @ext @ext @ext           @ext                @ext @ext @ext @ext       @ext @ext @ext
 )
