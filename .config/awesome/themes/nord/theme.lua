@@ -90,7 +90,7 @@ theme.menu_height                               = 25
 theme.menu_width                                = 260
 
 theme.lain_icons         = os.getenv("HOME") ..
-                           "/.config/awesome/lain/icons/layout/default/"
+                           "/.config/awesome/lain/icons/layout/nord/"
 -- Icons for the theme.
 theme.menu_submenu_icon                         = theme.dir .. "/icons/submenu.png"
 theme.awesome_icon                              = theme.dir .. "/icons/awesome.png"
@@ -109,9 +109,10 @@ theme.layout_fullscreen                         = theme.dir .. "/icons/fullscree
 theme.layout_magnifier                          = theme.dir .. "/icons/magnifier.png"
 theme.layout_floating                           = theme.dir .. "/icons/floating.png"
 theme.layout_termfair                           = theme.lain_icons .. "termfair.png"
+theme.layout_termfairh                          = theme.lain_icons .. "termfairh.png"
 theme.layout_centerfair                         = theme.lain_icons .. "centerfair.png"  -- termfair.center
-theme.layout_cascade                            = theme.lain_icons .. "cascade.png"
-theme.layout_cascadetile                        = theme.lain_icons .. "cascadetile.png" -- cascade.tile
+-- theme.layout_cascade                            = theme.lain_icons .. "cascade.png"
+-- theme.layout_cascadetile                        = theme.lain_icons .. "cascadetile.png" -- cascade.tile
 theme.layout_centerwork                         = theme.lain_icons .. "centerwork.png"
 theme.layout_centerworkh                        = theme.lain_icons .. "centerworkh.png" -- centerwork.horizontal
 theme.widget_ac                                 = theme.dir .. "/icons/ac.png"
