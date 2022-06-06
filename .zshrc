@@ -221,6 +221,9 @@ echo 8 > $XDG_DATA_HOME/yabai/padding.txt
 # -- OS SPECIFIC --------------------------------------------------------------
 
 if [[ "$OSTYPE" == 'darwin'* ]]; then
+  export CMAKE_INCLUDE_PATH="/opt/homebrew/opt/flex/include"
+  export CMAKE_LIBRARY_PATH="/opt/homebrew/opt/flex/lib;/opt/homebrew/opt/bison/lib"
+  export PATH="/opt/homebrew/opt/flex/bin:/opt/homebrew/opt/bison/bin:$PATH"
   alias grep="ggrep --color"
   # export TERMINFO="/Users/gustavkristensen/opt/anaconda3/share/terminfo"
   export ANACONDA_PATH="/Users/gustavkristensen/opt/anaconda3"

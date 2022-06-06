@@ -8,9 +8,9 @@
       "graphviz"
     ]
     lastNavigationState:
-      editingNoteId: "note:h9Zr_p8pS"
+      editingNoteId: "note:ZlZ85OafvPt"
       queryContext:
-        bookId: "book:first"
+        bookId: "book:hoz1b8o51o"
         filterKeyword: ""
         includeChildren: false
         mode: "book"
@@ -26,13 +26,13 @@
       noteListBar:
         w: 219
       position:
-        x: 46
+        x: 8
         y: 33
       sideBar:
         w: 200
       size:
         h: 859
-        w: 1386
+        w: 708
     themes: [
       "vibrant-dark-ui"
       "nord-syntax"
