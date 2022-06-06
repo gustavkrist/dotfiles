@@ -90,12 +90,12 @@
 )
 
 (deflayer whichkey-base
-  @ext _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
-  _    @mql _    _    _    @dts _    _    _    @mop @pwm _    _    _     _    _    _
-  @cap @map @msh @wkd _    _    _    _    _    _    _    _    _
-  _    _    _    _    @mti @mvl @mbl _    _    _    _    _    _               _
-  _    _    _              _                   _    _    _    @ext       _    _    _
+  @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext
+  @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext  @ext @ext @ext
+  @ext @mql @ext @ext @ext @dts @ext @ext @ext @mop @pwm @ext @ext @ext  @ext @ext @ext
+  @cap @map @msh @wkd @ext @ext @ext @ext @ext @ext @ext @ext @ext
+  @ext @ext @ext @ext @mti @mvl @mbl @ext @ext @ext @ext @ext @ext            @ext
+  @ext @ext @ext           @ext                @ext @ext @ext @ext       @ext @ext @ext
 )
 
 (defalias
@@ -108,12 +108,12 @@
 )
 
 (deflayer wk-dotfiles
-  @ext _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
-  _    _    _    @rpr _    _    _    _    _    _    _    _    _    _     _    _    _
-  _    @wka _    _    _    _    _    _    @kmo @wkl _    _    _
-  _    _    @zsh _    _    _    _    _    _    _    _    _    _               _
-  _    _    _              _                   _    _    _    @ext       _    _    _
+  @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext
+  @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext  @ext @ext @ext
+  @ext @ext @ext @rpr @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext  @ext @ext @ext
+  @ext @wka @ext @ext @ext @ext @ext @ext @kmo @wkl @ext @ext @ext
+  @ext @ext @zsh @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext            @ext
+  @ext @ext @ext           @ext                @ext @ext @ext @ext       @ext @ext @ext
 )
 
 (defalias
@@ -123,12 +123,12 @@
 )
 
 (deflayer wk-awesome
-  @ext _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
-  _    _    _    _    @arc @ath _    _    _    _    _    _    _    _     _    _    _
-  _    _    _    _    _    _    _    _    @akb _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _               _
-  _    _    _              _                   _    _    _    @ext       _    _    _
+  @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext
+  @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext  @ext @ext @ext
+  @ext @ext @ext @ext @arc @ath @ext @ext @ext @ext @ext @ext @ext @ext  @ext @ext @ext
+  @ext @ext @ext @ext @ext @ext @ext @ext @akb @ext @ext @ext @ext
+  @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext            @ext
+  @ext @ext @ext           @ext                @ext @ext @ext @ext       @ext @ext @ext
 )
 
 (defalias
@@ -142,12 +142,12 @@
 )
 
 (deflayer wk-lunarvim
-  @ext _    _    _    _    _    _    _    _    _    _    _    _
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _     _    _    _
-  _    _    _    _    _    @lts _    _    _    @lop @lpl _    _    _     _    _    _
-  _    @lau _    _    _    _    _    _    @lkb _    _    _    _
-  _    _    _    _    @lcf _    _    @lnv _    _    _    _    _               _
-  _    _    _              _                   _    _    _    @ext       _    _    _
+  @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext
+  @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext @ext  @ext @ext @ext
+  @ext @ext @ext @ext @ext @lts @ext @ext @ext @lop @lpl @ext @ext @ext  @ext @ext @ext
+  @ext @lau @ext @ext @ext @ext @ext @ext @lkb @ext @ext @ext @ext
+  @ext @ext @ext @ext @lcf @ext @ext @lnv @ext @ext @ext @ext @ext            @ext
+  @ext @ext @ext           @ext                @ext @ext @ext @ext       @ext @ext @ext
 )
 
 #| ----------------------------------------------------------------------------
