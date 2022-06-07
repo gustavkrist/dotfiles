@@ -185,6 +185,8 @@ local globalKeys = myTable.join(
         {description = "Launch default browser.", group = "Hotkeys" }),
     awful.key({ modkey }, "e", function () awful.util.spawn( guiEditor ) end,
         {description = "Launch graphical text editor.", group = "Hotkeys" }),
+    awful.key({ modkey }, "i", function () awful.util.spawn( "inkdrop" ) end,
+        {description = "Launch Inkdrop.", group = "Hotkeys" }),
     awful.key({ modkey }, "t", function () awful.util.spawn( editor ) end,
         {description = "Launch default terminal editor.", group = "Hotkeys" }),
     awful.key({ modkey, ctrl, altkey }, "l", function () awful.util.spawn( lockscreen ) end,
