@@ -34,18 +34,17 @@ local update_taglist = function (item, tag, index)
   end
 end
 
-
 -- {{{ Initiating theme variable.
-local theme                                     = {}
+local theme = {}
 -- }}}
 
 -- {{{ Assigning values to theme.
 -- Theme config folder
-theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/nord"
+theme.dir   = os.getenv("HOME") .. "/.config/awesome/themes/nord"
 
 -- Theme fonts.
-theme.font                                      = "Noto Sans Regular 10"
--- theme.taglist_font                              = "Noto Sans Regular 10"
+theme.font  = "Noto Sans Regular 10"
+-- theme.taglist_font = "Noto Sans Regular 10"
 
 theme.nord0  = "#2E3440"
 theme.nord1  = "#3B4252"
@@ -169,26 +168,31 @@ theme.titlebar_maximized_button_normal_inactive = theme.dir .. "/icons/titlebar/
 theme.taglist_spacing = dpi(5)
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
-theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
-)
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
-)
+-- local taglist_square_size = dpi(4)
+-- theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
+--     taglist_square_size, theme.fg_normal
+-- )
+-- theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
+--     taglist_square_size, theme.fg_normal
+-- )
 
-theme.taglist_text_font = "Fira Code Nerd Font Mono"
+-- theme.taglist_text_font = "Fira Code Nerd Font Mono"
 -- theme.taglist_text_empty    =  {"","","","","","","","",""}
 -- theme.taglist_text_occupied =  {"","","","","","","","",""}
 -- theme.taglist_text_focused  = {"","","","","","","","",""}
 -- theme.taglist_text_urgent   = {"","","","","","","","",""}
 
-theme.taglist_text_empty    = {"", "", "", "", "", "", "", "", ""}
-theme.taglist_text_occupied = {"", "", "", "", "", "", "", "", ""}
-theme.taglist_text_focused  = {"", "", "", "", "", "", "", "", ""}
-theme.taglist_text_urgent   = {"", "", "", "", "", "", "", "", ""}
+-- theme.taglist_text_empty    = {"", "ﴬ", "", "", "﬏", "", "", "", ""}
+-- theme.taglist_text_occupied = {"", "ﴬ", "", "", "﬏", "", "", "", ""}
+-- theme.taglist_text_focused  = {"", "ﴬ", "", "", "﬏", "", "", "", ""}
+-- theme.taglist_text_urgent   = {"", "ﴬ", "", "", "﬏", "", "", "", ""}
 
--- theme.taglist_font = "Roboto 12"
+-- theme.taglist_text_empty    = {"", "", "", "", "", "", "", "", ""}
+-- theme.taglist_text_occupied = {"", "", "", "", "", "", "", "", ""}
+-- theme.taglist_text_focused  = {"", "", "", "", "", "", "", "", ""}
+-- theme.taglist_text_urgent   = {"", "", "", "", "", "", "", "", ""}
+
+theme.taglist_font = "Fira Code Nerd Font Mono 14"
 theme.taglist_bg_focus = theme.bg_normal
 theme.taglist_fg_focus = theme.nord13
 theme.taglist_bg_occupied = theme.bg_normal
@@ -455,15 +459,15 @@ function theme.at_screen_connect(s)
     -- If wallpaper is a function, call it with the screen
     -- local wallpaper = theme.wallpaper
 
-    if s.geometry.width > s.geometry.height then
-        fair_layout = awful.layout.suit.fair
-        tile_layout = awful.layout.suit.tile
-        -- wallpaper   = theme.dir .. "/wild.png"
-    else
-        fair_layout = awful.layout.suit.fair.horizontal
-        tile_layout = lain.layout.centerwork.horizontal
-        -- wallpaper   = theme.dir .. "/nord-arctic-fox-vertical.png"
-    end
+    -- if s.geometry.width > s.geometry.height then
+    --     fair_layout = awful.layout.suit.fair
+    --     tile_layout = awful.layout.suit.tile
+    --     -- wallpaper   = theme.dir .. "/wild.png"
+    -- else
+    --     fair_layout = awful.layout.suit.fair.horizontal
+    --     tile_layout = lain.layout.centerwork.horizontal
+    --     -- wallpaper   = theme.dir .. "/nord-arctic-fox-vertical.png"
+    -- end
 
     -- if type(wallpaper) == "function" then
     --     wallpaper = wallpaper(s)
@@ -471,15 +475,15 @@ function theme.at_screen_connect(s)
     -- gears.wallpaper.maximized(wallpaper, s, true)
 
     -- All tags open with layout 1
-    awful.tag.add("1",     {screen = s, layout = tile_layout, selected = true})
-    awful.tag.add("2", {screen = s, layout = tile_layout})
-    awful.tag.add("3",  {screen = s, layout = tile_layout})
-    awful.tag.add("4",     {screen = s, layout = tile_layout})
-    awful.tag.add("5",     {screen = s, layout = tile_layout})
-    awful.tag.add("6",   {screen = s, layout = tile_layout})
-    awful.tag.add("7",         {screen = s, layout = tile_layout})
-    awful.tag.add("8",         {screen = s, layout = tile_layout})
-    awful.tag.add("9",         {screen = s, layout = tile_layout})
+    -- awful.tag.add("1",     {screen = s, layout = tile_layout, selected = true})
+    -- awful.tag.add("2", {screen = s, layout = tile_layout})
+    -- awful.tag.add("3",  {screen = s, layout = tile_layout})
+    -- awful.tag.add("4",     {screen = s, layout = tile_layout})
+    -- awful.tag.add("5",     {screen = s, layout = tile_layout})
+    -- awful.tag.add("6",   {screen = s, layout = tile_layout})
+    -- awful.tag.add("7",         {screen = s, layout = tile_layout})
+    -- awful.tag.add("8",         {screen = s, layout = tile_layout})
+    -- awful.tag.add("9",         {screen = s, layout = tile_layout})
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -496,19 +500,19 @@ function theme.at_screen_connect(s)
     s.mytaglist = wibox.container.margin(awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
-        widget_template = {
-          widget = wibox.widget.textbox,
-          create_callback = function(self, tag, index, _)
-            self.align = "left"
-            self.valign = "center"
-            self.font = beautiful.taglist_text_font
+        -- widget_template = {
+        --   widget = wibox.widget.textbox,
+        --   create_callback = function(self, tag, index, _)
+        --     self.align = "left"
+        --     self.valign = "center"
+        --     self.font = beautiful.taglist_text_font
 
-            update_taglist(self, tag, index)
-          end,
-          update_callback = function(self, tag, index, _)
-            update_taglist(self, tag, index)
-          end,
-        },
+        --     update_taglist(self, tag, index)
+        --   end,
+        --   update_callback = function(self, tag, index, _)
+        --     update_taglist(self, tag, index)
+        --   end,
+        -- },
         buttons = awful.util.taglist_buttons,
     }, dpi(5), 0, 0, 0)
 

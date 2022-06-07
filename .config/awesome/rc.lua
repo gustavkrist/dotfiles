@@ -52,6 +52,7 @@ local myTable       =   awful.util.table or gears.table -- 4.{0,1} compatibility
 local bling = require("bling")
 
 local keys = require("keys")
+local tags = require("tags").tags
 
 local helpers = require("helpers")
 -- }}}
@@ -141,11 +142,11 @@ awful.util.terminal     = terminal
 -- Use this for reference : https://fontawesome.com/cheatsheet
 
 -- awful.util.tagnames = {  "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }
---awful.util.tagnames = {  "➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒", "➓" }
---awful.util.tagnames = { " DEV ", " WWW ", " SYS ", " DOC ", " VBOX ", " CHAT ", " MUS ", " VID ", " GFX " }
---awful.util.tagnames = { "⠐", "⠡", "⠲", "⠵", "⠻", "⠿" }
---awful.util.tagnames = { "⌘", "♐", "⌥", "ℵ" }
---awful.util.tagnames = { "www", "edit", "gimp", "inkscape", "music" }
+-- awful.util.tagnames = {  "➊", "➋", "➌", "➍", "➎", "➏", "➐", "➑", "➒", "➓" }
+-- awful.util.tagnames = { " DEV ", " WWW ", " SYS ", " DOC ", " VBOX ", " CHAT ", " MUS ", " VID ", " GFX " }
+-- awful.util.tagnames = { "⠐", "⠡", "⠲", "⠵", "⠻", "⠿" }
+-- awful.util.tagnames = { "⌘", "♐", "⌥", "ℵ" }
+-- awful.util.tagnames = { "www", "edit", "gimp", "inkscape", "music" }
 -- }}}
 
 -- {{{ Layouts
@@ -176,22 +177,7 @@ awful.layout.layouts = {
 lain.layout.termfair.nmaster = 3
 lain.layout.termfair.center.nmaster = 3
 
-awful.util.taglist_buttons = myTable.join(
-    awful.button({ }, 1, function(t) t:view_only() end),
-    awful.button({ modkey }, 1, function(t)
-        if client.focus then
-            client.focus:move_to_tag(t)
-        end
-    end),
-    awful.button({ }, 3, awful.tag.viewtoggle),
-    awful.button({ modkey }, 3, function(t)
-        if client.focus then
-            client.focus:toggle_tag(t)
-        end
-    end),
-    awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-    awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
-)
+
 
 awful.util.tasklist_buttons = myTable.join(
     awful.button({ }, 1, function (c)
@@ -440,7 +426,7 @@ client.connect_signal("unfocus",
 awful.screen.focus(screen.primary)
 
 for s in screen do
-  if s.geometry.width == 3440 then
+  if s.geometry.width > s.geometry.height then
     bling.module.wallpaper.setup {
       set_function = bling.module.wallpaper.setters.random,
       wallpaper = "/home/gustav/Pictures/nord/nord-wallpapers",
@@ -449,7 +435,7 @@ for s in screen do
       background = "#2E3440",
       screen = s
     }
-  elseif s.geometry.height == 2560 then
+  else
     bling.module.wallpaper.setup {
       set_function = bling.module.wallpaper.setters.random,
       wallpaper = "/home/gustav/Pictures/nord/nord-wallpapers-vertical",
