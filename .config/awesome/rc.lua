@@ -124,7 +124,7 @@ local ctrl   = "Control" -- Contro button just in case.
 
 -- {{{ Personal variables
 local terminal    = "kitty"
-local guiEditor   = "kitty lvim"
+local guiEditor   = "neovide"
 local filemanager = "thunar"
 
 -- {{{ Set the path to awesome config file

@@ -99,9 +99,9 @@
 )
 
 (defalias
-  kmo (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/kmonad/keychron_k8.kbd"))
-  rpr (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.Rprofile"))
-  zsh (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.zshrc"))
+  kmo (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/kmonad/keychron_k8.kbd"))
+  rpr (tap-macro @closewhk (cmd-button "neovide /home/gustav/.Rprofile"))
+  zsh (tap-macro @closewhk (cmd-button "neovide /home/gustav/.zshrc"))
 
   wka (tap-macro @closewhk (around-next (layer-toggle wk-awesome)) (cmd-button "/home/gustav/.config/kmonad/whichkey/whichkey.sh /home/gustav/.config/kmonad/whichkey/awesome.json"))
   wkl (tap-macro @closewhk (around-next (layer-toggle wk-lunarvim)) (cmd-button "/home/gustav/.config/kmonad/whichkey/whichkey.sh /home/gustav/.config/kmonad/whichkey/lunarvim.json"))
@@ -117,9 +117,9 @@
 )
 
 (defalias
-  arc (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/awesome/rc.lua"))
-  akb (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/awesome/keys.lua"))
-  ath (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/awesome/themes/nord/theme.lua"))
+  arc (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/awesome/rc.lua"))
+  akb (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/awesome/keys.lua"))
+  ath (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/awesome/themes/nord/theme.lua"))
 )
 
 (deflayer wk-awesome
@@ -132,13 +132,13 @@
 )
 
 (defalias
-  lcf (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/config.lua"))
-  lkb (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/keymap.lua"))
-  lau (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/autocmds.lua"))
-  lnv (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/neovide.lua"))
-  lop (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/options.lua"))
-  lpl (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/plugins.lua"))
-  lts (tap-macro @closewhk (cmd-button "/bin/kitty lvim /home/gustav/.config/lvim/lua/user/treesitter.lua"))
+  lcf (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/lvim/config.lua"))
+  lkb (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/lvim/lua/user/keymap.lua"))
+  lau (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/lvim/lua/user/autocmds.lua"))
+  lnv (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/lvim/lua/user/neovide.lua"))
+  lop (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/lvim/lua/user/options.lua"))
+  lpl (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/lvim/lua/user/plugins.lua"))
+  lts (tap-macro @closewhk (cmd-button "neovide /home/gustav/.config/lvim/lua/user/treesitter.lua"))
 )
 
 (deflayer wk-lunarvim

@@ -16,7 +16,6 @@ vim.cmd([[
 
 -- Lvim
 lvim.transparent_window = true
-require "user.neovide"
 lvim.log.level = "warn"
 lvim.format_on_save = false
 lvim.colorscheme = "nord"
@@ -58,3 +57,7 @@ lvim.builtin.alpha.mode = "dashboard"
 -- Snippets
 
 require('luasnip').filetype_extend("rmd", { "tex" })
+
+if vim.g.neovide == true then
+  require "user.neovide"
+end

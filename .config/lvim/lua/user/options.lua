@@ -2,7 +2,7 @@
 vim.g.tokyonight_style = 'storm'
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.guifont = 'FiraCode Nerd Font:h12'
+vim.opt.guifont = 'Fira Code:h12'
 vim.g.python3_host_prog = "/Users/gustavkristensen/opt/anaconda3/bin/python"
 vim.o.foldminlines = 5
 vim.o.foldlevel = 3

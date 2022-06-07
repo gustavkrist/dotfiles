@@ -34,7 +34,7 @@ local ctrl      = "Control" -- Contro button just in case.
 local browser           = "google-chrome-stable"
 local terminal          = "kitty"
 local editor            = os.getenv("EDITOR") or "nano"
-local guiEditor         = "kitty lvim"
+local guiEditor         = "neovide"
 local filemanager       = "thunar"
 local lockscreen        = "light-locker-command -l"
 
@@ -519,17 +519,17 @@ local globalKeys = myTable.join(
         end,
         {description = "Go back.", group = "Client"}),
 
-    -- Dynamic tagging
-    awful.key({ modkey, "Shift" }, "n", function () lain.util.add_tag() end,
-              {description = "Add new tag.", group = "Tag"}),
-    awful.key({ modkey, ctrl }, "r", function () lain.util.rename_Tag() end,
-              {description = "Rename tag.", group = "Tag"}),
-    awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end,
-              {description = "Move tag to the left.", group = "Tag"}),
-    awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
-              {description = "Move tag to the right", group = "Tag"}),
-    awful.key({ modkey, "Shift" }, "y", function () lain.util.delete_tag() end,
-              {description = "Delete tag", group = "Tag"}),
+    -- -- Dynamic tagging
+    -- awful.key({ modkey, "Shift" }, "n", function () lain.util.add_tag() end,
+    --           {description = "Add new tag.", group = "Tag"}),
+    -- awful.key({ modkey, ctrl }, "r", function () lain.util.rename_Tag() end,
+    --           {description = "Rename tag.", group = "Tag"}),
+    -- awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end,
+    --           {description = "Move tag to the left.", group = "Tag"}),
+    -- awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
+    --           {description = "Move tag to the right", group = "Tag"}),
+    -- awful.key({ modkey, "Shift" }, "y", function () lain.util.delete_tag() end,
+    --           {description = "Delete tag", group = "Tag"}),
 
     -- Retore window
     awful.key({ modkey, ctrl }, "n",
