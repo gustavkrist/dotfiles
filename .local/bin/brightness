@@ -1,12 +1,12 @@
 #!/bin/bash
 
-X_LOC=$(xdotool getmouselocation --shell | awk -F= '/X/ {print $2}')
-
-if [[ $(($X_LOC > 3440)) = 1 ]]; then
-  DISPLAY=1
-else
-  DISPLAY=2
-fi
+MON=$($HOME/.local/bin/get-focused-monitor)
+case $MON in
+  "DP-0")
+    DISPLAY=1 ;;
+  "DP-2")
+    DISPLAY=2 ;;
+esac
 
 if [[ "$1" = "+" || "$1" = "-" ]]; then
   ddcutil --display $DISPLAY setvcp 10 $@
