@@ -53,8 +53,8 @@ local bling = require("bling")
 
 local keys = require("keys")
 local tags = require("tags")
+local charitable = require("charitable")
 
-local helpers = require("helpers")
 -- }}}
 
 -- {{{ Error handling
@@ -254,7 +254,19 @@ end)
 -- }}}
 
 -- Create a wibox for each screen and add it.
-awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
+awful.screen.connect_for_each_screen(function(s)
+  for i = 1, #tags do
+    if not tags[i].selected then
+      tags[i].screen = s
+      tags[i]:view_only()
+      break
+    end
+  end
+
+  -- Create a special scratch tag for double buffering
+  s.scratch = awful.tag.add('scratch-' .. s.index, {})
+  beautiful.at_screen_connect(s)
+end)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
@@ -473,3 +485,15 @@ if autoRun then
   end
 end
 -- }}}
+
+tag.connect_signal("request::screen", function(t)
+  t.selected = false
+  for s in capi.screen do
+    if s ~= t.screen then
+      t.screen = s
+      return
+    end
+  end
+end)
+
+awful.tag.history.restore = function() end

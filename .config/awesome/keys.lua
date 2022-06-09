@@ -19,7 +19,7 @@ local hotkeys_popup =   require("awful.hotkeys_popup").widget
 local menubar       =   require("menubar")
 
 local bling         =   require("bling")
-local sharedtags    =   require("sharedtags")
+local charitable    =   require("charitable")
 
 local myTable       =   awful.util.table or gears.table -- 4.{0,1} compatibility
 local tags          =   require("tags")
@@ -504,9 +504,9 @@ local globalKeys = myTable.join(
    ),
 
     -- Layout manipulation
-    awful.key({ modkey, ctrl }, "s", function () awful.screen.focus_relative( 1) end,
+    awful.key({ modkey, ctrl }, "a", function () awful.screen.focus_relative( 1) end,
         {description = "Focus the next screen.", group = "Screen"}),
-    awful.key({ modkey, ctrl }, "a", function () awful.screen.focus_relative(-1) end,
+    awful.key({ modkey, ctrl }, "s", function () awful.screen.focus_relative(-1) end,
         {description = "Focus the previous screen.", group = "Screen"}),
     awful.key({ modkey }, "u", awful.client.urgent.jumpto,
         {description = "Jump to urgent client", group = "Client"}),
@@ -682,7 +682,7 @@ for i = 1, 9 do
                         local screen = awful.screen.focused()
                         local tag = tags[i]
                         if tag then
-                           sharedtags.viewonly(tag, screen)
+                           charitable.select_tag(tag, screen)
                         end
                   end,
                   descr_view),
@@ -692,7 +692,7 @@ for i = 1, 9 do
                       local screen = awful.screen.focused()
                       local tag = tags[i]
                       if tag then
-                         sharedtags.viewtoggle(tag, screen)
+                         charitable.toggle_tag(tag, screen)
                       end
                   end,
                   descr_toggle),

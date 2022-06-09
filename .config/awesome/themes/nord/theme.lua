@@ -20,6 +20,7 @@ local myTable = awful.util.table or gears.table -- 4.{0,1} compatibility
 
 local helpers = require("helpers")
 local beautiful = require("beautiful")
+local tags = require("tags")
 
 -- Helper function that updates a taglist item
 local update_taglist = function (item, tag, index)
@@ -514,6 +515,7 @@ function theme.at_screen_connect(s)
         --   end,
         -- },
         buttons = awful.util.taglist_buttons,
+        source = function(screen, args) return tags end,
     }, dpi(5), 0, 0, 0)
 
     -- Create a tasklist widget
