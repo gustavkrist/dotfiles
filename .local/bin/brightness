@@ -2,10 +2,12 @@
 
 MON=$($HOME/.local/bin/get-focused-monitor)
 case $MON in
-  "DP-0")
+  "DVI-D-0")
     DISPLAY=1 ;;
-  "DP-2")
+  "DP-0")
     DISPLAY=2 ;;
+  "DP-2")
+    DISPLAY=3 ;;
 esac
 
 if [[ "$1" = "+" || "$1" = "-" ]]; then

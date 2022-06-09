@@ -12,14 +12,14 @@ local ctrl       = "Control" -- Contro button just in case.
 
 local tags = sharedtags {
     { name = "", screen = 1, layout = awful.layout.suit.tile },
-    { name = "ﴬ", layout = awful.layout.suit.tile },
-    { name = "", layout = awful.layout.suit.tile },
-    { name = "", layout = awful.layout.suit.tile },
-    { name = "﬏", layout = awful.layout.suit.tile },
-    { name = "", layout = awful.layout.suit.tile },
-    { name = "", screen = 2, layout = lain.layout.centerwork.horizontal },
-    { name = "", screen = 2, layout = lain.layout.centerwork.horizontal },
-    { name = "", screen = 2, layout = lain.layout.centerwork.horizontal }
+    { name = "", screen = 1, layout = awful.layout.suit.tile },
+    { name = "﬏", screen = 1, layout = awful.layout.suit.tile },
+    { name = "ﴬ", screen = 2, layout = awful.layout.suit.tile },
+    { name = "", screen = 2, layout = awful.layout.suit.tile },
+    { name = "", screen = 2, layout = awful.layout.suit.tile },
+    { name = "", screen = 3, layout = lain.layout.centerwork.horizontal },
+    { name = "", screen = 3, layout = lain.layout.centerwork.horizontal },
+    { name = "", screen = 3, layout = lain.layout.centerwork.horizontal }
 }
 
 
