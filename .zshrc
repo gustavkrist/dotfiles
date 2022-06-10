@@ -294,7 +294,9 @@ unset __conda_setup
 
 # eval "$(zoxide init zsh)"
 # [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f "/home/gustav/.ghcup/env" ] && source "/home/gustav/.ghcup/env" # ghcup-env
 
 # -- FINAL --------------------------------------------------------------------
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+

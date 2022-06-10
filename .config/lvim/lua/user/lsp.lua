@@ -9,6 +9,7 @@ local opts = {
   end
 } -- check the lspconfig documentation for a list of all possible options
 require("lvim.lsp.manager").setup("jedi_language_server", opts)
+-- require'lspconfig'.hls.setup{}
 
 
 lvim.lsp.diagnostics.virtual_text = false
