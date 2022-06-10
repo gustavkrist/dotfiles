@@ -51,13 +51,14 @@ import XMonad.Layout.Magnifier
 import XMonad.Layout.MultiToggle (mkToggle, single, EOT(EOT), (??))
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(NBFULL, MIRROR, NOBORDERS))
 import XMonad.Layout.NoBorders
+import XMonad.Layout.PerWorkspace
 import XMonad.Layout.Renamed
 import XMonad.Layout.ShowWName
 import XMonad.Layout.Simplest
 import XMonad.Layout.Spacing
 import XMonad.Layout.SubLayouts
 import XMonad.Layout.WindowArranger (windowArrange, WindowArrangerMsg(..))
-import XMonad.Layout.WindowNavigation
+-- import XMonad.Layout.WindowNavigation
 import qualified XMonad.Layout.ToggleLayouts as T (toggleLayouts, ToggleLayout(Toggle))
 import qualified XMonad.Layout.MultiToggle as MT (Toggle(..))
 
@@ -83,7 +84,7 @@ import XMonad.Util.SpawnOnce
 import Colors.Nord
 
 myFont :: String
-myFont = "xft:SauceCodePro Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
+myFont = "xft:Fira Code Nerd Font Mono:regular:size=9:antialias=true:hinting=true"
 
 myModMask :: KeyMask
 myModMask = mod4Mask        -- Sets modkey to super/windows key
@@ -102,7 +103,7 @@ myBorderWidth :: Dimension
 myBorderWidth = 2           -- Sets border width for windows
 
 myNormColor :: String       -- Border color of normal windows
-myNormColor   = colorBack   -- This variable is imported from Colors.THEME
+myNormColor   = color09     -- This variable is imported from Colors.THEME
 
 myFocusColor :: String      -- Border color of focused windows
 myFocusColor  = color15     -- This variable is imported from Colors.THEME
@@ -118,7 +119,7 @@ myStartupHook = do
 
     spawnOnce "light-locker"
     spawnOnce "nm-applet"
-    spawnOnce "volumeicon"
+    spawnOnce "sleep 1 & volumeicon"
     spawnOnce "numlockx on"
     spawnOnce "$HOME/.screenlayout/monitor.sh"
     spawnOnce "sleep 1 && picom -b --config  $HOME/.config/picom/picom.conf"
@@ -181,7 +182,7 @@ mySpacing' i = spacingRaw True (Border i i i i) True (Border i i i i) True
 -- mySpacing n sets the gap size around the windows.
 tall     = renamed [Replace "tall"]
            $ smartBorders
-           $ windowNavigation
+           -- $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 12
@@ -189,7 +190,7 @@ tall     = renamed [Replace "tall"]
            $ ResizableTall 1 (3/100) (1/2) []
 threeCol = renamed [Replace "threeCol"]
            $ smartBorders
-           $ windowNavigation
+           -- $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 7
@@ -197,7 +198,7 @@ threeCol = renamed [Replace "threeCol"]
            $ ThreeColMid 1 (3/100) (2/5)
 threeRow = renamed [Replace "threeRow"]
            $ smartBorders
-           $ windowNavigation
+           -- $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 7
@@ -208,7 +209,7 @@ threeRow = renamed [Replace "threeRow"]
            $ ThreeColMid 1 (3/100) (2/5)
 monocle  = renamed [Replace "monocle"]
            $ smartBorders
-           $ windowNavigation
+           -- $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 20 Full
@@ -217,7 +218,7 @@ floats   = renamed [Replace "floats"]
            $ limitWindows 20 simplestFloat
 grid     = renamed [Replace "grid"]
            $ smartBorders
-           $ windowNavigation
+           -- $ windowNavigation
            $ addTabs shrinkText myTabTheme
            $ subLayout [] (smartBorders Simplest)
            $ limitWindows 12
@@ -238,15 +239,15 @@ myTabTheme = def { fontName            = myFont
 -- Theme for showWName which prints current workspace when you change workspaces.
 myShowWNameTheme :: SWNConfig
 myShowWNameTheme = def
-    { swn_font              = "xft:Ubuntu:bold:size=60"
+    { swn_font              = "xft:JetbrainsMono Nerd Font:bold:size=60"
     , swn_fade              = 1.0
-    , swn_bgcolor           = "#1c1f24"
-    , swn_color             = "#ffffff"
+    , swn_bgcolor           = color09
+    , swn_color             = colorFore
     }
 
 -- The layout hook
 myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats
-               $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
+               $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) $ myDefaultLayout
              where
                myDefaultLayout =     withBorder myBorderWidth tall
                                  ||| threeCol
@@ -255,8 +256,9 @@ myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts float
                                  ||| grid
                                  ||| floats
 
-myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
+-- myWorkspaces = [" 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 ", " 8 ", " 9 "]
 -- myWorkspaces = ["  ", "  ", "  ", " ﴬ ", "  ", "  ", " ﬏ ", "  ", "  "]
+myWorkspaces = [" \xf8dd ", " \xf489 ", " \xf8de ", " \xfd2c ", " \xf268 ", " \xf085 ", " \xfb0f ", " \xf885 ", " \xf10c "]
 -- myWorkspaces = [" dev ", " www ", " sys ", " doc ", " vbox ", " chat ", " mus ", " vid ", " gfx "]
 myWorkspaceIndices = M.fromList $ zipWith (,) myWorkspaces [1..] -- (,) == \x y -> (x,y)
 
@@ -407,8 +409,8 @@ myKeys =
         , ("<XF86AudioMute>", spawn "amixer set Master toggle")
         , ("<XF86AudioLowerVolume>", spawn "amixer set Master 5%- unmute")
         , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 5%+ unmute")
-        , ("<XF86MonBrightnessDown>", spawn "~/.local/bin/brightness -5")
-        , ("<XF86MonBrightnessUp>", spawn "~/.local/bin/brightness +5")
+        , ("<XF86MonBrightnessDown>", spawn "/home/gustav/.local/bin/brightness - 5")
+        , ("<XF86MonBrightnessUp>", spawn "/home/gustav/.local/bin/brightness + 5")
         ]
     -- The following lines are needed for named scratchpads.
           where nonNSP          = WSIs (return (\ws -> W.tag ws /= "NSP"))
@@ -423,11 +425,11 @@ myNavigation2DConfig = def {
 main :: IO ()
 main = do
     -- Launching three instances of xmobar on their monitors.
-    xmproc0 <- spawnPipe ("xmobar -x 0 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
+    xmproc0 <- spawnPipe ("xmobar -x 0 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc-main")
     xmproc1 <- spawnPipe ("xmobar -x 1 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
     xmproc2 <- spawnPipe ("xmobar -x 2 $HOME/.config/xmobar/" ++ colorScheme ++ "-xmobarrc")
     -- the xmonad, ya know...what the WM is named after!
-    xmonad $ docks $ withNavigation2DConfig myNavigation2DConfig $ ewmh def
+    xmonad $ docks $ withNavigation2DConfig myNavigation2DConfig $ ewmhFullscreen $ ewmh def
         { manageHook         = myManageHook <+> manageDocks
         -- , handleEventHook    = docksEventHook
                                -- Uncomment this line to enable fullscreen support on things like YouTube/Netflix.
@@ -467,7 +469,7 @@ main = do
                 -- Adding # of windows on current workspace to the bar
               , ppExtras  = [windowCount]
                 -- order of things in xmobar
-              , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
+              , ppOrder  = \(ws:l:t:ex) -> ["<fn=4>"++ws++"</fn>",l]++ex++[t]
               }
         } `additionalKeysP` myKeys
 
