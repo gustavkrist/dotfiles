@@ -314,9 +314,9 @@ awful.rules.rules = {
   { rule = { class = filemanager },
     properties = { maximized = true, floating = false } },
   { rule = { class = "Code" },
-    properties = { tag = tags[5], switchtotag = true } },
+    properties = { tag = tags[7], switchtotag = true } },
   { rule = { class = "inkdrop" },
-    properties = { tag = tags[2], switchtotag = true } },
+    properties = { tag = tags[4], switchtotag = true } },
   { rule = { class = "Arandr" },
     properties = { maximized = false, floating = false } },
 
@@ -437,6 +437,17 @@ client.connect_signal("unfocus",
     c.opacity = 0.9
   end)
 
+
+-- client.connect_signal(
+--   "focus",
+--   function(c)
+--     if client.focus == c then
+--       naughty.notify({ preset = naughty.config.presets.critical,
+--         title = "The current client changed!",
+--         text  = c.name })
+--     end
+--   end)
+
 awful.screen.focus(screen.primary)
 
 for s in screen do
@@ -475,7 +486,7 @@ local autoRunApps = {
   "killall firewall-applet && dex --autostart --environment awesome",
   "sleep 1 && picom -b --config  $HOME/.config/picom/picom.conf",
   "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1",
-  "sleep 1 && kmonad $HOME/.config/kmonad/keychron_k8.kbd"
+  "sleep 2 && kmonad $HOME/.config/kmonad/keychron_k8.kbd"
 }
 
 if autoRun then
