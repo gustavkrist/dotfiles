@@ -621,7 +621,7 @@ c.TerminalInteractiveShell.editing_mode = 'vi'
 
 ## Set the editor used by IPython (default to $EDITOR/vi/notepad).
 #  Default: 'lvim'
-# c.TerminalInteractiveShell.editor = 'lvim'
+c.TerminalInteractiveShell.editor = 'nvim'
 
 ## Add shortcuts from 'emacs' insert mode to 'vi' insert mode.
 #  Default: True
