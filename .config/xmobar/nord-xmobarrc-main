@@ -50,6 +50,8 @@ Config {
                     , Run Com "echo" ["<fn=2>\xf0f3</fn>"] "bell" 3600
                         -- Check for pacman updates (script found in .local/bin)
                     , Run Com ".local/bin/pacupdate" [] "pacupdate" 36000
+                        -- Check the volume level and mute status
+                    , Run Com ".config/xmobar/get_volume.sh" [] "volume" 20
                         -- Time and date
                     , Run Date "<fn=2>\xf017</fn>  %b %d %Y - (%H:%M) " "date" 50
                         -- Script that dynamically adjusts xmobar padding depending on number of trayer icons.
@@ -59,5 +61,5 @@ Config {
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <action=`~/.config/rofi/bin/launcher_text`><icon=haskell_20.xpm/> </action>   <fc=#666666>|</fc> <fn=5>%UnsafeStdinReader%</fn> }{ <box type=Bottom width=2 mb=2 color=#8FBCBB><fc=#8FBCBB>%penguin%  %kernel%</fc></box>    <box type=Bottom width=2 mb=2 color=#A3BE8C><fc=#A3BE8C><action=`kitty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#81A1C1><fc=#81A1C1><action=`kitty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#EBCB8B><fc=#EBCB8B>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#B48EAD><fc=#B48EAD>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#88C0D0><fc=#88C0D0>%bell%  <action=`kitty -e sudo pacman -Syu`>%pacupdate%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#A3BE8C><fc=#A3BE8C><action=`emacsclient -c -a 'emacs' --eval '(doom/window-maximize-buffer(dt/year-calendar))'`>%date%</action></fc></box> %trayerpad%"
+       , template = " <action=`~/.config/rofi/bin/launcher_text`><icon=haskell_20.xpm/> </action>   <fn=1><fc=#4C566A>|</fc></fn> <fn=5>%UnsafeStdinReader%</fn> }{ <box type=Bottom width=2 mb=2 color=#88C0D0><fc=#88C0D0>%penguin%  %kernel%</fc></box>    <box type=Bottom width=2 mb=2 color=#A3BE8C><fc=#A3BE8C><action=`kitty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#81A1C1><fc=#81A1C1><action=`kitty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#EBCB8B><fc=#EBCB8B>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#B48EAD><fc=#B48EAD>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#88C0D0><fc=#88C0D0>%bell%  <action=`kitty -e sudo pacman -Syu`>%pacupdate%</action></fc></box>  <box type=Bottom width=2 mb=2 color=#A3BE8C><fc=#A3BE8C><action=`amixer set Master toggle`>%volume%</action></fc></box>  <box type=Bottom width=2 mb=2 color=#81A1C1><fc=#81A1C1>%date%</fc></box> %trayerpad%"
        }

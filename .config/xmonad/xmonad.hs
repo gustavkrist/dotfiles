@@ -120,7 +120,7 @@ myStartupHook = do
     spawn "killall kmonad"  -- kill current kmonad on each restart
 
     spawnOnce "light-locker"
-    spawnOnce "nm-applet & volumeicon"
+    spawnOnce "nm-applet"
     spawnOnce "numlockx on"
     spawnOnce "$HOME/.screenlayout/monitor.sh"
     spawnOnce "sleep 1 && picom -b --config  $HOME/.config/picom/picom.conf"
