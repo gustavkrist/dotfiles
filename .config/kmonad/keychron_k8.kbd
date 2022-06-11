@@ -74,7 +74,7 @@
 
 (defalias
   cap (tap-macro @closewhk caps)
-  dts (tap-macro @closewhk (cmd-button "tdrop -ma -w 70% -x 15% -y 20 -s dropdown kitty"))
+  dts (tap-macro @closewhk (cmd-button "tdrop -ma -w 70% -x 15% -y 30 kitty --title=dropdown"))
   ;; Rofi menu for apps, backlight, quicklinks, screenshot, time and powermenu
   map (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_apps"))
   mbl (tap-macro @closewhk (cmd-button "/home/gustav/.config/rofi/bin/menu_backlight"))

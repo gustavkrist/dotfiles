@@ -12,4 +12,4 @@ sed -n '/START_KEYS/,/END_KEYS/p' ~/.config/xmonad/xmonad.hs | \
     -e 's/\[ (/(/' \
     -e 's/-- KB_GROUP /\n/' \
     -e 's/", /"\t: /' | \
-    yad --text-info --back=#282c34 --fore=#46d9ff --geometry=1200x800
+    yad --no-buttons --text-info --back=#434C5E --fore=#ECEFF4 --geometry=1200x800
