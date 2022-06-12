@@ -50,8 +50,11 @@ Config {
                     , Run Com "echo" ["<fn=2>\xf0f3</fn>"] "bell" 3600
                         -- Check for pacman updates (script found in .local/bin)
                     , Run Com ".local/bin/pacupdate" [] "pacupdate" 36000
-                        -- Check the volume level and mute status
-                    , Run Com ".config/xmobar/get_volume.sh" [] "volume" 20
+                        -- Shows the volume level and mute status
+                    , Run Alsa "default" "Master" ["test", "-t", "<status> <volume>%", "--", "-c", "#A3BE8C", "-C", "#A3BE8C", "-o", "<fn=2>\xf6a9</fn>", "-O", "<fn=2>\xf028</fn>"]
+                        -- For actions to control volume - Necessary because % can't be escaped in template
+                    , Run Com "echo" ["amixer set Master 5%+ unmute"] "volup" 36000
+                    , Run Com "echo" ["amixer set Master 5%- unmute"] "voldown" 36000
                         -- Time and date
                     , Run Date "<fn=2>\xf017</fn>  %b %d %Y - (%H:%M) " "date" 50
                         -- Prints out the left side items such as workspaces, layout, etc.
@@ -59,5 +62,5 @@ Config {
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " <action=`~/.config/rofi/bin/launcher_text`><icon=haskell_20.xpm/> </action>   <fn=1><fc=#4C566A>|</fc></fn> <fn=5>%UnsafeStdinReader%</fn> }{ <box type=Bottom width=2 mb=2 color=#88C0D0><fc=#88C0D0>%penguin%  %kernel%</fc></box>    <box type=Bottom width=2 mb=2 color=#A3BE8C><fc=#A3BE8C><action=`kitty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#81A1C1><fc=#81A1C1><action=`kitty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#EBCB8B><fc=#EBCB8B>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#B48EAD><fc=#B48EAD>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#88C0D0><fc=#88C0D0>%bell%  <action=`kitty -e sudo pacman -Syu`>%pacupdate%</action></fc></box>  <box type=Bottom width=2 mb=2 color=#A3BE8C><fc=#A3BE8C><action=`amixer set Master toggle`>%volume%</action></fc></box>  <box type=Bottom width=2 mb=2 color=#81A1C1><fc=#81A1C1>%date%</fc></box>"
+       , template = " <action=`~/.config/rofi/bin/applet_powermenu`><icon=haskell_20.xpm/> </action>   <fn=1><fc=#4C566A>|</fc></fn> <fn=5>%UnsafeStdinReader%</fn> }{ <box type=Bottom width=2 mb=2 color=#88C0D0><fc=#88C0D0>%penguin%  %kernel%</fc></box>    <box type=Bottom width=2 mb=2 color=#A3BE8C><fc=#A3BE8C><action=`kitty -e htop`>%cpu%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#81A1C1><fc=#81A1C1><action=`kitty -e htop`>%memory%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#EBCB8B><fc=#EBCB8B>%disku%</fc></box>    <box type=Bottom width=2 mb=2 color=#B48EAD><fc=#B48EAD>%uparrow%  %uptime%</fc></box>    <box type=Bottom width=2 mb=2 color=#88C0D0><fc=#88C0D0>%bell%  <action=`kitty -e sudo pacman -Syu`>%pacupdate%</action></fc></box>    <box type=Bottom width=2 mb=2 color=#A3BE8C><fc=#A3BE8C><action=`amixer set Master toggle` button=123><action=`%volup%` button=4><action=`%voldown%` button=5>%alsa:default:Master%</action></action></action></fc></box>    <box type=Bottom width=2 mb=2 color=#81A1C1><fc=#81A1C1>%date%</fc></box>"
        }
