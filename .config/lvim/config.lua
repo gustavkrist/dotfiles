@@ -2,7 +2,6 @@ require "user.keymap"
 require "user.autocmds"
 require "user.os"
 require "user.plugins"
-require "user.neovide"
 require "user.null_ls"
 require "user.lsp"
 require "user.treesitter"
@@ -61,3 +60,9 @@ lvim.builtin.alpha.mode = "dashboard"
 -- Snippets
 
 require('luasnip').filetype_extend("rmd", { "tex" })
+
+-- Neovide
+
+if vim.g.neovide == true then
+  require "user.neovide"
+end

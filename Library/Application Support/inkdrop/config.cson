@@ -20,7 +20,6 @@
           visible: false
     mainWindow:
       acrylicEnabled: true
-      distractionFreeEnabled: true
       fullscreen: false
       maximized: false
       noteListBar:
@@ -29,10 +28,11 @@
         x: 8
         y: 33
       sideBar:
+        visible: false
         w: 200
       size:
         h: 859
-        w: 708
+        w: 1424
     themes: [
       "vibrant-dark-ui"
       "nord-syntax"

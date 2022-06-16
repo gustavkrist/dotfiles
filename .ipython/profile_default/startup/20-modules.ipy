@@ -1,0 +1,12 @@
+try:
+    # from richprompt.startup import load
+    # load()
+    # from ipython_nord_theme.startup import load
+    # load()
+    # del load
+    %load_ext ipython_nord_theme
+    %load_ext rich
+    import numpy as np
+    from rich import inspect
+except ModuleNotFoundError:
+    pass
