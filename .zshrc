@@ -243,6 +243,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]] && [[ $(lsb_release -ds) =~ "Ubuntu" ]]; th
     export ANACONDA_PATH="$HOME/anaconda3"
     export FZF_PATH="/home/linuxbrew/.linuxbrew/opt/fzf/"
     export DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0"
+    alias rg="/usr/bin/rg"
   fi
 fi
 
