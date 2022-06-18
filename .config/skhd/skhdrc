@@ -79,7 +79,7 @@ hyper - z : yabai -m space --balance
 ctrl + alt + cmd - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
 ## Close active application
-hyper - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+hyper - q : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
 
 ## rotate tree 90
 hyper - r : yabai -m space --rotate 90

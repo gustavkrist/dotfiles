@@ -215,8 +215,10 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bddedc"
 export LS_COLORS=$(echo "$(vivid generate nord):*.plist=0;38;2;180;142;173:*.cson=0;38;2;180;142;173:\
   *.Rmd=0;38;2;180;142;173" | sed 's/ //g')
 export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
-mkdir -p $XDG_DATA_HOME/yabai
-echo 8 > $XDG_DATA_HOME/yabai/padding.txt
+if [[ ! -f $XDG_DATA_HOME/yabai/padding.txt ]]; then
+  mkdir -p $XDG_DATA_HOME/yabai
+  echo 8 > $XDG_DATA_HOME/yabai/padding.txt
+fi
 
 # -- OS SPECIFIC --------------------------------------------------------------
 
