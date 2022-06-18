@@ -7,6 +7,13 @@ local autocmd_dict = {
     {
       pattern = "*.Rmd",
       command = "nmap <buffer>  \\cd|nmap <buffer> <C-CR> \\cd|inoremap <M-Tab> ```{r}<CR><CR>```<UP>|inoremap <C-Tab> ```{r}<CR><CR>```<UP>"
+    },
+    {
+      pattern = "tmp-*.md",
+      callback = function()
+        vim.cmd "ASOff"
+        require("convert").admon_to_vim()
+      end
     }
   },
   BufAdd = {
@@ -35,6 +42,15 @@ local autocmd_dict = {
     {
       pattern = "*",
       command = "if exists('g:SendCmdToR') && string(g:SendCmdToR) != 'function(''SendCmdToR_fake'')' | call RQuit('nosave') | endif"
+    }
+
+  },
+  BufWritePre = {
+    {
+      pattern = "tmp-*.md",
+      callback = function()
+        require("convert").admon_to_inkdrop()
+      end
     }
   },
   BufWritePost = {

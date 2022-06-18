@@ -66,3 +66,6 @@ require('luasnip').filetype_extend("rmd", { "tex" })
 if vim.g.neovide == true then
   require "user.neovide"
 end
+
+-- Own scripts
+package.path = package.path .. ";" .. os.getenv("LUNARVIM_CONFIG_DIR") .. "/packages/?.lua"

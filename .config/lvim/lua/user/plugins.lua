@@ -79,6 +79,9 @@ lvim.plugins = {
   {
     'vim-pandoc/vim-pandoc',
     requires = 'vim-pandoc/vim-pandoc-syntax',
+    config = function()
+      vim.cmd "let g:pandoc#syntax#codeblocks#embeds#langs=['R']"
+    end,
     ft = "markdown"
   },
   {
@@ -132,7 +135,8 @@ lvim.plugins = {
       require("autosave").setup({
         conditions = {
           filename_is_not = { "config.lua" }
-        }
+        },
+        on_off_commands = true
       })
     end,
   },
@@ -164,6 +168,14 @@ lvim.plugins = {
   },
   {
     "hood/popui.nvim",
-    requires = {"RishabhRD/popfix"}
+    requires = { "RishabhRD/popfix" }
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    run = "cd app && npm install",
+    setup = function()
+      require("user.config.mkdp").setup()
+    end,
+    ft = { "markdown", "pandoc" }
   }
 }

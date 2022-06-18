@@ -18,5 +18,5 @@ lvim.builtin.treesitter.highlight = {
 }
 lvim.builtin.treesitter.indent = {
   enable = true,
-  disable = { 'python' }
+  disable = { 'python', 'lua' }
 }
