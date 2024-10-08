@@ -25,13 +25,25 @@ return {
       end
       return {
         "<C-t>",
-        { "<C-t>",      "<cmd>execute v:count . 'ToggleTerm'<CR>",          desc = "Toggle Terminal", noremap = true, silent = true },
-        { "<C-t>",      "<Esc><cmd>ToggleTerm<CR>",                         desc = "Toggle Terminal", noremap = true, silent = true },
-        { "<leader>gg", _LAZYGIT_TOGGLE,                                    desc = "Lazygit" },
-        { "<leader>tg", _LAZYGIT_TOGGLE,                                    desc = "Lazygit" },
-        { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>",              desc = "Float" },
+        {
+          "<C-t>",
+          "<cmd>execute v:count . 'ToggleTerm'<CR>",
+          desc = "Toggle Terminal",
+          noremap = true,
+          silent = true,
+        },
+        {
+          "<C-t>",
+          "<Esc><cmd>ToggleTerm<CR>",
+          desc = "Toggle Terminal",
+          noremap = true,
+          silent = true,
+        },
+        { "<leader>gg", _LAZYGIT_TOGGLE, desc = "Lazygit" },
+        { "<leader>tg", _LAZYGIT_TOGGLE, desc = "Lazygit" },
+        { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "Float" },
         { "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "Horizontal" },
-        { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>",   desc = "Vertical" },
+        { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Vertical" },
       }
     end,
   },
@@ -149,17 +161,28 @@ return {
     },
     cmd = "ZenMode",
     keys = {
-      { "<leader>uz", function() require("zen-mode").toggle() end, desc = "Toggle Zen Mode" },
+      {
+        "<leader>uz",
+        function()
+          require("zen-mode").toggle()
+        end,
+        desc = "Toggle Zen Mode",
+      },
     },
   },
   {
     "xvzc/chezmoi.nvim",
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function(_, opts)
       require("chezmoi").setup(opts)
       require("util.plugins").on_load("telescope.nvim", function()
         require("telescope").load_extension("chezmoi")
-        vim.keymap.set("n", "<leader>oc", require("telescope").extensions.chezmoi.find_files, {})
+        vim.keymap.set(
+          "n",
+          "<leader>oc",
+          require("telescope").extensions.chezmoi.find_files,
+          { desc = "Edit chezmoi files" }
+        )
       end)
       vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
         pattern = { os.getenv("HOME") .. "/.local/share/chezmoi/*" },
@@ -173,6 +196,6 @@ return {
       })
     end,
     opts = {},
-    keys = { "<leader>oc" },
+    keys = { { "<leader>oc", desc = "Edit chezmoi files" } },
   },
 }
