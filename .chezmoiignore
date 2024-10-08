@@ -5,7 +5,7 @@
 .config/*
 !.config/wezterm
 {{- else }}
-AppData/Roaming/neovide/config.toml
+AppData/
 {{- if ne .chezmoi.os "darwin" }}
 .hammerspoon/
 Library/
