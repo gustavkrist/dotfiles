@@ -1,0 +1,77 @@
+#!/usr/bin/env sh
+
+# -- Load scripting addition --------------------------------------------------
+
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+sudo yabai --load-sa
+
+# -- Mouse --------------------------------------------------------------------
+
+yabai -m config mouse_follows_focus off
+yabai -m config focus_follows_mouse off
+yabai -m config mouse_modifier ctrl
+yabai -m config mouse_action1 resize
+yabai -m config mouse_action2 move
+
+# -- Window -------------------------------------------------------------------
+
+yabai -m config window_border on
+yabai -m config window_border_width 3
+yabai -m config active_window_border_color 0x8081a1c1
+yabai -m config normal_window_border_color 0x00ffffff
+yabai -m config window_placement second_child
+yabai -m config insert_feedback_color 0xaad75f5f
+yabai -m config split_ratio 0.50
+yabai -m config auto_balance off
+yabai -m config window_opacity_duration 0.0
+yabai -m config active_window_opacity 1.0
+yabai -m config normal_window_opacity 0.90
+yabai -m config window_topmost off
+yabai -m config window_opacity off
+## With SIP disabled
+# yabai -m config window_opacity on
+# yabai -m config window_topmost on
+# yabai -m config window_shadow on
+
+# -- Space --------------------------------------------------------------------
+
+yabai -m config layout bsp
+yabai -m config --space 1 layout float
+# yabai -m config --space 2 layout stack
+yabai -m config top_padding 8
+yabai -m config bottom_padding 8
+yabai -m config left_padding 8
+yabai -m config right_padding 8
+yabai -m config window_gap 8
+
+## With SIP disabled and external status bar
+yabai -m config external_bar main:25:0
+
+# -- Rules --------------------------------------------------------------------
+
+# float system preferences. Most of these just diable Yabai form resizing them.
+yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Karabiner-Elements$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Karabiner-EventViewer$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Line$" manage=off
+yabai -m rule --add app="^Disk Utility$" sticky=on layer=above manage=off
+yabai -m rule --add app="^System Information$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Bitwarden$" layer=above manage=off
+yabai -m rule --add app="^Spotify$" manage=off
+# yabai -m rule --add app="^iTerm2$" manage=off
+yabai -m rule --add app="^Notes$" manage=off
+yabai -m rule --add app="^python$" manage=off
+yabai -m rule --add app="^NordVPN$" manage=off
+yabai -m rule --add app="^JetBrains Toolbox$" manage=off
+
+# -- Misc ---------------------------------------------------------------------
+
+~/.config/yabai/scripts/3_column.sh
+# If I close the active window, focus on any other visible window.
+yabai -m signal --add event=window_destroyed action="bash -c '~/.config/yabai/scripts/window-focus-on-destroy.sh | ~/.config/yabai/scripts/refresh.sh'"
+yabai -m signal --add event=window_created action="~/.config/yabai/scripts/refresh.sh"
+yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+
+echo "yabai configuration loaded.."

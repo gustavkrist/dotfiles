@@ -32,23 +32,14 @@ zinit light-mode for \
 
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
-# zinit ice as"command" from"gh-r" \
-#           atclone"./starship init zsh > init.zsh; ./starship completions zsh > _starship" \
-#           atpull"%atclone" src"init.zsh"
-# zinit light starship/starship
-# $(starship init zsh)
-fpath+=${ZDOTDIR:-~}/.zsh_functions
 
 _zshrc_after_load() {
   eval "$(aactivator init)"
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-  bindkey "^O" dotbare-fedit
 }
 
 zinit wait lucid light-mode for \
   Aloxaf/fzf-tab \
-  atload'bindkey "^o" dotbare-fedit' \
-    kazhala/dotbare \
   atload'_zsh_autosuggest_start;
   unset ZSH_AUTOSUGGEST_USE_ASYNC;
   bindkey -v "^ " autosuggest-accept' \
@@ -70,7 +61,6 @@ zinit wait lucid light-mode for \
   kutsan/zsh-system-clipboard \
   atinit'zicompinit;
   zicdreplay;
-  _dotbare_completion_cmd;
   _zshrc_after_load' \
     zdharma-continuum/fast-syntax-highlighting \
 
@@ -89,26 +79,38 @@ setopt nobeep
 
 # -- PATH ---------------------------------------------------------------------
 
-export PATH=$PATH:$HOME/.ghcup/bin
+{{ if eq .chezmoi.os "darwin" }}
+export PATH="$PATH:/opt/homebrew/opt/mysql-client/bin"
+export PATH=$PATH:$HOME/.npm-global-bin
+{{ else if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
 export PATH=$PATH:$HOME/.npm-global/bin
-export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:/usr/local/cuda/bin"
-export PATH="$PATH:/home/gustav/.dotnet"
-export PATH="$PATH:/home/gustav/.dotnet/tools"
-export PATH="$PATH:/mnt/c/Users/gusta/bin"
 export PATH="$PATH:/mnt/c/Program Files/WezTerm"
-fpath=( ~/.zsh_functions "${fpath[@]}" )
+export PATH="$PATH:/home/gustav/.dotnet/tools"
+{{ if eq .chezmoi.hostname "Gustav-PC" }}
+export PATH="$PATH:/mnt/c/Users/gusta/bin"
+{{ end }}
+{{ end }}
+export PATH=$PATH:$HOME/.ghcup/bin
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/go/bin"
+export PATH="$PATH:$HOME/.dotnet"
+export PATH="$PATH:$HOME/.dotnet/tools"
+export PATH="$PATH:$HOME/.roswell/bin"
 
 # -- SYSTEM ENV ---------------------------------------------------------------
 
 export EDITOR='nvim'
+export PAGER='less -R'
 export LANG="en_US.UTF-8"
 export LC_CTYPE="en_US.UTF-8"
 export COLORTERM="truecolor"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+export JAVA_HOME=$(/usr/libexec/java_home)
 export DOTNET_ROOT="$HOME/.dotnet"
+export FSHARP_GLIB_PATH="$HOME/fsharp/GLib"
 command -v luarocks 2>&1 >/dev/null && eval $(luarocks path --bin)
 
 # -- ALIASES ------------------------------------------------------------------
@@ -118,24 +120,24 @@ alias zz="z -"
 alias ls="eza --icons"
 alias la="ls -a"
 alias ll="eza -l"
-alias zshconf="nvim ~/.zshrc"
-alias mux="tmuxinator"
+alias zshconf="chezmoi edit ~/.zshrc --apply"
 alias tml="tmux list-sessions"
 alias tma="tmux attach -t"
-alias db="dotbare"
 alias py="python"
 alias ipy="ipython"
 alias fgrep="fgrep --color"
 alias egrep="egrep --color"
-alias rvim="nvr --remote"
 alias r="radian"
 alias lg="lazygit"
-alias lgdb="lg --git-dir=$HOME/.cfg --work-tree=$HOME"
 alias fp="fzf-tmux -p -w 90% -h 90% -- --preview \
   'bat --theme Nord --style=numbers --color=always --line-range :500 {}'"
 alias coa="conda activate"
 alias cod="conda deactivate"
 alias cm="chezmoi"
+{{ if eq .chezmoi.os "darwin" }}
+alias ipyk="ipython3 -i -c \"import sys;sys.path.append('$LUNARVIM_RUNTIME_DIR/site/pack/packer/opt/vim-jukit/helpers');import matplotlib;import matplotlib.pyplot as plt;matplotlib.use('module://matplotlib-backend-kitty');plt.show.__annotations__['save_dpi'] = 150;import matplotlib.pyplot as plt;plt.style.use('$LUNARVIM_RUNTIME_DIR/site/pack/packer/opt/vim-jukit/helpers/matplotlib-backend-kitty/backend.mplstyle')\""
+alias icat="kitty +kitten icat"
+{{ end }}
 
 # -- PLUGIN CONFIG ------------------------------------------------------------
 
@@ -196,19 +198,6 @@ zstyle ':fzf-tab:complete:nvim:*' fzf-preview \
   'bat --theme Nord --style=numbers --color=always --line-range :500 $realpath'
 zstyle ':fzf-tab:complete:nvim:*' fzf-flags -p 70%,70%
 
-# DOTBARE
-
-export DOTBARE_FZF_DEFAULT_OPTS="--height=100% --preview-window=right:60%"
-export DOTBARE_PREVIEW="bat --theme Nord --style=numbers --color=always --line-range :500 {}"
-export DOTBARE_DIFF_PAGER="delta --diff-so-fancy"
-export DOTBARE_KEY="
-  --bind=alt-a:toggle-all
-  --bind=alt-j:jump
-  --bind=alt-0:top
-  --bind=alt-s:toggle-sort
-  --bind=alt-t:toggle-preview
-"
-
 # LUNAR/NEOVIM
 
 export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"$HOME/.local/share/lunarvim"}"
@@ -230,19 +219,38 @@ if [[ ! -f $XDG_DATA_HOME/yabai/padding.txt ]]; then
   echo 8 > $XDG_DATA_HOME/yabai/padding.txt
 fi
 
-# -- ADDITIONAL SETTINGS -------------------------------------------------------
+# -- OS SPECIFIC --------------------------------------------------------------
+{{ if eq .chezmoi.os "darwin" }}
+# -- PERL ---------------------------------------------------------------------
 
-# export TERM="xterm-256color"
+PATH="/Users/gustavkristensen/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="/Users/gustavkristensen/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/Users/gustavkristensen/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/Users/gustavkristensen/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/Users/gustavkristensen/perl5"; export PERL_MM_OPT;
+export CMAKE_INCLUDE_PATH="/opt/homebrew/opt/flex/include"
+export CMAKE_LIBRARY_PATH="/opt/homebrew/opt/flex/lib;/opt/homebrew/opt/bison/lib"
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+export PATH="/opt/homebrew/opt/flex/bin:/opt/homebrew/opt/bison/bin:$PATH"
+alias grep="ggrep --color"
+alias find="gfind"
+alias sed="gsed"
+alias xargs="gxargs"
+export FZF_PATH="/opt/homebrew/opt/fzf/"
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+{{ else if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
 alias grep="grep --color"
 alias pbcopy="clip.exe"
 alias pbpaste="powershell.exe -command 'Get-Clipboard'"
 export FZF_PATH="/home/linuxbrew/.linuxbrew/opt/fzf/"
-# export DISPLAY="`grep nameserver /etc/resolv.conf | sed 's/nameserver //'`:0"
-# alias rg="/usr/bin/rg"
+{{ end }}
+
+# -- ADDITIONAL SETTINGS -------------------------------------------------------
+
 
 # -- FUNCTIONS ----------------------------------------------------------------
-
-autoload -Uz ${fpath[1]}/*(.:t)
 
 # Go up n directories
 
@@ -254,19 +262,6 @@ autoload -Uz ${fpath[1]}/*(.:t)
     done
   fi
   \cd "$target"
-}
-
-# Unlock BitWarden and export token
-
-bwu() {
-  eval $(bw unlock | grep export | cut -c 3-)
-}
-
-# Search through BitWarden vault and copy password
-
-bwp() {
-  [[ -z "${BW_SESSON}" ]] && bwu
-  bw get password $(bw list items | bwfzf; cat /tmp/bwfzf | fzf | awk 'BEGIN { FS="- " } ; { print $3 }') | pbcopy; rm /tmp/bwfzf
 }
 
 # Rich print of file with less
@@ -314,9 +309,38 @@ v() {
   local file
   file="$(fasd -Rfl "$1" | fzf-tmux -1 -0 --no-sort +m)" && nvim "${file}" || return 1
 }
+{{ if eq .chezmoi.os "darwin" }}
+# Set yabai padding
+ypad() {
+  yabai -m config top_padding $1
+  yabai -m config bottom_padding $1
+  yabai -m config left_padding $1
+  yabai -m config right_padding $1
+  yabai -m config window_gap $1
+  echo $1 > $XDG_DATA_HOME/yabai/padding.txt
+  ~/.config/yabai/scripts/refresh.sh
+}
+{{ end }}
 
 # -- CONDA --------------------------------------------------------------------
 
+{{ if eq .chezmoi.os "darwin" }}
+__conda_setup="$('/Users/gustavkristensen/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/gustavkristensen/mambaforge/etc/profile.d/conda.sh" ]; then
+# . "/Users/gustavkristensen/mambaforge/etc/profile.d/conda.sh"  # commented out by conda initialize
+    else
+# export PATH="/Users/gustavkristensen/mambaforge/bin:$PATH"  # commented out by conda initialize
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/Users/gustavkristensen/mambaforge/etc/profile.d/mamba.sh" ]; then
+    . "/Users/gustavkristensen/mambaforge/etc/profile.d/mamba.sh"
+fi
+{{ else if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
 __conda_setup="$('/home/gustav/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -332,6 +356,7 @@ unset __conda_setup
 if [ -f "/home/gustav/mambaforge/etc/profile.d/mamba.sh" ]; then
     . "/home/gustav/mambaforge/etc/profile.d/mamba.sh"
 fi
+{{ end }}
 
 if [[ $TMUX ]]; then
     conda deactivate
@@ -340,30 +365,28 @@ fi
 
 # -- SSH-AGENT ----------------------------------------------------------------
 
-SSH_ENV="$HOME/.ssh/environment"
+SSH_ENV=$HOME/.ssh/environment
 
-# function start_agent {
-#     touch $SSH_ENV
-#     chmod 600 "${SSH_ENV}"
-#     /usr/bin/ssh-agent | sed 's/^echo/#echo/' >> "${SSH_ENV}"
-#     . "${SSH_ENV}" > /dev/null
-#     /usr/bin/ssh-add
-# }
+# start the ssh-agent
+function start_agent {
+    # spawn ssh-agent
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+}
 
-# # Source SSH settings, if applicable
-# if [ -f "${SSH_ENV}" ]; then
-#     . "${SSH_ENV}" > /dev/null
-#     kill -0 $SSH_AGENT_PID 2>/dev/null || {
-#         start_agent
-#     }
-# else
-#     start_agent
-# fi
+if [ -f "${SSH_ENV}" ]; then
+     . "${SSH_ENV}" > /dev/null
+     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
 
 # -- MISC ---------------------------------------------------------------------
 
 eval "$(zoxide init zsh)"
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # -- FINAL --------------------------------------------------------------------
 

@@ -2,7 +2,11 @@ set -g history-limit 10000
 set-option -sg escape-time 10
 set-option -g focus-events on
 # set -g default-terminal "alacritty"
+{{ if eq .chezmoi.os "darwin" -}}
+set-option -g default-shell "/opt/homebrew/bin/zsh"
+{{- else -}}
 set-option -g default-shell "zsh"
+{{- end }}
 set -g default-terminal "tmux-256color"
 set-option -ga terminal-overrides ",xterm-256color:RGB"
 
@@ -126,9 +130,9 @@ set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @resurrect-strategy-nvim 'session'
 set -g @resurrect-capture-pane-contents 'on'
 set -g @resurrect-save-bash-history 'on'
-set -g @plugin 'tmux-plugins/tmux-continuum'
-set -g @continuum-restore 'on'
-set -g @continuum-save-interval '5'
+# set -g @plugin 'tmux-plugins/tmux-continuum'
+# set -g @continuum-restore 'on'
+# set -g @continuum-save-interval '5'
 set -g @plugin 'jaclu/tmux-menus'
 set -g @plugin 'sainnhe/tmux-fzf'
 unbind \\

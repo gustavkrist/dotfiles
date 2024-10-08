@@ -1,0 +1,125 @@
+#SKHD STUFF
+
+# if you're having troubles finding key codes for a key just type skhd --observe in a terminal and type a key. Pretty cool! Or just check the wiki.
+
+## HYPER == SHIFT + CMD + ALT + OPTION
+
+# -- Movement -----------------------------------------------------------------
+
+## swap managed window
+hyper - j : yabai -m window --swap west
+hyper - l : yabai -m window --swap east
+hyper - i : yabai -m window --swap north
+hyper - k : yabai -m window --swap south
+
+# insert managed window into stack
+hyper - a : yabai -m window --stack west
+hyper - s : yabai -m window --stack south
+hyper - w : yabai -m window --stack north
+hyper - d : yabai -m window --stack east
+
+# move floating window
+hyper - left : yabai -m window --move rel:-20:0
+hyper - right : yabai -m window --move rel:20:0
+hyper - down : yabai -m window --move rel:0:20
+hyper - up : yabai -m window --move rel:0:-20
+
+# -- Focus --------------------------------------------------------------------
+
+# focus window
+shift + alt - h : yabai -m window --focus west
+shift + alt - j : yabai -m window --focus south
+shift + alt - k : yabai -m window --focus north
+shift + alt - l : yabai -m window --focus east
+shift + alt - g : yabai -m window --focus first
+shift + alt - a : yabai -m window --focus recent
+shift + alt - p : yabai -m window --focus stack.prev || yabai -m window --focus prev || yabai -m window --focus last
+shift + alt - n : yabai -m window --focus stack.next || yabai -m window --focus next || yabai -m window --focus first
+
+# send window to space
+hyper - 1 : yabai -m window --space 1 --focus
+hyper - 2 : yabai -m window --space 2 --focus
+hyper - 3 : yabai -m window --space 3 --focus
+hyper - 4 : yabai -m window --space 4 --focus
+hyper - 5 : yabai -m window --space 5 --focus
+hyper - 6 : yabai -m window --space 6 --focus
+
+# send window to display
+shift + alt + ctrl - 1 : bash -c "DISPLAY=1 ~/.config/skhd/scripts/move_display_and_follow.sh"
+shift + alt + ctrl - 2 : bash -c "DISPLAY=2 ~/.config/skhd/scripts/move_display_and_follow.sh"
+
+# focus display
+shift + alt - 1 : yabai -m display --focus 1
+shift + alt - 2 : yabai -m display --focus 2
+
+# -- Size ---------------------------------------------------------------------
+
+# make floating window fill screen or center
+shift + lalt + lcmd + ctrl + ralt - f : yabai -m window --grid 1:1:0:0:1:1
+shift + lalt + lcmd + ctrl + ralt - c : yabai -m window --grid 9:9:2:1:5:7
+
+# resize floating window
+shift + alt + ctrl - l : yabai -m window --resize bottom_right:100:100
+shift + alt + ctrl - o : yabai -m window --resize bottom_right:-100:-100
+shift + alt + ctrl - k : yabai -m window --resize bottom_left:-100:100
+shift + alt + ctrl - i : yabai -m window --resize bottom_left:100:-100
+
+# resize window
+shift + alt - left : yabai -m window west --resize right:-20:0 2> /dev/null || yabai -m window --resize right:-20:0
+shift + alt - down : yabai -m window north --resize bottom:0:20 2> /dev/null || yabai -m window --resize bottom:0:20
+shift + alt - up : yabai -m window south --resize top:0:-20 2> /dev/null || yabai -m window --resize top:0:-20
+shift + alt - right : yabai -m window east --resize left:20:0 2> /dev/null || yabai -m window --resize left:20:0
+
+# -- Commands -----------------------------------------------------------------
+
+## Balance size of windows
+hyper - z : yabai -m space --balance
+
+## Quickly restart the yabai launch agent
+ctrl + alt + cmd - r : yabai --restart-service
+
+## Close active application
+hyper - q : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+
+## rotate tree 90
+hyper - r : yabai -m space --rotate 90
+
+## mirror tree y-axis
+hyper - y : yabai -m space --mirror y-axis
+
+## mirror tree x-axis
+hyper - x : yabai -m space --mirror x-axis
+
+## toggle sub split directory
+hyper - t : yabai -m window --toggle split
+
+## toggle window fullscreen zoom
+hyper - f : yabai -m window --toggle zoom-fullscreen
+
+## toggle focused window float
+
+hyper - m : yabai -m window --toggle float
+
+## toggle padding
+hyper - p : /Users/gustavkristensen/.config/skhd/scripts/toggle_padding.sh
+
+## Move active window to next space on current display
+shift + lalt + lcmd + ctrl + ralt - tab : /Users/gustavkristensen/.config/skhd/scripts/move_to_next_space.sh
+
+## Focus next stack item
+ctrl + alt + cmd + lshift - return : yabai -m window --focus stack.next || yabai -m window --focus stack.first
+
+## toggle space management
+shift + alt - f : yabai -m space --layout float
+shift + alt - d : yabai -m space --layout bsp
+shift + alt - s : yabai -m space --layout stack
+
+## Toggle active window border
+hyper - b : bash -c 'if [[ "$(yabai -m config window_border)" = "on" ]]; then yabai -m config window_border off; else yabai -m config window_border on; fi'
+
+## Launch terminal
+# cmd - return : kitty -d=/Users/gustavkristensen -1
+# cmd - return : osascript /Users/gustavkristensen/iterm_scripts/launch_iterm.scpt
+
+# launch jukit kitty terminal
+hyper - v : bash -c 'kitty --listen-on=unix:/tmp/kitty_"$(date +%s%N)" -d ~ -1'

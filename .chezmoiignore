@@ -1,0 +1,18 @@
+{{- if ne .chezmoi.os "darwin" }}
+.hammerspoon/
+Library/
+.ideavimrc
+.config/karabiner/
+.config/sketchybar/
+.config/skhd/
+.config/yabai/
+{{- end }}
+{{- if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
+.config/kitty/
+.config/wezterm/
+{{- end }}
+{{- if eq .chezmoi.os "windows" }}
+*
+!.ideavimrc
+!.config/wezterm/
+{{- end }}

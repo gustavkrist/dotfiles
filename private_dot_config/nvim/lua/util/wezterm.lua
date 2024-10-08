@@ -52,7 +52,7 @@ function M.setup()
       vim.cmd.wincmd(dir)
       local pane = vim.env.WEZTERM_PANE
       local wezterm_prog = "wezterm"
-      if vim.fn.has("wsl") then
+      if vim.fn.has("wsl") == 1 then
         wezterm_prog = "wezterm.exe"
         pane = vim.env.TERM == "wezterm"
       end

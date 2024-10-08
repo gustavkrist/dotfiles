@@ -1,0 +1,98 @@
+{:profiles
+ {:Default {:default true
+        :alone   300
+        :held    50
+        :delay   0
+        :sim     30}}
+ :templates {:open "open -a \"%s\""
+             :itermscript "/Applications/iTerm.app/Contents/Resources/it2run %s"}
+
+ ;;;; helper function to generate things little bit quicker
+ ;; quick define "layers" or "state" feature(use set_variable)
+ ;; can use as conditions in rule list
+ ;; {:<layer name> {:from <froms>}}
+ :simlayers {:o-mode {:key :o}
+             :i-mode {:key :i}
+             :w-mode {:key :w}
+             :e-mode {:key :e}}
+
+ ;; main list
+ :main
+ ;; [<from> <to>] or
+ ;; [<from> <to> <conditions>] or
+ ;; [<from> <to> <conditions> <other options>]
+ ;; <from> can be keywords defined in froms or keycodes without `{:not-from true}`
+ ;; <to> can be keywords defined in tos, keycodes without `{:not-to true}`, string (shell script)
+ ;; <conditions> can be keywords defined in layers, devices, applications
+ ;; <other options> {:other {:parameters {:to_delayed_action_delay_milliseconds 100 :basic.to_if_alone_timeout_milliseconds 500 :basic.to_if_held_down_threshold_milliseconds 250}} }
+ [{:des "Right CMD → Hyper Key (⌃⌥⇧⌘)" :rules [[:right_command :!CTOleft_shift]]}
+  {:des "Both Shifts to CAPS" :rules [[:!S#Pright_shift :caps_lock] [:!R#Pleft_shift :caps_lock]]}
+  {:des "CTRL to ESC if left alone" :rules [[:##left_control :left_control nil {:alone :escape}]]}
+  {:des "Left CMD to CMD+TAB" :rules [[:left_command :left_command nil {:alone :!Ctab}]]}
+  {:des "Avoid starting sysdiagnose with the built-in macOS shortcut cmd+shift+option+ctrl+," :rules [[:!!comma []]]}
+  {:des "Avoid starting sysdiagnose with the built-in macOS shortcut cmd+shift+option+ctrl+." :rules [[:!!period []]]}
+  {:des "Avoid starting sysdiagnose with the built-in macOS shortcut cmd+shift+option+ctrl+backslash" :rules [[:!!backslash []]]}
+  {:des "Hyper navigation keys (i/j/k/l/$/0)" :rules[
+                                                     ; [:!!j :left_arrow]
+                                                     ; [:!!k :down_arrow]
+                                                     ; [:!!l :right_arrow]
+                                                     ; [:!!i :up_arrow]
+                                                     [:!!0 :home]
+                                                     [:!CTOSR4 :end]
+                                                     ]}
+  ; {:des "o-mode launcher"
+  ;  :rules [:o-mode
+  ;          [:c [:open "Visual Studio Code.app"]]
+  ;          [:t [:open "kitty"]]
+  ;          [:g [:open "Google Chrome"]]
+  ;          [:n [:open "Obsidian.app"]]]}
+  {:des "i-mode insert"
+   :rules [:i-mode
+           [:tab [:spacebar :spacebar :spacebar :spacebar]]]}
+  ; {:des "w-mode write language in vim"
+  ;  :rules [:w-mode
+  ;          [:l [:itermscript "popup_editor tex"]]
+  ;          [:m [:itermscript "popup_editor pandoc"]]
+  ;          [:p [:itermscript "popup_editor python"]]
+  ;          ]}
+  ; {:des "e-mode edit language in vim"
+  ;  :rules [:e-mode
+  ;          [:l [:itermscript "popup_editor tex modify"]]
+  ;          [:m [:itermscript "popup_editor pandoc modify"]]
+  ;          [:p [:itermscript "popup_editor python modify"]]
+           ; ]}
+]
+
+ ;; code won't read cheatsheet section
+ ;; ! stand for mandatory
+ ;; # stand for optional
+ ;; C T O S for left command control optional shift
+ ;; F for fn
+ ;; need to prefix C T O S F with ! or #
+ :cheatsheet {:!Ca "command a" ;; mandatory left_command
+              :!Ta "control a" ;; mandatory left_control
+              :!Oa "option a"
+              :!Sa "shift a"
+              :#Sa "shift a" ;; keycode a, optional left_shift
+              :!CTOa "command control option a"
+              :!Cspacebar "command space"
+              :!Fa "fn a"
+              :##a "keycode a optional any"
+              :!!a "mandatory hyper(control command option shift) a "}}
+
+;; here's the definition
+
+    ;; !  | means mandatory
+    ;; #  | means optional
+    ;; C  | left_command
+    ;; T  | left_control
+    ;; O  | left_option
+    ;; S  | left_shift
+    ;; F  | fn
+    ;; Q  | right_command
+    ;; W  | right_control
+    ;; E  | right_option
+    ;; R  | right_shift
+    ;; P  | caps_lock
+    ;; !! | mandatory command + control + optional + shift (hyper)
+    ;; ## | optional any

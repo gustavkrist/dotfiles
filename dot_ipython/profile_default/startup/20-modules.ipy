@@ -1,5 +1,4 @@
 try:
-    # %load_ext rich
     import numpy as np
     from rich import inspect
     from pprint import pprint as pp
