@@ -8,7 +8,7 @@ srgb = false
 wsl = false
 {{- else if eq .chezmoi.os "windows" }}
 frame = "full"
-neovim-bin = "/home/linuxbrew/.linuxbrew/bin/nvim" # in reality found dynamically on $PATH if unset
+neovim-bin = "/home/linuxbrew/.linuxbrew/bin/nvim"
 srgb = true
 wsl = true
 {{- end }}
