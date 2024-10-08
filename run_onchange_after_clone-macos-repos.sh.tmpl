@@ -1,0 +1,6 @@
+{{- if eq .chezmoi.os "darwin" }}
+#!/bin/sh
+git clone https://github.com/AdamWagner/stackline "$HOME/.hammerspoon/stackline"
+git clone https://github.com/trygveaa/kitty-kitten-search "$HOME/.config/kitty/kitty_search"
+git clone https://github.com/yurikhan/kitty_grab "$HOME/.config/kitty/kitty_grab"
+{{- end }}

@@ -1,3 +1,10 @@
+{{- if eq .chezmoi.os "windows" -}}
+*
+!.ideavimrc
+!.config
+.config/*
+!.config/wezterm
+{{- else }}
 {{- if ne .chezmoi.os "darwin" }}
 .hammerspoon/
 Library/
@@ -11,8 +18,4 @@ Library/
 .config/kitty/
 .config/wezterm/
 {{- end }}
-{{- if eq .chezmoi.os "windows" }}
-*
-!.ideavimrc
-!.config/wezterm/
 {{- end }}
