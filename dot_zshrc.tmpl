@@ -247,6 +247,12 @@ fi
   \cd "$target"
 }
 
+_cmedit() {
+  $HOME/.local/bin/cmedit
+}
+zle -N _cmedit
+bindkey "^O" _cmedit
+
 {{ if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
 ksw () {
   namespace=$(echo "default\nplayground-test\nsupwiz-1-test\nsupwiz-2-test\nsupwiz-3-test\nproduct-demo-prod" | fzf -q "$1" -0 -1)

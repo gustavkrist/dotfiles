@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+import os
+import subprocess
+
+managed = subprocess.run(["chezmoi", "managed"], capture_output=True).stdout.decode()
+files = [
+    file
+    for file in managed.splitlines()
+    if not os.path.isdir(f"{os.getenv('HOME')}/{file}")
+]
+fzf = subprocess.Popen(
+    [
+        "fzf",
+        "-m",
+        "--preview",
+        f"bat --theme Nord --style=numbers --color=always --line-range :500 '{os.getenv('HOME')}/{{}}'",
+    ],
+    stdin=subprocess.PIPE,
+    stdout=subprocess.PIPE,
+)
+files_to_edit = fzf.communicate("\n".join(files).encode())[0].decode().splitlines()
+if files_to_edit:
+    subprocess.run(["chezmoi", "edit", "--apply"] + [f"{os.getenv('HOME')}/{file}" for file in files_to_edit])
