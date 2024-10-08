@@ -377,6 +377,8 @@ if [[ $TMUX ]]; then
     conda activate base
 fi
 {{- else if and (eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu") (eq .chezmoi.hostname "Gustav-PC") }}
+# -- CONDA --------------------------------------------------------------------
+
 __conda_setup="$('/home/gustav/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
