@@ -1,0 +1,47 @@
+kl() {
+  local KGP_OUTPUT=$(kubectl get pods)
+  local ARGS=$#
+  local POD=${1:?"Missing required argument 'pod'"}
+  shift
+  case $POD in
+    bsb)
+      POD=$(echo $KGP_OUTPUT | awk '/botstudio-backend/ { print $1 }')
+      kubectl logs $POD $@
+      ;;
+
+    bcbeat)
+      POD=$(echo $KGP_OUTPUT | awk '/botstudio-celery-beat/ { print $1 }')
+      kubectl logs $POD $@
+      ;;
+
+    bcload)
+      POD=$(echo $KGP_OUTPUT | awk '/botstudio-celery-bot-load/ { print $1 }')
+      kubectl logs $POD $@
+      ;;
+
+    bcdef)
+      POD=$(echo $KGP_OUTPUT | awk '/botstudio-celery-default/ { print $1 }')
+      kubectl logs $POD $@
+      ;;
+
+    bctrain)
+      POD=$(echo $KGP_OUTPUT | awk '/botstudio-celery-train/ { print $1 }')
+      kubectl logs $POD $@
+      ;;
+
+    bsd)
+      POD=$(echo $KGP_OUTPUT | awk '/botstudio-demoserver/ { print $1 }')
+      kubectl logs $POD $@
+      ;;
+
+    bsc)
+      POD=$(echo $KGP_OUTPUT | awk '/botserve-control/ { print $1 }')
+      kubectl logs $POD $@
+      ;;
+
+    *)
+      POD=$(echo $KGP_OUTPUT | awk -v pat=$POD '$0~pat { print $1 }')
+      kubectl logs $POD $@
+      ;;
+  esac
+}

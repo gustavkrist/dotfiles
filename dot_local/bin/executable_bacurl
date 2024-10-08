@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+TOKEN=$(curl -s -k 'https://botadmin.local/api/auth/obtain-token/' -d '{"username": "superuser", "password": "superuser"}' -H 'Content-Type: application/json' | jq -r '.access')
+curl -k -H "Authorization: JWT $TOKEN" $@

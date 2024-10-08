@@ -1,0 +1,17 @@
+kx() {
+  local KGP_OUTPUT=$(kubectl get pods)
+  local ARGS=$#
+  local POD=${1:?"Missing required argument 'pod'"}
+  shift
+  case $POD in
+    bsb)
+      POD=$(echo $KGP_OUTPUT | awk '/botstudio-backend/ { print $1 }')
+      kubectl exec -it $POD -- bash
+      ;;
+
+    *)
+      POD=$(echo $KGP_OUTPUT | awk -v pat=$POD '$0~pat { print $1 }')
+      kubectl exec -it $POD -- $@
+      ;;
+  esac
+}

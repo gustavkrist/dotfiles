@@ -1,0 +1,8 @@
+#!/bin/zsh
+
+local PRODUCT="$1"
+kubectl logs -f -l product="$PRODUCT" --max-log-requests=13 --timestamps --prefix |& grep --line-buffered -v 'Defaulted container ' | sed -u 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' > "/tmp/$PRODUCT-log.log" &
+LOG_PID=$!
+lnav "/tmp/$PRODUCT-log.log" 
+kill "$LOG_PID"
+rm "/tmp/$PRODUCT-log.log" 

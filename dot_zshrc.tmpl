@@ -296,7 +296,10 @@ kns () {
 dropcache () {
   sync; sudo sh -c "echo $1 > /proc/sys/vm/drop_caches"
 }
-{{ end }}
+
+fpath=( ~/.zsh_functions "${fpath[@]}" )
+autoload -Uz ${fpath[1]}/*(.:t)
+{{- end }}
 
 # Rich print of file with less
 richer () {
