@@ -1,0 +1,109 @@
+local wezterm = require('wezterm') --[[@as Wezterm]]
+local config = wezterm.config_builder()
+wezterm.log_info("reloading")
+
+require("keys").setup(config)
+require("links").setup(config)
+require("mouse").setup(config)
+require("tabs").setup(config)
+
+config.enable_wayland = true
+config.webgpu_power_preference = "HighPerformance"
+config.cursor_blink_ease_in = "Constant"
+config.cursor_blink_ease_out = "Constant"
+config.enable_kitty_keyboard = true
+config.enable_kitty_graphics = true
+
+if wezterm.target_triple:find("windows") then
+  config.launch_menu = {
+    {
+      label = "PowerShell",
+      args = { "powershell.exe", "-NoLogo" },
+      domain = { DomainName = "local" },
+    },
+  }
+  -- WSL
+  config.wsl_domains = {
+    {
+      name = 'WSL:Ubuntu',
+      distribution = "Ubuntu",
+      default_cwd = "~",
+      username = "gustav",
+    },
+  }
+  config.default_domain = "WSL:Ubuntu"
+  config.window_decorations = "INTEGRATED_BUTTONS | RESIZE"
+else
+  config.window_decorations = "RESIZE"
+end
+
+config.term = "wezterm"
+config.color_scheme = 'nord'
+config.font = wezterm.font({ family = "Fira Code" })
+config.font_size = 14
+config.bold_brightens_ansi_colors = "BrightAndBold"
+config.adjust_window_size_when_changing_font_size = false
+
+config.scrollback_lines = 10000
+
+
+-- Colors
+config.colors = {
+  tab_bar = {
+    inactive_tab_edge = "#4C566A",
+    active_tab = {
+      bg_color = "#3B4252",
+      fg_color = "#c0c0c0",
+    },
+    inactive_tab = {
+      bg_color = "#2E3440",
+      fg_color = "#808080",
+    },
+    inactive_tab_hover = {
+      bg_color = "#434C5E",
+      fg_color = "#c0c0c0",
+    },
+    new_tab = {
+      bg_color = "#2E3440",
+      fg_color = "#808080",
+    },
+    new_tab_hover = {
+      bg_color = "#434C5E",
+      fg_color = "#c0c0c0",
+    }
+  }
+}
+
+
+-- Window
+config.window_frame = {
+  active_titlebar_bg = "#2E3440"
+}
+config.window_background_opacity = 0.90
+
+wezterm.on('user-var-changed', function(window, pane, name, value)
+  local overrides = window:get_config_overrides() or {}
+  -- zen-mode.nvim integration
+  if name == "ZEN_MODE" then
+    local incremental = value:find("+")
+    local number_value = tonumber(value)
+    if incremental ~= nil then
+      while (number_value > 0) do
+        window:perform_action(wezterm.action.IncreaseFontSize, pane)
+        number_value = number_value - 1
+      end
+      overrides.enable_tab_bar = false
+    elseif number_value < 0 then
+      window:perform_action(wezterm.action.ResetFontSize, pane)
+      overrides.font_size = nil
+      overrides.enable_tab_bar = true
+    else
+      overrides.font_size = number_value
+      overrides.enable_tab_bar = false
+    end
+  end
+  window:set_config_overrides(overrides)
+end)
+
+-- and finally, return the configuration to wezterm
+return config
