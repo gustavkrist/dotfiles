@@ -626,7 +626,7 @@ c.TerminalInteractiveShell.editor = "nvim"
 
 ## Add shortcuts from 'emacs' insert mode to 'vi' insert mode.
 #  Default: True
-# c.TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode = True
+c.TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode = True
 
 ## Allows to enable/disable the prompt toolkit history search
 #  Default: True

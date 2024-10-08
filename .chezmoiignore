@@ -15,7 +15,7 @@ Library/
 .config/skhd/
 .config/yabai/
 {{- end }}
-{{- if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
+{{- if eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu" }}
 .config/kitty/
 .config/wezterm/
 .config/neovide/

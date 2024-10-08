@@ -77,47 +77,12 @@ setopt hist_verify
 setopt share_history
 setopt nobeep
 
-# -- PATH ---------------------------------------------------------------------
-
-{{ if eq .chezmoi.os "darwin" }}
-export PATH="$PATH:/opt/homebrew/opt/mysql-client/bin"
-export PATH=$PATH:$HOME/.npm-global-bin
-{{ else if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
-export PATH=$PATH:$HOME/.npm-global/bin
-export PATH="$PATH:/usr/local/cuda/bin"
-export PATH="$PATH:/mnt/c/Program Files/WezTerm"
-export PATH="$PATH:/home/gustav/.dotnet/tools"
-{{ if eq .chezmoi.hostname "Gustav-PC" }}
-export PATH="$PATH:/mnt/c/Users/gusta/bin"
-{{ end }}
-{{ end }}
-export PATH=$PATH:$HOME/.ghcup/bin
-export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:$HOME/go/bin"
-export PATH="$PATH:$HOME/.dotnet"
-export PATH="$PATH:$HOME/.dotnet/tools"
-export PATH="$PATH:$HOME/.roswell/bin"
-
-# -- SYSTEM ENV ---------------------------------------------------------------
-
-export EDITOR='nvim'
-export PAGER='less -R'
-export LANG="en_US.UTF-8"
-export LC_CTYPE="en_US.UTF-8"
-export COLORTERM="truecolor"
-export XDG_CONFIG_HOME="$HOME/.config"
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-export DOTNET_ROOT="$HOME/.dotnet"
-export FSHARP_GLIB_PATH="$HOME/fsharp/GLib"
-command -v luarocks 2>&1 >/dev/null && eval $(luarocks path --bin)
-
 # -- ALIASES ------------------------------------------------------------------
 
 alias cd="z"
 alias zz="z -"
 alias ls="eza --icons"
-alias la="ls -a"
+alias la="eza -a --icons"
 alias ll="eza -l"
 alias zshconf="chezmoi edit ~/.zshrc --apply"
 alias tml="tmux list-sessions"
@@ -130,9 +95,19 @@ alias r="radian"
 alias lg="lazygit"
 alias fp="fzf-tmux -p -w 90% -h 90% -- --preview \
   'bat --theme Nord --style=numbers --color=always --line-range :500 {}'"
+alias cm="chezmoi"
+{{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+alias remount="sudo mount -a"
+alias decolerize="sed -u 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g'"
+alias bslogs="prodlogs botstudio"
+alias nvide="'/mnt/c/Program Files/Neovide/neovide.exe' --"
+alias k="kubectl"
+alias kgp="kubectl get pods"
+alias kex="kubectl exec -it"
+{{- else }}
 alias coa="conda activate"
 alias cod="conda deactivate"
-alias cm="chezmoi"
+{{- end }}
 {{ if eq .chezmoi.os "darwin" }}
 alias ipyk="ipython3 -i -c \"import sys;sys.path.append('$LUNARVIM_RUNTIME_DIR/site/pack/packer/opt/vim-jukit/helpers');import matplotlib;import matplotlib.pyplot as plt;matplotlib.use('module://matplotlib-backend-kitty');plt.show.__annotations__['save_dpi'] = 150;import matplotlib.pyplot as plt;plt.style.use('$LUNARVIM_RUNTIME_DIR/site/pack/packer/opt/vim-jukit/helpers/matplotlib-backend-kitty/backend.mplstyle')\""
 alias icat="kitty +kitten icat"
@@ -208,6 +183,7 @@ export NVIM_LISTEN_ADDRESS='/tmp/nvimsocket'
 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 export ZSH_SYSTEM_CLIPBOARD_TMUX_SUPPORT="true"
+export ZSH_SYSTEM_CLIPBOARD_METHOD="pb"
 export BAT_THEME="Nord"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bddedc"
 export LS_COLORS=$(echo "$(vivid generate nord):*.plist=0;38;2;180;142;173:*.cson=0;38;2;180;142;173:\
@@ -240,7 +216,7 @@ alias sed="gsed"
 alias xargs="gxargs"
 export FZF_PATH="/opt/homebrew/opt/fzf/"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-{{ else if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
+{{ else if eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu" }}
 alias grep="grep --color"
 alias pbcopy="clip.exe"
 alias pbpaste="powershell.exe -command 'Get-Clipboard'"
@@ -270,6 +246,57 @@ fi
   fi
   \cd "$target"
 }
+
+{{ if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+ksw () {
+  namespace=$(echo "default\nplayground-test\nsupwiz-1-test\nsupwiz-2-test\nsupwiz-3-test\nproduct-demo-prod" | fzf -q "$1" -0 -1)
+  case $namespace in
+    default)
+      kubectl config use docker-desktop && kubectl config set-context --current --namespace="$namespace"
+      ;;
+
+    playground-test)
+      kubectl config use humor && kubectl config set-context --current --namespace="$namespace"
+      ;;
+
+    supwiz-1-test)
+      kubectl config use badekar && kubectl config set-context --current --namespace="$namespace"
+      ;;
+
+    supwiz-2-test)
+      kubectl config use humor && kubectl config set-context --current --namespace="$namespace"
+      ;;
+
+    supwiz-3-test)
+      kubectl config use badekar && kubectl config set-context --current --namespace="$namespace"
+      ;;
+
+    product-demo-prod)
+      kubectl config use kumbum && kubectl config set-context --current --namespace="$namespace"
+      ;;
+
+  esac
+}
+
+kcu () {
+  config=$(kubectl config get-contexts | sed 's/^/\*/' | awk '{ print $2 }' | tail -n +2 | fzf -q "$1" -0 -1)
+  kubectl config use "$config"
+}
+
+ksc () {
+  k config set-context --current --namespace="$1"
+}
+
+kns () {
+  namespace=$(k get ns | cut -d" " -f1 | tail -n +2 | fzf -q "$1" -0 -1)
+  k config set-context --current --namespace="$namespace"
+}
+
+# Drop cache
+dropcache () {
+  sync; sudo sh -c "echo $1 > /proc/sys/vm/drop_caches"
+}
+{{ end }}
 
 # Rich print of file with less
 richer () {
@@ -306,12 +333,6 @@ fif() {
     file="$(rga --max-count=1 --ignore-case --files-with-matches --no-messages "$*" | fzf-tmux -p -w 80% -h 80% -- +m --preview="rga --ignore-case --pretty --context 10 '"$*"' {}")" && echo "opening $file" && nvim "$file" || return 1;
 }
 
-# Search though Lastpass vault and copy password
-lp() {
-  lpass show -c --password $(lpass ls  | fzf-tmux | awk '{print $(NF)}' | sed 's/\]//g')
-}
-
-# Find file and open in nvim
 v() {
   local file
   file="$(fasd -Rfl "$1" | fzf-tmux -1 -0 --no-sort +m)" && nvim "${file}" || return 1
@@ -329,9 +350,9 @@ ypad() {
 }
 {{ end }}
 
+{{- if eq .chezmoi.os "darwin" }}
 # -- CONDA --------------------------------------------------------------------
 
-{{ if eq .chezmoi.os "darwin" }}
 __conda_setup="$('/Users/gustavkristensen/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -347,7 +368,12 @@ unset __conda_setup
 if [ -f "/Users/gustavkristensen/mambaforge/etc/profile.d/mamba.sh" ]; then
     . "/Users/gustavkristensen/mambaforge/etc/profile.d/mamba.sh"
 fi
-{{ else if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
+
+if [[ $TMUX ]]; then
+    conda deactivate
+    conda activate base
+fi
+{{- else if and (eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu") (eq .chezmoi.hostname "Gustav-PC") }}
 __conda_setup="$('/home/gustav/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
@@ -363,12 +389,12 @@ unset __conda_setup
 if [ -f "/home/gustav/mambaforge/etc/profile.d/mamba.sh" ]; then
     . "/home/gustav/mambaforge/etc/profile.d/mamba.sh"
 fi
-{{ end }}
 
 if [[ $TMUX ]]; then
     conda deactivate
     conda activate base
 fi
+{{- end }}
 
 # -- SSH-AGENT ----------------------------------------------------------------
 

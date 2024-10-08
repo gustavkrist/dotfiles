@@ -1,2 +1,75 @@
 skip_global_compinit=1
 . "$HOME/.cargo/env"
+{{ if eq .chezmoi.os "darwin" }}
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="$PATH:/Users/gustavkristensen/Library/Application Support/JetBrains/Toolbox/scripts"
+{{ else if eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu" }}
+export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
+export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
+export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";
+export PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin${PATH+:$PATH}";
+[ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}";
+export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:${INFOPATH:-}";
+{{ end }}
+export NVIM_LISTEN_ADDRESS='/tmp/nvimsocket'
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+
+# -- SYSTEM ENV ---------------------------------------------------------------
+
+export EDITOR='nvim'
+export PAGER='less -R'
+export LANG="en_US.UTF-8"
+export LC_CTYPE="en_US.UTF-8"
+export COLORTERM="truecolor"
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export DOTNET_ROOT="$HOME/.dotnet"
+export FSHARP_GLIB_PATH="$HOME/fsharp/GLib"
+command -v luarocks 2>&1 >/dev/null && eval $(luarocks path --bin)
+{{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+export PYENV_ROOT="$HOME/.pyenv"
+export AZ_PATH="/usr/bin/az"
+export DOCKER_PATH="/usr/bin/docker"
+export SUPWIZ_REPO_ROOT="$HOME/repositories/supwiz"
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+{{- end }}
+
+# -- PATH ---------------------------------------------------------------------
+
+{{- if eq .chezmoi.os "darwin" }}
+export PATH="$PATH:/opt/homebrew/opt/mysql-client/bin"
+export PATH=$PATH:$HOME/.npm-global-bin
+{{- else if eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu" }}
+export PATH=$PATH:$HOME/.npm-global/bin
+export PATH="$PATH:/usr/local/cuda/bin"
+export PATH="$PATH:/mnt/c/Program Files/WezTerm"
+export PATH="$PATH:/home/gustav/.dotnet/tools"
+{{- if eq .chezmoi.hostname "Gustav-PC" }}
+export PATH="$PATH:/mnt/c/Users/gusta/bin"
+{{- end }}
+{{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+export PATH="/mnt/c/Users/GustavKristensen/AppData/Local/Programs/Microsoft VS Code/bin:$PATH"
+export PATH="/mnt/c/Program Files/win32yank:$PATH"
+export PATH="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:$PATH"
+export PATH="/mnt/c/WINDOWS/System32:$PATH"
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PYTHONPATH="$HOME/repositories/supwiz/src:$PYTHONPATH"
+export PATH="/mnt/c/Windows:$PATH"
+export PATH="$PYENV_ROOT/bin:$PATH"
+{{- end }}
+{{- end }}
+export PATH=$PATH:$HOME/.ghcup/bin
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/go/bin"
+export PATH="$PATH:$HOME/.dotnet"
+export PATH="$PATH:$HOME/.dotnet/tools"
+export PATH="$PATH:$HOME/.roswell/bin"
+{{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+eval "$(pyenv virtualenv-init -)"
+{{- end }}
