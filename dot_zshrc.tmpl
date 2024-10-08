@@ -249,6 +249,13 @@ export FZF_PATH="/home/linuxbrew/.linuxbrew/opt/fzf/"
 
 # -- ADDITIONAL SETTINGS -------------------------------------------------------
 
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
 
 # -- FUNCTIONS ----------------------------------------------------------------
 
