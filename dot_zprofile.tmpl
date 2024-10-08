@@ -1,7 +1,7 @@
 {{ if eq .chezmoi.os "darwin" }}
 eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH="$PATH:/Users/gustavkristensen/Library/Application Support/JetBrains/Toolbox/scripts"
-{{ else if eq (env "WSL_DISTRO_NAME") "linux" }}
+{{ else if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
 export HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew";
 export HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar";
 export HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew";

@@ -108,7 +108,6 @@ export COLORTERM="truecolor"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
-export JAVA_HOME=$(/usr/libexec/java_home)
 export DOTNET_ROOT="$HOME/.dotnet"
 export FSHARP_GLIB_PATH="$HOME/fsharp/GLib"
 command -v luarocks 2>&1 >/dev/null && eval $(luarocks path --bin)
@@ -232,6 +231,7 @@ export CMAKE_INCLUDE_PATH="/opt/homebrew/opt/flex/include"
 export CMAKE_LIBRARY_PATH="/opt/homebrew/opt/flex/lib;/opt/homebrew/opt/bison/lib"
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+export JAVA_HOME=$(/usr/libexec/java_home)
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 export PATH="/opt/homebrew/opt/flex/bin:/opt/homebrew/opt/bison/bin:$PATH"
 alias grep="ggrep --color"
