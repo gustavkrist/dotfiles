@@ -5,6 +5,7 @@
 .config/*
 !.config/wezterm
 {{- else }}
+AppData/Roaming/neovide/config.toml
 {{- if ne .chezmoi.os "darwin" }}
 .hammerspoon/
 Library/
@@ -17,5 +18,6 @@ Library/
 {{- if eq (env "WSL_DISTRO_NAME") "Ubuntu" }}
 .config/kitty/
 .config/wezterm/
+.config/neovide/
 {{- end }}
 {{- end }}
