@@ -99,7 +99,7 @@ alias lg="lazygit"
 alias fp="fzf-tmux -p -w 90% -h 90% -- --preview \
   'bat --theme Nord --style=numbers --color=always --line-range :500 {}'"
 alias cm="chezmoi"
-alias lgcm="lg -w $(chezmoi source-path)"
+alias lgcm="lg -g '$(chezmoi source-path)/.git' -w '$(chezmoi source-path)'"
 {{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
 alias remount="sudo mount -a"
 alias decolerize="sed -u 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g'"
