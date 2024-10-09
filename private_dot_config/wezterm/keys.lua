@@ -23,7 +23,8 @@ function M.setup(config)
     { mods = M.mod,   key = "p",     action = act.ActivateCommandPalette },
     -- Scroll
     { mods = M.mod,   key = "k",     action = act.ScrollByPage(-0.5) },
-    { mods = M.mod,   key = "k",     action = act.ScrollByPage(0.5) },
+    { mods = M.mod,   key = "j",     action = act.ScrollByPage(0.5) },
+    { mods = M.mod,   key = "g",     action = act.ScrollToBottom },
     -- New tab
     { mods = M.mod,   key = "t",     action = act.SpawnTab("CurrentPaneDomain") },
     -- Splits
