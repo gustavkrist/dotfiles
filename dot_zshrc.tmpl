@@ -36,6 +36,9 @@ zinit light romkatv/powerlevel10k
 _zshrc_after_load() {
   eval "$(aactivator init)"
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  {{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+  source <(kubectl completion zsh)
+  {{- end }}
 }
 
 zinit wait lucid light-mode for \
@@ -81,8 +84,8 @@ setopt nobeep
 
 alias cd="z"
 alias zz="z -"
-alias ls="eza --icons"
-alias la="eza -a --icons"
+alias ls="eza --icons=always"
+alias la="eza -a --icons=always"
 alias ll="eza -l"
 alias zshconf="chezmoi edit ~/.zshrc --apply"
 alias tml="tmux list-sessions"
