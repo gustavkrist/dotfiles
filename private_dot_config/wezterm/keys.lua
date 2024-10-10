@@ -68,8 +68,9 @@ function M.setup(config)
     M.split_nav("move", "CTRL", "k", "Up"),
     M.split_nav("move", "CTRL", "l", "Right"),
     -- Ctrl sequences
-    { mods = "SHIFT", key = "Enter", action = wezterm.action { SendString = "\u{001b}[13;2u" } },
-    { mods = "CTRL",  key = "Enter", action = wezterm.action { SendString = "\u{001b}[13;5u" } },
+    { mods = "CTRL",  key = "i",     action = wezterm.action({ SendString = "\u{001b}[105;5u" }) },
+    { mods = "SHIFT", key = "Enter", action = wezterm.action({ SendString = "\u{001b}[13;2u" }) },
+    { mods = "CTRL",  key = "Enter", action = wezterm.action({ SendString = "\u{001b}[13;5u" }) },
   }
 end
 
