@@ -87,6 +87,7 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
+    cond = function() return not require("util.firenvim").get() end,
     config = function(_, opts)
       require("gitsigns").setup(opts)
       vim.o.signcolumn = "yes:2"
@@ -220,6 +221,7 @@ return {
     event = "InsertEnter",
   },
   {
-    "airblade/vim-rooter"
+    "airblade/vim-rooter",
+    cond = function() return not require("util.firenvim").get() end,
   },
 }

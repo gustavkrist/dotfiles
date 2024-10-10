@@ -1,6 +1,7 @@
 return {
   {
     "akinsho/toggleterm.nvim",
+    cond = function() return not require("util.firenvim").get() end,
     version = "*",
     opts = {
       open_mapping = "<C-t>",
