@@ -24,6 +24,7 @@ map("n", "<leader><leader>", "<C-^>", { desc = "Go to last used buffer", silent 
 map("n", "<leader>c", "<cmd>lua require('util.bufferline').buf_kill()<cr>", { desc = "Close Buffer", silent = true })
 map("n", "<esc>", "<cmd>nohlsearch<cr>", { desc = "No Highlight", silent = true })
 map("n", "<leader>m", "<cmd>messages<cr>", { desc = "Show messages", silent = true })
+map("n", "<C-i>", "<C-i>", { noremap = true, silent = true })
 
 -- Better window navigation
 map("n", "<C-h>", "<C-w>h", opts)
