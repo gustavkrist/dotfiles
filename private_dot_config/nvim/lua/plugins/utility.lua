@@ -226,6 +226,7 @@ return {
       local fastaction = require("fastaction")
       fastaction.setup(opts)
       vim.ui.select = function(items, opts, on_choice)
+        opts = opts or {}
         opts.relative = "cursor"
         fastaction.select(items, opts, on_choice)
       end
