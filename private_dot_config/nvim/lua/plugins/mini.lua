@@ -186,8 +186,11 @@ return {
       })
       require("mini.icons").setup()
       require("mini.operators").setup({
-        replace = { prefix = "cr" },
-        sort = { prefix = "go" },
+        replace = { prefix = "gor" },
+        evaluate = { prefix = "goe" },
+        exchange = { prefix = "gox" },
+        multiply = { prefix = "gom" },
+        sort = { prefix = "gos" },
       })
       if not require("util.firenvim")() then
         require("mini.sessions").setup()

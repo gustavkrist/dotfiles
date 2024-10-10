@@ -40,11 +40,11 @@ return {
           noremap = true,
           silent = true,
         },
-        { "<leader>gg", _LAZYGIT_TOGGLE, desc = "Lazygit" },
-        { "<leader>tg", _LAZYGIT_TOGGLE, desc = "Lazygit" },
-        { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "Float" },
+        { "<leader>gg", _LAZYGIT_TOGGLE,                                    desc = "Lazygit" },
+        { "<leader>tg", _LAZYGIT_TOGGLE,                                    desc = "Lazygit" },
+        { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>",              desc = "Float" },
         { "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "Horizontal" },
-        { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Vertical" },
+        { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>",   desc = "Vertical" },
       }
     end,
   },
@@ -199,4 +199,18 @@ return {
     opts = {},
     keys = { { "<leader>oc", desc = "Edit chezmoi files" } },
   },
+  {
+    "chrishrb/gx.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function(_, opts)
+      require("gx").setup(opts)
+      vim.keymap.set("n", "gx", "<cmd>Browse<cr>", { desc = "Open text under cursor" })
+    end,
+    opts = {},
+    -- cmd = { "Browse" },
+    -- keys = {
+    --   { "gx", "<cmd>Browse<cr>", desc = "Open text under cursor" },
+    --   { "gx", "<Esc>:Browse<cr>", desc = "Open selected text", mode = "x" },
+    -- },
+  }
 }
