@@ -1,3 +1,4 @@
+-- Most of this is taken from LunarVim
 local M = {}
 local icons = require("util.icons")
 local plugin_util = require("util.plugins")

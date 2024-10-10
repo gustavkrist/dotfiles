@@ -1,3 +1,4 @@
+-- Adapted from LunarVim
 local M = {}
 
 local icons = require("util.icons").kind

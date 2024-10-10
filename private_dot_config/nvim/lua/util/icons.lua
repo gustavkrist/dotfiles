@@ -1,3 +1,4 @@
+-- From LunarVim
 return {
   kind = {
     Array = "",
