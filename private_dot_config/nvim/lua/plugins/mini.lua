@@ -278,6 +278,6 @@ return {
         { "<leader>Sg", write_git_branch_session,             desc = "Write current session (git branch)" },
       }
     end,
-    event = "VimEnter",
+    lazy = false,
   },
 }

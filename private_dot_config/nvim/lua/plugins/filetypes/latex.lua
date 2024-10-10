@@ -17,6 +17,6 @@ return {
       vim.g.vimtex_delim_timeout = 300
       vim.g.vimtex_delim_insert_timeout = 60
     end,
-    event = "VeryLazy",
+    ft = { "markdown", "latex", "tex" },
   },
 }

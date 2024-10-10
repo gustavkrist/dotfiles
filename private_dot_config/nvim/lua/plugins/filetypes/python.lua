@@ -153,6 +153,7 @@ return {
   },
   {
     "alexpasmantier/pymple.nvim",
+    cond = function() return not require("util.firenvim").get() end,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",

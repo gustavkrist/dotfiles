@@ -134,7 +134,7 @@ local definitions = {
     },
   },
   { -- taken from AstroNvim
-    { "BufRead", "BufWinEnter", "BufNewFile" },
+    { "BufReadPost", "BufWritePre", "BufNewFile" },
     {
       group = "_file_opened",
       nested = true,

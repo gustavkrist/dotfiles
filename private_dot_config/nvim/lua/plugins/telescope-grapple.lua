@@ -1,7 +1,9 @@
 return {
   {
     "cbochs/grapple.nvim",
-    cond = function() return not require("util.firenvim").get() end,
+    cond = function()
+      return not require("util.firenvim").get()
+    end,
     dependencies = {
       { "nvim-tree/nvim-web-devicons", lazy = true },
     },
@@ -40,7 +42,9 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    cond = function() return not require("util.firenvim").get() end,
+    cond = function()
+      return not require("util.firenvim").get()
+    end,
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -160,12 +164,13 @@ return {
         },
       }
     end,
-    cmd = "WhichKey",
-    event = "VeryLazy",
+    cmd = "Telescope",
   },
   {
     "will-lynas/grapple-line.nvim",
-    cond = function() return not require("util.firenvim").get() end,
+    cond = function()
+      return not require("util.firenvim").get()
+    end,
     dependencies = {
       "cbochs/grapple.nvim",
     },
@@ -189,5 +194,6 @@ return {
       -- Files for which the parent directory should always be shown
       always_show_parent = {},
     },
+    lazy = true,
   },
 }

@@ -14,11 +14,12 @@ return {
             hi NavicSeparator guibg=NONE
             ]])
           require("util.wezterm").set_term_background("#D8DEE9", "#2E3440", "#D8DEE9")
-          require("util.lualine").load_lualine_custom_nord()
+          if require("util.plugins").has("lualine.nvim") then
+            require("util.lualine").load_lualine_custom_nord()
+          end
         end,
       })
       vim.cmd("colorscheme nord")
-      require("util.lualine").load_lualine_custom_nord()
     end,
     opts = {
       transparent = true,
@@ -40,13 +41,16 @@ return {
             hi NavicSeparator guibg=NONE
             ]])
           require("util.wezterm").set_term_background("#c0caf5", "#24283b", "#c0caf5")
-          require("util.lualine").load_template("tokyonight")
+          if require("util.plugins").has("lualine.nvim") then
+            require("util.lualine").load_template("tokyonight")
+          end
         end,
       })
     end,
     opts = {
       transparent = true,
     },
+    lazy = true,
   },
   {
     "widatama/vim-phoenix",
@@ -62,7 +66,8 @@ return {
           require("util.wezterm").set_term_background("#CCCCCC", "#191919", "#EFEFEF")
         end,
       })
-    end
+    end,
+    lazy = true,
   },
   {
     "kxzk/skull-vim",
@@ -78,7 +83,8 @@ return {
           require("util.wezterm").set_term_background("#CCCCCC", "#222222", "#A0A0A0")
         end,
       })
-    end
+    end,
+    lazy = true,
   },
   {
     "kvrohit/rasmus.nvim",
@@ -95,7 +101,8 @@ return {
           require("util.wezterm").set_term_background("#d1d1d1", "#1a1a19", "#7bb099")
         end,
       })
-    end
+    end,
+    lazy = true,
   },
   {
     "gustavkrist/darkvoid.nvim",
@@ -109,15 +116,17 @@ return {
             hi NavicSeparator guibg=NONE
             ]])
           require("util.wezterm").set_term_background("#c0c0c0", "#1c1c1c", "#bdfe58")
-          require("util.lualine").load_template("darkvoid", true, false)
-          -- require("lualine").setup({ options = { theme = "darkvoid" } })
+          if require("util.plugins").has("lualine.nvim") then
+            require("util.lualine").load_template("darkvoid", true, false)
+          end
         end,
       })
     end,
     opts = {
       transparent = true,
       glow = true,
-      disabled_plugins = { "lualine" }
+      disabled_plugins = { "lualine" },
     },
+    lazy = true,
   },
 }

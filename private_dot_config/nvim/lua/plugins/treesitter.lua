@@ -117,11 +117,10 @@ return {
       "TSInstallSync",
       "TSInstallFromGrammar",
     },
-    event = "VeryLazy",
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "VeryLazy",
+    event = "User FileOpened",
     config = function()
       -- If treesitter is already loaded, we need to run config again for textobjects
       if require("util.plugins").is_loaded("nvim-treesitter") then

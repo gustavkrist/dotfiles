@@ -95,7 +95,7 @@ return {
     cond = no_firenvim,
     opts = {},
     dependencies = "mason.nvim",
-    lazy = false,
+    event = "User FileOpened",
   },
   {
     "stevearc/conform.nvim",
@@ -248,7 +248,7 @@ return {
         depth_limit_indicator = "..",
       }
     end,
-    event = "VeryLazy",
+    event = "User FileOpened",
   },
   { "justinsgithub/wezterm-types", lazy = true },
   {

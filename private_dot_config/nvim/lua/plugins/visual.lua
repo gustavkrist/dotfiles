@@ -14,7 +14,7 @@ return {
   {
     "folke/todo-comments.nvim",
     opts = {},
-    event = "VeryLazy",
+    event = "User FileOpened",
     keys = {
       { "[t",         function() require("todo-comments").jump_prev() end, desc = "Prev todo comment" },
       { "]t",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
@@ -25,12 +25,12 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     main = "ibl",
     opts = {},
-    event = "VeryLazy",
+    event = "User FileOpened",
   },
   {
     "stevearc/dressing.nvim",
     cond = no_firenvim,
-    event = "VimEnter",
+    event = "VeryLazy",
   },
   {
     "akinsho/bufferline.nvim",
