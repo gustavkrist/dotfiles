@@ -157,8 +157,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
-      -- optional (nicer ui)
-      "stevearc/dressing.nvim",
       "nvim-tree/nvim-web-devicons",
     },
     build = ":PympleBuild",

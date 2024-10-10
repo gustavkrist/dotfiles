@@ -202,15 +202,53 @@ return {
   {
     "chrishrb/gx.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    config = function(_, opts)
-      require("gx").setup(opts)
-      vim.keymap.set("n", "gx", "<cmd>Browse<cr>", { desc = "Open text under cursor" })
+    opts = {
+      open_browser_app = vim.fn.has("wsl") == 1 and "powershell.exe" or nil,
+      open_browser_args = vim.fn.has("wsl") == 1 and { "start", "explorer.exe" } or nil,
+    },
+    cmd = { "Browse" },
+    keys = {
+      { "gx", "<cmd>Browse<cr>",  desc = "Open text under cursor", mode = "n" },
+      { "gx", "<Esc>:Browse<cr>", desc = "Open selected text",     mode = "x" },
+    },
+  },
+  {
+    "stevearc/dressing.nvim",
+    cond = function()
+      return not require("util.firenvim").get()
     end,
-    opts = {},
-    -- cmd = { "Browse" },
-    -- keys = {
-    --   { "gx", "<cmd>Browse<cr>", desc = "Open text under cursor" },
-    --   { "gx", "<Esc>:Browse<cr>", desc = "Open selected text", mode = "x" },
-    -- },
-  }
+    event = "VeryLazy",
+  },
+  {
+    "Chaitanyabsprip/fastaction.nvim",
+    dependencies = { "stevearc/dressing.nvim" },
+    config = function(_, opts)
+      local fastaction = require("fastaction")
+      fastaction.setup(opts)
+      vim.ui.select = function(items, opts, on_choice)
+        opts.relative = "cursor"
+        fastaction.select(items, opts, on_choice)
+      end
+    end,
+    opts = function()
+      ---@param params GetActionConfigParams
+      ---@return ActionConfig | nil
+      local function get_action_config_from_keys(params)
+        if #params.valid_keys == nil or #params.valid_keys == 0 then return nil end
+        for _, k in pairs(params.valid_keys) do
+          if not vim.tbl_contains(params.invalid_keys, k) then
+            return { key = k, order = 0 }
+          end
+        end
+      end
+
+      return {
+        dismiss_keys = { "<C-c>", "<Esc>", "q" },
+        override_function = get_action_config_from_keys,
+        register_ui_select = true,
+        fallback_threshold = 15,
+      }
+    end,
+    event = "VeryLazy",
+  },
 }

@@ -28,11 +28,6 @@ return {
     event = "User FileOpened",
   },
   {
-    "stevearc/dressing.nvim",
-    cond = no_firenvim,
-    event = "VeryLazy",
-  },
-  {
     "akinsho/bufferline.nvim",
     cond = false,
     opts = function()
