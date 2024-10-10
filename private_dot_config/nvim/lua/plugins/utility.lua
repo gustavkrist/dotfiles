@@ -220,14 +220,15 @@ return {
     event = "VeryLazy",
   },
   {
-    "Chaitanyabsprip/fastaction.nvim",
+    "gustavkrist/fastaction.nvim",
     dependencies = { "stevearc/dressing.nvim" },
     config = function(_, opts)
       local fastaction = require("fastaction")
       fastaction.setup(opts)
       vim.ui.select = function(items, opts, on_choice)
         opts = opts or {}
-        opts.relative = "cursor"
+        opts.relative = "win"
+        opts.centered = true
         fastaction.select(items, opts, on_choice)
       end
     end,
