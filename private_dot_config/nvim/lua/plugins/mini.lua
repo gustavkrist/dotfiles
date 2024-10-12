@@ -281,7 +281,7 @@ return {
             end
             vim.g.git_session_name = nil
           end
-          vim.defer_fn(wait, 50)
+          vim.schedule(wait)
         end
       end)
     end,
