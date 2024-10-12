@@ -5,6 +5,7 @@ if not status_luasnip_ok then
   return
 end
 
+-- Function from LunarVim
 function M.jumpable(dir)
   local win_get_cursor = vim.api.nvim_win_get_cursor
   local get_current_buf = vim.api.nvim_get_current_buf

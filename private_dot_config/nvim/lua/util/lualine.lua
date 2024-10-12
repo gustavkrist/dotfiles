@@ -1,3 +1,4 @@
+-- Adapted from LunarVim
 local palette = require("nord.colors").palette
 local M = {}
 
