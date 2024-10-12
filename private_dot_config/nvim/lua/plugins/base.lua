@@ -171,9 +171,6 @@ return {
           end
           return not in_snippets_dir(buf)
         end,
-        execution_message = {
-          enabled = false,
-        },
       })
     end,
     keys = {
