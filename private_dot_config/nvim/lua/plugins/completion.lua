@@ -62,6 +62,7 @@ return {
   },
   {
     "iguanacucumber/magazine.nvim",
+    cond = false,
     name = "nvim-cmp",
     dependencies = {
       { "hrsh7th/cmp-nvim-lsp",     lazy = true },
@@ -264,17 +265,31 @@ return {
   },
   {
     -- TODO: Come back to this one when it supports luasnippets
-    'saghen/blink.cmp',
-    enabled = false,
+    'gustavkrist/blink.cmp',
+    -- dependencies = {
+    --   {
+    --     "benlubas/cmp2lsp",
+    --     dependencies = {
+    --       "saadparwaiz1/cmp_luasnip"
+    --     },
+    --     -- config = vim.schedule_wrap(function()
+    --     --   print(vim.inspect(require("cmp2lsp.sources").sources))
+    --     --   require("cmp2lsp").setup()
+    --     --   print(vim.inspect(require("cmp2lsp.sources").sources))
+    --     -- end)
+    --     opts = {},
+    --   },
+    -- },
+    enabled = true,
     lazy = false, -- lazy loading handled internally
     -- optional: provides snippets for the snippet source
     -- dependencies = 'rafamadriz/friendly-snippets',
 
     -- use a release tag to download pre-built binaries
-    version = 'v0.*',
     -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
     -- build = 'cargo build --release',
 
+    ---@type blink.cmp.Config
     opts = {
       keymap = {
         select_prev = { "<Down>", "<C-k>" },
@@ -282,8 +297,8 @@ return {
         accept = {},
         snippet_forward = {},
         snippet_backward = {},
-        scroll_documentation_up = {},
-        scroll_documentation_down = {},
+        -- scroll_documentation_up = {},
+        -- scroll_documentation_down = {},
       },
       highlight = {
         -- sets the fallback highlight groups to nvim-cmp's highlight groups
@@ -299,12 +314,23 @@ return {
         { "blink.cmp.sources.path" },
         { "blink.cmp.sources.buffer" },
       },
-      -- windows = {
-      --   documentation = {
-      --     border = "padded",
-      --     winhighlight = "Normal:BlinkCmpDoc,FloatBorder:Added,CursorLine:BlinkCmpDocCursorLine,Search:None",
-      --   },
-      -- },
+      windows = {
+        documentation = {
+          border = "rounded",
+          auto_show = true,
+        },
+        autocomplete = {
+          border = "rounded",
+          draw = "reversed",
+          winhighlight = 'Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder',
+        },
+      },
+      fuzzy = {
+        prebuiltBinaries = {
+          download = true,
+        },
+      },
+      snippet_expand = function(...) require("luasnip").lsp_expand(...) end,
 
       -- experimental auto-brackets support
       -- accept = { auto_brackets = { enabled = true } }
@@ -323,6 +349,8 @@ return {
               luasnip.expand_or_jump()
             elseif win:is_open() then
               require("blink.cmp").accept()
+            elseif require("util.cmp").has_words_before() then
+              require("blink.cmp").show()
             else
               return vim.api.nvim_feedkeys("\t", "n", true)
             end
