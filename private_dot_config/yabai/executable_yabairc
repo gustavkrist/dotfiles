@@ -15,10 +15,6 @@ yabai -m config mouse_action2 move
 
 # -- Window -------------------------------------------------------------------
 
-yabai -m config window_border on
-yabai -m config window_border_width 3
-yabai -m config active_window_border_color 0x8081a1c1
-yabai -m config normal_window_border_color 0x00ffffff
 yabai -m config window_placement second_child
 yabai -m config insert_feedback_color 0xaad75f5f
 yabai -m config split_ratio 0.50
@@ -26,12 +22,6 @@ yabai -m config auto_balance off
 yabai -m config window_opacity_duration 0.0
 yabai -m config active_window_opacity 1.0
 yabai -m config normal_window_opacity 0.90
-yabai -m config window_topmost off
-yabai -m config window_opacity off
-## With SIP disabled
-# yabai -m config window_opacity on
-# yabai -m config window_topmost on
-# yabai -m config window_shadow on
 
 # -- Space --------------------------------------------------------------------
 
@@ -50,15 +40,15 @@ yabai -m config external_bar main:25:0
 # -- Rules --------------------------------------------------------------------
 
 # float system preferences. Most of these just diable Yabai form resizing them.
-yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Karabiner-Elements$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Karabiner-EventViewer$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
+yabai -m rule --add app="^System Preferences$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Karabiner-Elements$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Karabiner-EventViewer$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Finder$" sticky=on sub-layer=above manage=off
 yabai -m rule --add app="^Line$" manage=off
-yabai -m rule --add app="^Disk Utility$" sticky=on layer=above manage=off
-yabai -m rule --add app="^System Information$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Bitwarden$" layer=above manage=off
+yabai -m rule --add app="^Disk Utility$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^System Information$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Activity Monitor$" sticky=on sub-layer=above manage=off
+yabai -m rule --add app="^Bitwarden$" sub-layer=above manage=off
 yabai -m rule --add app="^Spotify$" manage=off
 # yabai -m rule --add app="^iTerm2$" manage=off
 yabai -m rule --add app="^Notes$" manage=off
@@ -74,4 +64,5 @@ yabai -m signal --add event=window_destroyed action="bash -c '~/.config/yabai/sc
 yabai -m signal --add event=window_created action="~/.config/yabai/scripts/refresh.sh"
 yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
 
+borders active_color=0x8081a1c1 inactive_color=0x00ffffff width=5.0 &
 echo "yabai configuration loaded.."
