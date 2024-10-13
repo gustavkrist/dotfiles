@@ -9,7 +9,10 @@ return {
           libuv = true,
         },
       })
-      -- require("luasnip.loaders.from_vscode").lazy_load()
+      require("luasnip.loaders.from_vscode").lazy_load({
+        paths = "./snippets",
+        fs_event_providers = { autocmd = false, livuv = true },
+      })
       require("luasnip").filetype_extend("latex", { "tex" })
       require("luasnip").filetype_extend("markdown_inline", { "markdown" })
       require("luasnip").setup(opts)
@@ -17,6 +20,7 @@ return {
     opts = function()
       local types = require("luasnip.util.types")
       return {
+        delete_check_events= "InsertLeave",
         enable_autosnippets = true,
         store_selection_keys = "<Tab>",
         ft_func = require("luasnip.extras.filetype_functions").from_pos_or_filetype,
@@ -328,6 +332,7 @@ return {
       fuzzy = {
         prebuiltBinaries = {
           download = true,
+          forceVersion = "0.2.1",
         },
       },
       snippet_expand = function(...) require("luasnip").lsp_expand(...) end,

@@ -46,7 +46,7 @@ local snippets = {
       [[
       for {} in range(len({})):
           {}
-    ]],
+      ]],
       { i(1, "i"), i(2, "object"), i(3, "pass") }
     )
   ),
@@ -54,36 +54,30 @@ local snippets = {
     { trig = "rdb", desc = "Celery [r]emote [d]e[b]ugger trace" },
     t('__import__("celery.contrib.rdb", list=True).set_trace()')
   ),
-  s(
-    {
-      trig = "#env",
-      desc = "Shebang line for python script",
-    },
-    t("#!/usr/bin/env python")
-  ),
-  s(
-    {
-      trig = "s",
-      hidden = true
-    },
-    t("self.")
-  ),
-  s(
-    {
-      trig = "fim",
-      hidden = true,
-    },
-    fmt("from {} import {}", { i(1, "sys"), i(2, "stdin") })
-  ),
+  s({
+    trig = "#env",
+    desc = "Shebang line for python script",
+  }, t("#!/usr/bin/env python")),
+  s({
+    trig = "s",
+    hidden = true,
+  }, t("self.")),
+  s({
+    trig = "fim",
+    hidden = true,
+  }, fmt("from {} import {}", { i(1, "sys"), i(2, "stdin") })),
   s(
     {
       trig = "deft",
-      desc = "Function [def]inition with return [t]ype"
+      desc = "Function [def]inition with return [t]ype",
     },
-    fmt([[
+    fmt(
+      [[
     def {}({}) -> {}:
         {}
-    ]], { i(1, "fname"), i(2), i(3, "None"), i(4, "pass") })
+    ]],
+      { i(1, "fname"), i(2), i(3, "None"), i(4, "pass") }
+    )
   ),
 }
 
