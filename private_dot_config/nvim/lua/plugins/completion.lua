@@ -270,20 +270,21 @@ return {
   {
     -- TODO: Come back to this one when it supports luasnippets
     'gustavkrist/blink.cmp',
-    -- dependencies = {
-    --   {
-    --     "benlubas/cmp2lsp",
-    --     dependencies = {
-    --       "saadparwaiz1/cmp_luasnip"
-    --     },
-    --     -- config = vim.schedule_wrap(function()
-    --     --   print(vim.inspect(require("cmp2lsp.sources").sources))
-    --     --   require("cmp2lsp").setup()
-    --     --   print(vim.inspect(require("cmp2lsp.sources").sources))
-    --     -- end)
-    --     opts = {},
-    --   },
-    -- },
+    dependencies = {
+      "L3MON4D3/LuaSnip",
+      -- {
+      --   "benlubas/cmp2lsp",
+      --   dependencies = {
+      --     "saadparwaiz1/cmp_luasnip"
+      --   },
+      --   -- config = vim.schedule_wrap(function()
+      --   --   print(vim.inspect(require("cmp2lsp.sources").sources))
+      --   --   require("cmp2lsp").setup()
+      --   --   print(vim.inspect(require("cmp2lsp.sources").sources))
+      --   -- end)
+      --   opts = {},
+      -- },
+    },
     enabled = true,
     lazy = false, -- lazy loading handled internally
     -- optional: provides snippets for the snippet source
@@ -344,10 +345,7 @@ return {
       -- trigger = { signature_help = { enabled = true } }
     },
     keys = function()
-      local luasnip_ok, luasnip = pcall(require, "luasnip")
-      if not luasnip_ok then
-        return
-      end
+      local luasnip = require("luasnip")
       return {
         {
           "<Tab>",
