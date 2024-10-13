@@ -344,7 +344,10 @@ return {
       -- trigger = { signature_help = { enabled = true } }
     },
     keys = function()
-      local luasnip = require("luasnip")
+      local luasnip_ok, luasnip = pcall(require, "luasnip")
+      if not luasnip_ok then
+        return
+      end
       return {
         {
           "<Tab>",
