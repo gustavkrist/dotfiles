@@ -70,7 +70,7 @@ function M.run_openingh_with_picked_ref(fn, mode)
   vim.ui.select({
     { text = string.format("Current branch [%s]", current), value = current },
     { text = string.format("Default branch [%s]", default), value = default },
-    { text = string.format("Last commit [%s]", commit),     value = commit },
+    { text = string.format("Last commit [%s]", commit), value = commit },
   }, {
     prompt = "Which branch to use?",
     format_item = function(item)
@@ -79,7 +79,9 @@ function M.run_openingh_with_picked_ref(fn, mode)
   }, function(choice)
     if choice ~= nil then
       if mode == "v" then
-        vim.cmd(vim.api.nvim_replace_termcodes(string.format("normal gv:%s %s<CR>", fn, choice.value), true, true, true))
+        vim.cmd(
+          vim.api.nvim_replace_termcodes(string.format("normal gv:%s %s<CR>", fn, choice.value), true, true, true)
+        )
       else
         vim.cmd(string.format("%s %s", fn, choice.value))
       end

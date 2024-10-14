@@ -1,4 +1,6 @@
-local no_firenvim = function() return not require("util.firenvim").get() end
+local no_firenvim = function()
+  return not require("util.firenvim").get()
+end
 return {
   {
     "neovim/nvim-lspconfig",
@@ -12,7 +14,7 @@ return {
     config = function()
       local lspconfig = require("lspconfig")
       local vue_language_server_path = require("mason-registry").get_package("vue-language-server"):get_install_path()
-          .. "/node_modules/@vue/language-server"
+        .. "/node_modules/@vue/language-server"
 
       local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
       local capabilities = ok and cmp_nvim_lsp.default_capabilities() or {}
@@ -21,7 +23,7 @@ return {
         bashls = true,
         fsautocomplete = true,
         hls = {
-          manual_install = true
+          manual_install = true,
         },
         jsonls = true,
         lua_ls = true,
@@ -75,7 +77,7 @@ return {
 
         lspconfig[name].setup(config)
       end
-    end
+    end,
   },
   {
     "williamboman/mason.nvim",
@@ -88,7 +90,7 @@ return {
     end,
     keys = {
       { "<leader>lm", "<cmd>Mason<cr>", desc = "Mason" },
-    }
+    },
   },
   {
     "williamboman/mason-lspconfig.nvim",
@@ -104,8 +106,8 @@ return {
       local opts = {
         default_format_opts = {
           timeout_ms = 3000,
-          async = false,           -- not recommended to change
-          quiet = false,           -- not recommended to change
+          async = false, -- not recommended to change
+          quiet = false, -- not recommended to change
           lsp_format = "fallback", -- not recommended to change
         },
         formatters = {
@@ -269,10 +271,26 @@ return {
       snippet_engine = "luasnip",
     },
     keys = {
-      { "<leader>nc", "<cmd>lua require('neogen').generate({ type = 'class' })<cr>", desc = "Generate Annotations (Class)" },
-      { "<leader>nf", "<cmd>lua require('neogen').generate({ type = 'func' })<cr>",  desc = "Generate Annotations (Function)" },
-      { "<leader>nt", "<cmd>lua require('neogen').generate({ type = 'type' })<cr>",  desc = "Generate Annotations (Type)" },
-      { "<leader>nF", "<cmd>lua require('neogen').generate({ type = 'file' })<cr>",  desc = "Generate Annotations (File)" },
-    }
+      {
+        "<leader>nc",
+        "<cmd>lua require('neogen').generate({ type = 'class' })<cr>",
+        desc = "Generate Annotations (Class)",
+      },
+      {
+        "<leader>nf",
+        "<cmd>lua require('neogen').generate({ type = 'func' })<cr>",
+        desc = "Generate Annotations (Function)",
+      },
+      {
+        "<leader>nt",
+        "<cmd>lua require('neogen').generate({ type = 'type' })<cr>",
+        desc = "Generate Annotations (Type)",
+      },
+      {
+        "<leader>nF",
+        "<cmd>lua require('neogen').generate({ type = 'file' })<cr>",
+        desc = "Generate Annotations (File)",
+      },
+    },
   },
 }

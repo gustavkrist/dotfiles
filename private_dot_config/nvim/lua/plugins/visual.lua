@@ -1,4 +1,6 @@
-local no_firenvim = function() return not require("util.firenvim").get() end
+local no_firenvim = function()
+  return not require("util.firenvim").get()
+end
 return {
   {
     "norcalli/nvim-colorizer.lua",
@@ -16,10 +18,22 @@ return {
     opts = {},
     event = "User FileOpened",
     keys = {
-      { "[t",         function() require("todo-comments").jump_prev() end, desc = "Prev todo comment" },
-      { "]t",         function() require("todo-comments").jump_next() end, desc = "Next todo comment" },
-      { "<leader>st", "<cmd>TodoTelescope keywords=TODO,FIX<cr>",          desc = "Search Todo-Comments" }
-    }
+      {
+        "[t",
+        function()
+          require("todo-comments").jump_prev()
+        end,
+        desc = "Prev todo comment",
+      },
+      {
+        "]t",
+        function()
+          require("todo-comments").jump_next()
+        end,
+        desc = "Next todo comment",
+      },
+      { "<leader>st", "<cmd>TodoTelescope keywords=TODO,FIX<cr>", desc = "Search Todo-Comments" },
+    },
   },
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -48,17 +62,17 @@ return {
           duplicates_across_groups = true,
           auto_toggle_bufferline = true,
           groups = { items = {}, options = { toggle_hidden_on_enter = true } },
-          mode = "buffers",               -- set to "tabs" to only show tabpages instead
-          numbers = "none",               -- can be "none" | "ordinal" | "buffer_id" | "both" | function
+          mode = "buffers", -- set to "tabs" to only show tabpages instead
+          numbers = "none", -- can be "none" | "ordinal" | "buffer_id" | "both" | function
           close_command = function(bufnr) -- can be a string | function, see "Mouse actions"
             bl_util.buf_kill("bd", bufnr, false)
           end,
           right_mouse_command = "vert sbuffer %d", -- can be a string | function, see "Mouse actions"
-          left_mouse_command = "buffer %d",        -- can be a string | function, see "Mouse actions"
-          middle_mouse_command = nil,              -- can be a string | function, see "Mouse actions"
+          left_mouse_command = "buffer %d", -- can be a string | function, see "Mouse actions"
+          middle_mouse_command = nil, -- can be a string | function, see "Mouse actions"
           indicator = {
-            icon = icons.ui.BoldLineLeft,          -- this should be omitted if indicator style is not 'icon'
-            style = "icon",                        -- can also be 'underline'|'none',
+            icon = icons.ui.BoldLineLeft, -- this should be omitted if indicator style is not 'icon'
+            style = "icon", -- can also be 'underline'|'none',
           },
           diagnostics = "nvim_lsp",
           diagnostics_update_in_insert = false,
@@ -269,7 +283,14 @@ return {
     opts = {},
     cmd = "IncRename",
     keys = {
-      { "<leader>lr", function() return ":IncRename " .. vim.fn.expand("<cword>") end, desc = "Rename", expr = true },
+      {
+        "<leader>lr",
+        function()
+          return ":IncRename " .. vim.fn.expand("<cword>")
+        end,
+        desc = "Rename",
+        expr = true,
+      },
     },
   },
 }

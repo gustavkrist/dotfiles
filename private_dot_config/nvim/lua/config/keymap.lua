@@ -76,7 +76,12 @@ map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 -- Quickfix
 map("n", "[q", "<cmd>cprev<cr>zz", { desc = "Previous Quickfix" })
 map("n", "]q", "<cmd>cnext<cr>zz", { desc = "Next Quickfix" })
-map("n", "<leader>qa", "<cmd>caddexpr expand('%') .. ':' .. line('.') ..  ':' .. getline('.')<cr>", { desc = "Add to quickfix list" })
+map(
+  "n",
+  "<leader>qa",
+  "<cmd>caddexpr expand('%') .. ':' .. line('.') ..  ':' .. getline('.')<cr>",
+  { desc = "Add to quickfix list" }
+)
 map("n", "<leader>qo", "<cmd>copen<cr>", { desc = "Quickfix List" })
 
 -- tabs
@@ -151,7 +156,12 @@ map("n", "gy", function()
     vim.lsp.buf.implementation()
   end
 end, { noremap = true, silent = true })
-map("n", "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>", { desc = "Code Action", silent = true, noremap = true })
+map(
+  "n",
+  "<leader>la",
+  "<cmd>lua vim.lsp.buf.code_action()<cr>",
+  { desc = "Code Action", silent = true, noremap = true }
+)
 map("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "Info", silent = true, noremap = true })
 map(
   "n",
@@ -165,9 +175,18 @@ map(
   "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
   { desc = "Prev Diagnostic", silent = true, noremap = true }
 )
-map("n", "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", { desc = "CodeLens Action", silent = true, noremap = true })
-map("n", "<leader>lq", "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",
-  { desc = "Quickfix", silent = true, noremap = true })
+map(
+  "n",
+  "<leader>ll",
+  "<cmd>lua vim.lsp.codelens.run()<cr>",
+  { desc = "CodeLens Action", silent = true, noremap = true }
+)
+map(
+  "n",
+  "<leader>lq",
+  "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",
+  { desc = "Quickfix", silent = true, noremap = true }
+)
 map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "Rename", silent = true, noremap = true })
 
 -- Commenting

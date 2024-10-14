@@ -156,21 +156,18 @@ local autosnippets = {
       local res, env = {}, snip.env
       vim.list_extend(
         res,
-        fmt(
-          "> [!{}]",
-          {
-            c(1, {
-              i(0, "NOTE"),
-              t("EXAMPLE"),
-              t("INFO"),
-              t("TODO"),
-              t("TIP"),
-              t("IMPORTANT"),
-              t("WARNING"),
-              t("CAUTION"),
-            }),
-          }
-        )
+        fmt("> [!{}]", {
+          c(1, {
+            i(0, "NOTE"),
+            t("EXAMPLE"),
+            t("INFO"),
+            t("TODO"),
+            t("TIP"),
+            t("IMPORTANT"),
+            t("WARNING"),
+            t("CAUTION"),
+          }),
+        })
       )
       for _, ele in ipairs(env.TM_SELECTED_TEXT) do
         table.insert(res, t({ "", "> " .. ele }))

@@ -117,21 +117,23 @@ return {
     cmd = { "VenvSelect" },
     branch = "regexp", -- This is the regexp branch, use this for the new version
     config = function(_, opts)
-      vim.api.nvim_create_autocmd({ "FileType" },
-        {
-          pattern = "python",
-          callback = function()
-            vim.keymap.set("n", "<leader>vs", "<cmd>VenvSelect<cr>",
-              { desc = "Select VirtualEnv", silent = true, noremap = true, buffer = 0 })
-            vim.keymap.set(
-              "n",
-              "<leader>vd",
-              "<cmd>lua require('venv-selector').deactivate()<cr>",
-              { desc = "Deactivate VirtualEnv", silent = true, noremap = true, buffer = 0 }
-            )
-          end,
-        }
-      )
+      vim.api.nvim_create_autocmd({ "FileType" }, {
+        pattern = "python",
+        callback = function()
+          vim.keymap.set(
+            "n",
+            "<leader>vs",
+            "<cmd>VenvSelect<cr>",
+            { desc = "Select VirtualEnv", silent = true, noremap = true, buffer = 0 }
+          )
+          vim.keymap.set(
+            "n",
+            "<leader>vd",
+            "<cmd>lua require('venv-selector').deactivate()<cr>",
+            { desc = "Deactivate VirtualEnv", silent = true, noremap = true, buffer = 0 }
+          )
+        end,
+      })
       require("venv-selector").setup(opts)
     end,
     opts = {
@@ -153,7 +155,9 @@ return {
   },
   {
     "alexpasmantier/pymple.nvim",
-    cond = function() return not require("util.firenvim").get() end,
+    cond = function()
+      return not require("util.firenvim").get()
+    end,
     dependencies = {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",

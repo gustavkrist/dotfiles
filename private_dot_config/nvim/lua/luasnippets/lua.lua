@@ -26,40 +26,34 @@ local snippets = {
       trig = "autocmd",
       desc = "Create neovim autocmd",
     },
-    fmta([[
+    fmta(
+      [[
       vim.api.nvim_create_autocmd("<event>", {
         group = vim.api.nvim_create_augroup("<group>", { clear = true }),
         callback = function(ev)
           <body>
         end
       })
-      ]], {
-      event = i(1, "event"),
-      group = i(2, "group"),
-      body = i(3, "return"),
-    })
+      ]],
+      {
+        event = i(1, "event"),
+        group = i(2, "group"),
+        body = i(3, "return"),
+      }
+    )
   ),
-  s(
-    {
-      trig = "augroup",
-      desc = "Create neovim augroup",
-    },
-    fmta([[vim.api.nvim_create_augroup("<group>", { clear = true })]], { group = i(1, "group") })
-  ),
-  s(
-    {
-      trig = "win",
-      desc = "Current window"
-    },
-    t("local win = vim.api.nvim_get_current_win()")
-  ),
-  s(
-    {
-      trig = "buf",
-      desc = "Current buffer"
-    },
-    t("local buf = vim.api.nvim_get_current_buf()")
-  ),
+  s({
+    trig = "augroup",
+    desc = "Create neovim augroup",
+  }, fmta([[vim.api.nvim_create_augroup("<group>", { clear = true })]], { group = i(1, "group") })),
+  s({
+    trig = "win",
+    desc = "Current window",
+  }, t("local win = vim.api.nvim_get_current_win()")),
+  s({
+    trig = "buf",
+    desc = "Current buffer",
+  }, t("local buf = vim.api.nvim_get_current_buf()")),
 }
 
 local autosnippets = {}

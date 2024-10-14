@@ -8,7 +8,7 @@ vim.filetype.add({
             and path
             and vim.fn.getfsize(path) > (1024 * 1024 * 1.5) -- 1.5MB
             and "bigfile"
-            or nil
+          or nil
       end,
     },
   },
@@ -151,7 +151,7 @@ local definitions = {
     "BufRead",
     {
       pattern = "*.ipynb",
-      command = "setlocal ft=python"
+      command = "setlocal ft=python",
     },
   },
 }

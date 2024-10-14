@@ -62,7 +62,7 @@ return {
       local function paste_image()
         vim.ui.input({
           prompt = "Image name",
-          default = string.format("pasted-image-%s", os.time())
+          default = string.format("pasted-image-%s", os.time()),
         }, function(input)
           local cur_dir = vim.api.nvim_buf_get_name(0):match("(.*)/")
           local path = vim.fs.joinpath(cur_dir, "attachments", input)
@@ -73,7 +73,7 @@ return {
         pattern = "markdown",
         callback = function()
           vim.keymap.set("n", "<leader>op", paste_image, { desc = "Paste image from clipboard", buffer = 0 })
-        end
+        end,
       })
       require("obsidian").setup(opts)
     end,
@@ -94,7 +94,7 @@ return {
           path = client:vault_relative_path(path) or path
           return string.format("![[%s]]", path.name)
         end,
-      }
+      },
     },
   },
   {
@@ -142,7 +142,7 @@ return {
           vim.keymap.set("n", "<leader>od", function()
             require("otter").deactivate()
           end, { desc = "Deactivate otter", buffer = 0 })
-        end
+        end,
       })
       require("otter").setup(opts)
     end,
@@ -173,7 +173,7 @@ return {
               return direct_path
             end
             local attachments_path =
-                vim.fs.joinpath(document_path:match("(.*)/"), "attachments", image_path:match("[^#|]+"))
+              vim.fs.joinpath(document_path:match("(.*)/"), "attachments", image_path:match("[^#|]+"))
             if vim.fn.filereadable(attachments_path) == 1 then
               return attachments_path
             end
@@ -183,13 +183,13 @@ return {
       },
     },
     ft = "markdown",
-    cond = (not require("util.firenvim")()) and vim.fn.executable("magick") == 1
+    cond = (not require("util.firenvim")()) and vim.fn.executable("magick") == 1,
   },
   {
     "OXY2DEV/markview.nvim",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons"
+      "nvim-tree/nvim-web-devicons",
     },
     opts = {
       hybrid_modes = { "n" },

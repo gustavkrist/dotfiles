@@ -76,7 +76,7 @@ function M.setup()
     group = vim.api.nvim_create_augroup("_unset_is_nvim_uservar", { clear = true }),
     callback = function(_)
       M.set_user_var("IS_NVIM", false)
-    end
+    end,
   })
 
   -- Move to window using the movement keys
@@ -90,7 +90,7 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
   group = vim.api.nvim_create_augroup("_reset_colorscheme", { clear = true }),
   callback = function(_)
     M.reset_term_colors()
-  end
+  end,
 })
 
 return M

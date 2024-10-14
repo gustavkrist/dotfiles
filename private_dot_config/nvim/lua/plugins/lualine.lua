@@ -1,7 +1,9 @@
 return {
   {
     "nvim-lualine/lualine.nvim",
-    cond = function() return not require("util.firenvim").get() end,
+    cond = function()
+      return not require("util.firenvim").get()
+    end,
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "gbprod/nord.nvim",
@@ -303,7 +305,9 @@ return {
           lualine_x = {
             -- HACK: Removed `%*` from the end of the grapple-line output so the highlight group is not cut off
             --       which gets rid of an incorrecly highlighted cell
-            function() return require("grapple-line").lualine():match("^(.*)%%%*$") or "" end,
+            function()
+              return require("grapple-line").lualine():match("^(.*)%%%*$") or ""
+            end,
           },
           lualine_z = {
             {

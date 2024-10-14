@@ -7,8 +7,8 @@ function M.make_theme_transparent(theme, swap_fg_bg)
   for mode, mode_table in pairs(theme) do
     template[mode] = template[mode] or {}
     for section, section_table in pairs(mode_table) do
-      if vim.tbl_contains({"b", "c"}, section) or not swap_fg_bg then
-        template[mode][section] = {fg = section_table.fg, bg = "NONE", gui = section_table.gui }
+      if vim.tbl_contains({ "b", "c" }, section) or not swap_fg_bg then
+        template[mode][section] = { fg = section_table.fg, bg = "NONE", gui = section_table.gui }
       else
         template[mode][section] = { fg = section_table.bg, bg = "NONE" }
       end
@@ -68,8 +68,8 @@ function M.load_lualine_custom_nord()
           b = { fg = require("nord.utils").make_global_bg(), bg = "NONE" },
           c = { fg = palette.polar_night.bright, bg = "NONE" },
         },
-      }
-    }
+      },
+    },
   })
 end
 

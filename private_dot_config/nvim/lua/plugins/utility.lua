@@ -1,7 +1,9 @@
 return {
   {
     "akinsho/toggleterm.nvim",
-    cond = function() return not require("util.firenvim").get() end,
+    cond = function()
+      return not require("util.firenvim").get()
+    end,
     version = "*",
     opts = {
       open_mapping = "<C-t>",
@@ -40,11 +42,11 @@ return {
           noremap = true,
           silent = true,
         },
-        { "<leader>gg", _LAZYGIT_TOGGLE,                                    desc = "Lazygit" },
-        { "<leader>tg", _LAZYGIT_TOGGLE,                                    desc = "Lazygit" },
-        { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>",              desc = "Float" },
+        { "<leader>gg", _LAZYGIT_TOGGLE, desc = "Lazygit" },
+        { "<leader>tg", _LAZYGIT_TOGGLE, desc = "Lazygit" },
+        { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "Float" },
         { "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "Horizontal" },
-        { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>",   desc = "Vertical" },
+        { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Vertical" },
       }
     end,
   },
@@ -208,8 +210,8 @@ return {
     },
     cmd = { "Browse" },
     keys = {
-      { "gx", "<cmd>Browse<cr>",  desc = "Open text under cursor", mode = "n" },
-      { "gx", "<Esc>:Browse<cr>", desc = "Open selected text",     mode = "x" },
+      { "gx", "<cmd>Browse<cr>", desc = "Open text under cursor", mode = "n" },
+      { "gx", "<Esc>:Browse<cr>", desc = "Open selected text", mode = "x" },
     },
   },
   {
@@ -236,7 +238,9 @@ return {
       ---@param params GetActionConfigParams
       ---@return ActionConfig | nil
       local function get_action_config_from_keys(params)
-        if #params.valid_keys == nil or #params.valid_keys == 0 then return nil end
+        if #params.valid_keys == nil or #params.valid_keys == 0 then
+          return nil
+        end
         for _, k in pairs(params.valid_keys) do
           if not vim.tbl_contains(params.invalid_keys, k) then
             return { key = k, order = 0 }

@@ -150,10 +150,10 @@ return {
             i = { "@block.inner", "@conditional.inner", "@loop.inner" },
           }),
           f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
-          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),       -- class
-          t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },           -- tags
-          d = { "%f[%d]%d+" },                                                          -- digits
-          e = {                                                                         -- Word with case
+          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }), -- class
+          t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" }, -- tags
+          d = { "%f[%d]%d+" }, -- digits
+          e = { -- Word with case
             {
               "%u[%l%d]+%f[^%l%d]",
               "%f[%S][%l%d]+%f[^%l%d]",
@@ -162,9 +162,9 @@ return {
             },
             "^().*()$",
           },
-          i = ai_indent,                                             -- indent
-          g = ai_buffer,                                             -- buffer
-          u = ai.gen_spec.function_call(),                           -- u for "Usage"
+          i = ai_indent, -- indent
+          g = ai_buffer, -- buffer
+          u = ai.gen_spec.function_call(), -- u for "Usage"
           U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- without dot in function name
         },
       }
@@ -189,7 +189,7 @@ return {
           -- Make new window and set it as target
           local cur_target = MiniFiles.get_explorer_state().target_window
           local new_target = vim.api.nvim_win_call(cur_target, function()
-            vim.cmd(direction .. ' split')
+            vim.cmd(direction .. " split")
             return vim.api.nvim_get_current_win()
           end)
 
@@ -197,17 +197,17 @@ return {
         end
 
         -- Adding `desc` will result into `show_help` entries
-        local desc = 'Split ' .. direction
-        vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
+        local desc = "Split " .. direction
+        vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
       end
 
-      vim.api.nvim_create_autocmd('User', {
-        pattern = 'MiniFilesBufferCreate',
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MiniFilesBufferCreate",
         callback = function(args)
           local buf_id = args.data.buf_id
           -- Tweak keys to your liking
-          map_split(buf_id, '<C-s>', 'belowright horizontal')
-          map_split(buf_id, '<C-v>', 'belowright vertical')
+          map_split(buf_id, "<C-s>", "belowright horizontal")
+          map_split(buf_id, "<C-v>", "belowright vertical")
         end,
       })
       require("mini.icons").setup()
@@ -224,7 +224,7 @@ return {
       end
 
       local gen_hook = require("mini.splitjoin").gen_hook
-      local curly = { brackets = { '%b{}' } }
+      local curly = { brackets = { "%b{}" } }
       -- Add trailing comma when splitting inside curly brackets
       local add_comma_curly = gen_hook.add_trailing_separator(curly)
       -- Delete trailing comma when joining inside curly brackets
@@ -233,17 +233,16 @@ return {
       local pad_curly = gen_hook.pad_brackets(curly)
 
       require("mini.splitjoin").setup()
-      vim.api.nvim_create_autocmd("FileType",
-        {
-          pattern = { "lua" },
-          group = vim.api.nvim_create_augroup("_splitjoin_filetype", { clear = true }),
-          callback = function()
-            vim.b.minisplitjoin_config = {
-              split = { hooks_post = { add_comma_curly } },
-              join  = { hooks_post = { del_comma_curly, pad_curly } },
-            }
-          end
-        })
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "lua" },
+        group = vim.api.nvim_create_augroup("_splitjoin_filetype", { clear = true }),
+        callback = function()
+          vim.b.minisplitjoin_config = {
+            split = { hooks_post = { add_comma_curly } },
+            join = { hooks_post = { del_comma_curly, pad_curly } },
+          }
+        end,
+      })
       vim.api.nvim_exec_autocmds("FileType", { group = "_splitjoin_filetype" })
 
       require("mini.trailspace").setup()
@@ -301,10 +300,10 @@ return {
           end,
           desc = "File Explorer (fresh)",
         },
-        { "<leader>Sn", write_new_session,                    desc = "New session" },
+        { "<leader>Sn", write_new_session, desc = "New session" },
         { "<leader>Ss", "<cmd>lua MiniSessions.select()<cr>", desc = "Select a session" },
-        { "<leader>Sw", "<cmd>lua MiniSessions.write()<cr>",  desc = "Write current session" },
-        { "<leader>Sg", write_git_branch_session,             desc = "Write current session (git branch)" },
+        { "<leader>Sw", "<cmd>lua MiniSessions.write()<cr>", desc = "Write current session" },
+        { "<leader>Sg", write_git_branch_session, desc = "Write current session (git branch)" },
       }
     end,
     lazy = false,

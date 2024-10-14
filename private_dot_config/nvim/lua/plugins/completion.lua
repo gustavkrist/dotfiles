@@ -20,7 +20,7 @@ return {
     opts = function()
       local types = require("luasnip.util.types")
       return {
-        delete_check_events= "InsertLeave",
+        delete_check_events = "InsertLeave",
         enable_autosnippets = true,
         store_selection_keys = "<Tab>",
         ft_func = require("luasnip.extras.filetype_functions").from_pos_or_filetype,
@@ -45,12 +45,12 @@ return {
     build = "make install_jsregexp",
     event = "InsertEnter",
     keys = {
-      { "<C-n>",      "<Plug>luasnip-next-choice",                                    mode = "i" },
-      { "<C-n>",      "<Plug>luasnip-next-choice",                                    mode = "s" },
-      { "<C-p>",      "<Plug>luasnip-prev-choice",                                    mode = "i" },
-      { "<C-p>",      "<Plug>luasnip-prev-choice",                                    mode = "s" },
-      { "<C-u>",      "<cmd>lua require('luasnip.extras.select_choice')()<cr>",       mode = "i" },
-      { "<C-u>",      "<cmd>lua require('luasnip.extras.select_choice')()<cr>",       mode = "s" },
+      { "<C-n>", "<Plug>luasnip-next-choice", mode = "i" },
+      { "<C-n>", "<Plug>luasnip-next-choice", mode = "s" },
+      { "<C-p>", "<Plug>luasnip-prev-choice", mode = "i" },
+      { "<C-p>", "<Plug>luasnip-prev-choice", mode = "s" },
+      { "<C-u>", "<cmd>lua require('luasnip.extras.select_choice')()<cr>", mode = "i" },
+      { "<C-u>", "<cmd>lua require('luasnip.extras.select_choice')()<cr>", mode = "s" },
       { "<leader>se", "<cmd>lua require('luasnip.loaders').edit_snippet_files()<CR>", desc = "Edit snippets" },
       -- {
       --   "<S-Tab>",
@@ -69,11 +69,11 @@ return {
     cond = false,
     name = "nvim-cmp",
     dependencies = {
-      { "hrsh7th/cmp-nvim-lsp",     lazy = true },
-      { "hrsh7th/cmp-buffer",       lazy = true },
-      { "hrsh7th/cmp-path",         lazy = true },
-      { "hrsh7th/cmp-cmdline",      lazy = true },
-      { "hrsh7th/cmp-nvim-lua",     lazy = true },
+      { "hrsh7th/cmp-nvim-lsp", lazy = true },
+      { "hrsh7th/cmp-buffer", lazy = true },
+      { "hrsh7th/cmp-path", lazy = true },
+      { "hrsh7th/cmp-cmdline", lazy = true },
+      { "hrsh7th/cmp-nvim-lua", lazy = true },
       { "saadparwaiz1/cmp_luasnip", lazy = true },
       "L3MON4D3/LuaSnip",
     },
@@ -269,7 +269,7 @@ return {
   },
   {
     -- TODO: Come back to this one when it supports luasnippets
-    'gustavkrist/blink.cmp',
+    "gustavkrist/blink.cmp",
     dependencies = {
       "L3MON4D3/LuaSnip",
       "Saghen/blink.compat",
@@ -301,7 +301,7 @@ return {
       keymap = {
         select_prev = { "<Down>", "<C-k>" },
         select_next = { "<Up>", "<C-j>" },
-        accept = {},
+        accept = { "<CR>" },
         snippet_forward = {},
         snippet_backward = {},
         -- scroll_documentation_up = {},
@@ -315,7 +315,7 @@ return {
       },
       -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- adjusts spacing to ensure icons are aligned
-      nerd_font_variant = 'normal',
+      nerd_font_variant = "normal",
       sources = {
         providers = {
           { "blink.cmp.sources.lsp", name = "LSP" },
@@ -333,7 +333,7 @@ return {
           border = "rounded",
           draw = "reversed",
           selection = "preselect",
-          winhighlight = 'Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder',
+          winhighlight = "Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder",
         },
       },
       fuzzy = {
@@ -342,7 +342,9 @@ return {
           forceVersion = "0.2.1",
         },
       },
-      snippet_expand = function(...) require("luasnip").lsp_expand(...) end,
+      snippet_expand = function(...)
+        require("luasnip").lsp_expand(...)
+      end,
 
       -- experimental auto-brackets support
       -- accept = { auto_brackets = { enabled = true } }
@@ -368,8 +370,8 @@ return {
             end
           end,
           mode = { "i", "s" },
-          noremap = true
-        }
+          noremap = true,
+        },
       }
     end,
   },
