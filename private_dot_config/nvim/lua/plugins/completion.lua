@@ -272,6 +272,8 @@ return {
     'gustavkrist/blink.cmp',
     dependencies = {
       "L3MON4D3/LuaSnip",
+      "Saghen/blink.compat",
+      "saadparwaiz1/cmp_luasnip",
       -- {
       --   "benlubas/cmp2lsp",
       --   dependencies = {
@@ -314,10 +316,13 @@ return {
       -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
       -- adjusts spacing to ensure icons are aligned
       nerd_font_variant = 'normal',
-      providers = {
-        { "blink.cmp.sources.lsp" },
-        { "blink.cmp.sources.path" },
-        { "blink.cmp.sources.buffer" },
+      sources = {
+        providers = {
+          { "blink.cmp.sources.lsp", name = "LSP" },
+          { "blink.cmp.sources.path", name = "Path" },
+          { "blink.cmp.sources.buffer", name = "Buffer", fallback_for = { "LSP" } },
+          { "blink.compat.init", name = "luasnip", score_offset = 1 },
+        },
       },
       windows = {
         documentation = {
@@ -327,6 +332,7 @@ return {
         autocomplete = {
           border = "rounded",
           draw = "reversed",
+          selection = "preselect",
           winhighlight = 'Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder',
         },
       },
@@ -350,10 +356,10 @@ return {
         {
           "<Tab>",
           function()
-            local win = require("blink.cmp").windows.autocomplete.win
+            local autocomplete = require("blink.cmp").windows.autocomplete
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
-            elseif win:is_open() then
+            elseif autocomplete.win:is_open() then
               require("blink.cmp").accept()
             elseif require("util.cmp").has_words_before() then
               require("blink.cmp").show()
