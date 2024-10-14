@@ -138,7 +138,8 @@ return {
           lua = { "stylua" },
           markdown = { "injected" },
           python = { "black", "isort", "pyupgrade" },
-          sh = { "shfmt" },
+          sh = { "beautish" },
+          zsh = { "beautish" },
           vue = { "eslint_d" },
         },
       }
