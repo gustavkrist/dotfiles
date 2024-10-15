@@ -16,8 +16,11 @@ return {
       local vue_language_server_path = require("mason-registry").get_package("vue-language-server"):get_install_path()
         .. "/node_modules/@vue/language-server"
 
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
       local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-      local capabilities = ok and cmp_nvim_lsp.default_capabilities() or {}
+      if ok then
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      end
 
       local servers = {
         bashls = true,
