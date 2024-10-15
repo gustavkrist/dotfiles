@@ -30,7 +30,16 @@ return {
         },
         jsonls = true,
         lua_ls = true,
-        pyright = true,
+        pyright = {
+          init_options = {
+            settings = {
+              pyright = {
+                disableOrganizeImport = true,
+              },
+            },
+          },
+        },
+        ruff = true,
         texlab = true,
         ts_ls = {
           init_options = {
@@ -43,7 +52,6 @@ return {
             },
           },
           filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-          capabilities = capabilities,
           on_attach = function(client, bufnr)
             if vim.api.nvim_get_option_value("filetype", { buf = bufnr }) ~= "vue" then
               require("nvim-navic").attach(client, bufnr)
@@ -54,6 +62,20 @@ return {
         volar = true,
         yamlls = true,
       }
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client == nil then
+            return
+          end
+          if client.name == "ruff" then
+            -- Disable hover in favor of Pyright
+            client.server_capabilities.hoverProvider = false
+          end
+        end,
+        desc = "LSP: Disable hover capability from Ruff",
+      })
 
       -- From https://github.com/tjdevries/config.nvim/blob/37c9356fd40a8d3589638c8d16a6a6b1274c40ca/lua/custom/plugins/lsp.lua
       local servers_to_install = vim.tbl_filter(function(key)
@@ -74,7 +96,9 @@ return {
         config = vim.tbl_deep_extend("force", {}, {
           capabilities = capabilities,
           on_attach = function(client, bufnr)
-            require("nvim-navic").attach(client, bufnr)
+            if not vim.tbl_contains({ "ruff" }, name) then
+              require("nvim-navic").attach(client, bufnr)
+            end
           end,
         }, config)
 
@@ -140,7 +164,6 @@ return {
           fsharp = { "fantomas" },
           lua = { "stylua" },
           markdown = { "injected" },
-          python = { "black", "isort", "pyupgrade" },
           sh = { "beautish" },
           zsh = { "beautish" },
           vue = { "eslint_d" },
@@ -176,7 +199,7 @@ return {
     config = function()
       local linters_by_ft = {
         lua = { "stylua" },
-        python = { "flake8", "mypy" },
+        python = { "mypy" },
         vue = { "eslint" },
       }
       local executable_linters = {}
