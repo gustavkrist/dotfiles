@@ -270,6 +270,7 @@ return {
   {
     -- TODO: Come back to this one when it supports luasnippets
     "gustavkrist/blink.cmp",
+    build = "cargo build --release",
     dependencies = {
       "L3MON4D3/LuaSnip",
       "Saghen/blink.compat",
@@ -339,7 +340,7 @@ return {
       fuzzy = {
         prebuiltBinaries = {
           download = true,
-          forceVersion = "0.2.1",
+          forceVersion = "0.3",
         },
       },
       snippet_expand = function(...)
