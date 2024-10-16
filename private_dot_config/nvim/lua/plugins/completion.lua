@@ -66,7 +66,7 @@ return {
   },
   {
     "iguanacucumber/magazine.nvim",
-    cond = false,
+    cond = true,
     name = "nvim-cmp",
     dependencies = {
       { "hrsh7th/cmp-nvim-lsp", lazy = true },
@@ -288,7 +288,7 @@ return {
       --   opts = {},
       -- },
     },
-    enabled = true,
+    enabled = false,
     lazy = false, -- lazy loading handled internally
     -- optional: provides snippets for the snippet source
     -- dependencies = 'rafamadriz/friendly-snippets',
