@@ -108,6 +108,8 @@ alias nvide="'/mnt/c/Program Files/Neovide/neovide.exe' --"
 alias k="kubectl"
 alias kgp="kubectl get pods"
 alias kex="kubectl exec -it"
+alias bsh='kx botstudio-celery-default ipython -i -c '"'"'import django;import os;os.environ.setdefault("DJANGO_SETTINGS_MODULE", "botstudio.settings");django.setup();from botstudio.models import *'"'"''
+alias bish='kx botstudio-celery-default python -i -c '"'"'import django;import os;os.environ.setdefault("DJANGO_SETTINGS_MODULE", "botstudio.settings");django.setup();from botstudio.models import *'"'"''
 {{- else }}
 alias coa="conda activate"
 alias cod="conda deactivate"
