@@ -207,4 +207,6 @@ require("util.plugins").on_very_lazy(function()
   end
 end)
 
-require("util.wezterm").setup()
+if not require("util.firenvim")() then
+  require("util.wezterm").setup()
+end

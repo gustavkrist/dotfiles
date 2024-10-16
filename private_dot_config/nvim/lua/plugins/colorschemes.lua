@@ -13,7 +13,9 @@ return {
             hi! link NoiceLspProgressTitle @comment
             hi NavicSeparator guibg=NONE
             ]])
-          require("util.wezterm").set_term_background("#D8DEE9", "#2E3440", "#D8DEE9")
+          if not require("util.firenvim")() then
+            require("util.wezterm").set_term_background("#D8DEE9", "#2E3440", "#D8DEE9")
+          end
           if require("util.plugins").has("lualine.nvim") then
             require("util.lualine").load_lualine_custom_nord()
           end
@@ -32,6 +34,9 @@ return {
   {
     "folke/tokyonight.nvim",
     config = function(_, opts)
+      if vim.g.neovide ~= nil or require("util.firenvim")() then
+        opts.transparent = false
+      end
       require("tokyonight").setup(opts)
       vim.api.nvim_create_autocmd("Colorscheme", {
         pattern = { "tokyonight" },
@@ -107,6 +112,9 @@ return {
   {
     "gustavkrist/darkvoid.nvim",
     config = function(_, opts)
+      if vim.g.neovide ~= nil or require("util.firenvim")() then
+        opts.transparent = false
+      end
       require("darkvoid").setup(opts)
       vim.api.nvim_create_autocmd("Colorscheme", {
         pattern = { "darkvoid" },
