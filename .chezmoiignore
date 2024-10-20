@@ -4,8 +4,10 @@
 !.config
 .config/*
 !.config/wezterm
+!.config/kmonad
 {{- else }}
 AppData/
+.config/kmonad
 {{- if ne .chezmoi.os "darwin" }}
 .hammerspoon/
 Library/
