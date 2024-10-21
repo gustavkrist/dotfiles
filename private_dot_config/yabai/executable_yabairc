@@ -34,8 +34,7 @@ yabai -m config left_padding 8
 yabai -m config right_padding 8
 yabai -m config window_gap 8
 
-## With SIP disabled and external status bar
-yabai -m config external_bar main:25:0
+yabai -m config external_bar main:40:0
 
 # -- Rules --------------------------------------------------------------------
 
