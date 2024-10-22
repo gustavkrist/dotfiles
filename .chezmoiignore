@@ -7,12 +7,12 @@
 !.config/kmonad
 {{- else }}
 AppData/
-.config/kmonad
 {{- if ne .chezmoi.os "darwin" }}
 .hammerspoon/
 Library/
 .ideavimrc
 .config/karabiner/
+.config/kmonad
 .config/sketchybar/
 .config/skhd/
 .config/yabai/
