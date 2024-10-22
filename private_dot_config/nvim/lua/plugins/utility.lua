@@ -202,6 +202,9 @@ return {
     keys = { { "<leader>oc", desc = "Edit chezmoi files" } },
   },
   {
+    "kmonad/kmonad-vim",
+  },
+  {
     "chrishrb/gx.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
@@ -256,5 +259,34 @@ return {
       }
     end,
     event = "VeryLazy",
+  },
+  {
+    "m4xshen/hardtime.nvim",
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    config = function(_, opts)
+      require("hardtime").setup(opts)
+      vim.keymap.set("n", "<leader>ut", "<cmd>Hardtime toggle<cr>", { desc = "Toggle Hardtime" })
+    end,
+    event = "User FileOpened",
+    opts = {
+      callback = function(text)
+        require("precognition").peek()
+        vim.notify(text)
+      end,
+      disabled_keys = {
+        ["<Up>"] = {},
+        ["<Down>"] = {},
+        ["<Left>"] = {},
+        ["<Right>"] = {},
+      },
+    },
+  },
+  {
+    "tris203/precognition.nvim",
+    event = "User FileOpened",
+    opts = {
+      startVisible = false,
+      showBlankVirtLine = false,
+    },
   },
 }
