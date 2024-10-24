@@ -50,8 +50,6 @@ local options = {
   laststatus = 0,
 }
 
-vim.opt.formatoptions:append({ "n" })
-
 vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
 
 for k, v in pairs(options) do

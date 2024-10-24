@@ -11,3 +11,4 @@ vim.keymap.set(
   [[<cmd>2TermExec size=70 direction=vertical cmd="]] .. pythonpath .. [[ %"<cr>]],
   { noremap = true, silent = true, buffer = 0 }
 )
+vim.opt.formatoptions:append("r")

@@ -40,6 +40,7 @@ return {
           },
         },
         ruff = true,
+        taplo = true,
         texlab = true,
         ts_ls = {
           init_options = {
