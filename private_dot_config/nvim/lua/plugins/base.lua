@@ -278,5 +278,6 @@ return {
     cond = function()
       return not require("util.firenvim").get()
     end,
+    enabled = false,
   },
 }

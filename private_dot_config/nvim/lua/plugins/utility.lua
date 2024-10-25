@@ -269,24 +269,12 @@ return {
     end,
     event = "User FileOpened",
     opts = {
-      callback = function(text)
-        require("precognition").peek()
-        vim.notify(text)
-      end,
       disabled_keys = {
         ["<Up>"] = {},
         ["<Down>"] = {},
         ["<Left>"] = {},
         ["<Right>"] = {},
       },
-    },
-  },
-  {
-    "tris203/precognition.nvim",
-    event = "User FileOpened",
-    opts = {
-      startVisible = false,
-      showBlankVirtLine = false,
     },
   },
 }

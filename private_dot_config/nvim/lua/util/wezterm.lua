@@ -50,15 +50,19 @@ function M.setup()
     return function()
       local win = vim.api.nvim_get_current_win()
       vim.cmd.wincmd(dir)
-      local pane = vim.env.WEZTERM_PANE
+      local pane = vim.env.WEZTERM_PANE or vim.env.WEZTERM_REMOTE_PANE
       local wezterm_prog = "wezterm"
-      if vim.fn.has("wsl") == 1 then
+      local opts = { text = true }
+      if vim.fn.has("wsl") == 1 and vim.env.WEZTERM_PANE == nil then
         wezterm_prog = "wezterm.exe"
         pane = vim.env.TERM == "wezterm"
+        if vim.env.WEZTERM_REMOTE_PANE ~= nil then
+          opts.cwd = "/home/gustav/winhome/.local/share/wezterm"
+        end
       end
       if vim.system and pane and win == vim.api.nvim_get_current_win() then
         local pane_dir = nav[dir]
-        vim.system({ wezterm_prog, "cli", "activate-pane-direction", pane_dir }, { text = true }, function(p)
+        vim.system({ wezterm_prog, "cli", "activate-pane-direction", pane_dir }, opts, function(p)
           if p.code ~= 0 then
             vim.notify(
               "Failed to move to pane " .. pane_dir .. "\n" .. p.stderr,
