@@ -113,7 +113,8 @@ function M.split_nav(resize_or_move, mods, key, dir)
 end
 
 function M.is_nvim(pane)
-  return pane:get_user_vars().IS_NVIM == "true" or pane:get_foreground_process_name():find("n?vim")
+  local process_name = pane:get_foreground_process_name()
+  return pane:get_user_vars().IS_NVIM == "true" or (process_name and process_name:find("n?vim") or false)
 end
 
 return M
