@@ -275,6 +275,7 @@ return {
         ["<Left>"] = {},
         ["<Right>"] = {},
       },
+      disable_mouse = false,
     },
   },
 }
