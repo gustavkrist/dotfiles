@@ -2110,6 +2110,27 @@ local non_autosnippets = {
   }, {
     condition = not_in_mathzone,
   }),
+  s({
+    trig = "figure",
+    name = "Figure",
+    wordTrig = true,
+
+  }, fmta(
+    [[
+    \begin{figure}
+      \centering
+      \includegraphics[width=<>\textwidth]{<>}
+      \caption{<>}
+      \label{fig:<>}
+    \end{figure}
+    ]], {
+    i(1, "1"),
+    i(2),
+    i(3),
+    i(4),
+  }), {
+    condition = not_in_mathzone,
+  }),
 }
 
 -- Add space after degree function, except for h
