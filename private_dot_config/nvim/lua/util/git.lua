@@ -56,17 +56,22 @@ function M.set_git_session_global()
 end
 
 --- Open picker for branch/commit and run vim function `fn` with picked value as argument
----@param fn string
+---@param what "file" | "repo"
 ---@param mode string?
-function M.run_openingh_with_picked_ref(fn, mode)
+function M.gitbrowse_with_branch(what, mode)
+  local start_pos, end_pos = nil, nil
+  if mode == "v" then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, true, true), "n", false)
+    start_pos = vim.api.nvim_buf_get_mark(0, "<")[1]
+    end_pos = vim.api.nvim_buf_get_mark(0, ">")[1]
+  end
   local branches = vim.split(
-    vim.system({ "git", "rev-parse", "--abbrev-ref origin/HEAD", "HEAD" }, { text = true }):wait().stdout,
+    vim.system({ "git", "rev-parse", "--abbrev-ref", "origin/HEAD", "HEAD" }, { text = true }):wait().stdout,
     "\n"
   )
   local default = vim.fs.basename(branches[1])
   local current = string.gsub(branches[2], "%s*$", "")
   local commit = vim.system({ "git", "log", "-n", "1", "--pretty=format:'%H'" }, { text = true }):wait().stdout
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, true, true), "n", false)
   vim.ui.select({
     { text = string.format("Current branch [%s]", current), value = current },
     { text = string.format("Default branch [%s]", default), value = default },
@@ -78,13 +83,13 @@ function M.run_openingh_with_picked_ref(fn, mode)
     end,
   }, function(choice)
     if choice ~= nil then
+      ---@type snacks.gitbrowse.Config
+      local config = { what = what, branch = choice.value }
       if mode == "v" then
-        vim.cmd(
-          vim.api.nvim_replace_termcodes(string.format("normal gv:%s %s<CR>", fn, choice.value), true, true, true)
-        )
-      else
-        vim.cmd(string.format("%s %s", fn, choice.value))
+        config.line_start = start_pos
+        config.line_end = end_pos
       end
+      require("snacks").gitbrowse.open(config)
     end
   end)
 end

@@ -17,9 +17,13 @@ return {
         .. "/node_modules/@vue/language-server"
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      -- local ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+      -- if ok then
+      --   capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      -- end
+      local ok, blink_cmp = pcall(require, "blink.cmp")
       if ok then
-        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+        capabilities = blink_cmp.get_lsp_capabilities()
       end
 
       local servers = {
@@ -30,15 +34,27 @@ return {
         },
         jsonls = true,
         lua_ls = true,
-        pyright = {
+        basedpyright = {
           init_options = {
             settings = {
-              pyright = {
+              basedpyright = {
                 disableOrganizeImport = true,
               },
             },
           },
+          on_attach = function()
+            vim.lsp.inlay_hint.enable()
+          end,
         },
+        -- pyright = {
+        --   init_options = {
+        --     settings = {
+        --       pyright = {
+        --         disableOrganizeImport = true,
+        --       },
+        --     },
+        --   },
+        -- },
         ruff = true,
         taplo = true,
         texlab = true,
@@ -321,4 +337,49 @@ return {
       },
     },
   },
+  {
+    cond = no_firenvim,
+    "davidyz/inlayhint-filler.nvim",
+    keys = {
+      {
+        "<leader>ni",
+        function()
+          require("inlayhint-filler").fill()
+        end,
+        mode = { "n", "v" },
+        desc = "Insert inlay-hint under cursor",
+      },
+    },
+    event = "LspAttach",
+  },
+  {
+    cond = no_firenvim(),
+    "rachartier/tiny-inline-diagnostic.nvim",
+    priority = 1000,
+    opts = {
+      preset = "modern",
+      hi = {
+        mixing_color = "#2E3440",
+      },
+      options = {
+        show_source = true,
+      },
+    },
+    event = "LspAttach",
+  },
+  {
+    cond = no_firenvim(),
+    "DNLHC/glance.nvim",
+    opts = {
+      border = { enable = true },
+    },
+    event = "LspAttach",
+    cmd = "Glance",
+    keys = {
+      { "<leader>lgd", "<cmd>Glance definitions<cr>", mode = "n", desc = "Glance definitions" },
+      { "<leader>lgr", "<cmd>Glance references<cr>", mode = "n", desc = "Glance references" },
+      { "<leader>lgy", "<cmd>Glance type_definitions<cr>", mode = "n", desc = "Glance type definitions" },
+      { "<leader>lgi", "<cmd>Glance implementations<cr>", mode = "n", desc = "Glance implementations" },
+    },
+  }
 }

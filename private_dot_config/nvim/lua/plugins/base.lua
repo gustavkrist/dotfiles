@@ -79,7 +79,7 @@ return {
         { "<c-space>", desc = "Increment Selection", mode = { "x", "n" } },
       },
     },
-    lazy = true,
+    event = "VeryLazy",
   },
   {
     "nvim-tree/nvim-web-devicons",
@@ -230,7 +230,7 @@ return {
       })
     end,
     keys = {
-      { "<leader>at", "<cmd>ASToggle<cr>", desc = "Toggle AutoSave" },
+      { "<leader>ua", "<cmd>ASToggle<cr>", desc = "Toggle AutoSave" },
     },
   },
   {

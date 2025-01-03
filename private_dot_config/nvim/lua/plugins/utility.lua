@@ -1,56 +1,5 @@
 return {
   {
-    "akinsho/toggleterm.nvim",
-    cond = function()
-      return not require("util.firenvim").get()
-    end,
-    version = "*",
-    opts = {
-      open_mapping = "<C-t>",
-      direction = "float",
-      start_in_insert = true,
-      persist_mode = false,
-    },
-    cmd = {
-      "ToggleTerm",
-      "TermExec",
-      "ToggleTermToggleAll",
-      "ToggleTermSendCurrentLine",
-      "ToggleTermSendVisualLines",
-      "ToggleTermSendVisualSelection",
-    },
-    lazy = true,
-    keys = function()
-      local Terminal = require("toggleterm.terminal").Terminal
-      local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "float" })
-      local function _LAZYGIT_TOGGLE()
-        lazygit:toggle()
-      end
-      return {
-        "<C-t>",
-        {
-          "<C-t>",
-          "<cmd>execute v:count . 'ToggleTerm'<CR>",
-          desc = "Toggle Terminal",
-          noremap = true,
-          silent = true,
-        },
-        {
-          "<C-t>",
-          "<Esc><cmd>ToggleTerm<CR>",
-          desc = "Toggle Terminal",
-          noremap = true,
-          silent = true,
-        },
-        { "<leader>gg", _LAZYGIT_TOGGLE, desc = "Lazygit" },
-        { "<leader>tg", _LAZYGIT_TOGGLE, desc = "Lazygit" },
-        { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "Float" },
-        { "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "Horizontal" },
-        { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Vertical" },
-      }
-    end,
-  },
-  {
     "MagicDuck/grug-far.nvim",
     opts = { headerMaxWidth = 80 },
     keys = function()
@@ -72,106 +21,9 @@ return {
     cmd = "GrugFar",
   },
   {
-    "almo7aya/openingh.nvim",
-    config = function()
-      require("util.plugins").on_load("which-key.nvim", function()
-        require("which-key").add({ "<leader>og", group = "Open in GitHub..." })
-      end)
-    end,
-    keys = function()
-      local openingh = require("util.git").run_openingh_with_picked_ref
-      return {
-        { "<leader>ogr", "<cmd>OpenInGHRepo<cr>", desc = "Open repo in GitHub" },
-        {
-          "<leader>ogf",
-          function()
-            openingh("OpenInGHFile")
-          end,
-          mode = "n",
-          desc = "Open file in GitHub",
-        },
-        {
-          "<leader>ogl",
-          function()
-            openingh("OpenInGHFileLines")
-          end,
-          mode = "n",
-          desc = "Open line(s) in GitHub",
-        },
-        {
-          "<leader>ogl",
-          function()
-            openingh("OpenInGHFileLines", "v")
-          end,
-          mode = "v",
-          desc = "Open line(s) in GitHub",
-        },
-      }
-    end,
-    cmd = { "OpenInGHRepo", "OpenInGHFile", "OpenInGHFileLines" },
-  },
-  {
     "windwp/nvim-ts-autotag",
     opts = {},
     ft = { "html", "vue" },
-  },
-  {
-    "folke/zen-mode.nvim",
-    dependencies = {
-      { "folke/twilight.nvim", lazy = true, opts = { dimming = { term_bg = "#2E3440" } } },
-    },
-    opts = {
-      window = {
-        options = {
-          number = false,
-          relativenumber = false,
-        },
-      },
-      plugins = {
-        gitsigns = {
-          enabled = true,
-        },
-        wezterm = {
-          enabled = true,
-          font = "+2",
-        },
-        neovide = {
-          enabled = true,
-        },
-      },
-      on_open = function()
-        local lualine_ok, lualine = pcall(require, "lualine")
-        if lualine_ok then
-          lualine.hide()
-          vim.api.nvim_set_option_value("winbar", "", { scope = "local" })
-          vim.o.laststatus = 0
-        end
-        local ibl_ok, ibl = pcall(require, "ibl")
-
-        if ibl_ok then
-          ibl.update({ enabled = false })
-        end
-      end,
-      on_close = function()
-        local lualine_ok, lualine = pcall(require, "lualine")
-        if lualine_ok then
-          lualine.hide({ unhide = true })
-        end
-        if ibl_ok then
-          ibl.update({ enabled = true })
-        end
-      end,
-    },
-    cmd = "ZenMode",
-    keys = {
-      {
-        "<leader>uz",
-        function()
-          require("zen-mode").toggle()
-        end,
-        desc = "Toggle Zen Mode",
-      },
-    },
   },
   {
     "xvzc/chezmoi.nvim",
@@ -222,24 +74,54 @@ return {
     cond = function()
       return not require("util.firenvim").get()
     end,
+    opts = {
+      select = {
+        enabled = false,
+      },
+    },
     event = "VeryLazy",
   },
   {
-    "gustavkrist/fastaction.nvim",
+    "Chaitanyabsprip/fastaction.nvim",
     dependencies = { "stevearc/dressing.nvim" },
-    config = function(_, opts)
-      local fastaction = require("fastaction")
-      fastaction.setup(opts)
-      vim.ui.select = function(items, opts, on_choice)
-        opts = opts or {}
-        opts.relative = "win"
-        opts.centered = true
-        fastaction.select(items, opts, on_choice)
-      end
-    end,
     opts = function()
       ---@param params GetActionConfigParams
       ---@return ActionConfig | nil
+      local function get_action_config_from_priorities(params)
+          if params.priorities == nil or #params.priorities == 0 then return nil end
+          for _, priority in ipairs(params.priorities) do
+              if
+                  not vim.tbl_contains(params.invalid_keys, priority.key)
+                  and params.title:lower():match(priority.pattern)
+              then
+                  priority.order = priority.order or 10
+                  return priority
+              end
+          end
+      end
+
+      ---@param params GetActionConfigParams
+      ---@return ActionConfig | nil
+      local function get_action_config_from_title(params)
+          if params.title == nil or params.title == '' or #params.valid_keys == 0 then return nil end
+          local index = 1
+          local increment = #params.valid_keys[1]
+          params.title = string.lower(params.title)
+          params.title, _ = string.gsub(params.title, "^ruff: ", "")
+          params.title, _ = string.gsub(params.title, "^ruff %([a-z]+%d+%): ", "")
+          repeat
+              local char = params.title:sub(index, index + increment - 1)
+              if
+                  char:match '[a-z]+'
+                  and not vim.tbl_contains(params.invalid_keys, char)
+                  and vim.tbl_contains(params.valid_keys, char)
+              then
+                  return { key = char, order = 10 }
+              end
+              index = index + increment
+          until index >= #params.title
+      end
+
       local function get_action_config_from_keys(params)
         if #params.valid_keys == nil or #params.valid_keys == 0 then
           return nil
@@ -253,11 +135,39 @@ return {
 
       return {
         dismiss_keys = { "<C-c>", "<Esc>", "q" },
-        override_function = get_action_config_from_keys,
         register_ui_select = true,
-        fallback_threshold = 15,
+        fallback_threshold = 10,
+        override_function = function(params)
+          if params.kind == "codeaction" then
+            local res = get_action_config_from_priorities(params)
+            if res then
+              return res
+            end
+            return get_action_config_from_title(params)
+          end
+          return get_action_config_from_keys(params)
+        end,
+        popup = {
+          relative = "cursor",
+        },
+        priority = {
+          python = {
+            { pattern = "fix all auto-fixable problems", key = "a", order = 2 },
+            { pattern = "ruff: organize imports", key = "o", order = 1 },
+          },
+        },
       }
     end,
+    keys = {
+      {
+        "<leader>la",
+        function()
+          require("fastaction").code_action()
+        end,
+        mode = { "n", "v" },
+        desc = "Code Action",
+      },
+    },
     event = "VeryLazy",
   },
   {

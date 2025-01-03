@@ -11,6 +11,10 @@ return {
         callback = function()
           vim.cmd([[
             hi! link NoiceLspProgressTitle @comment
+            hi! link LspInlayHint @comment
+            hi! link FzfLuaHeaderText @function
+            hi! link FzfLuaPathLineNr @string
+            hi! link FzfLuaPathColNr @function
             hi NavicSeparator guibg=NONE
             ]])
           if not require("util.firenvim")() then
@@ -110,14 +114,15 @@ return {
     lazy = true,
   },
   {
-    "gustavkrist/darkvoid.nvim",
-    config = function(_, opts)
-      if vim.g.neovide ~= nil or require("util.firenvim")() then
-        opts.transparent = false
+    "wnkz/monoglow.nvim",
+    opts = {
+      on_colors = function(colors)
+        colors.bg = "NONE"
       end
-      require("darkvoid").setup(opts)
+    },
+    init = function()
       vim.api.nvim_create_autocmd("Colorscheme", {
-        pattern = { "darkvoid" },
+        pattern = { "monoglow" },
         callback = function()
           vim.cmd([[
             hi! link NoiceLspProgressTitle @comment
@@ -125,16 +130,11 @@ return {
             ]])
           require("util.wezterm").set_term_background("#c0c0c0", "#1c1c1c", "#bdfe58")
           if require("util.plugins").has("lualine.nvim") then
-            require("util.lualine").load_template("darkvoid", true, false)
+            require("util.lualine").load_template("monoglow", true, false)
           end
         end,
       })
     end,
-    opts = {
-      transparent = true,
-      glow = true,
-      disabled_plugins = { "lualine" },
-    },
     lazy = true,
-  },
+  }
 }

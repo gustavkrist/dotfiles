@@ -112,17 +112,17 @@ map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- LSP
 map("n", "gI", function()
-  if has("telescope.nvim") then
-    require("telescope.builtin").lsp_implementations({ reuse_win = true })
+  if has("fzf-lua") then
+    require("fzf-lua").lsp_implementations({ resume = true })
   else
     vim.lsp.buf.implementation()
   end
 end, { noremap = true, silent = true, desc = "Goto Implementation" })
 map("n", "gr", function()
-  if has("telescope.nvim") then
-    require("telescope.builtin").lsp_references({ reuse_win = true })
+  if has("fzf-lua") then
+    require("fzf-lua").lsp_references({ resume = true })
   else
-    vim.lsp.buf.implementation()
+    vim.lsp.buf.references()
   end
 end, { noremap = true, silent = true, desc = "Goto References" })
 map("n", "gl", function()
@@ -141,19 +141,19 @@ map(
   { noremap = true, silent = true, desc = "Show Signature Help" }
 )
 map("n", "gd", function()
-  if has("telescope.nvim") then
-    require("telescope.builtin").lsp_definitions({ reuse_win = true })
+  if has("fzf-lua") then
+    require("fzf-lua").lsp_definitions({ resume = true })
   else
-    vim.lsp.buf.implementation()
+    vim.lsp.buf.definition()
   end
 end, { noremap = true, silent = true, desc = "Goto Definition" })
 map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { noremap = true, silent = true, desc = "Goto Declaration" })
 map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", { noremap = true, silent = true })
 map("n", "gy", function()
-  if has("telescope.nvim") then
-    require("telescope.builtin").lsp_type_definitions({ reuse_win = true })
+  if has("fzf-lua") then
+    require("fzf-lua").lsp_type_definitions({ resume = true })
   else
-    vim.lsp.buf.implementation()
+    vim.lsp.buf.type_definition()
   end
 end, { noremap = true, silent = true })
 map(
@@ -194,18 +194,6 @@ map("n", "<leader>/", "gcc", { desc = "Toggle Comment", silent = true, remap = t
 map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Above" })
 map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
 map("v", "<leader>/", "gc", { desc = "Toggle Comment", silent = true, remap = true })
-
--- Toggles
-require("util.plugins").on_very_lazy(function()
-  local toggle = require("util.toggle")
-  toggle.map("<leader>ud", toggle.diagnostics)
-  toggle.map("<leader>us", toggle("spell", { name = "Spelling" }))
-  toggle.map("<leader>uw", toggle("wrap", { name = "Wrap" }))
-  toggle.map("<leader>wm", toggle.maximize)
-  if vim.lsp.inlay_hint then
-    toggle.map("<leader>uh", toggle.inlay_hints)
-  end
-end)
 
 if not require("util.firenvim")() then
   require("util.wezterm").setup()

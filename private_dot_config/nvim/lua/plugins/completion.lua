@@ -52,21 +52,11 @@ return {
       { "<C-u>", "<cmd>lua require('luasnip.extras.select_choice')()<cr>", mode = "i" },
       { "<C-u>", "<cmd>lua require('luasnip.extras.select_choice')()<cr>", mode = "s" },
       { "<leader>se", "<cmd>lua require('luasnip.loaders').edit_snippet_files()<CR>", desc = "Edit snippets" },
-      -- {
-      --   "<S-Tab>",
-      --   function()
-      --     local luasnip = require("luasnip")
-      --     if luasnip.locally_jumpable(-1) then
-      --       luasnip.jump(-1)
-      --     end
-      --   end,
-      --   mode = { "i", "s" }
-      -- }
     },
   },
   {
     "iguanacucumber/magazine.nvim",
-    cond = true,
+    cond = false,
     name = "nvim-cmp",
     dependencies = {
       { "hrsh7th/cmp-nvim-lsp", lazy = true },
@@ -268,112 +258,158 @@ return {
     event = { "InsertEnter", "CmdlineEnter" },
   },
   {
-    -- TODO: Come back to this one when it supports luasnippets
-    "gustavkrist/blink.cmp",
-    build = "cargo build --release",
-    dependencies = {
-      "L3MON4D3/LuaSnip",
-      "Saghen/blink.compat",
-      "saadparwaiz1/cmp_luasnip",
-      -- {
-      --   "benlubas/cmp2lsp",
-      --   dependencies = {
-      --     "saadparwaiz1/cmp_luasnip"
-      --   },
-      --   -- config = vim.schedule_wrap(function()
-      --   --   print(vim.inspect(require("cmp2lsp.sources").sources))
-      --   --   require("cmp2lsp").setup()
-      --   --   print(vim.inspect(require("cmp2lsp.sources").sources))
-      --   -- end)
-      --   opts = {},
-      -- },
-    },
-    enabled = false,
-    lazy = false, -- lazy loading handled internally
-    -- optional: provides snippets for the snippet source
-    -- dependencies = 'rafamadriz/friendly-snippets',
-
-    -- use a release tag to download pre-built binaries
-    -- OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-    -- build = 'cargo build --release',
-
+    "saghen/blink.cmp",
+    version = "*",
     ---@type blink.cmp.Config
     opts = {
-      keymap = {
-        select_prev = { "<Down>", "<C-k>" },
-        select_next = { "<Up>", "<C-j>" },
-        accept = { "<CR>" },
-        snippet_forward = {},
-        snippet_backward = {},
-        -- scroll_documentation_up = {},
-        -- scroll_documentation_down = {},
-      },
-      highlight = {
-        -- sets the fallback highlight groups to nvim-cmp's highlight groups
-        -- useful for when your theme doesn't support blink.cmp
-        -- will be removed in a future release, assuming themes add support
+      appearance = {
         use_nvim_cmp_as_default = true,
+        nerd_font_variant = "mono",
       },
-      -- set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-      -- adjusts spacing to ensure icons are aligned
-      nerd_font_variant = "normal",
-      sources = {
-        providers = {
-          { "blink.cmp.sources.lsp", name = "LSP" },
-          { "blink.cmp.sources.path", name = "Path" },
-          { "blink.cmp.sources.buffer", name = "Buffer", fallback_for = { "LSP" } },
-          { "blink.compat.init", name = "luasnip", score_offset = 1 },
-        },
-      },
-      windows = {
+      completion = {
+        keyword = { range = "prefix" },
+        accept = { auto_brackets = { enabled = true } },
+        list = { selection = "auto_insert" },
         documentation = {
-          border = "rounded",
           auto_show = true,
+          auto_show_delay_ms = 500,
+          window = {
+            border = "rounded",
+          }
         },
-        autocomplete = {
+        menu = {
           border = "rounded",
-          draw = "reversed",
-          selection = "preselect",
-          winhighlight = "Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder",
+          winhighlight = 'Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+          cmdline_position = function() -- FIXME: should be fixed by blink/noice and become unnecessary
+            if vim.g.ui_cmdline_pos ~= nil then
+              local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
+              return { pos["row"] - 1, pos["col"] }
+            end
+            local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
+            return { vim.o.lines - height, 0 }
+          end,
+          draw = {
+            columns = {
+              { "kind_icon" },
+              { "label", "label_description", gap = 1 },
+              { "source_name" },
+            },
+            components = {
+              kind_icon = {
+                ellipsis = false,
+                text = function(ctx)
+                  local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+                  return kind_icon
+                end,
+                highlight = function(ctx)
+                  local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
+                  return hl
+                end,
+              },
+            },
+          },
         },
       },
-      fuzzy = {
-        prebuiltBinaries = {
-          download = true,
-          forceVersion = "0.3",
-        },
-      },
-      snippet_expand = function(...)
-        require("luasnip").lsp_expand(...)
-      end,
-
-      -- experimental auto-brackets support
-      -- accept = { auto_brackets = { enabled = true } }
-
-      -- experimental signature help support
-      -- trigger = { signature_help = { enabled = true } }
-    },
-    keys = function()
-      local luasnip = require("luasnip")
-      return {
-        {
-          "<Tab>",
-          function()
-            local autocomplete = require("blink.cmp").windows.autocomplete
-            if luasnip.expand_or_locally_jumpable() then
-              luasnip.expand_or_jump()
-            elseif autocomplete.win:is_open() then
-              require("blink.cmp").accept()
-            elseif require("util.cmp").has_words_before() then
-              require("blink.cmp").show()
+      keymap = {
+        preset = "none",
+        -- ["<Down>"] = { "select_next", "fallback" },
+        -- ["<Up>"] = { "select_prev", "fallback" },
+        ["<C-j>"] = { "select_next", "fallback" },
+        ["<C-k>"] = { "select_prev", "fallback" },
+        ["<C-Space"] = { "show", "hide" },
+        ["<C-b>"] = { "scroll_documentation_up", "fallback" },
+        ["<C-f>"] = { "scroll_documentation_down", "fallback" },
+        ["<Esc>"] = { "hide", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
+        ["<Tab>"] = {
+          function(cmp)
+            if require("luasnip").expand_or_locally_jumpable() then
+              cmp.hide()
+              vim.schedule(require("luasnip").expand_or_jump)
+              return true
             else
-              return vim.api.nvim_feedkeys("\t", "n", true)
+              return
             end
           end,
-          mode = { "i", "s" },
-          noremap = true,
+          "snippet_forward",
+          "select_next",
+          "fallback",
         },
-      }
-    end,
+        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
+      },
+      snippets = {
+        expand = function(snippet)
+          require("luasnip").lsp_expand(snippet)
+        end,
+        active = function(filter)
+          if filter and filter.direction then
+            return require("luasnip").jumpable(filter.direction)
+          end
+          return require("luasnip").in_snippet()
+        end,
+        jump = function(direction)
+          require("luasnip").jump(direction)
+        end,
+      },
+      sources = {
+        default = { "lsp", "path", "buffer", "luasnip", "snippets", "lazydev" },
+        cmdline = function()
+          local type = vim.fn.getcmdtype()
+          -- Search forward and backward
+          if type == "/" or type == "?" then
+            return { "buffer" }
+          end
+          -- Commands
+          if type == ":" then
+            return { "cmdline" }
+          end
+          return {}
+        end,
+        providers = {
+          lsp = {
+            name = "[LSP]",
+            enabled = true,
+            module = "blink.cmp.sources.lsp",
+            fallbacks = { "snippets", "luasnip", "buffer" },
+            score_offset = 90,
+          },
+          path = {
+            name = "[Path]",
+            module = "blink.cmp.sources.path",
+            fallbacks = { "snippets", "luasnip", "buffer" },
+            score_offset = 3,
+            opts = {
+              trailing_slash = false,
+              label_trailing_slash = true,
+            },
+          },
+          buffer = {
+            name = "[Buffer]",
+            module = "blink.cmp.sources.buffer",
+            min_keyword_length = 2,
+          },
+          snippets = {
+            name = "[Snippet]",
+            enabled = true,
+            module = "blink.cmp.sources.snippets",
+            score_offset = 80,
+          },
+          luasnip = {
+            name = "[Luasnip]",
+            enabled = true,
+            score_offset = 85,
+            min_keyword_length = 2,
+            fallbacks = { "snippets" },
+          },
+          lazydev = {
+            name = "[Lazydev]",
+            module = "lazydev.integrations.blink",
+            score_offset = 80,
+          },
+        },
+      },
+    },
+    event = { "InsertEnter", "CmdlineEnter" },
+    enabled = true,
   },
 }

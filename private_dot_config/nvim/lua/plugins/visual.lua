@@ -3,12 +3,13 @@ local no_firenvim = function()
 end
 return {
   {
-    "norcalli/nvim-colorizer.lua",
+    "catgoose/nvim-colorizer.lua",
     config = function(_, opts)
       require("colorizer").setup(#opts > 0 and opts or nil)
     end,
     opts = {},
     lazy = false,
+    event = "BufReadPre",
     keys = {
       { "<leader>uc", "<cmd>ColorizerToggle<cr>", desc = "Toggle Colorizer" },
     },
@@ -32,14 +33,8 @@ return {
         end,
         desc = "Next todo comment",
       },
-      { "<leader>st", "<cmd>TodoTelescope keywords=TODO,FIX<cr>", desc = "Search Todo-Comments" },
+      { "<leader>st", "<cmd>TodoFzfLua keywords=TODO,FIX<cr>", desc = "Search Todo-Comments" },
     },
-  },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    main = "ibl",
-    opts = {},
-    event = "User FileOpened",
   },
   {
     "akinsho/bufferline.nvim",
@@ -134,49 +129,10 @@ return {
     event = "VeryLazy",
   },
   {
-    "rcarriga/nvim-notify",
-    cond = no_firenvim,
-    opts = {
-      stages = "static",
-      timeout = 3000,
-      max_height = function()
-        return math.floor(vim.o.lines * 0.75)
-      end,
-      max_width = function()
-        return math.floor(vim.o.columns * 0.75)
-      end,
-      on_open = function(win)
-        vim.api.nvim_win_set_config(win, { zindex = 100 })
-      end,
-    },
-    init = function()
-      -- when noice is not enabled, install notify on VeryLazy
-      if not require("util.plugins").has("noice.nvim") then
-        require("util.plugins").on_very_lazy(function()
-          vim.notify = require("notify")
-        end)
-      end
-    end,
-    keys = {
-      {
-        "<leader>un",
-        function()
-          require("notify").dismiss({ silent = true, pending = true })
-        end,
-        desc = "Dismiss All Notifications",
-      },
-      {
-        "<leader>sn",
-        "<cmd>lua require('telescope').extensions.notify.notify(require('telescope.themes').get_dropdown({previewer = false}))<cr>",
-        desc = "Search notifications",
-      },
-    },
-  },
-  {
     "folke/noice.nvim",
     cond = no_firenvim,
     dependencies = { "MunifTanjim/nui.nvim" },
-    version = "4.4.7",
+    version = "4.*",
     event = "VeryLazy",
     opts = {
       lsp = {

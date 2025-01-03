@@ -1,18 +1,3 @@
--- Big files
-vim.filetype.add({
-  pattern = {
-    [".*"] = {
-      function(path, buf)
-        return vim.bo[buf]
-            and vim.bo[buf].filetype ~= "bigfile"
-            and path
-            and vim.fn.getfsize(path) > (1024 * 1024 * 1.5) -- 1.5MB
-            and "bigfile"
-          or nil
-      end,
-    },
-  },
-})
 -- show cursor line only in active window
 vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
   callback = function()
@@ -102,17 +87,6 @@ local definitions = {
           silent = true,
           desc = "Quit buffer",
         })
-      end,
-    },
-  },
-  {
-    "FileType",
-    {
-      pattern = "bigfile",
-      callback = function(ev)
-        vim.schedule(function()
-          vim.bo[ev.buf].syntax = vim.filetype.match({ buf = ev.buf }) or ""
-        end)
       end,
     },
   },
