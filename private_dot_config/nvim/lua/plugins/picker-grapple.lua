@@ -41,6 +41,36 @@ return {
     },
   },
   {
+    "will-lynas/grapple-line.nvim",
+    cond = function()
+      return not require("util.firenvim").get()
+    end,
+    dependencies = {
+      "cbochs/grapple.nvim",
+    },
+    version = "1.x",
+    opts = {
+      number_of_files = 4,
+      colors = {
+        active = "lualine_a_normal",
+        inactive = "@comment",
+      },
+      -- Accepted values:
+      -- "unique_filename" shows the filename and parent directories if needed
+      -- "filename" shows the filename only
+      mode = "unique_filename",
+      -- If a tag name is set, use that instead of the filename
+      show_names = false,
+      -- Accepted values:
+      -- "none" - overflowing files are ignored
+      -- "ellipsis" - if there are overflowing files an ellipsis will be shown
+      overflow = "ellipsis",
+      -- Files for which the parent directory should always be shown
+      always_show_parent = {},
+    },
+    lazy = true,
+  },
+  {
     "nvim-telescope/telescope.nvim",
     cond = function()
       return not require("util.firenvim").get()
@@ -93,107 +123,98 @@ return {
         },
       }
     end,
+    lazy = true,
+  },
+  {
+    cond = function()
+      return not require("util.firenvim").get()
+    end,
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      fzf_colors = false,
+      oldfiles = {
+        include_current_session = true,
+      },
+      keymap = {
+        fzf = {
+          ["ctrl-q"] = "select-all+accept",
+        },
+      },
+    },
     keys = function()
-      local function telescope_project_root(picker, opts, style)
+      local function pick_project_root(picker, opts, style)
         opts = opts or {}
         local project_root = require("util.root")()
         if project_root ~= nil then
           opts.cwd = project_root
         end
         if style == "ivy" then
-          opts = require("telescope.themes").get_ivy(opts)
+          opts.winopts = {
+            -- split = "botright new",
+            border = "none",
+            row = 1.0,
+            col = 0.0,
+            height = 0.5,
+            width = 1.0,
+          }
         end
-        require("telescope.builtin")[picker](opts)
+        require("fzf-lua")[picker](opts)
       end
       return {
-
         {
           "<leader>b",
-          "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({previewer = false}))<cr>",
+          function() require("fzf-lua").buffers() end,
           desc = "Buffers",
         },
         {
           "<leader>f",
           function()
-            telescope_project_root("find_files")
+            pick_project_root("files")
           end,
           desc = "Find files",
         },
         {
           "<leader>F",
           function()
-            telescope_project_root("live_grep", {}, "ivy")
+            pick_project_root("live_grep", {}, "ivy")
           end,
           desc = "Search Text",
         },
-        { "<leader>go", "<cmd>Telescope git_status<cr>", desc = "Open changed file" },
-        { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
-        { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit" },
+        { "<leader>go", "<cmd>FzfLua git_status<cr>", desc = "Open changed file" },
+        { "<leader>gb", "<cmd>FzfLua git_branches<cr>", desc = "Checkout branch" },
+        { "<leader>gc", "<cmd>FzfLua git_commits<cr>", desc = "Checkout commit" },
         {
           "<leader>gC",
-          "<cmd>Telescope git_bcommits<cr>",
+          "<cmd>FzfLua git_bcommits<cr>",
           desc = "Checkout commit(for current file)",
         },
         {
           "<leader>ld",
-          "<cmd>Telescope diagnostics bufnr=0<cr>",
+          "<cmd>FzfLua diagnostics_document<cr>",
           desc = "Document Diagnostics",
         },
-        { "<leader>lw", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics" },
-        { "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document Symbols" },
+        { "<leader>lw", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "Workspace Diagnostics" },
+        { "<leader>ls", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Document Symbols" },
         {
           "<leader>lS",
-          "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+          "<cmd>FzfLua lsp_dynamic_workspace_symbols<cr>",
           desc = "Workspace Symbols",
         },
-        { "<leader>sb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
-        { "<leader>sc", "<cmd>Telescope colorscheme<cr>", desc = "Colorscheme" },
-        { "<leader>sf", "<cmd>Telescope find_files<cr>", desc = "Find File" },
-        { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Find Help" },
-        { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Find highlight groups" },
-        { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
-        { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Open Recent File" },
-        { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-        { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
-        { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
-        { "<leader>sl", "<cmd>Telescope resume<cr>", desc = "Resume last search" },
-        {
-          "<leader>sp",
-          "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
-          desc = "Colorscheme with Preview",
-        },
+        { "<leader>sc", "<cmd>FzfLua colorschemes<cr>", desc = "Colorscheme" },
+        { "<leader>sf", "<cmd>FzfLua files<cr>", desc = "Find File" },
+        { "<leader>sh", "<cmd>FzfLua helptags<cr>", desc = "Find Help" },
+        { "<leader>sH", "<cmd>FzfLua highlights<cr>", desc = "Find highlight groups" },
+        { "<leader>sM", "<cmd>FzfLua manpages<cr>", desc = "Man Pages" },
+        { "<leader>sr", "<cmd>FzfLua oldfiles<cr>", desc = "Open Recent File" },
+        { "<leader>sR", "<cmd>FzfLua resume<cr>", desc = "Resume" },
+        { "<leader>sk", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps" },
+        { "<leader>sC", "<cmd>FzfLua commands<cr>", desc = "Commands" },
       }
     end,
-    cmd = "Telescope",
-  },
-  {
-    "will-lynas/grapple-line.nvim",
-    cond = function()
-      return not require("util.firenvim").get()
+    init = function()
+      require("fzf-lua").register_ui_select()
     end,
-    dependencies = {
-      "cbochs/grapple.nvim",
-    },
-    version = "1.x",
-    opts = {
-      number_of_files = 4,
-      colors = {
-        active = "lualine_a_normal",
-        inactive = "@comment",
-      },
-      -- Accepted values:
-      -- "unique_filename" shows the filename and parent directories if needed
-      -- "filename" shows the filename only
-      mode = "unique_filename",
-      -- If a tag name is set, use that instead of the filename
-      show_names = false,
-      -- Accepted values:
-      -- "none" - overflowing files are ignored
-      -- "ellipsis" - if there are overflowing files an ellipsis will be shown
-      overflow = "ellipsis",
-      -- Files for which the parent directory should always be shown
-      always_show_parent = {},
-    },
-    lazy = true,
+    cmd = "FzfLua",
   },
 }
