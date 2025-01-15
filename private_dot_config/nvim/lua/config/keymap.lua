@@ -166,13 +166,13 @@ map("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "Info", silent = true, norem
 map(
   "n",
   "<leader>lj",
-  "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
+  "<cmd>lua vim.diagnostic.goto_next()<CR>",
   { desc = "Next Diagnostic", silent = true, noremap = true }
 )
 map(
   "n",
   "<leader>lk",
-  "<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
+  "<cmd>lua vim.diagnostic.goto_prev()<cr>",
   { desc = "Prev Diagnostic", silent = true, noremap = true }
 )
 map(
@@ -184,7 +184,7 @@ map(
 map(
   "n",
   "<leader>lq",
-  "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>",
+  "<cmd>lua vim.diagnostic.set_loclist()<cr>",
   { desc = "Quickfix", silent = true, noremap = true }
 )
 map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "Rename", silent = true, noremap = true })

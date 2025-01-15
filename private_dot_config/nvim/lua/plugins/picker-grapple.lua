@@ -141,6 +141,9 @@ return {
           ["ctrl-q"] = "select-all+accept",
         },
       },
+      fzf_opts = {
+        ["--select-1"] = true,
+      },
     },
     keys = function()
       local function pick_project_root(picker, opts, style)
@@ -198,7 +201,7 @@ return {
         { "<leader>ls", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Document Symbols" },
         {
           "<leader>lS",
-          "<cmd>FzfLua lsp_dynamic_workspace_symbols<cr>",
+          "<cmd>FzfLua lsp_live_workspace_symbols<cr>",
           desc = "Workspace Symbols",
         },
         { "<leader>sc", "<cmd>FzfLua colorschemes<cr>", desc = "Colorscheme" },
