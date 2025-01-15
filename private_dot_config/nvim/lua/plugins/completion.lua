@@ -260,6 +260,7 @@ return {
   {
     "saghen/blink.cmp",
     version = "*",
+    dependencies = { "L3MON4D3/LuaSnip", version = "v2.*" },
     ---@type blink.cmp.Config
     opts = {
       appearance = {
@@ -269,7 +270,7 @@ return {
       completion = {
         keyword = { range = "prefix" },
         accept = { auto_brackets = { enabled = true } },
-        list = { selection = "auto_insert" },
+        list = { selection = { preselect = false, auto_insert = true } },
         documentation = {
           auto_show = true,
           auto_show_delay_ms = 500,
@@ -338,21 +339,10 @@ return {
         ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
       },
       snippets = {
-        expand = function(snippet)
-          require("luasnip").lsp_expand(snippet)
-        end,
-        active = function(filter)
-          if filter and filter.direction then
-            return require("luasnip").jumpable(filter.direction)
-          end
-          return require("luasnip").in_snippet()
-        end,
-        jump = function(direction)
-          require("luasnip").jump(direction)
-        end,
+        preset = "luasnip",
       },
       sources = {
-        default = { "lsp", "path", "buffer", "luasnip", "snippets", "lazydev" },
+        default = { "lsp", "path", "buffer", "snippets", "lazydev" },
         cmdline = function()
           local type = vim.fn.getcmdtype()
           -- Search forward and backward
@@ -370,13 +360,13 @@ return {
             name = "[LSP]",
             enabled = true,
             module = "blink.cmp.sources.lsp",
-            fallbacks = { "snippets", "luasnip", "buffer" },
+            fallbacks = { "snippets", "buffer" },
             score_offset = 90,
           },
           path = {
             name = "[Path]",
             module = "blink.cmp.sources.path",
-            fallbacks = { "snippets", "luasnip", "buffer" },
+            fallbacks = { "snippets", "buffer" },
             score_offset = 3,
             opts = {
               trailing_slash = false,
@@ -393,13 +383,6 @@ return {
             enabled = true,
             module = "blink.cmp.sources.snippets",
             score_offset = 80,
-          },
-          luasnip = {
-            name = "[Luasnip]",
-            enabled = true,
-            score_offset = 85,
-            min_keyword_length = 2,
-            fallbacks = { "snippets" },
           },
           lazydev = {
             name = "[Lazydev]",

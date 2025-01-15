@@ -12,9 +12,6 @@ return {
           vim.cmd([[
             hi! link NoiceLspProgressTitle @comment
             hi! link LspInlayHint @comment
-            hi! link FzfLuaHeaderText @function
-            hi! link FzfLuaPathLineNr @string
-            hi! link FzfLuaPathColNr @function
             hi NavicSeparator guibg=NONE
             ]])
           if not require("util.firenvim")() then
