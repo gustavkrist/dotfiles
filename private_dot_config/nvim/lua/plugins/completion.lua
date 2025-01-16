@@ -260,7 +260,10 @@ return {
   {
     "saghen/blink.cmp",
     version = "*",
-    dependencies = { "L3MON4D3/LuaSnip", version = "v2.*" },
+    dependencies = {
+      { "L3MON4D3/LuaSnip", version = "v2.*" },
+      { "giuxtaposition/blink-cmp-copilot", dependencies = { "zbirenbaum/copilot.lua" } },
+    },
     ---@type blink.cmp.Config
     opts = {
       appearance = {
@@ -342,7 +345,7 @@ return {
         preset = "luasnip",
       },
       sources = {
-        default = { "lsp", "path", "buffer", "snippets", "lazydev" },
+        default = { "lsp", "path", "buffer", "snippets", "lazydev", "copilot" },
         cmdline = function()
           local type = vim.fn.getcmdtype()
           -- Search forward and backward
@@ -388,6 +391,12 @@ return {
             name = "[Lazydev]",
             module = "lazydev.integrations.blink",
             score_offset = 80,
+          },
+          copilot = {
+            name = "[Copilot]",
+            module = "blink-cmp-copilot",
+            score_offset = 70,
+            async = true,
           },
         },
       },

@@ -19,6 +19,7 @@ local firenvim = require("util.firenvim").get
 
 require("lazy").setup({
   spec = {
+    { import = "plugins.ai" },
     { import = "plugins.base" },
     { import = "plugins.colorschemes" },
     { import = "plugins.completion" },
