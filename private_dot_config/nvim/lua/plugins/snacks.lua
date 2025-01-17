@@ -28,6 +28,14 @@ return {
     notifier = {
       enabled = no_firenvim(),
     },
+    picker = {
+      ui_select = true,
+      formatters = {
+        file = {
+          filename_first = true
+        },
+      },
+    },
     quickfile = { enabled = true },
     terminal = {
       win = {
@@ -70,6 +78,14 @@ return {
   },
   keys = function()
     local openingh = require("util.git").gitbrowse_with_branch
+    local function pick_project_root(picker, opts)
+      opts = opts or {}
+      local project_root = require("util.root")()
+      if project_root ~= nil then
+        opts.cwd = project_root
+      end
+      Snacks.picker.pick(picker, opts)
+    end
     return {
       {
         "<C-t>",
@@ -119,6 +135,89 @@ return {
         mode = "v",
         desc = "Open selected lines in Git remote",
       },
+      {
+        "gd",
+        function()
+          Snacks.picker.lsp_definitions()
+        end,
+        desc = "Pick lsp definitions"
+      },
+      {
+        "gr",
+        function()
+          Snacks.picker.lsp_references()
+        end,
+        nowait = true,
+        desc = "Pick lsp references"
+      },
+      {
+        "gy",
+        function()
+          Snacks.picker.lsp_type_definitions()
+        end,
+        desc = "Pick lsp type definitions"
+      },
+      {
+        "gI",
+        function()
+          Snacks.picker.lsp_implementations()
+        end,
+        desc = "Pick lsp implementations"
+      },
+      {
+        "<leader>b",
+        function()
+          Snacks.picker.buffers({ layout = "select" })
+        end,
+        desc = "Pick buffer",
+      },
+      {
+        "<leader>f",
+        function()
+          pick_project_root("files")
+        end,
+        desc = "Find files",
+      },
+      {
+        "<leader>F",
+        function()
+          pick_project_root("live_grep", { layout = "ivy" })
+        end,
+        desc = "Search text",
+      },
+      { "<leader>go", function() Snacks.picker.git_status() end, desc = "Open changed file" },
+      -- { "<leader>gb", "<cmd>FzfLua git_branches<cr>", desc = "Checkout branch" },
+      -- { "<leader>gc", "<cmd>FzfLua git_commits<cr>", desc = "Checkout commit" },
+      -- {
+      --   "<leader>gC",
+      --   "<cmd>FzfLua git_bcommits<cr>",
+      --   desc = "Checkout commit(for current file)",
+      -- },
+      {
+        "<leader>ld",
+        function()
+          Snacks.picker.diagnostics_buffer()
+        end,
+        desc = "Buffer Diagnostics",
+      },
+      { "<leader>lw", function() Snacks.picker.diagnostics() end, desc = "Workspace Diagnostics" },
+      { "<leader>ls", function() Snacks.picker.lsp_symbols() end, desc = "Document Symbols" },
+      -- {
+      --   "<leader>lS",
+      --   "<cmd>FzfLua lsp_live_workspace_symbols<cr>",
+      --   desc = "Workspace Symbols",
+      -- },
+      { "<leader>sc", function() Snacks.picker.colorschemes() end, desc = "Colorscheme" },
+      { "<leader>sf", function() Snacks.picker.files() end, desc = "Find File" },
+      { "<leader>sh", function() Snacks.picker.help() end, desc = "Find Help" },
+      { "<leader>sH", function() Snacks.picker.highlights() end, desc = "Find highlight groups" },
+      { "<leader>sl", function() Snacks.picker.lines() end, desc = "Find lines in buffer" },
+      { "<leader>sM", function() Snacks.picker.man() end, desc = "Man Pages" },
+      { "<leader>sr", function() Snacks.picker.recent() end, desc = "Open Recent File" },
+      { "<leader>sR", function() Snacks.picker.resume() end, desc = "Resume" },
+      { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "Keymaps" },
+      { "<leader>sC", function() Snacks.picker.commands() end, desc = "Commands" },
+      { "<leader>s:", function() Snacks.picker.command_history() end, desc = "Command history" },
     }
   end,
   init = function()

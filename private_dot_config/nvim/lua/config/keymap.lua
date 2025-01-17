@@ -111,20 +111,6 @@ map("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 map("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- LSP
-map("n", "gI", function()
-  if has("fzf-lua") then
-    require("fzf-lua").lsp_implementations({ resume = true })
-  else
-    vim.lsp.buf.implementation()
-  end
-end, { noremap = true, silent = true, desc = "Goto Implementation" })
-map("n", "gr", function()
-  if has("fzf-lua") then
-    require("fzf-lua").lsp_references({ resume = true })
-  else
-    vim.lsp.buf.references()
-  end
-end, { noremap = true, silent = true, desc = "Goto References" })
 map("n", "gl", function()
   local float = vim.diagnostic.config().float
   if float then
@@ -140,22 +126,17 @@ map(
   "<cmd>lua vim.lsp.buf.signature_help()<cr>",
   { noremap = true, silent = true, desc = "Show Signature Help" }
 )
-map("n", "gd", function()
-  if has("fzf-lua") then
-    require("fzf-lua").lsp_definitions({ resume = true })
-  else
-    vim.lsp.buf.definition()
-  end
-end, { noremap = true, silent = true, desc = "Goto Definition" })
 map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", { noremap = true, silent = true, desc = "Goto Declaration" })
 map("n", "gh", "<cmd>lua vim.lsp.buf.hover()<cr>", { noremap = true, silent = true })
-map("n", "gy", function()
-  if has("fzf-lua") then
-    require("fzf-lua").lsp_type_definitions({ resume = true })
-  else
-    vim.lsp.buf.type_definition()
-  end
-end, { noremap = true, silent = true })
+map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", { noremap = true, silent = true, desc = "Goto Definition" })
+map("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", { noremap = true, silent = true, desc = "Goto References" })
+map("n", "gy", "<cmd>lua vim.lsp.buf.type_definition()<cr>", { noremap = true, silent = true })
+map(
+  "n",
+  "gI",
+  "<cmd>lua vim.lsp.buf.implementation()<cr>",
+  { noremap = true, silent = true, desc = "Goto Implementation" }
+)
 map(
   "n",
   "<leader>la",

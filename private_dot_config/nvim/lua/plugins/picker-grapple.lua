@@ -165,26 +165,26 @@ return {
         require("fzf-lua")[picker](opts)
       end
       return {
-        {
-          "<leader>b",
-          function() require("fzf-lua").buffers() end,
-          desc = "Buffers",
-        },
-        {
-          "<leader>f",
-          function()
-            pick_project_root("files")
-          end,
-          desc = "Find files",
-        },
-        {
-          "<leader>F",
-          function()
-            pick_project_root("live_grep", {}, "ivy")
-          end,
-          desc = "Search Text",
-        },
-        { "<leader>go", "<cmd>FzfLua git_status<cr>", desc = "Open changed file" },
+        -- {
+        --   "<leader>b",
+        --   function() require("fzf-lua").buffers() end,
+        --   desc = "Buffers",
+        -- },
+        -- {
+        --   "<leader>f",
+        --   function()
+        --     pick_project_root("files")
+        --   end,
+        --   desc = "Find files",
+        -- },
+        -- {
+        --   "<leader>F",
+        --   function()
+        --     pick_project_root("live_grep", {}, "ivy")
+        --   end,
+        --   desc = "Search Text",
+        -- },
+        -- { "<leader>go", "<cmd>FzfLua git_status<cr>", desc = "Open changed file" },
         { "<leader>gb", "<cmd>FzfLua git_branches<cr>", desc = "Checkout branch" },
         { "<leader>gc", "<cmd>FzfLua git_commits<cr>", desc = "Checkout commit" },
         {
@@ -192,32 +192,32 @@ return {
           "<cmd>FzfLua git_bcommits<cr>",
           desc = "Checkout commit(for current file)",
         },
-        {
-          "<leader>ld",
-          "<cmd>FzfLua diagnostics_document<cr>",
-          desc = "Document Diagnostics",
-        },
-        { "<leader>lw", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "Workspace Diagnostics" },
-        { "<leader>ls", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Document Symbols" },
+        -- {
+        --   "<leader>ld",
+        --   "<cmd>FzfLua diagnostics_document<cr>",
+        --   desc = "Document Diagnostics",
+        -- },
+        -- { "<leader>lw", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "Workspace Diagnostics" },
+        -- { "<leader>ls", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Document Symbols" },
         {
           "<leader>lS",
           "<cmd>FzfLua lsp_live_workspace_symbols<cr>",
           desc = "Workspace Symbols",
         },
-        { "<leader>sc", "<cmd>FzfLua colorschemes<cr>", desc = "Colorscheme" },
-        { "<leader>sf", "<cmd>FzfLua files<cr>", desc = "Find File" },
-        { "<leader>sh", "<cmd>FzfLua helptags<cr>", desc = "Find Help" },
-        { "<leader>sH", "<cmd>FzfLua highlights<cr>", desc = "Find highlight groups" },
-        { "<leader>sM", "<cmd>FzfLua manpages<cr>", desc = "Man Pages" },
-        { "<leader>sr", "<cmd>FzfLua oldfiles<cr>", desc = "Open Recent File" },
-        { "<leader>sR", "<cmd>FzfLua resume<cr>", desc = "Resume" },
-        { "<leader>sk", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps" },
-        { "<leader>sC", "<cmd>FzfLua commands<cr>", desc = "Commands" },
+        -- { "<leader>sc", "<cmd>FzfLua colorschemes<cr>", desc = "Colorscheme" },
+        -- { "<leader>sf", "<cmd>FzfLua files<cr>", desc = "Find File" },
+        -- { "<leader>sh", "<cmd>FzfLua helptags<cr>", desc = "Find Help" },
+        -- { "<leader>sH", "<cmd>FzfLua highlights<cr>", desc = "Find highlight groups" },
+        -- { "<leader>sM", "<cmd>FzfLua manpages<cr>", desc = "Man Pages" },
+        -- { "<leader>sr", "<cmd>FzfLua oldfiles<cr>", desc = "Open Recent File" },
+        -- { "<leader>sR", "<cmd>FzfLua resume<cr>", desc = "Resume" },
+        -- { "<leader>sk", "<cmd>FzfLua keymaps<cr>", desc = "Keymaps" },
+        -- { "<leader>sC", "<cmd>FzfLua commands<cr>", desc = "Commands" },
       }
     end,
-    init = function()
-      require("fzf-lua").register_ui_select()
-    end,
+    -- init = function()
+    --   require("fzf-lua").register_ui_select()
+    -- end,
     cmd = "FzfLua",
   },
 }

@@ -33,7 +33,7 @@ return {
         end,
         desc = "Next todo comment",
       },
-      { "<leader>st", "<cmd>TodoFzfLua keywords=TODO,FIX<cr>", desc = "Search Todo-Comments" },
+      { "<leader>st", function() Snacks.picker.todo_comments() end, desc = "Search Todo-Comments" },
     },
   },
   {
