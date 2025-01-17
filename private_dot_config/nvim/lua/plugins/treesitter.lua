@@ -71,8 +71,7 @@ return {
             node_decremental = "<bs>",
           },
         },
-        indent = { enable = true },
-        disable = { "yaml", "python" },
+        indent = { enable = true, disable = { "yaml", "python" } },
         context_commentstring = {
           enable = true,
           enable_autocmd = false,
@@ -179,7 +178,14 @@ return {
     "nvim-treesitter/nvim-treesitter-context",
     event = "VeryLazy",
     keys = {
-      { "[c", function() require("treesitter-context").go_to_context(vim.v.count1) end, mode = { "n", "v" }, desc = "Goto treesitter context" },
+      {
+        "[c",
+        function()
+          require("treesitter-context").go_to_context(vim.v.count1)
+        end,
+        mode = { "n", "v" },
+        desc = "Goto treesitter context",
+      },
     },
   },
 }
