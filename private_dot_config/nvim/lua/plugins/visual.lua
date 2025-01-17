@@ -33,7 +33,13 @@ return {
         end,
         desc = "Next todo comment",
       },
-      { "<leader>st", function() Snacks.picker.todo_comments() end, desc = "Search Todo-Comments" },
+      {
+        "<leader>st",
+        function()
+          Snacks.picker.todo_comments({ keywords = { "TODO", "FIX", "FIXME" } })
+        end,
+        desc = "Search Todo-Comments",
+      },
     },
   },
   {
