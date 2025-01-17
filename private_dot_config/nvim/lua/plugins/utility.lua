@@ -88,38 +88,42 @@ return {
       ---@param params GetActionConfigParams
       ---@return ActionConfig | nil
       local function get_action_config_from_priorities(params)
-          if params.priorities == nil or #params.priorities == 0 then return nil end
-          for _, priority in ipairs(params.priorities) do
-              if
-                  not vim.tbl_contains(params.invalid_keys, priority.key)
-                  and params.title:lower():match(priority.pattern)
-              then
-                  priority.order = priority.order or 10
-                  return priority
-              end
+        if params.priorities == nil or #params.priorities == 0 then
+          return nil
+        end
+        for _, priority in ipairs(params.priorities) do
+          if
+            not vim.tbl_contains(params.invalid_keys, priority.key)
+            and params.title:lower():match(priority.pattern)
+          then
+            priority.order = priority.order or 10
+            return priority
           end
+        end
       end
 
       ---@param params GetActionConfigParams
       ---@return ActionConfig | nil
       local function get_action_config_from_title(params)
-          if params.title == nil or params.title == '' or #params.valid_keys == 0 then return nil end
-          local index = 1
-          local increment = #params.valid_keys[1]
-          params.title = string.lower(params.title)
-          params.title, _ = string.gsub(params.title, "^ruff: ", "")
-          params.title, _ = string.gsub(params.title, "^ruff %([a-z]+%d+%): ", "")
-          repeat
-              local char = params.title:sub(index, index + increment - 1)
-              if
-                  char:match '[a-z]+'
-                  and not vim.tbl_contains(params.invalid_keys, char)
-                  and vim.tbl_contains(params.valid_keys, char)
-              then
-                  return { key = char, order = 10 }
-              end
-              index = index + increment
-          until index >= #params.title
+        if params.title == nil or params.title == "" or #params.valid_keys == 0 then
+          return nil
+        end
+        local index = 1
+        local increment = #params.valid_keys[1]
+        params.title = string.lower(params.title)
+        params.title, _ = string.gsub(params.title, "^ruff: ", "")
+        params.title, _ = string.gsub(params.title, "^ruff %([a-z]+%d+%): ", "")
+        repeat
+          local char = params.title:sub(index, index + increment - 1)
+          if
+            char:match("[a-z]+")
+            and not vim.tbl_contains(params.invalid_keys, char)
+            and vim.tbl_contains(params.valid_keys, char)
+          then
+            return { key = char, order = 10 }
+          end
+          index = index + increment
+        until index >= #params.title
       end
 
       local function get_action_config_from_keys(params)
@@ -186,6 +190,33 @@ return {
         ["<Right>"] = {},
       },
       disable_mouse = false,
+    },
+  },
+  {
+    "stevearc/quicker.nvim",
+    event = "FileType qf",
+    ---@module "quicker"
+    ---@type quicker.SetupOptions
+    opts = {
+      keys = {
+        {
+          ">",
+          function()
+            require("quicker").expand({ before = 2, after = 2, add_to_existing = true })
+          end,
+          desc = "Expand quickfix context",
+        },
+        {
+          "<",
+          function()
+            require("quicker").collapse()
+          end,
+          desc = "Collapse quickfix context",
+        },
+      },
+    },
+    keys = {
+      { "<leader>qo", function() require("quicker").toggle() end, desc = "Toggle quickfix" },
     },
   },
 }
