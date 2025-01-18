@@ -104,7 +104,7 @@ return {
         end
       end, vim.tbl_keys(servers))
 
-      require("mason-tool-installer").setup({ ensure_installed = servers_to_install })
+      require("mason-tool-installer").setup({ ensure_installed = servers_to_install, auto_update = true })
 
       for name, config in pairs(servers) do
         if config == true then
