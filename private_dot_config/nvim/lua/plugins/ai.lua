@@ -8,7 +8,4 @@ return {
     cmd = "Copilot",
     event = "InsertEnter",
   },
-  {
-    "giuxtaposition/blink-cmp-copilot",
-  },
 }

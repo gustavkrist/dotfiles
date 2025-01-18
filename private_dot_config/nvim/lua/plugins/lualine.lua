@@ -53,6 +53,24 @@ return {
 
       local branch = icons.git.Branch
 
+      local function get_copilot_status()
+        local clients = require("util.plugins").is_loaded("copilot.lua")
+            and vim.lsp.get_clients({ name = "copilot", bufnr = 0 })
+          or {}
+        if #clients > 0 then
+          local status = require("copilot.api").status.data.status
+          if status ~= "" then
+            return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
+          end
+        end
+      end
+
+      local copilot_colors = {
+        ok = "Special",
+        error = "DiagnosticsError",
+        pending = "DiagnosticsWarn",
+      }
+
       local components = {
         mode = {
           function()
@@ -102,6 +120,17 @@ return {
           color = { fg = colors.green },
           cond = hide_in_width,
         },
+        copilot = {
+          function()
+            return " "
+          end,
+          cond = function()
+            return get_copilot_status() ~= nil
+          end,
+          color = function()
+            return { fg = require("snacks").util.color(copilot_colors[get_copilot_status()] or copilot_colors.ok) }
+          end,
+        },
         diagnostics = {
           "diagnostics",
           sources = { "nvim_diagnostic" },
@@ -128,7 +157,6 @@ return {
           function()
             local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
             local buf_client_names = {}
-            local copilot_active = false
 
             -- add formatters and linters
             local running_formatters = require("conform").list_formatters_for_buffer(0)
@@ -146,18 +174,12 @@ return {
               if client.name ~= "copilot" then
                 table.insert(buf_client_names, client.name)
               end
-
-              if client.name == "copilot" then
-                copilot_active = true
-              end
             end
 
             local unique_client_names = table.concat(buf_client_names, ", ")
             local language_servers = string.format("[%s]", unique_client_names)
 
-            if copilot_active then
-              language_servers = language_servers .. " " .. icons.git.Octoface
-            end
+            language_servers = language_servers
 
             return language_servers
           end,
@@ -225,6 +247,7 @@ return {
           lualine_x = {
             components.diagnostics,
             components.lsp,
+            components.copilot,
             components.spaces,
             components.filetype,
           },

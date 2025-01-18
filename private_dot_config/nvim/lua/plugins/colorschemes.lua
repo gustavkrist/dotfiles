@@ -6,6 +6,7 @@ return {
         opts.transparent = false
       end
       require("nord").setup(opts)
+      vim.cmd("colorscheme nord")
       vim.api.nvim_create_autocmd("Colorscheme", {
         pattern = { "nord" },
         callback = function()
@@ -22,7 +23,7 @@ return {
           end
         end,
       })
-      vim.cmd("colorscheme nord")
+      require("util.plugins").on_very_lazy(function() vim.cmd("colorscheme nord") end)
     end,
     opts = {
       transparent = true,
