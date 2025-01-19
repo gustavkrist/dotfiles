@@ -42,9 +42,9 @@ return {
               },
             },
           },
-          on_attach = function()
-            vim.lsp.inlay_hint.enable()
-          end,
+          -- on_attach = function()
+          --   vim.lsp.inlay_hint.enable()
+          -- end,
         },
         -- pyright = {
         --   init_options = {

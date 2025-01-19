@@ -6,7 +6,6 @@ return {
         opts.transparent = false
       end
       require("nord").setup(opts)
-      vim.cmd("colorscheme nord")
       vim.api.nvim_create_autocmd("Colorscheme", {
         pattern = { "nord" },
         callback = function()
@@ -18,12 +17,12 @@ return {
           if not require("util.firenvim")() then
             require("util.wezterm").set_term_background("#D8DEE9", "#2E3440", "#D8DEE9")
           end
-          if require("util.plugins").has("lualine.nvim") then
+          require("util.plugins").on_load("lualine.nvim", function()
             require("util.lualine").load_lualine_custom_nord()
-          end
+          end)
         end,
       })
-      require("util.plugins").on_very_lazy(function() vim.cmd("colorscheme nord") end)
+      vim.cmd("colorscheme nord")
     end,
     opts = {
       transparent = true,
