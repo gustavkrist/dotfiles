@@ -71,9 +71,7 @@ return {
   },
   {
     "stevearc/dressing.nvim",
-    cond = function()
-      return not require("util.firenvim").get()
-    end,
+    firenvim = false,
     opts = {
       select = {
         enabled = false,

@@ -1,6 +1,3 @@
-local no_firenvim = function()
-	return not require("util.firenvim").get()
-end
 return {
 	{
 		"catgoose/nvim-colorizer.lua",
@@ -136,7 +133,7 @@ return {
 	},
 	{
 		"folke/noice.nvim",
-		cond = no_firenvim,
+    firenvim = false,
 		dependencies = { "MunifTanjim/nui.nvim" },
 		version = "4.*",
 		event = "VeryLazy",
@@ -237,7 +234,7 @@ return {
 	},
 	{
 		"MunifTanjim/nui.nvim",
-		cond = no_firenvim,
+    firenvim = false,
 		lazy = true,
 	},
 	{

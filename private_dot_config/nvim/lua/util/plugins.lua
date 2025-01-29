@@ -51,4 +51,26 @@ function M.has(plugin)
   return M.get_plugin(plugin) ~= nil
 end
 
+function M.should_enable_cond(spec)
+  local enabled_cond = true
+  if spec.cond ~= nil then
+    if type(spec.cond) == "function" then
+      enabled_cond = spec.cond()
+    else
+      enabled_cond = spec.cond
+    end
+  end
+  if not enabled_cond then
+    return false
+  else
+    if vim.g.started_by_firenvim then
+      return spec.firenvim == nil and true or spec.firenvim
+    elseif vim.g.vscode == 1 then
+      return spec.vscode ~= nil and spec.vscode or false
+    else
+      return true
+    end
+  end
+end
+
 return M

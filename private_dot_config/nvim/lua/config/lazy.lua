@@ -15,24 +15,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local firenvim = require("util.firenvim").get
-
 require("lazy").setup({
   spec = {
-    { import = "plugins.ai" },
-    { import = "plugins.base" },
-    { import = "plugins.colorschemes" },
-    { import = "plugins.completion" },
-    { import = "plugins.filetypes" },
-    { import = "plugins.lsp" },
-    { import = "plugins.lualine" },
-    { import = "plugins.mini" },
-    { import = "plugins.snacks" },
-    { import = "plugins.picker-grapple" },
-    { import = "plugins.treesitter" },
-    { import = "plugins.utility" },
-    { import = "plugins.visual" },
-    { "glacambre/firenvim", build = ":call firenvim#install(0)", cond = firenvim() },
+    { import = "plugins.all" },
+    -- { import = "plugins" },
+    { "glacambre/firenvim", build = ":call firenvim#install(0)", cond = function() return vim.g.started_by_firenvim ~= nil end },
   },
   install = { colorscheme = { "nord" } },
   checker = {

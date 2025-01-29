@@ -183,7 +183,7 @@ return {
       },
     },
     ft = "markdown",
-    cond = (not require("util.firenvim")()) and vim.fn.executable("magick") == 1,
+    cond = (vim.g.started_by_firenvim == nil) and vim.fn.executable("magick") == 1,
   },
   {
     "OXY2DEV/markview.nvim",
@@ -192,7 +192,7 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     opts = {
-      hybrid_modes = { "n" },
+      preview = { hybrid_modes = { "n" } },
     },
     ft = "markdown",
   },

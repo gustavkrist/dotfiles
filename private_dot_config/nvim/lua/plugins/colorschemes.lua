@@ -2,7 +2,7 @@ return {
   {
     "gbprod/nord.nvim",
     config = function(_, opts)
-      if vim.g.neovide ~= nil or require("util.firenvim")() then
+      if vim.g.neovide ~= nil or vim.g.started_by_firenvim ~= nil then
         opts.transparent = false
       end
       require("nord").setup(opts)
@@ -14,7 +14,7 @@ return {
             hi! link LspInlayHint @comment
             hi NavicSeparator guibg=NONE
             ]])
-          if not require("util.firenvim")() then
+          if vim.g.started_by_firenvim == nil then
             require("util.wezterm").set_term_background("#D8DEE9", "#2E3440", "#D8DEE9")
           end
           require("util.plugins").on_load("lualine.nvim", function()
@@ -35,7 +35,7 @@ return {
   {
     "folke/tokyonight.nvim",
     config = function(_, opts)
-      if vim.g.neovide ~= nil or require("util.firenvim")() then
+      if vim.g.neovide ~= nil or vim.g.started_by_firenvim ~= nil then
         opts.transparent = false
       end
       require("tokyonight").setup(opts)

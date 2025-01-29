@@ -140,6 +140,7 @@ return {
   {
     "echasnovski/mini.nvim",
     version = "*",
+    vscode = true,
     config = function()
       local ai = require("mini.ai")
       local opts = {
@@ -174,42 +175,45 @@ return {
           ai_whichkey(opts)
         end)
       end)
-      require("mini.cursorword").setup()
-      require("mini.files").setup({
-        windows = {
-          preview = true,
-          width_preview = 30,
-        },
-        options = {
-          use_as_default_explorer = true,
-        },
-      })
-      local map_split = function(buf_id, lhs, direction)
-        local rhs = function()
-          -- Make new window and set it as target
-          local cur_target = MiniFiles.get_explorer_state().target_window
-          local new_target = vim.api.nvim_win_call(cur_target, function()
-            vim.cmd(direction .. " split")
-            return vim.api.nvim_get_current_win()
-          end)
+      if vim.g.vscode == nil then
+        require("mini.cursorword").setup()
+        require("mini.files").setup({
+          windows = {
+            preview = true,
+            width_preview = 30,
+          },
+          options = {
+            use_as_default_explorer = true,
+          },
+        })
+        require("mini.trailspace").setup()
+        local map_split = function(buf_id, lhs, direction)
+          local rhs = function()
+            -- Make new window and set it as target
+            local cur_target = MiniFiles.get_explorer_state().target_window
+            local new_target = vim.api.nvim_win_call(cur_target, function()
+              vim.cmd(direction .. " split")
+              return vim.api.nvim_get_current_win()
+            end)
 
-          MiniFiles.set_target_window(new_target)
+            MiniFiles.set_target_window(new_target)
+          end
+
+          -- Adding `desc` will result into `show_help` entries
+          local desc = "Split " .. direction
+          vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
         end
 
-        -- Adding `desc` will result into `show_help` entries
-        local desc = "Split " .. direction
-        vim.keymap.set("n", lhs, rhs, { buffer = buf_id, desc = desc })
+        vim.api.nvim_create_autocmd("User", {
+          pattern = "MiniFilesBufferCreate",
+          callback = function(args)
+            local buf_id = args.data.buf_id
+            -- Tweak keys to your liking
+            map_split(buf_id, "<C-s>", "belowright horizontal")
+            map_split(buf_id, "<C-v>", "belowright vertical")
+          end,
+        })
       end
-
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "MiniFilesBufferCreate",
-        callback = function(args)
-          local buf_id = args.data.buf_id
-          -- Tweak keys to your liking
-          map_split(buf_id, "<C-s>", "belowright horizontal")
-          map_split(buf_id, "<C-v>", "belowright vertical")
-        end,
-      })
       require("mini.icons").setup()
       require("mini.operators").setup({
         replace = { prefix = "gor" },
@@ -218,7 +222,7 @@ return {
         multiply = { prefix = "gom" },
         sort = { prefix = "gos" },
       })
-      if not require("util.firenvim")() then
+      if vim.g.started_by_firenvim == nil and vim.g.vscode == nil then
         require("mini.sessions").setup()
         require("mini.starter").setup()
       end
@@ -245,11 +249,10 @@ return {
       })
       vim.api.nvim_exec_autocmds("FileType", { group = "_splitjoin_filetype" })
 
-      require("mini.trailspace").setup()
       -- Sessions
       vim.api.nvim_create_autocmd({ "BufEnter" }, {
         callback = function()
-          if require("util.firenvim")() then
+          if vim.g.started_by_firenvim ~= nil or vim.g.vscode == 1 then
             return
           end
           for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -264,7 +267,7 @@ return {
         end,
       })
       require("util.plugins").on_very_lazy(function()
-        if require("util.firenvim")() then
+        if vim.g.started_by_firenvim ~= nil or vim.g.vscode == 1 then
           return
         end
         local buftype = vim.api.nvim_get_option_value("buftype", { buf = 0 })
@@ -285,26 +288,30 @@ return {
       end)
     end,
     keys = function()
-      return {
-        {
-          "<leader>e",
-          function()
-            minifiles_open_cwd(false)
-          end,
-          desc = "File Explorer",
-        },
-        {
-          "<leader>E",
-          function()
-            minifiles_open_cwd(true)
-          end,
-          desc = "File Explorer (fresh)",
-        },
-        { "<leader>Sn", write_new_session, desc = "New session" },
-        { "<leader>Ss", "<cmd>lua MiniSessions.select()<cr>", desc = "Select a session" },
-        { "<leader>Sw", "<cmd>lua MiniSessions.write()<cr>", desc = "Write current session" },
-        { "<leader>Sg", write_git_branch_session, desc = "Write current session (git branch)" },
-      }
+      keys = {}
+      if vim.g.started_by_firenvim == nil and vim.g.vscode == nil then
+        vim.list_extend(keys, {
+          {
+            "<leader>e",
+            function()
+              minifiles_open_cwd(false)
+            end,
+            desc = "File Explorer",
+          },
+          {
+            "<leader>E",
+            function()
+              minifiles_open_cwd(true)
+            end,
+            desc = "File Explorer (fresh)",
+          },
+          { "<leader>Sn", write_new_session, desc = "New session" },
+          { "<leader>Ss", "<cmd>lua MiniSessions.select()<cr>", desc = "Select a session" },
+          { "<leader>Sw", "<cmd>lua MiniSessions.write()<cr>", desc = "Write current session" },
+          { "<leader>Sg", write_git_branch_session, desc = "Write current session (git branch)" },
+        })
+      end
+      return keys
     end,
     lazy = false,
   },

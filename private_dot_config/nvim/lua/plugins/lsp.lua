@@ -1,10 +1,7 @@
-local no_firenvim = function()
-  return not require("util.firenvim").get()
-end
 return {
   {
     "neovim/nvim-lspconfig",
-    cond = no_firenvim,
+    firenvim = false,
     lazy = true,
     dependencies = {
       "mason-lspconfig.nvim",
@@ -125,7 +122,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
-    cond = no_firenvim,
+    firenvim = false,
     opts = {},
     build = function()
       pcall(function()
@@ -138,14 +135,14 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
-    cond = no_firenvim,
+    firenvim = false,
     opts = {},
     dependencies = "mason.nvim",
     event = "User FileOpened",
   },
   {
     "stevearc/conform.nvim",
-    cond = no_firenvim,
+    firenvim = false,
     config = function()
       local opts = {
         default_format_opts = {
@@ -212,7 +209,7 @@ return {
   },
   {
     "mfussenegger/nvim-lint",
-    cond = no_firenvim,
+    firenvim = false,
     config = function()
       local linters_by_ft = {
         lua = { "stylua" },
@@ -242,7 +239,7 @@ return {
   },
   {
     "SmiteshP/nvim-navic",
-    cond = no_firenvim,
+    firenvim = false,
     config = function(_, opts)
       require("nvim-navic").setup(opts)
     end,
@@ -298,18 +295,17 @@ return {
   },
   { "justinsgithub/wezterm-types", lazy = true },
   {
-    {
-      "folke/lazydev.nvim",
-      ft = "lua",
-      opts = {
-        library = {
-          { path = "wezterm-types", modes = { "wezterm" } },
-        },
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        { path = "wezterm-types", modes = { "wezterm" } },
+        { path = "snacks.nvim", words = { "Snacks" } },
       },
     },
   },
   {
-    cond = no_firenvim,
+    firenvim = false,
     "danymat/neogen",
     opts = {
       snippet_engine = "luasnip",
@@ -338,7 +334,7 @@ return {
     },
   },
   {
-    cond = no_firenvim,
+    firenvim = false,
     "davidyz/inlayhint-filler.nvim",
     keys = {
       {
@@ -353,7 +349,7 @@ return {
     event = "LspAttach",
   },
   {
-    cond = no_firenvim(),
+    firenvim = false,
     "rachartier/tiny-inline-diagnostic.nvim",
     priority = 1000,
     opts = {
@@ -368,7 +364,7 @@ return {
     event = "LspAttach",
   },
   {
-    cond = no_firenvim(),
+    firenvim = false,
     "DNLHC/glance.nvim",
     opts = {
       border = { enable = true },

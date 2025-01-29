@@ -2,15 +2,18 @@ return {
   {
     "folke/lazy.nvim",
     tag = "stable",
+    vscode = true,
   },
-  { "nvim-lua/plenary.nvim" },
+  { "nvim-lua/plenary.nvim", vscode = true },
   {
     "tpope/vim-surround",
     event = "User FileOpened",
+    vscode = true,
   },
   {
     "tpope/vim-repeat",
     event = "User FileOpened",
+    vscode = true,
   },
   {
     "folke/which-key.nvim",
@@ -87,9 +90,7 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
-    cond = function()
-      return not require("util.firenvim").get()
-    end,
+    firenvim = false,
     config = function(_, opts)
       require("gitsigns").setup(opts)
       vim.o.signcolumn = "yes:2"
@@ -170,11 +171,6 @@ return {
           desc = "Stage Hunk",
           mode = { "v" },
         },
-        {
-          "<leader>gu",
-          gitsigns.undo_stage_hunk,
-          desc = "Undo Stage Hunk",
-        },
         { "<leader>gd", gitsigns.diffthis, desc = "Git Diff" },
         { "<leader>gtb", gitsigns.toggle_current_line_blame, desc = "Toggle Current Line Blame" },
         { "<leader>gtd", gitsigns.toggle_deleted, desc = "Toggle Show Deleted Lines" },
@@ -203,6 +199,7 @@ return {
       -- vim.keymap.set("o", "gs", "<Plug>(leap-cross-window)", { silent = true })
     end,
     event = "User FileOpened",
+    vscode = true,
   },
   {
     "okuuva/auto-save.nvim",
@@ -276,9 +273,7 @@ return {
   },
   {
     "airblade/vim-rooter",
-    cond = function()
-      return not require("util.firenvim").get()
-    end,
+    firenvim = false,
     enabled = false,
   },
 }

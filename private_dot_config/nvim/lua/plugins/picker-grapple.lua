@@ -1,9 +1,7 @@
 return {
   {
     "cbochs/grapple.nvim",
-    cond = function()
-      return not require("util.firenvim").get()
-    end,
+    firenvim = false,
     dependencies = {
       { "nvim-tree/nvim-web-devicons", lazy = true },
     },
@@ -42,9 +40,7 @@ return {
   },
   {
     "will-lynas/grapple-line.nvim",
-    cond = function()
-      return not require("util.firenvim").get()
-    end,
+    firenvim = false,
     dependencies = {
       "cbochs/grapple.nvim",
     },
@@ -72,9 +68,7 @@ return {
   },
   {
     "nvim-telescope/telescope.nvim",
-    cond = function()
-      return not require("util.firenvim").get()
-    end,
+    firenvim = false,
     dependencies = {
       {
         "nvim-telescope/telescope-fzf-native.nvim",
@@ -126,9 +120,7 @@ return {
     lazy = true,
   },
   {
-    cond = function()
-      return not require("util.firenvim").get()
-    end,
+    firenvim = false,
     "ibhagwan/fzf-lua",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {

@@ -11,8 +11,9 @@ if vim.fn.has("wsl") == 1 then
   }
 end
 if vim.g.vscode == 1 then
-  vim.cmd([[execute "source " . $HOME . "/.config/nvim/vscode/vscode.vim"]])
-  dofile(os.getenv("HOME") .. "/.config/nvim/vscode/plugins.lua")
+  require("config.autocommands")
+  require("config.vscode")
+  require("config.lazy")
 else
   require("config.options")
   require("config.keymap")
@@ -22,7 +23,7 @@ else
   if vim.g.neovide then
     require("config.neovide")
   end
-  if require("util.firenvim")() then
+  if vim.g.started_by_firenvim ~= nil then
     require("config.firenvim")
   end
 end
