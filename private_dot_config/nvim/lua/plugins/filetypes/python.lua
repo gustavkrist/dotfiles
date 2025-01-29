@@ -112,7 +112,7 @@ return {
     dependencies = {
       "neovim/nvim-lspconfig",
     },
-    lazy = true,
+    ft = { "python" },
     cmd = { "VenvSelect" },
     branch = "regexp", -- This is the regexp branch, use this for the new version
     config = function(_, opts)
@@ -121,13 +121,13 @@ return {
         callback = function()
           vim.keymap.set(
             "n",
-            "<leader>vs",
+            "<localleader>vs",
             "<cmd>VenvSelect<cr>",
             { desc = "Select VirtualEnv", silent = true, noremap = true, buffer = 0 }
           )
           vim.keymap.set(
             "n",
-            "<leader>vd",
+            "<localleader>vd",
             "<cmd>lua require('venv-selector').deactivate()<cr>",
             { desc = "Deactivate VirtualEnv", silent = true, noremap = true, buffer = 0 }
           )
@@ -169,11 +169,15 @@ return {
     opts = {
       keymaps = {
         resolve_import_under_cursor = {
-          desc = "Resolve import unser cursor",
+          desc = "Resolve import under cursor",
           keys = "<localleader>li",
         },
       },
     },
     event = "VeryLazy",
+  },
+  {
+    "Vimjas/vim-python-pep8-indent",
+    ft = { "python" },
   },
 }

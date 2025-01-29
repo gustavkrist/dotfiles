@@ -185,13 +185,13 @@ return {
         --   desc = "Search Text",
         -- },
         -- { "<leader>go", "<cmd>FzfLua git_status<cr>", desc = "Open changed file" },
-        { "<leader>gb", "<cmd>FzfLua git_branches<cr>", desc = "Checkout branch" },
-        { "<leader>gc", "<cmd>FzfLua git_commits<cr>", desc = "Checkout commit" },
-        {
-          "<leader>gC",
-          "<cmd>FzfLua git_bcommits<cr>",
-          desc = "Checkout commit(for current file)",
-        },
+        -- { "<leader>gb", "<cmd>FzfLua git_branches<cr>", desc = "Checkout branch" },
+        -- { "<leader>gc", "<cmd>FzfLua git_commits<cr>", desc = "Checkout commit" },
+        -- {
+        --   "<leader>gC",
+        --   "<cmd>FzfLua git_bcommits<cr>",
+        --   desc = "Checkout commit(for current file)",
+        -- },
         -- {
         --   "<leader>ld",
         --   "<cmd>FzfLua diagnostics_document<cr>",
@@ -199,11 +199,11 @@ return {
         -- },
         -- { "<leader>lw", "<cmd>FzfLua diagnostics_workspace<cr>", desc = "Workspace Diagnostics" },
         -- { "<leader>ls", "<cmd>FzfLua lsp_document_symbols<cr>", desc = "Document Symbols" },
-        {
-          "<leader>lS",
-          "<cmd>FzfLua lsp_live_workspace_symbols<cr>",
-          desc = "Workspace Symbols",
-        },
+        -- {
+        --   "<leader>lS",
+        --   "<cmd>FzfLua lsp_live_workspace_symbols<cr>",
+        --   desc = "Workspace Symbols",
+        -- },
         -- { "<leader>sc", "<cmd>FzfLua colorschemes<cr>", desc = "Colorscheme" },
         -- { "<leader>sf", "<cmd>FzfLua files<cr>", desc = "Find File" },
         -- { "<leader>sh", "<cmd>FzfLua helptags<cr>", desc = "Find Help" },

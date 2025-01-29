@@ -71,7 +71,7 @@ return {
             node_decremental = "<bs>",
           },
         },
-        indent = { enable = true, disable = { "yaml", "python" } },
+        indent = { enable = true, disable = { "yaml" } },
         context_commentstring = {
           enable = true,
           enable_autocmd = false,
