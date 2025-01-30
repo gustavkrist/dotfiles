@@ -348,7 +348,7 @@ return {
             function()
               Snacks.scratch()
             end,
-            desc = "Toggle scratch buffer"
+            desc = "Toggle scratch buffer",
           },
         })
       end

@@ -23,7 +23,7 @@ local final_specs = {}
 
 for _, spec in ipairs(specs) do
   if type(spec) == "string" then
-    spec = {spec}
+    spec = { spec }
   end
   spec.cond = require("util.plugins").should_enable_cond(spec)
   table.insert(final_specs, spec)

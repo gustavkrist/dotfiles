@@ -115,7 +115,7 @@ return {
     opts = {
       on_colors = function(colors)
         colors.bg = "NONE"
-      end
+      end,
     },
     init = function()
       vim.api.nvim_create_autocmd("Colorscheme", {
@@ -133,5 +133,5 @@ return {
       })
     end,
     lazy = true,
-  }
+  },
 }

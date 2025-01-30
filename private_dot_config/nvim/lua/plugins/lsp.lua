@@ -377,5 +377,5 @@ return {
       { "<leader>lgy", "<cmd>Glance type_definitions<cr>", mode = "n", desc = "Glance type definitions" },
       { "<leader>lgi", "<cmd>Glance implementations<cr>", mode = "n", desc = "Glance implementations" },
     },
-  }
+  },
 }

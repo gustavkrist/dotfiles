@@ -1,9 +1,9 @@
 local pythonpath
 if require("util.os").is_macos() then
-	local conda = os.getenv("CONDA_PREFIX") or (os.getenv("HOME") .. "/mambaforge")
-	pythonpath = conda .. "/bin/python"
+  local conda = os.getenv("CONDA_PREFIX") or (os.getenv("HOME") .. "/mambaforge")
+  pythonpath = conda .. "/bin/python"
 else
-	pythonpath = "python"
+  pythonpath = "python"
 end
 vim.opt.formatoptions:append("r")
 

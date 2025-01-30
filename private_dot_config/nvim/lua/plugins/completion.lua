@@ -279,11 +279,11 @@ return {
           auto_show_delay_ms = 500,
           window = {
             border = "rounded",
-          }
+          },
         },
         menu = {
           border = "rounded",
-          winhighlight = 'Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
+          winhighlight = "Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
           cmdline_position = function() -- FIXME: should be fixed by blink/noice and become unnecessary
             if vim.g.ui_cmdline_pos ~= nil then
               local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed

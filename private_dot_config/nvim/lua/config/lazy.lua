@@ -19,7 +19,13 @@ require("lazy").setup({
   spec = {
     { import = "plugins.all" },
     -- { import = "plugins" },
-    { "glacambre/firenvim", build = ":call firenvim#install(0)", cond = function() return vim.g.started_by_firenvim ~= nil end },
+    {
+      "glacambre/firenvim",
+      build = ":call firenvim#install(0)",
+      cond = function()
+        return vim.g.started_by_firenvim ~= nil
+      end,
+    },
   },
   install = { colorscheme = { "nord" } },
   checker = {
