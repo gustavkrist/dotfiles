@@ -32,6 +32,7 @@ local winbar_filetype_exclude = {
   "neotest-summary",
   "noice",
   "notify",
+  "snacks_dashboard",
   "spectre_panel",
   "startify",
   "toggleterm",

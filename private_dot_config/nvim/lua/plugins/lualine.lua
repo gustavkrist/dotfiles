@@ -228,7 +228,7 @@ return {
           icons_enabled = true,
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
-          disabled_filetypes = { "ministarter" },
+          disabled_filetypes = { "ministarter", "snacks_dashboard" },
         },
         sections = {
           lualine_a = {
@@ -316,6 +316,7 @@ return {
                   "noice",
                   "notify",
                   "qf",
+                  "snacks_dashboard",
                   "spectre_panel",
                   "startify",
                   "toggleterm",

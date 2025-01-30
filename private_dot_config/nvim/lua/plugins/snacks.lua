@@ -11,6 +11,14 @@ return {
     ---@type snacks.Config
     opts = {
       bigfile = { enabled = true },
+      dashboard = {
+        enabled = true,
+        sections = {
+          { section = "keys", gap = 1, padding = 2 },
+          { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 2 },
+          { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 2 },
+        },
+      },
       dim = { enabled = no_vscode() },
       indent = { animate = { enabled = false }, enabled = no_vscode() },
       lazygit = {
