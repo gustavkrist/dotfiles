@@ -223,10 +223,25 @@ return {
         multiply = { prefix = "gom" },
         sort = { prefix = "gos" },
       })
+      require("mini.pairs").setup()
       if vim.g.started_by_firenvim == nil and vim.g.vscode == nil then
         require("mini.sessions").setup()
         require("mini.starter").setup()
       end
+
+      require("mini.surround").setup({
+        mappings = {
+          add = "ys",
+          delete = "ds",
+          find = "",
+          find_left = "",
+          highlight = "",
+          replace = "cs",
+          update_n_lines = "",
+          suffix_last = "l",
+          suffix_next = "n",
+        },
+      })
 
       local gen_hook = require("mini.splitjoin").gen_hook
       local curly = { brackets = { "%b{}" } }

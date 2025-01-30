@@ -6,11 +6,6 @@ return {
   },
   { "nvim-lua/plenary.nvim", vscode = true },
   {
-    "tpope/vim-surround",
-    event = "User FileOpened",
-    vscode = true,
-  },
-  {
     "tpope/vim-repeat",
     event = "User FileOpened",
     vscode = true,
@@ -246,30 +241,6 @@ return {
         lastplace_open_folds = true,
       })
     end,
-  },
-  {
-    "windwp/nvim-autopairs",
-    opts = {
-      check_ts = true,
-      ts_config = {
-        lua = { "string", "source" },
-        javascript = { "string", "template_string" },
-        java = false,
-      },
-      disable_filetype = { "TelescopePrompt", "spectre_panel", "snacks_picker_input" },
-      fast_wrap = {
-        map = "<M-e>",
-        chars = { "{", "[", "(", '"', "'" },
-        pattern = string.gsub([[ [%'%"%)%>%]%)%}%,] ]], "%s+", ""),
-        offset = 0, -- Offset from pattern match
-        end_key = "$",
-        keys = "qwertyuiopzxcvbnmasdfghjkl",
-        check_comma = true,
-        highlight = "PmenuSel",
-        highlight_grey = "LineNr",
-      },
-    },
-    event = "InsertEnter",
   },
   {
     "airblade/vim-rooter",
