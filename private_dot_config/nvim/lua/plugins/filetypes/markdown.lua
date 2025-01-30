@@ -192,6 +192,18 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     opts = {
+      highlight_groups = {
+        MarkviewCode = { bg = "#3B4252" },
+        MarkviewCodeFg = { fg = "#3B4252" },
+        MarkviewCodeInfo = { bg = "#3B4252", fg = "#616E88" },
+        MarkviewInlineCode = { bg = "#3B4252" },
+        MarkviewIcon0 = { bg = "#3B4252", fg = "#606E87" },
+        MarkviewIcon1 = { bg = "#3B4252", fg = "#87C0CF" },
+        MarkviewIcon2 = { bg = "#3B4252", fg = "#87C0CF" },
+        MarkviewIcon3 = { bg = "#3B4252", fg = "#87C0CF" },
+        MarkviewIcon4 = { bg = "#3B4252", fg = "#87C0CF" },
+        MarkviewIcon5 = { bg = "#3B4252", fg = "#87C0CF" },
+      },
       preview = { hybrid_modes = { "n" } },
     },
     ft = "markdown",
