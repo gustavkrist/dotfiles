@@ -182,12 +182,12 @@ return {
     event = "VeryLazy",
     keys = {
       {
-        "[c",
+        "[x",
         function()
           require("treesitter-context").go_to_context(vim.v.count1)
         end,
         mode = { "n", "v" },
-        desc = "Goto treesitter context",
+        desc = "Goto treesitter conte[x]t",
       },
     },
   },

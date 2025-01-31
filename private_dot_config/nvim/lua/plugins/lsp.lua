@@ -118,6 +118,9 @@ return {
 
         lspconfig[name].setup(config)
       end
+      require("lspconfig")["kulala_ls"].setup({
+        capabilities = require("blink.cmp").get_lsp_capabilities()
+      })
     end,
   },
   {
@@ -173,9 +176,15 @@ return {
             args = { "$FILENAME" },
             cwd = require("conform.util").root_file({ "pyproject.toml" }),
           },
+          kulala = {
+            command = "kulala-fmt",
+            args = { "$FILENAME" },
+            stdin = false,
+          },
         },
         formatters_by_ft = {
           fsharp = { "fantomas" },
+          http = { "kulala" },
           lua = { "stylua" },
           markdown = { "injected" },
           sh = { "beautish" },
