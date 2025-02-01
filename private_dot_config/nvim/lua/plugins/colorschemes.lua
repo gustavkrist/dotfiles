@@ -46,7 +46,9 @@ return {
             hi! link NoiceLspProgressTitle @comment
             hi NavicSeparator guibg=NONE
             ]])
-          require("util.wezterm").set_term_background("#c0caf5", "#24283b", "#c0caf5")
+          if vim.g.started_by_firenvim == nil then
+            require("util.wezterm").set_term_background("#c0caf5", "#24283b", "#c0caf5")
+          end
           if require("util.plugins").has("lualine.nvim") then
             require("util.lualine").load_template("tokyonight")
           end
@@ -69,7 +71,9 @@ return {
             hi! link NoiceLspProgressTitle @comment
             hi NavicSeparator guibg=NONE
             ]])
-          require("util.wezterm").set_term_background("#CCCCCC", "#191919", "#EFEFEF")
+          if vim.g.started_by_firenvim == nil then
+            require("util.wezterm").set_term_background("#CCCCCC", "#191919", "#EFEFEF")
+          end
         end,
       })
     end,
@@ -86,7 +90,9 @@ return {
             hi! link NoiceLspProgressTitle @comment
             hi NavicSeparator guibg=NONE
             ]])
-          require("util.wezterm").set_term_background("#CCCCCC", "#222222", "#A0A0A0")
+          if vim.g.started_by_firenvim == nil then
+            require("util.wezterm").set_term_background("#CCCCCC", "#222222", "#A0A0A0")
+          end
         end,
       })
     end,
@@ -104,7 +110,9 @@ return {
             hi! link NoiceLspProgressTitle @comment
             hi NavicSeparator guibg=NONE
             ]])
-          require("util.wezterm").set_term_background("#d1d1d1", "#1a1a19", "#7bb099")
+          if vim.g.started_by_firenvim == nil then
+            require("util.wezterm").set_term_background("#d1d1d1", "#1a1a19", "#7bb099")
+          end
         end,
       })
     end,
@@ -125,7 +133,9 @@ return {
             hi! link NoiceLspProgressTitle @comment
             hi NavicSeparator guibg=NONE
             ]])
-          require("util.wezterm").set_term_background("#c0c0c0", "#1c1c1c", "#bdfe58")
+          if vim.g.started_by_firenvim == nil then
+            require("util.wezterm").set_term_background("#c0c0c0", "#1c1c1c", "#bdfe58")
+          end
           if require("util.plugins").has("lualine.nvim") then
             require("util.lualine").load_template("monoglow", true, false)
           end
