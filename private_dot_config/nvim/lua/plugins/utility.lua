@@ -175,6 +175,7 @@ return {
   {
     "m4xshen/hardtime.nvim",
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    firenvim = false,
     config = function(_, opts)
       require("hardtime").setup(opts)
       vim.keymap.set("n", "<leader>ut", "<cmd>Hardtime toggle<cr>", { desc = "Toggle Hardtime" })
