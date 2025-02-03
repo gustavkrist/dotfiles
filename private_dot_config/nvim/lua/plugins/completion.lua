@@ -284,14 +284,6 @@ return {
         menu = {
           border = "rounded",
           winhighlight = "Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder,CursorLine:BlinkCmpMenuSelection,Search:None",
-          cmdline_position = function() -- FIXME: should be fixed by blink/noice and become unnecessary
-            if vim.g.ui_cmdline_pos ~= nil then
-              local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
-              return { pos["row"] - 1, pos["col"] }
-            end
-            local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
-            return { vim.o.lines - height, 0 }
-          end,
           draw = {
             columns = {
               { "kind_icon" },

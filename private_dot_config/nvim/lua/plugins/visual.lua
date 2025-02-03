@@ -135,7 +135,7 @@ return {
     "folke/noice.nvim",
     firenvim = false,
     dependencies = { "MunifTanjim/nui.nvim" },
-    version = "4.*",
+    commit = "eaed6cc9c06aa2013b5255349e4f26a6b17ab70f",
     event = "VeryLazy",
     opts = {
       lsp = {
