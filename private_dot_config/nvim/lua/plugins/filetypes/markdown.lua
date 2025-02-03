@@ -114,7 +114,7 @@ return {
           -- vim.call("pandoc#command#Init")
           -- vim.call("pandoc#compiler#Init")
           vim.call("pandoc#folding#Init")
-          vim.call("pandoc#keyboard#Init")
+          -- vim.call("pandoc#keyboard#Init")
           -- vim.call("pandoc#formatting#Init")
           -- vim.call("pandoc#spell#Init")
           vim.call("pandoc#toc#Init")
@@ -132,20 +132,6 @@ return {
   },
   {
     "jmbuhr/otter.nvim",
-    config = function(_, opts)
-      vim.api.nvim_create_autocmd({ "FileType" }, {
-        pattern = "markdown",
-        callback = function()
-          vim.keymap.set("n", "<leader>oa", function()
-            require("otter").activate()
-          end, { desc = "Activate otter", buffer = 0 })
-          vim.keymap.set("n", "<leader>od", function()
-            require("otter").deactivate()
-          end, { desc = "Deactivate otter", buffer = 0 })
-        end,
-      })
-      require("otter").setup(opts)
-    end,
     opts = {},
     version = "*",
     ft = { "markdown" },
