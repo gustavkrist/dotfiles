@@ -191,4 +191,12 @@ return {
       },
     },
   },
+  {
+    'mtrajano/tssorter.nvim',
+    version = '*',
+    ---@module "tssorter"
+    ---@type TssorterOpts
+    opts = {
+    },
+  },
 }
