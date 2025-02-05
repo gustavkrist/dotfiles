@@ -70,18 +70,7 @@ return {
     },
   },
   {
-    "stevearc/dressing.nvim",
-    firenvim = false,
-    opts = {
-      select = {
-        enabled = false,
-      },
-    },
-    event = "VeryLazy",
-  },
-  {
     "Chaitanyabsprip/fastaction.nvim",
-    dependencies = { "stevearc/dressing.nvim" },
     opts = function()
       ---@param params GetActionConfigParams
       ---@return ActionConfig | nil
@@ -138,7 +127,7 @@ return {
       return {
         dismiss_keys = { "<C-c>", "<Esc>", "q" },
         register_ui_select = true,
-        fallback_threshold = 10,
+        fallback_threshold = 4,
         override_function = function(params)
           if params.kind == "codeaction" then
             local res = get_action_config_from_priorities(params)

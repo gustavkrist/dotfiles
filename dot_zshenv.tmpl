@@ -51,14 +51,14 @@ export PATH=$PATH:$HOME/.npm-global/bin
 export PATH="$PATH:/usr/local/cuda/bin"
 export PATH="$PATH:/mnt/c/Program Files/WezTerm"
 export PATH="$PATH:/home/gustav/.dotnet/tools"
+export PATH="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:$PATH"
+export PATH="/mnt/c/WINDOWS/System32:$PATH"
 {{- if eq .chezmoi.hostname "Gustav-PC" }}
 export PATH="$PATH:/mnt/c/Users/gusta/bin"
 {{- end }}
 {{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
 export PATH="/mnt/c/Users/GustavKristensen/AppData/Local/Programs/Microsoft VS Code/bin:$PATH"
 export PATH="/mnt/c/Program Files/win32yank:$PATH"
-export PATH="/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0:$PATH"
-export PATH="/mnt/c/WINDOWS/System32:$PATH"
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PYTHONPATH="$HOME/repositories/supwiz/src:$PYTHONPATH"
 export PATH="/mnt/c/Windows:$PATH"
