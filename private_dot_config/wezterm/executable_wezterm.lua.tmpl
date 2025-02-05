@@ -125,7 +125,11 @@ end)
 wezterm.on('open-uri', function(window, pane, uri)
   local url = wezterm.url.parse(uri)
   if url.scheme == "file" then
+    local line = uri:match("#(%d+)$")
     opts = { domain = "CurrentPaneDomain", args = { "nvim", url.file_path } }
+    if line then
+      table.insert(opts.args, "+" .. line)
+    end
     local dim = pane:get_dimensions()
     if dim.pixel_height > dim.pixel_width then
       window:perform_action(wezterm.action.SplitVertical(opts), pane)
