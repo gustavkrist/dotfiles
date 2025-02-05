@@ -61,6 +61,10 @@ function M.setup(config)
         },
         action = wezterm.action_callback(function(window, pane)
           local url = window:get_selection_escapes_for_pane(pane)
+          local is_hyperlink = url:find("]8;;")
+          if not is_hyperlink then
+            return
+          end
           local link_start = url:find("]8;;") + 4
           local uri = url:sub(link_start, url:find("\u{1b}", link_start) - 1)
           require("links").open_file_uri_in_nvim_split(window, pane, uri)
