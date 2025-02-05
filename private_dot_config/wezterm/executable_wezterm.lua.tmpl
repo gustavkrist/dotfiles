@@ -122,5 +122,19 @@ wezterm.on('user-var-changed', function(window, pane, name, value)
   window:set_config_overrides(overrides)
 end)
 
+wezterm.on('open-uri', function(window, pane, uri)
+  local url = wezterm.url.parse(uri)
+  if url.scheme == "file" then
+    opts = { domain = "CurrentPaneDomain", args = { "nvim", url.file_path } }
+    local dim = pane:get_dimensions()
+    if dim.pixel_height > dim.pixel_width then
+      window:perform_action(wezterm.action.SplitVertical(opts), pane)
+    else
+      window:perform_action(wezterm.action.SplitHorizontal(opts), pane)
+    end
+    return false
+  end
+end)
+
 -- and finally, return the configuration to wezterm
 return config
