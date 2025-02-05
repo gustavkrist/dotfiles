@@ -317,6 +317,7 @@ return {
                   "notify",
                   "qf",
                   "snacks_dashboard",
+                  "snacks_picker_list",
                   "spectre_panel",
                   "startify",
                   "toggleterm",

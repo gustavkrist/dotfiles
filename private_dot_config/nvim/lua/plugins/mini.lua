@@ -184,7 +184,7 @@ return {
             width_preview = 30,
           },
           options = {
-            use_as_default_explorer = true,
+            use_as_default_explorer = false,
           },
         })
         require("util.plugins").on_very_lazy(function()
@@ -309,20 +309,20 @@ return {
       keys = {}
       if vim.g.started_by_firenvim == nil and vim.g.vscode == nil then
         vim.list_extend(keys, {
-          {
-            "<leader>e",
-            function()
-              minifiles_open_cwd(false)
-            end,
-            desc = "File Explorer",
-          },
-          {
-            "<leader>E",
-            function()
-              minifiles_open_cwd(true)
-            end,
-            desc = "File Explorer (fresh)",
-          },
+          -- {
+          --   "<leader>e",
+          --   function()
+          --     minifiles_open_cwd(false)
+          --   end,
+          --   desc = "File Explorer",
+          -- },
+          -- {
+          --   "<leader>E",
+          --   function()
+          --     minifiles_open_cwd(true)
+          --   end,
+          --   desc = "File Explorer (fresh)",
+          -- },
           { "<leader>Sn", write_new_session, desc = "New session" },
           { "<leader>Ss", "<cmd>lua MiniSessions.select()<cr>", desc = "Select a session" },
           { "<leader>Sw", "<cmd>lua MiniSessions.write()<cr>", desc = "Write current session" },

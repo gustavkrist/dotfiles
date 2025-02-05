@@ -20,6 +20,7 @@ return {
         },
       },
       dim = { enabled = no_vscode() },
+      explorer = { enabled = true },
       indent = { animate = { enabled = false }, enabled = no_vscode() },
       lazygit = {
         enabled = no_vscode(),
@@ -188,6 +189,13 @@ return {
               Snacks.picker.buffers({ layout = "select" })
             end,
             desc = "Pick buffer",
+          },
+          {
+            "<leader>e",
+            function()
+              Snacks.explorer()
+            end,
+            desc = "Toggle explorer",
           },
           {
             "<leader>f",
