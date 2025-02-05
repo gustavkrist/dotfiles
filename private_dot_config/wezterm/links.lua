@@ -7,9 +7,9 @@ function M.open_file_uri_in_nvim_split(window, pane, uri)
   local url = wezterm.url.parse(uri)
   if url.scheme == "file" then
     local line = uri:match("#(%d+)$")
-    local opts = { domain = "CurrentPaneDomain", args = { "nvim", url.file_path } }
+    local opts = { domain = "CurrentPaneDomain", args = { "zsh", "-c", "nvim " .. url.file_path } }
     if line then
-      table.insert(opts.args, "+" .. line)
+      opts.args[3] = opts.args[3] .. " +" .. line
     end
     local dim = pane:get_dimensions()
     if dim.pixel_height > dim.pixel_width then
