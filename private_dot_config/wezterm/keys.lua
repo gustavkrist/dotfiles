@@ -51,6 +51,22 @@ function M.setup(config)
 		{ mods = M.mod, key = "f", action = act.Search("CurrentSelectionOrEmptyString") },
 		{ mods = M.mod, key = "v", action = act.PasteFrom("Clipboard") },
 		{ mods = "SUPER", key = "v", action = act.PasteFrom("Clipboard") },
+    {
+      mods = M.mod,
+      key = "o",
+      action = act.QuickSelectArgs({
+        patterns = {
+          '^\\d+(?=:\\s)',
+          '(?:[a-zA-Z-_]+/)*[a-zA-Z-_]+\\.(?:[a-z]{1,4})',
+        },
+        action = wezterm.action_callback(function(window, pane)
+          local url = window:get_selection_escapes_for_pane(pane)
+          local link_start = url:find("]8;;") + 4
+          local uri = url:sub(link_start, url:find("\u{1b}", link_start) - 1)
+          require("links").open_file_uri_in_nvim_split(window, pane, uri)
+        end)
+      }),
+    },
 		{
 			mods = M.mod,
 			key = "u",

@@ -3,6 +3,25 @@ local wezterm = require("wezterm")
 
 local M = {}
 
+function M.open_file_uri_in_nvim_split(window, pane, uri)
+  local url = wezterm.url.parse(uri)
+  if url.scheme == "file" then
+    local line = uri:match("#(%d+)$")
+    local opts = { domain = "CurrentPaneDomain", args = { "nvim", url.file_path } }
+    if line then
+      table.insert(opts.args, "+" .. line)
+    end
+    local dim = pane:get_dimensions()
+    if dim.pixel_height > dim.pixel_width then
+      window:perform_action(wezterm.action.SplitVertical(opts), pane)
+    else
+      window:perform_action(wezterm.action.SplitHorizontal(opts), pane)
+    end
+    return true
+  end
+  return false
+end
+
 ---@param config Config
 function M.setup(config)
 	config.hyperlink_rules = {
