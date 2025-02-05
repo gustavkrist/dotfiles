@@ -9,11 +9,11 @@ return {
       vim.api.nvim_create_autocmd("Colorscheme", {
         pattern = { "nord" },
         callback = function()
-          vim.cmd([[
-            hi! link NoiceLspProgressTitle @comment
-            hi! link LspInlayHint @comment
-            hi NavicSeparator guibg=NONE
-            ]])
+          vim.api.nvim_set_hl(0, "NavicSeparator", { fg = "#81A1C1" })
+          vim.api.nvim_set_hl(0, "NoiceLspProgressTitle", { link = "Comment" })
+          vim.api.nvim_set_hl(0, "LspInlayHint", { link = "@comment" })
+          vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { link = "Comment" })
+          vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { link = "Comment" })
           if vim.g.started_by_firenvim == nil then
             require("util.wezterm").set_term_background("#D8DEE9", "#2E3440", "#D8DEE9")
           end
