@@ -193,7 +193,7 @@ return {
           {
             "<leader>e",
             function()
-              Snacks.explorer()
+              Snacks.explorer({ hidden = true })
             end,
             desc = "Toggle explorer",
           },
