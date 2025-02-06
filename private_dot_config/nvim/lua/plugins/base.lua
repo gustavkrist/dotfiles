@@ -88,7 +88,6 @@ return {
     firenvim = false,
     config = function(_, opts)
       require("gitsigns").setup(opts)
-      vim.o.signcolumn = "yes:2"
     end,
     opts = {},
     keys = function()

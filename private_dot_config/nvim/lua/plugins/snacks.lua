@@ -53,6 +53,18 @@ return {
       scratch = {
         enabled = no_vscode(),
       },
+      statuscolumn = {
+        left = { "mark", "sign" },
+        right = { "fold", "git" },
+        folds = {
+          open = true,
+          git_hl = true,
+        },
+        git = {
+          patterns = { "GitSigns" },
+        },
+        refresh = 50,
+      },
       terminal = {
         enabled = no_vscode(),
         win = {
