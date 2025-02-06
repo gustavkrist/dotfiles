@@ -255,6 +255,7 @@ return {
   {
     "kosayoda/nvim-lightbulb",
     opts = {
+      priority = 13,
       autocmd = { enabled = true },
       filter = function(_, result)
         return not vim.tbl_contains({
