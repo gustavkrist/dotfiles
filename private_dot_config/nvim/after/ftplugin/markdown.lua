@@ -6,7 +6,7 @@ vim.keymap.set({ "n", "o", "x" }, "[`", function()
   require("nvim-treesitter.textobjects.move").goto_previous_start("@codeblock.inner")
 end, { desc = "Goto previous start @codeblock.inner", buffer = 0 })
 
-require("which-key").add({"<localleader>o", buffer = 0, group = "Otter" })
+require("which-key").add({ "<localleader>o", buffer = 0, group = "Otter" })
 vim.keymap.set("n", "<localleader>oa", function()
   require("otter").activate()
 end, { desc = "Activate otter", buffer = 0 })
@@ -21,7 +21,7 @@ vim.b.miniai_config = {
       a = { "@codeblock.outer" },
       i = { "@codeblock.inner" },
     }),
-  }
+  },
 }
 
 if require("util.plugins").has("vim-slime") then

@@ -9,7 +9,12 @@ vim.opt.formatoptions:append("r")
 
 if require("util.plugins").has("vim-slime") then
   vim.b.slime_cell_delimiter = "^#%%"
-  vim.keymap.set("n", "<localleader><cr>", "<Plug>SlimeCellsSendAndGoToNext", { desc = "Send cell and go next", buffer = 0 })
+  vim.keymap.set(
+    "n",
+    "<localleader><cr>",
+    "<Plug>SlimeCellsSendAndGoToNext",
+    { desc = "Send cell and go next", buffer = 0 }
+  )
   vim.keymap.set("n", "<localleader>j", "<Plug>SlimeCellsNext", { desc = "Next cell", buffer = 0 })
   vim.keymap.set("n", "<localleader>k", "<Plug>SlimeCellsPrev", { desc = "Prev cell", buffer = 0 })
   vim.keymap.set("n", "<localleader> ", "<Plug>SlimeLineSend", { desc = "Send line", buffer = 0 })

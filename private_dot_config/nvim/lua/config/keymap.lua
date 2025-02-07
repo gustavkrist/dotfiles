@@ -168,6 +168,6 @@ map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Commen
 map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
 map("v", "<leader>/", "gc", { desc = "Toggle Comment", silent = true, remap = true })
 
-if (vim.g.started_by_firenvim == nil and vim.g.vscode == nil) then
+if vim.g.started_by_firenvim == nil and vim.g.vscode == nil then
   require("util.wezterm").setup()
 end

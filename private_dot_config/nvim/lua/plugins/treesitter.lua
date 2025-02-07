@@ -195,9 +195,9 @@ return {
     },
   },
   {
-    'mtrajano/tssorter.nvim',
+    "mtrajano/tssorter.nvim",
     vscode = true,
-    version = '*',
+    version = "*",
     ---@module "tssorter"
     ---@type TssorterOpts
     opts = {},
