@@ -256,6 +256,12 @@ return {
     "kosayoda/nvim-lightbulb",
     opts = {
       priority = 13,
+      sign = {
+        enabled = true,
+        text = "",
+        lens_text = "󰍉",
+        hl = "DiagnosticSignWarn",
+      },
       autocmd = { enabled = true },
       filter = function(_, result)
         return not vim.tbl_contains({
