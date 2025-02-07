@@ -102,6 +102,9 @@ return {
             },
           },
         },
+        endwise = {
+          enable = true,
+        },
       })
     end,
     init = function(plugin)
@@ -197,7 +200,11 @@ return {
     version = '*',
     ---@module "tssorter"
     ---@type TssorterOpts
-    opts = {
-    },
+    opts = {},
+    cmd = "TSSort",
+  },
+  {
+    "RRethy/nvim-treesitter-endwise",
+    ft = { "lua", "bash", "zsh" },
   },
 }
