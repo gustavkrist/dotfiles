@@ -94,6 +94,11 @@ return {
       local gitsigns = require("gitsigns")
       return {
         {
+          "<leader>gB",
+          gitsigns.blame,
+          desc = "Full file blame",
+        },
+        {
           "<leader>gj",
           function()
             gitsigns.nav_hunk("next", { navigation_message = false })
@@ -135,6 +140,11 @@ return {
           desc = "Preview Hunk",
         },
         {
+          "<leader>gP",
+          gitsigns.preview_hunk_inline,
+          desc = "Preview Hunk Inline",
+        },
+        {
           "<leader>gr",
           gitsigns.reset_hunk,
           desc = "Reset Hunk",
@@ -167,7 +177,6 @@ return {
         },
         { "<leader>gd", gitsigns.diffthis, desc = "Git Diff" },
         { "<leader>gtb", gitsigns.toggle_current_line_blame, desc = "Toggle Current Line Blame" },
-        { "<leader>gtd", gitsigns.toggle_deleted, desc = "Toggle Show Deleted Lines" },
         { "ih", ":<C-u>Gitsigns select_hunk<cr>", mode = { "o", "x" } },
       }
     end,
