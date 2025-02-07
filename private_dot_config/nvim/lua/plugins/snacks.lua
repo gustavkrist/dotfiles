@@ -92,7 +92,7 @@ return {
         on_open = function()
           local lualine_ok, lualine = pcall(require, "lualine")
           if lualine_ok then
-            lualine.hide()
+            lualine.hide({ unhide = false, place = { "statusline", "tabline" , "winbar" } })
             vim.api.nvim_set_option_value("winbar", "", { scope = "local" })
             vim.o.laststatus = 0
           end
@@ -100,7 +100,7 @@ return {
         on_close = function()
           local lualine_ok, lualine = pcall(require, "lualine")
           if lualine_ok then
-            lualine.hide({ unhide = true })
+            lualine.hide({ unhide = true, place = { "statusline", "tabline" , "winbar" } })
           end
         end,
       },
@@ -205,6 +205,7 @@ return {
           {
             "<leader>e",
             function()
+              ---@diagnostic disable-next-line: missing-fields
               Snacks.explorer({ hidden = true })
             end,
             desc = "Toggle explorer",
@@ -247,7 +248,7 @@ return {
           {
             "<leader>ld",
             function()
-              Snacks.picker.diagnostics_buffer()
+              Snacks.picker.diagnostics_buffer({ layout = { preset = "ivy_split", preview = "main" } })
             end,
             desc = "Buffer Diagnostics",
           },
@@ -261,7 +262,7 @@ return {
           {
             "<leader>ls",
             function()
-              Snacks.picker.lsp_symbols()
+              Snacks.picker.lsp_symbols({ layout = { preset = "vscode", preview = "main" } })
             end,
             desc = "Document Symbols",
           },
@@ -350,18 +351,11 @@ return {
             desc = "Open Recent File",
           },
           {
-            "<leader>ss",
+            "<leader>sp",
             function()
-              Snacks.picker.smart()
+              Snacks.picker()
             end,
-            desc = "Smart picker",
-          },
-          {
-            "<leader>sS",
-            function()
-              Snacks.picker.smart()
-            end,
-            desc = "Pick scratch buffer",
+            desc = "Pick picker",
           },
           {
             "<leader>.",
@@ -380,9 +374,11 @@ return {
         callback = function()
           if no_vscode() then
             -- Setup some globals for debugging (lazy-loaded)
+            ---@diagnostic disable-next-line: duplicate-set-field
             _G.dd = function(...)
               Snacks.debug.inspect(...)
             end
+            ---@diagnostic disable-next-line: duplicate-set-field
             _G.bt = function()
               Snacks.debug.backtrace()
             end
