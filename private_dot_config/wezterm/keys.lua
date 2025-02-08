@@ -71,6 +71,9 @@ function M.setup(config)
         end)
       }),
     },
+    {
+      mods = M.mod, key = "q", action = act.EmitEvent("trigger-nvim-with-scrollback"),
+    },
 		{
 			mods = M.mod,
 			key = "u",
