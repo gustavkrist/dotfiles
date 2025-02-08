@@ -137,10 +137,11 @@ wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
   f:close()
 
   if wezterm.target_triple:find("windows") then
-    local success, name, stderr = wezterm.run_child_process({ "wsl", "-e", "wslpath", "-u", name })
+    local success, stdout, stderr = wezterm.run_child_process({ "wsl", "-e", "wslpath", "-u", name })
+    name = stdout
   end
 
-  if success then
+  if name then
     window:perform_action(
       wezterm.action.SplitVertical({
         domain = "CurrentPaneDomain", args = { "nvim", "-c", [[execute 'e' . expand('%h') | map q <cmd>qa!<cr> | lua require("util.plugins").on_very_lazy(function() Snacks.terminal.colorize(); vim.schedule(function() vim.o.ft = nil; vim.o.laststatus = 0; vim.o.winbar = nil; vim.o.showtabline = 0; require("lualine").hide() end) end)]], name },
