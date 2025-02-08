@@ -144,7 +144,7 @@ wezterm.on("trigger-nvim-with-scrollback", function(window, pane)
   if name then
     window:perform_action(
       wezterm.action.SplitVertical({
-        domain = "CurrentPaneDomain", args = { "nvim", "-c", [[execute 'e' . expand('%h') | map q <cmd>qa!<cr> | lua require("util.plugins").on_very_lazy(function() Snacks.terminal.colorize(); vim.schedule(function() vim.o.ft = nil; vim.o.laststatus = 0; vim.o.winbar = nil; vim.o.showtabline = 0; require("lualine").hide() end) end)]], name },
+        domain = "CurrentPaneDomain", args = { "zsh", "-c", [[nvim -c 'execute "e" . expand("%h") | map q <cmd>qa!<cr> | lua require("util.plugins").on_very_lazy(function() Snacks.terminal.colorize(); vim.schedule(function() vim.o.ft = nil; vim.o.laststatus = 0; vim.o.winbar = nil; vim.o.showtabline = 0; require("lualine").hide() end) end)' ]] .. name },
       }),
       pane
     )
