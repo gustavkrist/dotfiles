@@ -111,8 +111,8 @@ alias nvide="'/mnt/c/Program Files/Neovide/neovide.exe' --"
 alias k="kubectl"
 alias kgp="kubectl get pods"
 alias kex="kubectl exec -it"
-alias bsh='kx botstudio-celery-default ipython -i -c '"'"'import django;import os;os.environ.setdefault("DJANGO_SETTINGS_MODULE", "botstudio.settings");django.setup();from botstudio.models import *'"'"''
-alias bish='kx botstudio-celery-default python -i -c '"'"'import django;import os;os.environ.setdefault("DJANGO_SETTINGS_MODULE", "botstudio.settings");django.setup();from botstudio.models import *'"'"''
+alias bish='kx botstudio-celery-default ipython -i -c '"'"'import django;import os;os.environ.setdefault("DJANGO_SETTINGS_MODULE", "botstudio.settings");django.setup();from botstudio.models import *'"'"''
+alias bsh='kx botstudio-celery-default python -i -c '"'"'import django;import os;os.environ.setdefault("DJANGO_SETTINGS_MODULE", "botstudio.settings");django.setup();from botstudio.models import *'"'"''
 {{- else }}
 alias coa="conda activate"
 alias cod="conda deactivate"
@@ -263,6 +263,10 @@ zle -N _cmedit
 bindkey "^O" _cmedit
 
 {{ if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+_kubectl_get_resource_fzf () {
+  echo $(kubectl get "$1" | cut -d" " -f1 | tail -n +2 | fzf -q "$2" -0 -1)
+}
+
 ksw () {
   namespace=$(echo "default\nplayground-test\ndev01-dev" | fzf -q "$1" -0 -1)
   case $namespace in
@@ -274,7 +278,7 @@ ksw () {
       kubectl config use humor && kubectl config set-context --current --namespace="$namespace"
       ;;
 
-    dev01)
+    dev01-dev)
       kubectl config use aks01-dev && kubectl config set-context --current --namespace="$namespace"
       ;;
 
@@ -282,17 +286,51 @@ ksw () {
 }
 
 kcu () {
-  config=$(kubectl config get-contexts | sed 's/^/\*/' | awk '{ print $2 }' | tail -n +2 | fzf -q "$1" -0 -1)
+  local config=$(kubectl config get-contexts | sed 's/^/\*/' | awk '{ print $2 }' | tail -n +2 | fzf -q "$1" -0 -1)
+  if [[ -z "$config" ]] then
+    return 1
+  fi
   kubectl config use "$config"
 }
 
 ksc () {
-  k config set-context --current --namespace="$1"
+  kubectl config set-context --current --namespace="$1"
 }
 
 kns () {
-  namespace=$(k get ns | cut -d" " -f1 | tail -n +2 | fzf -q "$1" -0 -1)
-  k config set-context --current --namespace="$namespace"
+  local namespace=$(_kubectl_get_resource_fzf namespace "$1")
+  if [[ -z "$namespace" ]] then
+    return 1
+  fi
+  kubectl config set-context --current --namespace="$namespace"
+}
+
+kx () {
+  local POD=$(_kubectl_get_resource_fzf pod "$1")
+  if [[ -z "$POD" ]] then
+    return 1
+  fi
+  local ARGS=$#
+  shift
+  kubectl exec -it "$POD" -- ${@:-bash}
+}
+
+kd () {
+  local POD=$(_kubectl_get_resource_fzf pod "$1")
+  if [[ -z "$POD" ]] then
+    return 1
+  fi
+  kubectl delete pod "$POD"
+}
+
+kl () {
+  local POD=$(_kubectl_get_resource_fzf pod "$1")
+  if [[ -z "$POD" ]] then
+    return 1
+  fi
+  local ARGS=$#
+  shift
+  kubectl logs "$POD" $@
 }
 
 # Drop cache
@@ -300,8 +338,8 @@ dropcache () {
   sync; sudo sh -c "echo $1 > /proc/sys/vm/drop_caches"
 }
 
-fpath=( ~/.zsh_functions "${fpath[@]}" )
-autoload -Uz ${fpath[1]}/*(.:t)
+# fpath=( ~/.zsh_functions "${fpath[@]}" )
+# autoload -Uz ${fpath[1]}/*(.:t)
 {{- end }}
 
 # Rich print of file with less
