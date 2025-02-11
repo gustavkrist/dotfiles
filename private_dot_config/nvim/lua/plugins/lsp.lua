@@ -24,7 +24,9 @@ return {
       end
 
       local servers = {
-        bashls = true,
+        bashls = {
+          filetypes = { "sh", "bash", "zsh" },
+        },
         fsautocomplete = true,
         hls = {
           manual_install = true,
