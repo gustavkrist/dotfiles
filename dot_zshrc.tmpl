@@ -52,9 +52,10 @@ zinit wait lucid light-mode for \
   softmoth/zsh-vim-mode \
   hlissner/zsh-autopair \
   urbainvaes/fzf-marks \
-  OMZ::lib/git.zsh \
-  atload"unalias grv" OMZ::plugins/git/git.plugin.zsh \
+  OMZL::git.zsh \
+  atload"unalias grv" OMZP::git/git.plugin.zsh \
   ael-code/zsh-colored-man-pages \
+  OMZL::functions.zsh \
   OMZP::sudo \
   OMZP::web-search \
   OMZP::copypath \
@@ -263,7 +264,7 @@ bindkey "^O" _cmedit
 
 {{ if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
 ksw () {
-  namespace=$(echo "default\nplayground-test\nsupwiz-1-test\nsupwiz-2-test\nsupwiz-3-test\nproduct-demo-prod" | fzf -q "$1" -0 -1)
+  namespace=$(echo "default\nplayground-test\ndev01-dev" | fzf -q "$1" -0 -1)
   case $namespace in
     default)
       kubectl config use docker-desktop && kubectl config set-context --current --namespace="$namespace"
@@ -273,20 +274,8 @@ ksw () {
       kubectl config use humor && kubectl config set-context --current --namespace="$namespace"
       ;;
 
-    supwiz-1-test)
-      kubectl config use badekar && kubectl config set-context --current --namespace="$namespace"
-      ;;
-
-    supwiz-2-test)
-      kubectl config use humor && kubectl config set-context --current --namespace="$namespace"
-      ;;
-
-    supwiz-3-test)
-      kubectl config use badekar && kubectl config set-context --current --namespace="$namespace"
-      ;;
-
-    product-demo-prod)
-      kubectl config use kumbum && kubectl config set-context --current --namespace="$namespace"
+    dev01)
+      kubectl config use aks01-dev && kubectl config set-context --current --namespace="$namespace"
       ;;
 
   esac
