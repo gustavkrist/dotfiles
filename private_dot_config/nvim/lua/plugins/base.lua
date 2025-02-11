@@ -181,11 +181,9 @@ return {
       }
     end,
     event = "User FileOpened",
-    cmd = "Gitsigns",
   },
   {
     "ggandor/leap.nvim",
-    commit = "5ae080b646021bbb6e1d8715b155b1e633e28166", -- FIXME: Unfreeze when https://github.com/ggandor/leap.nvim/issues/260 is fixed
     config = function()
       vim.keymap.set("n", "s", "<Plug>(leap-forward-to)", { silent = true })
       vim.keymap.set("x", "z", "<Plug>(leap-forward-to)", { silent = true })

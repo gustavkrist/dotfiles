@@ -21,6 +21,7 @@ return {
       },
       dim = { enabled = no_vscode() },
       explorer = { enabled = true },
+      image = { enabled = true },
       indent = { animate = { enabled = false }, enabled = no_vscode() },
       lazygit = {
         enabled = no_vscode(),

@@ -5,7 +5,6 @@ return {
       require("colorizer").setup(#opts > 0 and opts or nil)
     end,
     opts = {},
-    lazy = false,
     event = "BufReadPre",
     keys = {
       { "<leader>uc", "<cmd>ColorizerToggle<cr>", desc = "Toggle Colorizer" },
@@ -254,6 +253,7 @@ return {
   },
   {
     "kosayoda/nvim-lightbulb",
+    event = "LspAttach",
     opts = {
       priority = 13,
       sign = {
