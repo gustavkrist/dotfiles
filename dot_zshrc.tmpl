@@ -143,11 +143,10 @@ export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS
   --bind=ctrl-d:preview-page-down
   --bind=ctrl-u:preview-page-up"
 
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
-    --color=fg:#e5e9f0,bg:#2d3441,hl:#81a1c1
-    --color=fg+:#e5e9f0,bg+:#2d3441,hl+:#81a1c1
-    --color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac
-    --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b'
+local FZF_COLORS='--color=fg:#e5e9f0,bg:#2d3441,hl:#81a1c1,fg+:#e5e9f0,bg+:#2d3441,hl+:#81a1c1,info:#eacb8a,prompt:#bf6069,pointer:#b48dac,marker:#a3be8b,spinner:#b48dac,header:#a3be8b'
+
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS"
+  $FZF_COLORS"
 
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -163,31 +162,6 @@ _fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude ".git" . "$1"
 }
 
-
-# FZF-TAB
-
-zstyle ':fzf-tab:*' fzf-command fzf-tmux
-zstyle ':completion:*:descriptions' format '[%d]'
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':fzf-tab:complete:*' fzf-flags -p 50%,50%
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'tree -L 1 -C --dirsfirst $realpath | head -200'
-zstyle ':fzf-tab:complete:cd:*' fzf-flags -p 70%,50%
-zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
-zstyle ':fzf-tab:*' switch-group ',' '.'
-zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
-	'git diff $word | delta'
-zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-flags -p 90%,90% --preview-window=right:70%
-zstyle ':fzf-tab:complete:nvim:*' fzf-preview \
-  'bat --theme Nord --style=numbers --color=always --line-range :500 $realpath'
-zstyle ':fzf-tab:complete:nvim:*' fzf-flags -p 70%,70%
-
-# LUNAR/NEOVIM
-
-export LUNARVIM_RUNTIME_DIR="${LUNARVIM_RUNTIME_DIR:-"$HOME/.local/share/lunarvim"}"
-export LUNARVIM_CONFIG_DIR="${LUNARVIM_CONFIG_DIR:-"$HOME/.config/lvim"}"
-export LUNARVIM_CACHE_DIR="${LUNARVIM_CACHE_DIR:-"$HOME/.cache/nvim"}"
-export NVIM_LISTEN_ADDRESS='/tmp/nvimsocket'
-
 # MISCELLANIOUS
 
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -197,11 +171,25 @@ export BAT_THEME="Nord"
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#bddedc"
 export LS_COLORS=$(echo "$(vivid generate nord):*.plist=0;38;2;180;142;173:*.cson=0;38;2;180;142;173:\
   *.Rmd=0;38;2;180;142;173:*.tsv=0;38;2;180;142;173" | sed 's/ //g')
-export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
-if [[ ! -f $XDG_DATA_HOME/yabai/padding.txt ]]; then
-  mkdir -p $XDG_DATA_HOME/yabai
-  echo 8 > $XDG_DATA_HOME/yabai/padding.txt
-fi
+
+# FZF-TAB
+
+zstyle ':fzf-tab:*' fzf-command fzf-tmux
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':fzf-tab:complete:*' fzf-flags -p 50%,50% "$FZF_COLORS"
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'tree -L 1 -C --dirsfirst $realpath | head -200'
+zstyle ':fzf-tab:complete:cd:*' fzf-flags -p 70%,50% "$FZF_COLORS"
+zstyle ':fzf-tab:complete:z:*' fzf-preview 'tree -L 1 -C --dirsfirst $realpath | head -200'
+zstyle ':fzf-tab:complete:z:*' fzf-flags -p 70%,50% "$FZF_COLORS"
+zstyle ':fzf-tab:*' fzf-bindings 'space:accept'
+zstyle ':fzf-tab:*' switch-group ',' '.'
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-preview \
+	'git diff $word | delta'
+zstyle ':fzf-tab:complete:git-(add|diff|restore):*' fzf-flags -p 90%,90% --preview-window=right:70% "$FZF_COLORS"
+zstyle ':fzf-tab:complete:nvim:*' fzf-preview \
+  'bat --theme Nord --style=numbers --color=always --line-range :500 $realpath'
+zstyle ':fzf-tab:complete:nvim:*' fzf-flags -p 70%,70% "$FZF_COLORS"
 
 # -- OS SPECIFIC --------------------------------------------------------------
 {{ if eq .chezmoi.os "darwin" }}
@@ -225,6 +213,12 @@ alias sed="gsed"
 alias xargs="gxargs"
 export FZF_PATH="/opt/homebrew/opt/fzf/"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
+if [[ ! -f $XDG_DATA_HOME/yabai/padding.txt ]]; then
+  mkdir -p $XDG_DATA_HOME/yabai
+  echo 8 > $XDG_DATA_HOME/yabai/padding.txt
+fi
+
 {{ else if eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu" }}
 alias grep="grep --color"
 alias pbcopy="clip.exe"
