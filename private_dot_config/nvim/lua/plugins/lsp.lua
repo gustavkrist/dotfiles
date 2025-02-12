@@ -189,8 +189,8 @@ return {
           http = { "kulala" },
           lua = { "stylua" },
           markdown = { "injected" },
-          sh = { "beautish" },
-          zsh = { "beautish" },
+          sh = { "beautysh" },
+          zsh = { "beautysh" },
           vue = { "eslint_d" },
         },
       }
