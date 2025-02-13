@@ -212,6 +212,13 @@ return {
             desc = "Toggle explorer",
           },
           {
+            "<leader>E",
+            function()
+              Snacks.explorer.reveal()
+            end,
+            desc = "Focus current file in explorer",
+          },
+          {
             "<leader>f",
             function()
               pick_project_root("files")
