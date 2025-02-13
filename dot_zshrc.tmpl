@@ -111,8 +111,6 @@ alias nvide="'/mnt/c/Program Files/Neovide/neovide.exe' --"
 alias k="kubectl"
 alias kgp="kubectl get pods"
 alias kex="kubectl exec -it"
-alias bish='kx botstudio-celery-default ipython -i -c '"'"'import django;import os;os.environ.setdefault("DJANGO_SETTINGS_MODULE", "botstudio.settings");django.setup();from botstudio.models import *'"'"''
-alias bsh='kx botstudio-celery-default python -i -c '"'"'import django;import os;os.environ.setdefault("DJANGO_SETTINGS_MODULE", "botstudio.settings");django.setup();from botstudio.models import *'"'"''
 {{- else }}
 alias coa="conda activate"
 alias cod="conda deactivate"
@@ -265,7 +263,7 @@ ksw () {
   namespace=$(echo "default\nplayground-test\ndev01-dev" | fzf -q "$1" -0 -1)
   case $namespace in
     default)
-      kubectl config use docker-desktop && kubectl config set-context --current --namespace="$namespace"
+      kubectl config use rancher-desktop && kubectl config set-context --current --namespace="$namespace"
       ;;
 
     playground-test)
@@ -325,6 +323,13 @@ kl () {
   local ARGS=$#
   shift
   kubectl logs "$POD" $@
+}
+
+bsh () {
+  local POD=$(_kubectl_get_resource_fzf pod "'botstudio-celery-default'")
+  expect -c "eval spawn kubectl exec $POD -it -- python manage.py shell
+  send \"from botstudio.models import Bot, ChatbotLog, NodeLabelItem\n\"
+  interact"
 }
 
 # Drop cache
