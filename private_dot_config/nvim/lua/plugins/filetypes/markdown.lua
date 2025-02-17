@@ -1,7 +1,7 @@
 return {
   {
     "iamcco/markdown-preview.nvim",
-    build = "cd app && npm install",
+    build = "cd app && npx --yes yarn install",
     init = function()
       if os.getenv("WSL_DISTRO_NAME") ~= nil then
         vim.g.browser = "/mnt/c/Program Files/Google/Chrome/Application/chrome.exe"

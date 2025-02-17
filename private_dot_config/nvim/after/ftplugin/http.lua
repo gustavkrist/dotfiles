@@ -1,3 +1,4 @@
+vim.o.commentstring = "# %s"
 vim.keymap.set("n", "<CR>", require("kulala").run, { buffer = 0, desc = "Execute current request" })
 vim.keymap.set("n", "[[", require("kulala").jump_prev, { buffer = 0, desc = "Jump to previous request" })
 vim.keymap.set("n", "]]", require("kulala").jump_next, { buffer = 0, desc = "Jump to next request" })
