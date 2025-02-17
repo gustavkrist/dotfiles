@@ -51,6 +51,7 @@ local options = {
   sessionoptions = { "buffers", "curdir", "tabpages", "winsize", "help", "globals", "skiprtp", "folds" },
   virtualedit = "block",
   laststatus = 0,
+  title = true,
 }
 
 vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })

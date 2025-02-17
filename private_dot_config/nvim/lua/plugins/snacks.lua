@@ -23,20 +23,7 @@ return {
       explorer = { enabled = true },
       image = {
         enabled = true,
-        markdown = { enabled = true },
-        resolve = function(file, src)
-          local dirname = vim.fs.dirname(file)
-          local direct_path = vim.fs.joinpath(dirname, src)
-          if vim.fn.filereadable(direct_path) == 1 then
-            return direct_path
-          end
-          local attachments_path =
-            vim.fs.joinpath(dirname, "attachments", src:match("[^#|]+"))
-          if vim.fn.filereadable(attachments_path) == 1 then
-            return attachments_path
-          end
-          return src
-        end
+        doc = { enabled = true, inline = false, float = true },
       },
       indent = { animate = { enabled = false }, enabled = no_vscode() },
       lazygit = {

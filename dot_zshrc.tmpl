@@ -468,4 +468,10 @@ eval "$(zoxide init zsh)"
 
 # -- FINAL --------------------------------------------------------------------
 
+_set_title_cwd() {
+  printf "\033]0;$PWD\007";
+}
+
+add-zsh-hook precmd _set_title_cwd
+
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
