@@ -225,4 +225,13 @@ return {
       vim.g.slime_default_config = { pane_direction = "right" }
     end,
   },
+  {
+    "folke/trouble.nvim",
+    opts = {},
+    cmd = { "Trouble" },
+  },
+  {
+    "OXY2DEV/patterns.nvim",
+    cmd = { "Patterns" },
+  },
 }

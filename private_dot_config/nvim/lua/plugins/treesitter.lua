@@ -23,6 +23,15 @@ return {
         filetype = "fsharp",
       }
 
+      parser_config.lua_patterns = {
+        install_info = {
+          url = "https://github.com/OXY2DEV/tree-sitter-lua_patterns",
+          branch = "main",
+          files = { "src/parser.c" }
+        },
+        requires_generate_from_grammar = false,
+      }
+
       configs.setup({
         ensure_installed = {
           "bash",
