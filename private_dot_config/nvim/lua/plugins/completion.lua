@@ -262,7 +262,14 @@ return {
     version = "*",
     dependencies = {
       { "L3MON4D3/LuaSnip", version = "v2.*" },
+      {
+        "saghen/blink.compat",
+        opts = {},
+        lazy = true,
+        version = "*",
+      },
     },
+    ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
       appearance = {
@@ -299,6 +306,18 @@ return {
                 highlight = function(ctx)
                   local _, hl, _ = require("mini.icons").get("lsp", ctx.kind)
                   return hl
+                end,
+              },
+              source_name = {
+                text = function(ctx)
+                  local obsidian_names = {
+                    obsidian = "[Obsidian]",
+                    obsidian_new = "[Obsidian]",
+                    obsidian_tags = "[Obsidian]",
+                  }
+                  return vim.list_contains(vim.tbl_keys(obsidian_names), ctx.source_name)
+                      and obsidian_names[ctx.source_name]
+                    or ctx.source_name
                 end,
               },
             },
@@ -365,7 +384,16 @@ return {
         end,
       },
       sources = {
-        default = { "lsp", "path", "buffer", "snippets", "lazydev" },
+        default = {
+          "lsp",
+          "path",
+          "buffer",
+          "snippets",
+          "lazydev",
+          "obsidian",
+          "obsidian_new",
+          "obsidian_tags",
+        },
         providers = {
           lsp = {
             name = "[LSP]",
@@ -399,6 +427,21 @@ return {
             name = "[Lazydev]",
             module = "lazydev.integrations.blink",
             score_offset = 80,
+          },
+          obsidian = {
+            name = "obsidian",
+            module = "blink.compat.source",
+            score_offset = 100,
+          },
+          obsidian_new = {
+            name = "obsidian_new",
+            module = "blink.compat.source",
+            score_offset = 100,
+          },
+          obsidian_tags = {
+            name = "obsidian_tags",
+            module = "blink.compat.source",
+            score_offset = 100,
           },
         },
       },
