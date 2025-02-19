@@ -1,8 +1,8 @@
 return {
   {
     "neovim/nvim-lspconfig",
+    event = { "User FileOpened" },
     firenvim = false,
-    lazy = true,
     dependencies = {
       "mason.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -20,7 +20,7 @@ return {
       -- end
       local ok, blink_cmp = pcall(require, "blink.cmp")
       if ok then
-        capabilities = blink_cmp.get_lsp_capabilities()
+        capabilities = blink_cmp.get_lsp_capabilities({}, true)
       end
 
       local servers = {

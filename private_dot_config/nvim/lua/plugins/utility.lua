@@ -246,7 +246,7 @@ return {
             },
           },
         })
-      end
+      end,
     },
     cmd = { "Trouble" },
     keys = {

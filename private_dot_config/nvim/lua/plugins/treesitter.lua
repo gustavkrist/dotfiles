@@ -27,7 +27,7 @@ return {
         install_info = {
           url = "https://github.com/OXY2DEV/tree-sitter-lua_patterns",
           branch = "main",
-          files = { "src/parser.c" }
+          files = { "src/parser.c" },
         },
         requires_generate_from_grammar = false,
       }

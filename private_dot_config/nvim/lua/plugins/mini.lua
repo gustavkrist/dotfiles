@@ -245,8 +245,8 @@ return {
         },
       })
       -- Remap adding surrounding to Visual mode selection
-      vim.keymap.del('x', 'ys')
-      vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
+      vim.keymap.del("x", "ys")
+      vim.keymap.set("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
 
       local gen_hook = require("mini.splitjoin").gen_hook
       local curly = { brackets = { "%b{}" } }

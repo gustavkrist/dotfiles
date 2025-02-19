@@ -57,9 +57,7 @@ return {
           or {}
         if #clients > 0 then
           local status = require("copilot.api").status.data.status
-          if status ~= "" then
-            return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
-          end
+          return (status == "InProgress" and "pending") or (status == "Warning" and "error") or "ok"
         end
       end
 

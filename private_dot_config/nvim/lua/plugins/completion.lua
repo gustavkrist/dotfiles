@@ -262,7 +262,6 @@ return {
     version = "*",
     dependencies = {
       { "L3MON4D3/LuaSnip", version = "v2.*" },
-      { "giuxtaposition/blink-cmp-copilot", dependencies = { "zbirenbaum/copilot.lua" } },
     },
     ---@type blink.cmp.Config
     opts = {
@@ -308,11 +307,21 @@ return {
       },
       keymap = {
         preset = "none",
-        -- ["<Down>"] = { "select_next", "fallback" },
-        -- ["<Up>"] = { "select_prev", "fallback" },
+        ["<Down>"] = { "select_next", "fallback" },
+        ["<Up>"] = { "select_prev", "fallback" },
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
-        ["<C-Space"] = { "show", "hide" },
+        ["<C-Space>"] = {
+          function(cmp)
+            if cmp.is_visible() then
+              cmp.hide()
+            else
+              cmp.show()
+            end
+          end,
+        },
+        ["<C-e>"] = { "hide", "fallback" },
+        ["<C-y>"] = { "select_and_accept" },
         ["<C-b>"] = { "scroll_documentation_up", "fallback" },
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
         ["<Esc>"] = { "hide", "fallback" },
@@ -328,30 +337,35 @@ return {
             end
           end,
           "snippet_forward",
-          "select_next",
+          function()
+            if require("copilot.suggestion").is_visible() then
+              require("copilot.suggestion").accept()
+              return true
+            end
+          end,
           "fallback",
         },
-        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
+        ["<S-Tab>"] = { "snippet_backward", "fallback" },
       },
       snippets = {
         preset = "luasnip",
       },
       cmdline = {
         sources = function()
-            local type = vim.fn.getcmdtype()
-            -- Search forward and backward
-            if type == "/" or type == "?" then
-              return { "buffer" }
-            end
-            -- Commands
-            if type == ":" then
-              return { "cmdline" }
-            end
-            return {}
-          end,
+          local type = vim.fn.getcmdtype()
+          -- Search forward and backward
+          if type == "/" or type == "?" then
+            return { "buffer" }
+          end
+          -- Commands
+          if type == ":" then
+            return { "cmdline" }
+          end
+          return {}
+        end,
       },
       sources = {
-        default = { "lsp", "path", "buffer", "snippets", "lazydev", "copilot" },
+        default = { "lsp", "path", "buffer", "snippets", "lazydev" },
         providers = {
           lsp = {
             name = "[LSP]",
@@ -385,12 +399,6 @@ return {
             name = "[Lazydev]",
             module = "lazydev.integrations.blink",
             score_offset = 80,
-          },
-          copilot = {
-            name = "[Copilot]",
-            module = "blink-cmp-copilot",
-            score_offset = 70,
-            async = true,
           },
         },
       },
