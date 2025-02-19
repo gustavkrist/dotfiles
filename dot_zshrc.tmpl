@@ -285,10 +285,6 @@ kcu () {
   kubectl config use "$config"
 }
 
-ksc () {
-  kubectl config set-context --current --namespace="$1"
-}
-
 kns () {
   local namespace=$(_kubectl_get_resource_fzf namespace "$1")
   if [[ -z "$namespace" ]] then
