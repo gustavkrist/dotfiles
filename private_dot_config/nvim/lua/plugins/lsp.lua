@@ -4,7 +4,7 @@ return {
     firenvim = false,
     lazy = true,
     dependencies = {
-      "mason-lspconfig.nvim",
+      "mason.nvim",
       "WhoIsSethDaniel/mason-tool-installer.nvim",
       "williamboman/mason-lspconfig.nvim",
     },
@@ -127,6 +127,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    dependencies = { "williamboman/mason-lspconfig.nvim", config = function() end },
     firenvim = false,
     opts = {},
     build = function()
@@ -137,13 +138,6 @@ return {
     keys = {
       { "<leader>lm", "<cmd>Mason<cr>", desc = "Mason" },
     },
-  },
-  {
-    "williamboman/mason-lspconfig.nvim",
-    firenvim = false,
-    opts = {},
-    dependencies = "mason.nvim",
-    event = "User FileOpened",
   },
   {
     "stevearc/conform.nvim",

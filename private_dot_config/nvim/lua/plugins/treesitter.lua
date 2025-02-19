@@ -133,7 +133,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    event = "User FileOpened",
+    event = "VeryLazy",
     vscode = true,
     config = function()
       -- If treesitter is already loaded, we need to run config again for textobjects

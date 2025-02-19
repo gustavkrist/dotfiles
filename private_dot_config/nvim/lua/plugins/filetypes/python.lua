@@ -109,9 +109,6 @@ return {
   },
   {
     "linux-cultist/venv-selector.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
     ft = { "python" },
     cmd = { "VenvSelect" },
     branch = "regexp", -- This is the regexp branch, use this for the new version

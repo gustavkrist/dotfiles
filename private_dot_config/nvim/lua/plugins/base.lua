@@ -199,7 +199,7 @@ return {
       -- vim.keymap.set("x", "gs", "<Plug>(leap-cross-window)", { silent = true })
       -- vim.keymap.set("o", "gs", "<Plug>(leap-cross-window)", { silent = true })
     end,
-    event = "User FileOpened",
+    event = "VeryLazy",
     vscode = true,
   },
   {
