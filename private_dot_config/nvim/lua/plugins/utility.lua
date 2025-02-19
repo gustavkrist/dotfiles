@@ -228,7 +228,47 @@ return {
   {
     "folke/trouble.nvim",
     opts = {},
+    specs = {
+      "folke/snacks.nvim",
+      opts = function(_, opts)
+        return vim.tbl_deep_extend("force", opts or {}, {
+          picker = {
+            actions = require("trouble.sources.snacks").actions,
+            win = {
+              input = {
+                keys = {
+                  ["<c-t>"] = {
+                    "trouble_open",
+                    mode = { "n", "i" },
+                  },
+                },
+              },
+            },
+          },
+        })
+      end
+    },
     cmd = { "Trouble" },
+    keys = {
+      {
+        "[x",
+        function()
+          require("trouble").prev()
+          require("trouble").jump()
+        end,
+        desc = "Previous Trouble Item",
+        mode = "n",
+      },
+      {
+        "]x",
+        function()
+          require("trouble").next()
+          require("trouble").jump()
+        end,
+        desc = "Next Trouble Item",
+        mode = "n",
+      },
+    },
   },
   {
     "OXY2DEV/patterns.nvim",
