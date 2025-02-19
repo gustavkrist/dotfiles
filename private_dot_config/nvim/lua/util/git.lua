@@ -71,7 +71,7 @@ function M.gitbrowse_with_branch(what, mode)
   )
   local default = vim.fs.basename(branches[1])
   local current = string.gsub(branches[2], "%s*$", "")
-  local commit = vim.system({ "git", "log", "-n", "1", "--pretty=format:'%H'" }, { text = true }):wait().stdout
+  local commit = vim.system({ "git", "log", "-n", "1", "--pretty=format:%H" }, { text = true }):wait().stdout
   vim.ui.select({
     { text = string.format("Current branch [%s]", current), value = current },
     { text = string.format("Default branch [%s]", default), value = default },
