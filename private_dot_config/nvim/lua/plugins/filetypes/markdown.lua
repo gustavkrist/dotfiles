@@ -127,7 +127,7 @@ return {
         callback = function()
           -- vim.call("pandoc#command#Init")
           -- vim.call("pandoc#compiler#Init")
-          vim.call("pandoc#folding#Init")
+          -- vim.call("pandoc#folding#Init")
           -- vim.call("pandoc#keyboard#Init")
           -- vim.call("pandoc#formatting#Init")
           -- vim.call("pandoc#spell#Init")
