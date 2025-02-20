@@ -108,7 +108,7 @@ function M.setup(config)
         key = "p",
         action = act.QuickSelectArgs({
           patterns = {
-            [[(?:\w-){2,}\w+]],
+            [[(?:\w+-){2,}\w+]],
           },
         }),
       },
