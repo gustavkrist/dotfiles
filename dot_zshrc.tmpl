@@ -256,18 +256,14 @@ bindkey "^O" _cmedit
 
 {{ if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
 _kubectl_get_resource_fzf () {
-  echo $(kubectl get "$1" | cut -d" " -f1 | tail -n +2 | fzf -q "$2" -0 -1)
+  echo $(kubectl get "$1" | fzf -q "$2" -0 -1 --header-lines 1 --accept-nth 1 --nth 1)
 }
 
 ksw () {
-  namespace=$(echo "default\nplayground-test\ndev01-dev" | fzf -q "$1" -0 -1)
+  namespace=$(echo "default\ndev01-dev" | fzf -q "$1" -0 -1)
   case $namespace in
     default)
       kubectl config use rancher-desktop && kubectl config set-context --current --namespace="$namespace"
-      ;;
-
-    playground-test)
-      kubectl config use humor && kubectl config set-context --current --namespace="$namespace"
       ;;
 
     dev01-dev)
@@ -278,7 +274,7 @@ ksw () {
 }
 
 kcu () {
-  local config=$(kubectl config get-contexts | sed 's/^/\*/' | awk '{ print $2 }' | tail -n +2 | fzf -q "$1" -0 -1)
+  local config=$(kubectl config get-contexts | fzf -q "$1" -0 -1 --header-lines 1 --with-nth 2,3,5 --accept-nth 1 --nth 1)
   if [[ -z "$config" ]] then
     return 1
   fi
