@@ -120,8 +120,8 @@ return {
     lazy = true,
   },
   {
-    firenvim = false,
     "ibhagwan/fzf-lua",
+    firenvim = false,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       fzf_colors = false,

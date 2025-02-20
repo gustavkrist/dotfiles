@@ -176,7 +176,7 @@ return {
         MarkviewIcon4 = { bg = "#3B4252", fg = "#87C0CF" },
         MarkviewIcon5 = { bg = "#3B4252", fg = "#87C0CF" },
       },
-      preview = { hybrid_modes = { "n" }, filetypes = { "codecompanion", "markdown" }, ignore_buftypes = {} },
+      preview = { hybrid_modes = { "n", "i" }, filetypes = { "codecompanion", "markdown" }, ignore_buftypes = {} },
     },
     ft = { "codecompanion", "markdown" },
   },

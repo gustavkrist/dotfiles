@@ -134,8 +134,7 @@ return {
     "folke/noice.nvim",
     firenvim = false,
     dependencies = { "MunifTanjim/nui.nvim" },
-    commit = "eaed6cc9c06aa2013b5255349e4f26a6b17ab70f",
-    event = "VeryLazy",
+    event = "UIEnter",
     opts = {
       lsp = {
         override = {
@@ -191,11 +190,6 @@ return {
         mode = "c",
         desc = "Redirect Cmdline",
       },
-      -- { "<leader>snl", function() require("noice").cmd("last") end, desc = "Noice Last Message" },
-      -- { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
-      -- { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
-      -- { "<leader>snd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
-      -- { "<leader>snt", function() require("noice").cmd("pick") end, desc = "Noice Picker (Telescope/FzfLua)" },
       {
         "<c-f>",
         function()

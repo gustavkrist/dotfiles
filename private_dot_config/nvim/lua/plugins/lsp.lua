@@ -310,8 +310,8 @@ return {
     },
   },
   {
-    firenvim = false,
     "danymat/neogen",
+    firenvim = false,
     opts = {
       snippet_engine = "luasnip",
     },
@@ -339,8 +339,8 @@ return {
     },
   },
   {
-    firenvim = false,
     "davidyz/inlayhint-filler.nvim",
+    firenvim = false,
     keys = {
       {
         "<leader>ni",
@@ -354,8 +354,8 @@ return {
     event = "LspAttach",
   },
   {
-    firenvim = false,
     "rachartier/tiny-inline-diagnostic.nvim",
+    firenvim = false,
     priority = 1000,
     opts = {
       preset = "modern",
@@ -369,8 +369,8 @@ return {
     event = "LspAttach",
   },
   {
-    firenvim = false,
     "DNLHC/glance.nvim",
+    firenvim = false,
     opts = {
       border = { enable = true },
     },

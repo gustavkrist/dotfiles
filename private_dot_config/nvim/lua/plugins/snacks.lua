@@ -23,7 +23,7 @@ return {
       explorer = { enabled = true },
       image = {
         enabled = true,
-        doc = { enabled = true, inline = false, float = true },
+        doc = { enabled = true, inline = true, float = true },
       },
       indent = { animate = { enabled = false }, enabled = no_vscode() },
       lazygit = {
