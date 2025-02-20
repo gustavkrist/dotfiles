@@ -63,6 +63,6 @@ return {
       { "<leader>at", "<cmd>CodeCompanionChat Toggle<CR>", mode = { "n", "v" }, desc = "Toggle AI Chat" },
       { "<leader>aa", "<cmd>CodeCompanionActions<CR>", mode = { "n", "v" }, desc = "Select AI Action" },
       { "<leader>aA", "<cmd>CodeCompanionChat Add<CR>", mode = "v", desc = "Add code to AI chat" },
-    }
+    },
   },
 }

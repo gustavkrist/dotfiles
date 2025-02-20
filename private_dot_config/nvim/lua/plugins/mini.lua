@@ -128,6 +128,22 @@ local write_git_branch_session = function()
   end
 end
 
+local pick_delete_session = function()
+  local sessions = require("mini.sessions").detected
+  if vim.tbl_isempty(sessions) then
+    return
+  end
+  local items = {}
+  for _, session in pairs(sessions) do
+    vim.list_extend(items, { session.name })
+  end
+  vim.ui.select(items, { prompt = "Delete session:" }, function(selected)
+    if selected ~= nil then
+      require("mini.sessions").delete(selected)
+    end
+  end)
+end
+
 local function minifiles_open_cwd(fresh)
   local path = vim.api.nvim_buf_get_name(0)
   if vim.fn.filereadable(path) == 1 then
@@ -330,6 +346,7 @@ return {
           { "<leader>Ss", "<cmd>lua MiniSessions.select()<cr>", desc = "Select a session" },
           { "<leader>Sw", "<cmd>lua MiniSessions.write()<cr>", desc = "Write current session" },
           { "<leader>Sg", write_git_branch_session, desc = "Write current session (git branch)" },
+          { "<leader>Sd", pick_delete_session, desc = "Pick a session to delete" },
         })
       end
       return keys
