@@ -356,15 +356,10 @@ return {
             end
           end,
           "snippet_forward",
-          function()
-            if require("copilot.suggestion").is_visible() then
-              require("copilot.suggestion").accept()
-              return true
-            end
-          end,
+          "select_next",
           "fallback",
         },
-        ["<S-Tab>"] = { "snippet_backward", "fallback" },
+        ["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
       },
       snippets = {
         preset = "luasnip",

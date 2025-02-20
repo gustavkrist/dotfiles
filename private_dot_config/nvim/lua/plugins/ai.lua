@@ -2,7 +2,7 @@ return {
   {
     "zbirenbaum/copilot.lua",
     opts = {
-      suggestion = { enabled = true, auto_trigger = true, keymap = { accept = false } },
+      suggestion = { enabled = true, auto_trigger = true, keymap = { accept = "<M-l>" } },
       panel = { enabled = false },
     },
     config = function(_, opts)
@@ -28,6 +28,10 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-treesitter/nvim-treesitter",
     },
+    config = function(_, opts)
+      require("codecompanion").setup(opts)
+      vim.keymap.set("ca", "cc", "CodeCompanion")
+    end,
     opts = {
       strategies = {
         chat = {
@@ -55,5 +59,10 @@ return {
         end,
       },
     },
+    keys = {
+      { "<leader>at", "<cmd>CodeCompanionChat Toggle<CR>", mode = { "n", "v" }, desc = "Toggle AI Chat" },
+      { "<leader>aa", "<cmd>CodeCompanionActions<CR>", mode = { "n", "v" }, desc = "Select AI Action" },
+      { "<leader>aA", "<cmd>CodeCompanionChat Add<CR>", mode = "v", desc = "Add code to AI chat" },
+    }
   },
 }

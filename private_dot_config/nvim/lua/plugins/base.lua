@@ -18,6 +18,7 @@ return {
         {
           mode = "n",
           { "<leader><Tab>", group = "Tabs" },
+          { "<leader>a", group = "AI" },
           { "<leader>S", group = "Sessions" },
           { "<leader>g", group = "Git" },
           { "<leader>h", group = "Grapple" },
