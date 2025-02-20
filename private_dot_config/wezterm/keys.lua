@@ -82,40 +82,39 @@ function M.setup(config)
     { mods = "SHIFT", key = "Enter", action = wezterm.action({ SendString = "\u{001b}[13;2u" }) },
     { mods = "CTRL", key = "Enter", action = wezterm.action({ SendString = "\u{001b}[13;5u" }) },
   }
+  config.key_tables = {
+    quick_select = {
+      {
+        key = "h",
+        action = act.QuickSelectArgs({
+          patterns = {
+            "^\\d+(?=:\\s)",
+            "(?:[a-zA-Z-_]+/)*[a-zA-Z-_]+\\.(?:[a-z]{1,4})",
+          },
+          action = wezterm.action_callback(function(window, pane)
+            local url = window:get_selection_escapes_for_pane(pane)
+            local is_hyperlink = url:find("]8;;")
+            if not is_hyperlink then
+              return
+            end
+            local link_start = url:find("]8;;") + 4
+            local uri = url:sub(link_start, url:find("\u{1b}", link_start) - 1)
+            require("links").open_file_uri_in_nvim_split(window, pane, uri)
+          end),
+          label = "Open hyperlink",
+        }),
+      },
+      {
+        key = "p",
+        action = act.QuickSelectArgs({
+          patterns = {
+            [[(?:\w-){2,}\w+]],
+          },
+        }),
+      },
+    },
+  }
 end
-
-config.key_tables = {
-  quick_select = {
-    {
-      key = "h",
-      action = act.QuickSelectArgs({
-        patterns = {
-          "^\\d+(?=:\\s)",
-          "(?:[a-zA-Z-_]+/)*[a-zA-Z-_]+\\.(?:[a-z]{1,4})",
-        },
-        action = wezterm.action_callback(function(window, pane)
-          local url = window:get_selection_escapes_for_pane(pane)
-          local is_hyperlink = url:find("]8;;")
-          if not is_hyperlink then
-            return
-          end
-          local link_start = url:find("]8;;") + 4
-          local uri = url:sub(link_start, url:find("\u{1b}", link_start) - 1)
-          require("links").open_file_uri_in_nvim_split(window, pane, uri)
-        end),
-        label = "Open hyperlink",
-      }),
-    },
-    {
-      key = "p",
-      action = act.QuickSelectArgs({
-        patterns = {
-          [[(?:\w-){2,}\w+]],
-        },
-      }),
-    },
-  },
-}
 
 ---@param resize_or_move "resize" | "move"
 ---@param mods string
