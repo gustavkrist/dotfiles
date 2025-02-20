@@ -101,7 +101,7 @@ function M.setup(config)
             local uri = url:sub(link_start, url:find("\u{1b}", link_start) - 1)
             require("links").open_file_uri_in_nvim_split(window, pane, uri)
           end),
-          label = "Open hyperlink",
+          label = "open hyperlink",
         }),
       },
       {
