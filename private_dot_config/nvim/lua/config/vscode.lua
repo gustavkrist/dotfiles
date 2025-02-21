@@ -1,5 +1,6 @@
 vscode = require("vscode")
 vim.g.clipboard = vim.g.vscode_clipboard
+vim.o.clipboard = "unnamedplus"
 vim.o.hlsearch = true
 vim.o.ignorecase = true
 vim.o.smartcase = true

@@ -242,7 +242,25 @@ return {
         multiply = { prefix = "gom" },
         sort = { prefix = "gos" },
       })
-      require("mini.pairs").setup()
+      require("mini.pairs").setup({
+        mappings = {
+          ["["] =  {
+            action = "open",
+            pair = "[]",
+            neigh_pattern = ".[%s%z%)}%]]",
+          },
+          ["("] = {
+            action = "open",
+            pair = "()",
+            neigh_pattern = ".[%s%z%)}%]]",
+          },
+          ["{"] = {
+            action = "open",
+            pair = "{}",
+            neigh_pattern = ".[%s%z%)}%]]",
+          },
+        },
+      })
       if vim.g.started_by_firenvim == nil and vim.g.vscode == nil then
         require("mini.sessions").setup()
       end
