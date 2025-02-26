@@ -10,6 +10,11 @@ return {
             formatter = { "jq", "." },
             pathresolver = require("kulala.parser.jsonpath").parse,
           },
+          ["application/graphql-response+json"] = {
+            ft = "json",
+            formatter = { "jq", "." },
+            pathresolver = require("kulala.parser.jsonpath").parse,
+          },
         },
       }
     end,

@@ -172,20 +172,17 @@ return {
             args = { "$FILENAME" },
             cwd = require("conform.util").root_file({ "pyproject.toml" }),
           },
-          kulala = {
-            command = "kulala-fmt",
-            args = { "$FILENAME" },
-            stdin = false,
-          },
         },
         formatters_by_ft = {
           fsharp = { "fantomas" },
-          http = { "kulala" },
+          graphql = { "prettier" },
+          http = { "kulala-fmt" },
+          json = { "jq" },
           lua = { "stylua" },
           markdown = { "injected" },
           sh = { "beautysh" },
-          zsh = { "beautysh" },
           vue = { "eslint_d" },
+          zsh = { "beautysh" },
         },
       }
       require("conform").setup(opts)
@@ -371,9 +368,19 @@ return {
   {
     "DNLHC/glance.nvim",
     firenvim = false,
-    opts = {
-      border = { enable = true },
-    },
+    opts = function()
+      local ok, nord_glance = pcall(require, "nord.plugins.glance")
+      if not ok then
+        return {
+          border = { enable = true },
+        }
+      end
+      return nord_glance.make_opts({
+        folds = {
+          folded = false,
+        },
+      })
+    end,
     event = "LspAttach",
     cmd = "Glance",
     keys = {

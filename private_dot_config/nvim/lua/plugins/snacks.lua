@@ -12,7 +12,7 @@ return {
     opts = {
       bigfile = { enabled = true },
       dashboard = {
-        enabled = true,
+        enabled = vim.g.started_by_firenvim == nil,
         sections = {
           { section = "keys", gap = 1, padding = 2 },
           { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 2 },

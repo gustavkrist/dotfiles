@@ -274,4 +274,11 @@ return {
     "OXY2DEV/patterns.nvim",
     cmd = { "Patterns" },
   },
+  {
+    "xzbdmw/clasp.nvim",
+    opts = {},
+    keys = {
+      { "<c-l>", function() require("clasp").wrap("next") end, mode = { "i" }, desc = "Increment wrap" },
+    }
+  }
 }
