@@ -100,12 +100,14 @@ return {
             vim.api.nvim_set_option_value("winbar", "", { scope = "local" })
             vim.o.laststatus = 0
           end
+          require("util.wezterm").set_user_var("ZEN_MODE", "+3")
         end,
         on_close = function()
           local lualine_ok, lualine = pcall(require, "lualine")
           if lualine_ok then
             lualine.hide({ unhide = true, place = { "statusline", "tabline", "winbar" } })
           end
+          require("util.wezterm").set_user_var("ZEN_MODE", "-1")
         end,
       },
     },
