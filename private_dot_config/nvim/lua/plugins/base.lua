@@ -221,17 +221,25 @@ return {
       require("auto-save").setup({
         condition = function(buf)
           local fn = vim.fn
-          local utils = require("auto-save.utils.data")
-          if not utils.not_in(fn.getbufvar(buf, "&filetype"), { "oil" }) then
+          if not vim.list_contains({ "oil" }, fn.getbufvar(buf, "&filetype")) then
             return false
           end
           return not in_snippets_dir(buf)
         end,
       })
+      vim.g.auto_save_disabled = false
+      Snacks.toggle({
+        id = "autosave",
+        name = "AutoSave",
+        get = function()
+          return not vim.g.auto_save_disabled
+        end,
+        set = function(state)
+          vim.g.auto_save_disabled = not state
+          vim.cmd("ASToggle")
+        end,
+      }):map("<leader>ua")
     end,
-    keys = {
-      { "<leader>ua", "<cmd>ASToggle<cr>", desc = "Toggle AutoSave" },
-    },
   },
   {
     "ethanholz/nvim-lastplace",

@@ -167,7 +167,22 @@ return {
     firenvim = false,
     config = function(_, opts)
       require("hardtime").setup(opts)
-      vim.keymap.set("n", "<leader>ut", "<cmd>Hardtime toggle<cr>", { desc = "Toggle Hardtime" })
+      vim.g.hardtime_disabled = false
+      Snacks.toggle({
+        id = "hardtime",
+        name = "Hardtime",
+        get = function()
+          return not vim.g.hardtime_disabled
+        end,
+        set = function(state)
+          if not state then
+            vim.cmd("Hardtime disable")
+          else
+            vim.cmd("Hardtime enable")
+          end
+          vim.g.hardtime_disabled = not state
+        end,
+      }):map("<leader>ut")
     end,
     event = "User FileOpened",
     opts = {

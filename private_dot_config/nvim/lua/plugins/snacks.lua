@@ -91,7 +91,10 @@ return {
       zen = {
         enabled = no_vscode(),
         toggles = {
-          git_signs = true,
+          git_signs = false,
+          indent = false,
+          copilot = false,
+          hardtime = false,
         },
         on_open = function()
           local lualine_ok, lualine = pcall(require, "lualine")
