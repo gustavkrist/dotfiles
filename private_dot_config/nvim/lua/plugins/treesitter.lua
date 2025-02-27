@@ -217,4 +217,9 @@ return {
     "RRethy/nvim-treesitter-endwise",
     ft = { "lua", "bash", "zsh" },
   },
+  {
+    "folke/ts-comments.nvim",
+    opts = {},
+    event = "VeryLazy",
+  },
 }
