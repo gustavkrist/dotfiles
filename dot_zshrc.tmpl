@@ -35,7 +35,7 @@ zinit light romkatv/powerlevel10k
 
 _zshrc_after_load() {
   eval "$(aactivator init)"
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+  eval "$(fzf --zsh)"
   {{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
   source <(kubectl completion zsh)
   {{- end }}
@@ -209,7 +209,6 @@ alias grep="ggrep --color"
 alias find="gfind"
 alias sed="gsed"
 alias xargs="gxargs"
-export FZF_PATH="/opt/homebrew/opt/fzf/"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 export GOKU_EDN_CONFIG_FILE="$XDG_CONFIG_HOME/karabiner/karabiner.edn"
 if [[ ! -f $XDG_DATA_HOME/yabai/padding.txt ]]; then
@@ -221,7 +220,6 @@ fi
 alias grep="grep --color"
 alias pbcopy="clip.exe"
 alias pbpaste="powershell.exe -command 'Get-Clipboard'"
-export FZF_PATH="/home/linuxbrew/.linuxbrew/opt/fzf/"
 {{ end }}
 
 # -- ADDITIONAL SETTINGS -------------------------------------------------------
