@@ -221,7 +221,7 @@ return {
       require("auto-save").setup({
         condition = function(buf)
           local fn = vim.fn
-          if not vim.list_contains({ "oil" }, fn.getbufvar(buf, "&filetype")) then
+          if vim.list_contains({ "oil" }, fn.getbufvar(buf, "&filetype")) then
             return false
           end
           return not in_snippets_dir(buf)
