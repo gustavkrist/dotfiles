@@ -29,5 +29,6 @@ Library/
 .local/bin/prodlogs
 .local/bin/bscurl
 .local/bin/bacurl
+.lnav/
 {{- end }}
 {{- end }}

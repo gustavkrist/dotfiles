@@ -1,0 +1,74 @@
+{
+    "$schema": "https://lnav.org/schemas/format-v1.schema.json",
+    "bslogs": {
+        "description": "Format file generated from regex101 entry -- https://regex101.com/r/lXZgmA",
+        "regex": {
+            "webserver": {
+                "pattern": "^(?<container>\\[\\w+\\/[\\w\\d-]+\\/(?:webserver|internal\\-api)\\]) (?<timestamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{9}Z) (?<ip>[\\d\\.]+) - - (?<other_timestamp>\\[\\d{2}\\/\\w{3}\\/\\d{4}:\\d{2}:\\d{2}:\\d{2} \\+\\d{4}\\]) \\d.\\d{6} (?<request>\"(?<request_type>GET|POST|PUT|PATCH|DELETE|HEAD)[^\"]+\") (?<body>.*)$"
+            },
+            "python": {
+                "pattern": "^(?<container>\\[\\w+\\/[\\w\\d-]+\\/\\w+\\]) (?<timestamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{9}Z) (?:#\\d+ )?(?<other_timestamp>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}) (?<filename>[\\w\\d_-]+\\.py:\\d+) (?<level>INFO|ERROR|DEBUG|WARNING)(?<body>.*)$"
+            },
+            "celery": {
+                "pattern": "^(?<container>\\[\\w+\\/[\\w\\d-]+\\/\\w+\\]) (?<timestamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{9}Z) \\[(?<other_timestamp>\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}): (?<level>INFO|ERROR|DEBUG|WARNING)\\/[\\w\\d-]+\\] (?<body>.*)$"
+            },
+            "std": {
+                "pattern": "^(?<container>\\[\\w+\\/[\\w\\d-]+\\/(?!webserver)(?!internal\\-api)\\w+\\]) (?<timestamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{9}Z) (?<body>(?:(?!\\.py:\\d+ |\\[\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2},\\d{3}: (:?INFO|ERROR|DEBUG|WARNING)\\/[\\w\\d-]+\\]).)*)$"
+            }
+        },
+        "level-field": "level",
+        "level": {
+            "error": "ERROR",
+            "warning": "WARNING",
+            "info": "INFO",
+            "debug": "DEBUG"
+        },
+        "value": {
+            "ip": {
+                "kind": "string"
+            },
+            "other_timestamp": {
+                "kind": "string",
+                "hidden": true
+            },
+            "request": {
+                "kind": "string"
+            },
+            "request_type": {
+                "kind": "string",
+                "identifier": true
+            },
+            "container": {
+                "kind": "string",
+                "identifier": true
+            },
+            "filename": {
+                "kind": "string"
+            }
+        },
+        "sample": [
+            {
+                "line": "[pod/botstudio-demoserver-test-bfbb65b48-lvksd/demoserver] 2023-11-03T09:45:06.123694139Z emitting event \"action.chat.sendReadySignal\" to Bt2e7qZ5RFgu114cAACN [/bot.io]"
+            },
+            {
+                "line": "[pod/botstudio-demoserver-dev-59b856768-k2vr5/demoserver] 2023-11-15T12:11:34.518319427Z #1955 2023-11-15 12:11:34,517 server.py:674 INFO QVzGp : disconnect",
+                "level": "info"
+            },
+            {
+                "line": "[pod/botstudio-backend-dev-f98954cc9-4hz7r/webserver] 2023-11-15T12:34:47.729401614Z 2023-11-15 12:34:47,727 log.py:224 ERROR Internal Server Error: /api/chatlogs/get-single/",
+                "level": "error"
+            },
+            {
+                "line": "[pod/botstudio-backend-dev-6459b87597-wnpxj/webserver] 2023-11-22T12:38:54.686121268Z 10.1.0.78 - - [22/Nov/2023:12:38:54 +0000] 0.013902 \"GET /api/task/?celery_id__in=eeff5b0b-88f6-4579-af89-8cbb759997d7,ad755bd1-3624-4f42-b2bc-3251be9f8e5f,c4b3ca2f-f8a8-44a0-bf64-957ef2b621c5,8dce3a1c-834f-4321-8179-55f6283d65d0,3d88c8c0-defa-4a7b-8f7c-ca586de269a9,b30e90ff-ab9d-4c7a-a6e0-d4887286af13,af63f48b-60a0-438f-9786-d516784ca49e,57663922-7e0f-4ed3-a11a-e54af1f14db2,81c83706-796e-41c0-8470-9a041576b112,d84494be-cad8-4d38-8230-3f6b2c2f2b23,1c41ca9c-0b48-4ef4-a296-0360fa1119a1,2f6231f2-f3a8-46f5-83f3-2d215d56cd0e,bc2f46a7-029c-49f7-ab59-c2066eb26d80,45157bef-f609-4f9f-bbee-215a77553e67,ffa7b227-290a-4f85-9458-0bd66157be7a,01a876b1-92fd-4525-ae7b-987c47c5c261,9097e9c8-344b-40d2-a605-b42c83e63434 HTTP/1.1\" 200 6187 \"https://botstudio.local/bot/4a3925dc-2ade-4bef-9105-39aaf3e78f94/health\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36\" \"1\""
+            },
+            {
+                "line": "[pod/botstudio-celery-default-dev-546cf99b67-4d6p8/main] 2025-03-12T12:50:00.003245000Z [2025-03-12 11:50:00,002: INFO/MainProcess] Task tasks.utils.fetch_info_from_aiengine.run[907a96fa-1021-48f7-9cb5-85e631b3a49a] received",
+                "level": "info"
+            },
+            {
+                "line": "[pod/botstudio-celery-default-dev-546cf99b67-4d6p8/main] 2025-03-12T12:55:22.907680000Z [2025-03-12 11:55:22,907: DEBUG/MainProcess] TaskPool: Apply <function fast_trace_task at 0x7f8427d30400> (args:('tasks.health.basic.has_atleast_3_conversation_tests.has_atleast_three_conversation_tests', '0fe90ae0-c7a8-497b-b094-1ce04d680a83', {'lang': 'py', 'task': 'tasks.health.basic.has_atleast_3_conversation_tests.has_atleast_three_conversation_tests', 'id': '0fe90ae0-c7a8-497b-b094-1ce04d680a83', 'shadow': None, 'eta': None, 'expires': None, 'group': None, 'group_index': None, 'retries': 0, 'timelimit': [None, None], 'root_id': '0fe90ae0-c7a8-497b-b094-1ce04d680a83', 'parent_id': None, 'argsrepr': '()', 'kwargsrepr': \"{'bot_id': UUID('c10e68ab-5fca-4fd3-9924-bcc7995c9d21'), 'task_id': UUID('6ae39564-bc76-4b87-abd8-564efe1706a2'), 'custom_compute_config': None}\", 'origin': 'gen7@botstudio-backend-dev-6cb6b5f766-4h6vk', 'ignore_result': False, 'replaced_task_nesting': 0, 'stamped_headers': None, 'stamps': {}, 'properties': {'correlation_id': '0fe90ae0-c7a8-497b-b094-1ce04d680a83', 'reply_to': '127208d3-f159-3fb8-8b38-c7612992fa95', 'delivery_mode': 2, 'delivery_info': {'exchange': '', 'routing_key': 'celery'},... kwargs:{})",
+                "level": "debug"
+            }
+        ]
+    }
+}
