@@ -1,7 +1,6 @@
 local opts = { noremap = true, silent = true }
 
 local term_opts = { silent = true }
-local has = require("util.plugins").has
 
 -- Shorten function name
 local map = vim.keymap.set
