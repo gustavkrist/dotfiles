@@ -10,7 +10,7 @@ return {
         },
       })
       require("luasnip.loaders.from_vscode").lazy_load({
-        paths = "./snippets",
+        paths = { "./snippets" },
         fs_event_providers = { autocmd = false, livuv = true },
       })
       require("luasnip").filetype_extend("latex", { "tex" })

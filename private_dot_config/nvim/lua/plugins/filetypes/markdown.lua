@@ -72,7 +72,7 @@ return {
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "markdown",
         callback = function()
-          vim.keymap.set("n", "<leader>op", paste_image, { desc = "Paste image from clipboard", buffer = 0 })
+          vim.keymap.set("n", "<localleader>ip", paste_image, { desc = "Paste image from clipboard", buffer = 0 })
         end,
       })
       require("obsidian").setup(opts)

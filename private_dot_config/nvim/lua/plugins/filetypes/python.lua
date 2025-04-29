@@ -146,6 +146,9 @@ return {
           miniconda_base = false,
           pipenv = false,
         },
+        options = {
+          picker = "native",
+        },
       },
     },
   },

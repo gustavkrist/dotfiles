@@ -257,9 +257,4 @@ return {
       })
     end,
   },
-  {
-    "airblade/vim-rooter",
-    firenvim = false,
-    enabled = false,
-  },
 }
