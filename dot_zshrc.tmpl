@@ -318,9 +318,18 @@ kl () {
 bsh () {
   local POD=$(_kubectl_get_resource_fzf pod "'botstudio-celery-default'")
   expect -c "eval spawn kubectl exec $POD -it -- python manage.py shell
-  send \"from botstudio.models import Bot, ChatbotLog, NodeLabelItem\n\"
+  send \"from botstudio.models import Bot, ChatbotLog, NodeLabelItem\nfrom pprint import pprint\n\"
   interact"
 }
+
+# FIXME: This is a hack needed for rancher desktop, hopefully a better fix is found
+clean_docker_config() {
+    CONFIG_FILE="$HOME/.docker/config.json"
+    if [[ -f "$CONFIG_FILE" ]]; then
+        jq 'del(.credsStore)' "$CONFIG_FILE" > "$CONFIG_FILE.tmp" && mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
+    fi
+}
+clean_docker_config
 
 # Drop cache
 dropcache () {
@@ -359,17 +368,6 @@ fe() {
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 
-# find-in-file - usage: fif <searchTerm> or fif "string with spaces" or fif "regex"
-fif() {
-    if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
-    local file
-    file="$(rga --max-count=1 --ignore-case --files-with-matches --no-messages "$*" | fzf-tmux -p -w 80% -h 80% -- +m --preview="rga --ignore-case --pretty --context 10 '"$*"' {}")" && echo "opening $file" && nvim "$file" || return 1;
-}
-
-v() {
-  local file
-  file="$(fasd -Rfl "$1" | fzf-tmux -1 -0 --no-sort +m)" && nvim "${file}" || return 1
-}
 {{ if eq .chezmoi.os "darwin" }}
 # Set yabai padding
 ypad() {
