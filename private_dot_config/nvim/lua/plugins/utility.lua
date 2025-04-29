@@ -26,37 +26,6 @@ return {
     ft = { "html", "vue" },
   },
   {
-    "xvzc/chezmoi.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function(_, opts)
-      require("chezmoi").setup(opts)
-      require("util.plugins").on_load("telescope.nvim", function()
-        require("telescope").load_extension("chezmoi")
-        vim.keymap.set(
-          "n",
-          "<leader>oc",
-          require("telescope").extensions.chezmoi.find_files,
-          { desc = "Edit chezmoi files" }
-        )
-      end)
-      vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-        pattern = { os.getenv("HOME") .. "/.local/share/chezmoi/*" },
-        callback = function(ev)
-          local bufnr = ev.buf
-          local edit_watch = function()
-            require("chezmoi.commands.__edit").watch(bufnr)
-          end
-          vim.schedule(edit_watch)
-        end,
-      })
-    end,
-    opts = {},
-    keys = { { "<leader>oc", desc = "Edit chezmoi files" } },
-  },
-  {
-    "kmonad/kmonad-vim",
-  },
-  {
     "chrishrb/gx.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
@@ -286,14 +255,10 @@ return {
     },
   },
   {
-    "OXY2DEV/patterns.nvim",
-    cmd = { "Patterns" },
-  },
-  {
     "xzbdmw/clasp.nvim",
     opts = {},
     keys = {
       { "<c-l>", function() require("clasp").wrap("next") end, mode = { "i" }, desc = "Increment wrap" },
     }
-  }
+  },
 }

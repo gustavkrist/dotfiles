@@ -3,7 +3,6 @@ return {
     "mistweaverco/kulala.nvim",
     opts = function()
       return {
-        additional_curl_options = { "-k" },
         contenttypes = {
           ["application/scim+json"] = {
             ft = "json",
