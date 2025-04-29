@@ -1,8 +1,9 @@
 #!/bin/zsh
 
 local PRODUCT="$1"
-kubectl logs -f -l product="$PRODUCT" --max-log-requests=13 --timestamps --prefix |& grep --line-buffered -v 'Defaulted container ' | sed -u 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' > "/tmp/$PRODUCT-log.log" &
+# kubectl logs -f -l product="$PRODUCT" --max-log-requests=13 --timestamps --prefix |& grep --line-buffered -v 'Defaulted container ' | sed -u 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' > "/tmp/$PRODUCT-log.log" &
+stern -l product=botstudio -s 1m --color never -E 'pgbouncer' -E 'redis' --only-log-lines -t --template '[pod/{{ .PodName }}/{{ .ContainerName }}] {{ slice .Message 0 29 }}Z {{ slice .Message 36 }}{{ printf "\n" }}' |& sed -u 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' > "/tmp/$PRODUCT-log.log" &
 LOG_PID=$!
-lnav "/tmp/$PRODUCT-log.log" 
+lnav "/tmp/$PRODUCT-log.log"
 kill "$LOG_PID"
-rm "/tmp/$PRODUCT-log.log" 
+rm "/tmp/$PRODUCT-log.log"
