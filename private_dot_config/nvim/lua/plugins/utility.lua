@@ -261,4 +261,17 @@ return {
       { "<c-l>", function() require("clasp").wrap("next") end, mode = { "i" }, desc = "Increment wrap" },
     }
   },
+  {
+    "chrisgrieser/nvim-scissors",
+    event = "VeryLazy",
+    opts = {
+      snippetSelection = {
+        picker = "snacks",
+      },
+      jsonFormatter = "jq",
+      backdrop = {
+        enabled = false,
+      },
+    },
+  },
 }

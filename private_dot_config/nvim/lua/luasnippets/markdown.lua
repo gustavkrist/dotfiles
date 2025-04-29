@@ -89,31 +89,6 @@ local snippets = {
     trig = "bi",
     desc = "[B]old and [i]talic text",
   }, fmt("***{}***", i(1))),
-  s(
-    {
-      trig = "callout",
-      desc = "Insert Obsidian-style callout",
-    },
-    fmt(
-      [[
-      > [!{}]
-      > {}
-      ]],
-      {
-        c(1, {
-          i(0, "NOTE"),
-          t("EXAMPLE"),
-          t("INFO"),
-          t("TODO"),
-          t("TIP"),
-          t("IMPORTANT"),
-          t("WARNING"),
-          t("CAUTION"),
-        }),
-        i(0),
-      }
-    )
-  ),
 }
 
 local autosnippets = {
@@ -144,35 +119,6 @@ local autosnippets = {
         table.insert(res, "> " .. ele)
       end
       return res
-    end)
-  ),
-  s(
-    {
-      trig = "co",
-      condition = conds.has_selected_text,
-      desc = "Wrap selection in callout",
-    },
-    d(1, function(_, snip)
-      local res, env = {}, snip.env
-      vim.list_extend(
-        res,
-        fmt("> [!{}]", {
-          c(1, {
-            i(0, "NOTE"),
-            t("EXAMPLE"),
-            t("INFO"),
-            t("TODO"),
-            t("TIP"),
-            t("IMPORTANT"),
-            t("WARNING"),
-            t("CAUTION"),
-          }),
-        })
-      )
-      for _, ele in ipairs(env.TM_SELECTED_TEXT) do
-        table.insert(res, t({ "", "> " .. ele }))
-      end
-      return sn(nil, res)
     end)
   ),
 }

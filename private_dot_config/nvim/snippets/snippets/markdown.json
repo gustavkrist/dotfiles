@@ -1,1 +1,11 @@
-{}
+{
+  "Callout": {
+    "body": [
+      "> [!${1|note,example,info,todo,tip,important,warning,caution|}]",
+      "> ${TM_SELECTED_TEXT/\\n/",
+      "> /g}$0"
+    ],
+    "description": "Insert Obsidian style callout",
+    "prefix": "callout"
+  }
+}
