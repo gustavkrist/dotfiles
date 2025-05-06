@@ -52,7 +52,7 @@ local snippets = {
   ),
   s(
     { trig = "rdb", desc = "Celery [r]emote [d]e[b]ugger trace" },
-    t('__import__("celery.contrib.rdb", list=True).set_trace()')
+    t('__import__("celery.contrib.rdb", fromlist=True).set_trace()')
   ),
   s({
     trig = "#env",
