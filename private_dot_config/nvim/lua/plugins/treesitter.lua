@@ -193,6 +193,29 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-context",
     event = "VeryLazy",
+    config = function(_, opts)
+      require("treesitter-context").setup(opts)
+      vim.g.treesitter_context_disabled = false
+      Snacks.toggle({
+        id = "tscontext",
+        name = "Treesitter Context",
+        get = function()
+          return not vim.g.treesitter_context_disabled
+        end,
+        set = function(state)
+          if not state then
+            vim.cmd("TSContextDisable")
+          else
+            vim.cmd("TSContextEnable")
+          end
+          vim.g.treesitter_context_disabled = not state
+        end,
+      }):map("<leader>ux")
+    end,
+    opts = {
+      multiline_threshold = 8,
+      separator = "─"
+    },
     keys = {
       {
         "[X",

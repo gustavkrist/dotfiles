@@ -16,3 +16,4 @@ vim.keymap.set(
   require("kulala").from_curl,
   { buffer = 0, desc = "Paste curl request from clipboard as http" }
 )
+require("kulala.cmd.lsp").start(0, "http")
