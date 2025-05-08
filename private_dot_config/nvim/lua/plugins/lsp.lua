@@ -64,9 +64,13 @@ return {
 				return servers[key].enable
 			end, vim.tbl_keys(servers))
 
-      vim.lsp.config("bashls", { filetypes = { "bash", "sh", "zsh" } })
+			vim.lsp.config("bashls", { filetypes = { "bash", "sh", "zsh" } })
+			vim.lsp.config(
+				"ts_ls",
+				{ filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" } }
+			)
 
-      vim.lsp.enable(servers_to_enable)
+			vim.lsp.enable(servers_to_enable)
 		end,
 	},
 	{
