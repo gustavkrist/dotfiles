@@ -27,7 +27,7 @@ if wezterm.target_triple:find("windows") then
     {
       name = 'WSL:Ubuntu',
 {{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
-      distribution = "Ubuntu-20.04",
+      distribution = "Ubuntu-22.04",
 {{- else }}
       distribution = "Ubuntu",
 {{- end }}
