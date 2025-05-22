@@ -5,6 +5,7 @@
 .config/*
 !.config/wezterm
 !.config/kmonad
+!AppData/
 {{- else }}
 AppData/
 {{- if ne .chezmoi.os "darwin" }}
