@@ -22,7 +22,7 @@ return {
 				texlab = { enable = true, install = true },
 				ts_ls = { enable = true, install = true },
 				vimls = { enable = true, install = true },
-				volar = { enable = true, install = true },
+				vue_ls = { enable = true, install = true },
 				yamlls = { enable = true, install = true },
 			}
 			vim.api.nvim_create_autocmd("LspAttach", {
@@ -61,12 +61,8 @@ return {
 			require("mason-tool-installer").setup({ ensure_installed = servers_to_install, auto_update = true })
 
 			local servers_to_enable = vim.tbl_filter(function(key)
-        if key == "volar" then  -- FIXME: Mason does not recognize vue_ls
-          return false
-        end
 				return servers[key].enable
 			end, vim.tbl_keys(servers))
-      vim.list_extend(servers_to_enable, { "vue_ls" })
 
 			vim.lsp.config("bashls", { filetypes = { "bash", "sh", "zsh" } })
 			vim.lsp.config(

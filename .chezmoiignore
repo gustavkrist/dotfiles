@@ -25,7 +25,7 @@ Library/
 .config/wezterm/
 .config/neovide/
 {{- end }}
-{{- if ne .chezmoi.hostname "LAPTOP-CMMU049J" }}
+{{- if ne .chezmoi.hostname "Puzzel-PF3M3GAA" }}
 .zsh_functions/
 .local/bin/prodlogs
 .local/bin/bscurl

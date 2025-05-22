@@ -36,7 +36,7 @@ zinit light romkatv/powerlevel10k
 _zshrc_after_load() {
   eval "$(aactivator init)"
   eval "$(fzf --zsh)"
-  {{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+  {{- if eq .chezmoi.hostname "Puzzel-PF3M3GAA" }}
   source <(kubectl completion zsh)
   {{- end }}
 }
@@ -103,7 +103,7 @@ alias fp="fzf-tmux -p -w 90% -h 90% -- --preview \
   'bat --theme Nord --style=numbers --color=always --line-range :500 {}'"
 alias cm="chezmoi"
 alias lgcm="lg -g '$(chezmoi source-path)/.git' -w '$(chezmoi source-path)'"
-{{- if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+{{- if eq .chezmoi.hostname "Puzzel-PF3M3GAA" }}
 alias remount="sudo mount -a"
 alias decolerize="sed -u 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g'"
 alias bslogs="prodlogs botstudio"
@@ -252,7 +252,7 @@ _cmedit() {
 zle -N _cmedit
 bindkey "^O" _cmedit
 
-{{ if eq .chezmoi.hostname "LAPTOP-CMMU049J" }}
+{{ if eq .chezmoi.hostname "Puzzel-PF3M3GAA" }}
 _kubectl_get_resource_fzf () {
   echo $(kubectl get "$1" | fzf -q "$2" -0 -1 --header-lines 1 --accept-nth 1 --nth 1)
 }
