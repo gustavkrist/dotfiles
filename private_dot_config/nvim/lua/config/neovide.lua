@@ -1,5 +1,5 @@
-vim.opt.guifont = "FiraCode Nerd Font:h14"
-vim.g.neovide_transparency = 0.8
+vim.opt.guifont = "JetBrainsMono NF:h14"
+vim.g.neovide_opacity = 0.8
 vim.g.neovide_position_animation_length = 0.05
 -- vim.g.neovide_scroll_animation_length = 0.15
 -- vim.g.neovide_cursor_animation_length = 0.09
