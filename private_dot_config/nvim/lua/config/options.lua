@@ -52,6 +52,7 @@ local options = {
   virtualedit = "block",
   laststatus = 0,
   title = true,
+  winborder = "rounded",
 }
 
 vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })

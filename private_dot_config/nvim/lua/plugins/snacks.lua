@@ -73,13 +73,27 @@ return {
         enabled = no_vscode(),
         win = {
           style = "float",
-          height = 0.85,
-          width = 0.85,
+          height = 0.95,
+          width = 0.95,
+          bo = {
+            filetype = "snacks_terminal",
+          },
           wo = {
             winhighlight = "FloatBorder:Normal,NormalFloat:Normal",
           },
           border = "rounded",
           keys = {
+            gf = function(self)
+              local f = vim.fn.findfile(vim.fn.expand("<cfile>"), "**")
+              if f == "" then
+                Snacks.notify.warn("No file under cursor")
+              else
+                self:hide()
+                vim.schedule(function()
+                  vim.cmd("e " .. f)
+                end)
+              end
+            end,
             hide_term = {
               "<C-t>",
               "hide",
