@@ -105,18 +105,6 @@ return {
                   return hl
                 end,
               },
-              source_name = {
-                text = function(ctx)
-                  local obsidian_names = {
-                    obsidian = "[Obsidian]",
-                    obsidian_new = "[Obsidian]",
-                    obsidian_tags = "[Obsidian]",
-                  }
-                  return vim.list_contains(vim.tbl_keys(obsidian_names), ctx.source_name)
-                      and obsidian_names[ctx.source_name]
-                    or ctx.source_name
-                end,
-              },
             },
           },
         },
@@ -182,9 +170,6 @@ return {
           "buffer",
           "snippets",
           "lazydev",
-          "obsidian",
-          "obsidian_new",
-          "obsidian_tags",
         },
         providers = {
           lsp = {
@@ -219,24 +204,6 @@ return {
             name = "[Lazydev]",
             module = "lazydev.integrations.blink",
             score_offset = 80,
-          },
-          obsidian = {
-            name = "obsidian",
-            module = "blink.compat.source",
-            score_offset = 100,
-            async = true,
-          },
-          obsidian_new = {
-            name = "obsidian_new",
-            module = "blink.compat.source",
-            score_offset = 100,
-            async = true,
-          },
-          obsidian_tags = {
-            name = "obsidian_tags",
-            module = "blink.compat.source",
-            score_offset = 100,
-            async = true,
           },
         },
       },
