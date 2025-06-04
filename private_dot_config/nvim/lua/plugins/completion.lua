@@ -59,12 +59,6 @@ return {
     version = "*",
     dependencies = {
       { "L3MON4D3/LuaSnip", version = "v2.*" },
-      {
-        "saghen/blink.compat",
-        opts = {},
-        lazy = true,
-        version = "*",
-      },
     },
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
