@@ -56,7 +56,7 @@ return {
     ft = { "markdown", "pandoc" },
   },
   {
-    "epwalsh/obsidian.nvim",
+    "obsidian-nvim/obsidian.nvim",
     ft = "markdown",
     config = function(_, opts)
       local function paste_image()
@@ -101,6 +101,10 @@ return {
       new_notes_location = "current_dir",
       ui = {
         enable = false,
+        checkboxes = {
+          [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+          ["x"] = { char = "", hl_group = "ObsidianDone" },
+        }
       },
       attachments = {
         confirm_img_paste = false,
@@ -108,6 +112,13 @@ return {
           path = client:vault_relative_path(path) or path
           return string.format("![[%s]]", path.name)
         end,
+      },
+      completion = {
+        blink = true,
+        min_chars = 2,
+      },
+      picker = {
+        name = "snacks.pick",
       },
     },
   },
@@ -141,6 +152,7 @@ return {
     "bullets-vim/bullets.vim",
     init = function()
       vim.g.bullets_outline_levels = { "ROM", "ABC", "num", "abc", "rom", "std-" }
+      vim.g.bullets_checkbox_markers = " ox"
     end,
     ft = "markdown",
   },
@@ -177,6 +189,26 @@ return {
         MarkviewIcon5 = { bg = "#3B4252", fg = "#87C0CF" },
       },
       preview = { hybrid_modes = { "n", "i" }, filetypes = { "codecompanion", "markdown" }, ignore_buftypes = {} },
+      markdown = {
+        list_items = {
+          shift_width = function (buffer, item)
+            --- Reduces the `indent` by 1 level.
+            ---
+            ---         indent                      1
+            --- ------------------------- = 1 ÷ --------- = new_indent
+            --- indent * (1 / new_indent)       new_indent
+            ---
+            local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth);
+
+            return (item.indent) * (1 / (parent_indnet * 2));
+          end,
+          marker_minus = {
+            add_padding = function (_, item)
+              return item.indent > 1;
+            end
+          }
+        }
+      }
     },
     ft = { "codecompanion", "markdown" },
   },
