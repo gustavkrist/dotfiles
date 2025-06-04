@@ -2,6 +2,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
+    branch = "master",
     build = ":TSUpdate",
     vscode = true,
     keys = {
@@ -134,6 +135,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
+    branch = "master",
     event = "VeryLazy",
     vscode = true,
     config = function()
@@ -244,5 +246,18 @@ return {
     "folke/ts-comments.nvim",
     opts = {},
     event = "VeryLazy",
+  },
+  {
+    "aaronik/treewalker.nvim",
+    keys = {
+      { "<C-j>", "<cmd>Treewalker Down<cr>" },
+      { "<C-k>", "<cmd>Treewalker Up<cr>" },
+      { "<C-h>", "<cmd>Treewalker Left<cr>" },
+      { "<C-l>", "<cmd>Treewalker Right<cr>" },
+      { "<C-M-j>", "<cmd>Treewalker SwapDown<cr>" },
+      { "<C-M-k>", "<cmd>Treewalker SwapUp<cr>" },
+      { "<C-M-h>", "<cmd>Treewalker SwapLeft<cr>" },
+      { "<C-M-l>", "<cmd>Treewalker SwapRight<cr>" },
+    },
   },
 }
