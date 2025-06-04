@@ -135,8 +135,6 @@ return {
     opts = {
       settings = {
         search = {
-          workspace = false,
-          file = false,
           pipx = false,
           cwd = false,
           poetry = false,
