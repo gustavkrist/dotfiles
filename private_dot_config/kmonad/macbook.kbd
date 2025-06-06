@@ -1,5 +1,5 @@
 (defcfg
-  input (iokit-name)
+  input (iokit-name "Apple Internal Keyboard / Trackpad")
   output (kext)
   fallthrough true
   allow-cmd false

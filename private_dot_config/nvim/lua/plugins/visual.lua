@@ -42,7 +42,7 @@ return {
     "folke/noice.nvim",
     firenvim = false,
     dependencies = { "MunifTanjim/nui.nvim" },
-    event = "UIEnter",
+    event = "VeryLazy",
     opts = {
       lsp = {
         override = {

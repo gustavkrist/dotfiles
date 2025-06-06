@@ -5,12 +5,22 @@ from prompt_toolkit.key_binding.vi_state import InputMode
 from functools import partial
 
 
-keybindings = get_ipython().pt_app.key_bindings
+def setup_keybindings():
+    ipython = get_ipython()
+    if not ipython:
+        return
+    pt_app = ipython.pt_app
+    if not pt_app:
+        return
+    keybindings = pt_app.key_bindings
 
-vi_navigation_mode_keybinding = partial(keybindings.add, filter=HasFocus(DEFAULT_BUFFER) & ViNavigationMode())
-vi_insert_mode_keybinding = partial(keybindings.add, filter=HasFocus(DEFAULT_BUFFER) & ViInsertMode())
+    vi_navigation_mode_keybinding = partial(keybindings.add, filter=HasFocus(DEFAULT_BUFFER) & ViNavigationMode())
+    vi_insert_mode_keybinding = partial(keybindings.add, filter=HasFocus(DEFAULT_BUFFER) & ViInsertMode())
 
 
-@vi_insert_mode_keybinding("j", "k")
-def switch_to_navigation_mode(event):
-    event.cli.vi_state.input_mode = InputMode.NAVIGATION
+    @vi_insert_mode_keybinding("j", "k")
+    def switch_to_navigation_mode(event):
+        event.cli.vi_state.input_mode = InputMode.NAVIGATION
+
+
+setup_keybindings()
