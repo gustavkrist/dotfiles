@@ -234,7 +234,7 @@ return {
         })
       end
       require("mini.icons").setup()
-      require("mini.move").setup()
+      -- require("mini.move").setup()
       require("mini.operators").setup({
         replace = { prefix = "gor" },
         evaluate = { prefix = "goe" },

@@ -206,9 +206,9 @@ return {
         end,
         set = function(state)
           if not state then
-            vim.cmd("TSContextDisable")
+            vim.cmd("TSContext disable")
           else
-            vim.cmd("TSContextEnable")
+            vim.cmd("TSContext enable")
           end
           vim.g.treesitter_context_disabled = not state
         end,
@@ -250,10 +250,10 @@ return {
   {
     "aaronik/treewalker.nvim",
     keys = {
-      { "<C-j>", "<cmd>Treewalker Down<cr>" },
-      { "<C-k>", "<cmd>Treewalker Up<cr>" },
-      { "<C-h>", "<cmd>Treewalker Left<cr>" },
-      { "<C-l>", "<cmd>Treewalker Right<cr>" },
+      { "<M-j>", "<cmd>Treewalker Down<cr>" },
+      { "<M-k>", "<cmd>Treewalker Up<cr>" },
+      { "<M-h>", "<cmd>Treewalker Left<cr>" },
+      { "<M-l>", "<cmd>Treewalker Right<cr>" },
       { "<C-M-j>", "<cmd>Treewalker SwapDown<cr>" },
       { "<C-M-k>", "<cmd>Treewalker SwapUp<cr>" },
       { "<C-M-h>", "<cmd>Treewalker SwapLeft<cr>" },
