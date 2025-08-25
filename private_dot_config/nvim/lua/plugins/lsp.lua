@@ -47,7 +47,7 @@ return {
           if
             not (
               vim.api.nvim_get_option_value("filetype", { buf = ev.buf }) == "vue"
-              or vim.list_contains({ "copilot", "ruff" }, client.name)
+              or vim.list_contains({ "copilot", "ruff", "obsidian-ls" }, client.name)
             )
           then
             require("nvim-navic").attach(client, ev.buf)

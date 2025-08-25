@@ -66,7 +66,7 @@ return {
         }, function(input)
           local cur_dir = vim.api.nvim_buf_get_name(0):match("(.*)/")
           local path = vim.fs.joinpath(cur_dir, "attachments", input)
-          vim.cmd(string.format("ObsidianPasteImg %s", path))
+          vim.cmd(string.format("Obsidian paste_img %s", path))
         end)
       end
       vim.api.nvim_create_autocmd("FileType", {
@@ -99,12 +99,9 @@ return {
         },
       },
       new_notes_location = "current_dir",
-      ui = {
-        enable = false,
-        checkboxes = {
-          [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-          ["x"] = { char = "", hl_group = "ObsidianDone" },
-        }
+      checkboxes = {
+        [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
+        ["x"] = { char = "", hl_group = "ObsidianDone" },
       },
       attachments = {
         confirm_img_paste = false,
@@ -120,6 +117,7 @@ return {
       picker = {
         name = "snacks.pick",
       },
+      legacy_commands = false,
     },
   },
   {
