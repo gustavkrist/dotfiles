@@ -1,195 +1,126 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = false,
-    branch = "master",
-    build = ":TSUpdate",
+    lazy = vim.fn.argc(-1) == 0,  -- load treesitter early when opening a file from the cmdline
+    event = { "User FileOpened", "VeryLazy" },
+    cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
+    branch = "main",
     vscode = true,
-    keys = {
-      { "<c-space>", desc = "Increment Selection" },
-      { "<bs>", desc = "Decrement Selection", mode = "x" },
+    build = function()
+      vim.cmd.TSUpdate()
+    end,
+    opts_extend = {" ensure_installed" },
+    opts = {
+      ensure_installed = {
+        "bash",
+        "c",
+        "diff",
+        "fsharp",
+        "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "jsonc",
+        "latex",
+        "lua",
+        "luadoc",
+        "luap",
+        "markdown",
+        "markdown_inline",
+        "printf",
+        "python",
+        "query",
+        "regex",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "vue",
+        "xml",
+        "yaml",
+      }
     },
-    config = function()
-      local configs = require("nvim-treesitter.configs")
-      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+    config = function(_, opts)
+      local parsers = require("nvim-treesitter.parsers")
 
       -- Setup https://github.com/ionide/tree-sitter-fsharp
-      parser_config.fsharp = {
+      parsers.fsharp = {
         install_info = {
           url = "https://github.com/ionide/tree-sitter-fsharp",
           branch = "main",
           files = { "src/scanner.c", "src/parser.c" },
           location = "fsharp",
+          generate = false,
         },
-        requires_generate_from_grammar = false,
         filetype = "fsharp",
       }
 
-      parser_config.lua_patterns = {
+      parsers.lua_patterns = {
         install_info = {
           url = "https://github.com/OXY2DEV/tree-sitter-lua_patterns",
           branch = "main",
           files = { "src/parser.c" },
+          generate = false,
         },
-        requires_generate_from_grammar = false,
       }
 
-      configs.setup({
-        ensure_installed = {
-          "bash",
-          "c",
-          "diff",
-          "fsharp",
-          "html",
-          "javascript",
-          "jsdoc",
-          "json",
-          "jsonc",
-          "latex",
-          "lua",
-          "luadoc",
-          "luap",
-          "markdown",
-          "markdown_inline",
-          "printf",
-          "python",
-          "query",
-          "regex",
-          "toml",
-          "tsx",
-          "typescript",
-          "vim",
-          "vimdoc",
-          "vue",
-          "xml",
-          "yaml",
-        },
-        sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
-        ignore_install = { "" }, -- List of parsers to ignore installing
-        autopairs = {
-          enable = true,
-        },
-        highlight = {
-          enable = true, -- false will disable the whole extension
-          disable = { "" }, -- list of language that will be disabled
-          additional_vim_regex_highlighting = false,
-        },
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = false,
-            node_decremental = "<bs>",
-          },
-        },
-        indent = { enable = true, disable = { "yaml" } },
-        context_commentstring = {
-          enable = true,
-          enable_autocmd = false,
-        },
-        textobjects = {
-          move = {
-            enable = true,
-            goto_next_start = {
-              ["]f"] = "@function.outer",
-              ["]c"] = "@class.outer",
-              ["]a"] = "@parameter.inner",
-            },
-            goto_next_end = {
-              ["]F"] = "@function.outer",
-              ["]C"] = "@class.outer",
-              ["]A"] = "@parameter.inner",
-            },
-            goto_previous_start = {
-              ["[f"] = "@function.outer",
-              ["[c"] = "@class.outer",
-              ["[a"] = "@parameter.inner",
-            },
-            goto_previous_end = {
-              ["[F"] = "@function.outer",
-              ["[C"] = "@class.outer",
-              ["[A"] = "@parameter.inner",
-            },
-          },
-        },
-        endwise = {
-          enable = true,
-        },
+      require("nvim-treesitter").setup(opts)
+
+      local needed = opts.ensure_installed
+      local installed = require("nvim-treesitter").get_installed("parsers")
+      local to_install = vim.tbl_filter(function(lang)
+        return vim.tbl_contains(installed, vim.treesitter.language.get_lang(lang))
+      end, needed)
+
+      if #to_install > 0 then
+        require("nvim-treesitter").install(to_install, { summary = true })
+      end
+
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          pcall(vim.treesitter.start)
+        end
       })
     end,
-    init = function(plugin)
-      require("lazy.core.loader").add_to_rtp(plugin)
-      require("nvim-treesitter.query_predicates")
-    end,
-    cmd = {
-      "TSInstall",
-      "TSUninstall",
-      "TSUpdate",
-      "TSUpdateSync",
-      "TSInstallInfo",
-      "TSInstallSync",
-      "TSInstallFromGrammar",
-    },
   },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
-    branch = "master",
+    branch = "main",
     event = "VeryLazy",
     vscode = true,
-    config = function()
-      -- If treesitter is already loaded, we need to run config again for textobjects
-      if require("util.plugins").is_loaded("nvim-treesitter") then
-        require("nvim-treesitter.configs").setup({
-          textobjects = {
-            move = {
-              enable = true,
-              goto_next_start = {
-                ["]f"] = "@function.outer",
-                ["]c"] = "@class.outer",
-                ["]a"] = "@parameter.inner",
-              },
-              goto_next_end = {
-                ["]F"] = "@function.outer",
-                ["]C"] = "@class.outer",
-                ["]A"] = "@parameter.inner",
-              },
-              goto_previous_start = {
-                ["[f"] = "@function.outer",
-                ["[c"] = "@class.outer",
-                ["[a"] = "@parameter.inner",
-              },
-              goto_previous_end = {
-                ["[F"] = "@function.outer",
-                ["[C"] = "@class.outer",
-                ["[A"] = "@parameter.inner",
-              },
-            },
-          },
-        })
-      end
-
-      -- When in diff mode, we want to use the default
-      -- vim text objects c & C instead of the treesitter ones.
-      local move = require("nvim-treesitter.textobjects.move") ---@type table<string,fun(...)>
-      local configs = require("nvim-treesitter.configs")
-      for name, fn in pairs(move) do
-        if name:find("goto") == 1 then
-          move[name] = function(q, ...)
-            if vim.wo.diff then
-              local config = configs.get_module("textobjects.move")[name] ---@type table<string,string>
-              for key, query in pairs(config or {}) do
-                if q == query and key:find("[%]%[][cC]") then
-                  vim.cmd("normal! " .. key)
-                  return
-                end
+    opts = {},
+    keys = function()
+      local moves = {
+        goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
+        goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
+        goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
+        goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
+      }
+      local ret = {} ---@type LazyKeysSpec[]
+      for method, keymaps in pairs(moves) do
+        for key, query in pairs(keymaps) do
+          local desc = query:gsub("@", ""):gsub("%..*", "")
+          desc = desc:sub(1, 1):upper() .. desc:sub(2)
+          desc = (key:sub(1, 1) == "[" and "Prev " or "Next ") .. desc
+          desc = desc .. (key:sub(2, 2) == key:sub(2, 2):upper() and " End" or " Start")
+          ret[#ret + 1] = {
+            key,
+            function()
+              -- don't use treesitter if in diff mode and the key is one of the c/C keys
+              if vim.wo.diff and key:find("[cC]") then
+                return vim.cmd("normal! " .. key)
               end
-            end
-            return fn(q, ...)
-          end
+              require("nvim-treesitter-textobjects.move")[method](query, "textobjects")
+            end,
+            desc = desc,
+            mode = { "n", "x", "o" },
+            silent = true,
+          }
         end
       end
+      return ret
     end,
   },
   {

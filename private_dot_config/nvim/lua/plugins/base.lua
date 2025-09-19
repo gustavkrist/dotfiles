@@ -73,10 +73,6 @@ return {
         align = "left", -- align columns left, center or right
       },
       show_help = true, -- show help message on the command line when the popup is visible
-      spec = {
-        { "<BS>", desc = "Decrement Selection", mode = "x" },
-        { "<c-space>", desc = "Increment Selection", mode = { "x", "n" } },
-      },
     },
     event = "VeryLazy",
   },
