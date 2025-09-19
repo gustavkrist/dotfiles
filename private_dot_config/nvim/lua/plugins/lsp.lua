@@ -12,6 +12,7 @@ return {
     config = function()
       local servers = {
         bashls = { enable = true, install = true },
+        elp = { enable = true, install = true },
         fsautocomplete = { enable = true, install = true },
         hls = { enable = true, install = false },
         jsonls = { enable = true, install = true },
@@ -19,6 +20,7 @@ return {
         basedpyright = { enable = true, install = true },
         jdtls = { enable = true, install = false },
         ruff = { enable = true, install = true },
+        rust_analyzer = { enable = true, install = false },
         taplo = { enable = true, install = true },
         texlab = { enable = true, install = true },
         ts_ls = { enable = true, install = true },
@@ -152,6 +154,7 @@ return {
           json = { "jq" },
           lua = { "stylua" },
           markdown = { "injected" },
+          rust = { "rustfmt" },
           sh = { "beautysh" },
           vue = { "eslint_d" },
           zsh = { "beautysh" },
