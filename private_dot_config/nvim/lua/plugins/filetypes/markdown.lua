@@ -59,20 +59,10 @@ return {
     "obsidian-nvim/obsidian.nvim",
     ft = "markdown",
     config = function(_, opts)
-      local function paste_image()
-        vim.ui.input({
-          prompt = "Image name",
-          default = string.format("pasted-image-%s", os.time()),
-        }, function(input)
-          local cur_dir = vim.api.nvim_buf_get_name(0):match("(.*)/")
-          local path = vim.fs.joinpath(cur_dir, "attachments", input)
-          vim.cmd(string.format("Obsidian paste_img %s", path))
-        end)
-      end
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "markdown",
         callback = function()
-          vim.keymap.set("n", "<localleader>ip", paste_image, { desc = "Paste image from clipboard", buffer = 0 })
+          vim.keymap.set("n", "<localleader>ip", "<cmd>Obsidian paste_img<cr>", { desc = "Paste image from clipboard", buffer = 0 })
         end,
       })
       require("obsidian").setup(opts)
@@ -105,10 +95,14 @@ return {
       },
       attachments = {
         confirm_img_paste = false,
-        img_text_func = function(client, path)
-          path = client:vault_relative_path(path) or path
-          return string.format("![[%s]]", path.name)
+        img_folder = "./attachments",
+        img_name_func = function()
+          return string.format("Pasted image %s", os.date "%Y%m%d%H%M%S")
         end,
+        -- img_text_func = function(client, path)
+        --   path = client:vault_relative_path(path) or path
+        --   return string.format("![[%s]]", path.name)
+        -- end,
       },
       completion = {
         blink = true,
