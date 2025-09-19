@@ -111,7 +111,7 @@ return {
     "linux-cultist/venv-selector.nvim",
     ft = { "python" },
     cmd = { "VenvSelect" },
-    branch = "regexp", -- This is the regexp branch, use this for the new version
+    branch = "main",
     config = function(_, opts)
       vim.api.nvim_create_autocmd({ "FileType" }, {
         pattern = "python",

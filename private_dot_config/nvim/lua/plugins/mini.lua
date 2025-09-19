@@ -155,7 +155,7 @@ end
 
 return {
   {
-    "echasnovski/mini.nvim",
+    "mini-nvim/mini.nvim",
     version = "*",
     vscode = true,
     config = function()
