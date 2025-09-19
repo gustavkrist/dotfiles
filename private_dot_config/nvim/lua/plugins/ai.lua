@@ -55,17 +55,6 @@ return {
           provider = "default",
         },
       },
-      adapters = {
-        copilot = function()
-          return require("codecompanion.adapters").extend("copilot", {
-            schema = {
-              model = {
-                default = "claude-3.5-sonnet",
-              },
-            },
-          })
-        end,
-      },
     },
     keys = {
       { "<leader>at", "<cmd>CodeCompanionChat Toggle<CR>", mode = { "n", "v" }, desc = "Toggle AI Chat" },
