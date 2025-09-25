@@ -70,7 +70,7 @@ return {
       local needed = opts.ensure_installed
       local installed = require("nvim-treesitter").get_installed("parsers")
       local to_install = vim.tbl_filter(function(lang)
-        return vim.tbl_contains(installed, vim.treesitter.language.get_lang(lang))
+        return not vim.tbl_contains(installed, vim.treesitter.language.get_lang(lang))
       end, needed)
 
       if #to_install > 0 then

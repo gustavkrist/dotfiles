@@ -40,3 +40,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
   pattern = "*scripthelp*.txt",
   command = "set filetype=python",
 })
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  pattern = "*ipynb*.txt",
+  command = "set filetype=python",
+})

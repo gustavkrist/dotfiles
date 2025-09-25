@@ -112,6 +112,7 @@ return {
         name = "snacks.pick",
       },
       legacy_commands = false,
+      disable_frontmatter = true,
     },
   },
   {

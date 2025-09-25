@@ -43,7 +43,6 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 # -- PATH ---------------------------------------------------------------------
 
 {{- if eq .chezmoi.os "darwin" }}
-export PATH="$PATH:/opt/homebrew/opt/mysql-client/bin"
 export PATH=$PATH:$HOME/.npm-global-bin
 {{- else if eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu" }}
 export PATH=$PATH:$HOME/.npm-global/bin

@@ -42,7 +42,7 @@ function M.setup(config)
     { mods = M.mod, key = "h", action = act({ ActivateTabRelative = -1 }) },
     { mods = M.mod, key = "r", action = wezterm.action.RotatePanes("Clockwise") },
     -- show the pane selection mode, but have it swap the active and selected panes
-    { mods = M.mod, key = "s", action = wezterm.action.PaneSelect({ show_pane_ids = true }) },
+    { mods = M.mod, key = "s", action = wezterm.action.PaneSelect({ mode = "SwapWithActiveKeepFocus", show_pane_ids = true }) },
     -- Clipboard
     { mods = M.mod, key = "c", action = act.CopyTo("Clipboard") },
     { mods = "SUPER", key = "c", action = act.CopyTo("Clipboard") },
