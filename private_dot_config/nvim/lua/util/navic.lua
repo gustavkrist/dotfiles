@@ -17,6 +17,7 @@ local winbar_filetype_exclude = {
   "alpha",
   "dap-repl",
   "dap-terminal",
+  "dap-view",
   "dapui_console",
   "dapui_hover",
   "dashboard",

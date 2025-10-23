@@ -58,15 +58,9 @@ return {
   {
     "obsidian-nvim/obsidian.nvim",
     ft = "markdown",
-    config = function(_, opts)
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "markdown",
-        callback = function()
-          vim.keymap.set("n", "<localleader>ip", "<cmd>Obsidian paste_img<cr>", { desc = "Paste image from clipboard", buffer = 0 })
-        end,
-      })
-      require("obsidian").setup(opts)
-    end,
+    keys = {
+      { "n", "<localleader>ip", "<cmd>Obsidian paste_img<cr>", desc = "Paste image from clipboard", ft = "markdown" },
+    },
     opts = {
       workspaces = {
         {
@@ -97,7 +91,7 @@ return {
         confirm_img_paste = false,
         img_folder = "./attachments",
         img_name_func = function()
-          return string.format("Pasted image %s", os.date "%Y%m%d%H%M%S")
+          return string.format("Pasted image %s", os.date("%Y%m%d%H%M%S"))
         end,
         -- img_text_func = function(client, path)
         --   path = client:vault_relative_path(path) or path
@@ -184,24 +178,24 @@ return {
       preview = { hybrid_modes = { "n", "i" }, filetypes = { "codecompanion", "markdown" }, ignore_buftypes = {} },
       markdown = {
         list_items = {
-          shift_width = function (buffer, item)
+          shift_width = function(buffer, item)
             --- Reduces the `indent` by 1 level.
             ---
             ---         indent                      1
             --- ------------------------- = 1 ÷ --------- = new_indent
             --- indent * (1 / new_indent)       new_indent
             ---
-            local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth);
+            local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth)
 
-            return (item.indent) * (1 / (parent_indnet * 2));
+            return item.indent * (1 / (parent_indnet * 2))
           end,
           marker_minus = {
-            add_padding = function (_, item)
-              return item.indent > 1;
-            end
-          }
-        }
-      }
+            add_padding = function(_, item)
+              return item.indent > 1
+            end,
+          },
+        },
+      },
     },
     ft = { "codecompanion", "markdown" },
   },

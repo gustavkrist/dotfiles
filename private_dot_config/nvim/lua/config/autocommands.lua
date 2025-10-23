@@ -128,6 +128,17 @@ local definitions = {
       command = "setlocal ft=python",
     },
   },
+  {
+    "BufEnter",
+    {
+      pattern = "*",
+      callback = function()
+        if require("util.os").is_macos() then
+          vim.b.copilot_suggestion_hidden = true
+        end
+      end
+    }
+  }
 }
 
 -- Taken from LunarVim

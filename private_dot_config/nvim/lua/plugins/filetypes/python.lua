@@ -162,14 +162,8 @@ return {
     config = function(_, opts)
       require("pymple").setup(opts)
     end,
-    opts = {
-      keymaps = {
-        resolve_import_under_cursor = {
-          desc = "Resolve import under cursor",
-          keys = "<localleader>li",
-        },
-      },
-    },
+    opts = {},
+    keys = { "<localleader>li", "<cmd>PympleResolveImport<cr>", desc = "Resolve import under cursor", ft = "python" },
     event = "VeryLazy",
   },
   {
