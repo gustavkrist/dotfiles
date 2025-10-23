@@ -59,7 +59,7 @@ return {
     "obsidian-nvim/obsidian.nvim",
     ft = "markdown",
     keys = {
-      { "n", "<localleader>ip", "<cmd>Obsidian paste_img<cr>", desc = "Paste image from clipboard", ft = "markdown" },
+      { "<localleader>ip", "<cmd>Obsidian paste_img<cr>", desc = "Paste image from clipboard", ft = "markdown" },
     },
     opts = {
       workspaces = {
@@ -78,25 +78,16 @@ return {
             templates = {
               folder = vim.NIL,
             },
-            disable_frontmatter = true,
+            frontmatter = {
+              enabled = false,
+            },
           },
         },
       },
       new_notes_location = "current_dir",
-      checkboxes = {
-        [" "] = { char = "󰄱", hl_group = "ObsidianTodo" },
-        ["x"] = { char = "", hl_group = "ObsidianDone" },
-      },
       attachments = {
         confirm_img_paste = false,
         img_folder = "./attachments",
-        img_name_func = function()
-          return string.format("Pasted image %s", os.date("%Y%m%d%H%M%S"))
-        end,
-        -- img_text_func = function(client, path)
-        --   path = client:vault_relative_path(path) or path
-        --   return string.format("![[%s]]", path.name)
-        -- end,
       },
       completion = {
         blink = true,
@@ -106,11 +97,17 @@ return {
         name = "snacks.pick",
       },
       legacy_commands = false,
-      disable_frontmatter = true,
+      ui = {
+        enabled = false,
+      },
+      checkbox = {
+        order = { " ", "x" },
+      },
     },
   },
   {
     "vim-pandoc/vim-pandoc",
+    enabled = false,
     init = function()
       vim.g["pandoc#filetypes#pandoc_markdown"] = 0
       vim.g["pandoc#filetypes#handled"] = { "pandoc", "markdown" }
