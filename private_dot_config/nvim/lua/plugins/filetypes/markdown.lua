@@ -193,6 +193,9 @@ return {
           },
         },
       },
+      latex = {
+        enable = false,
+      },
     },
     ft = { "codecompanion", "markdown" },
   },

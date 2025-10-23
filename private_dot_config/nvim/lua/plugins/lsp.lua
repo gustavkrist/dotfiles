@@ -12,6 +12,7 @@ return {
     config = function()
       local servers = {
         bashls = { enable = true, install = true },
+        clangd = { enable = true, install = true },
         codelldb = { enable = false, install = true },
         elp = { enable = true, install = true },
         fsautocomplete = { enable = true, install = true },
