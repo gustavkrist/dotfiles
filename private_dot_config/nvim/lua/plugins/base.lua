@@ -182,12 +182,12 @@ return {
   {
     "ggandor/leap.nvim",
     config = function()
-      vim.keymap.set("n", "s", "<Plug>(leap-forward-to)", { silent = true })
-      vim.keymap.set("x", "z", "<Plug>(leap-forward-to)", { silent = true })
-      vim.keymap.set("o", "z", "<Plug>(leap-forward-to)", { silent = true })
-      vim.keymap.set("n", "S", "<Plug>(leap-backward-to)", { silent = true })
-      vim.keymap.set("x", "Z", "<Plug>(leap-backward-to)", { silent = true })
-      vim.keymap.set("o", "Z", "<Plug>(leap-backward-to)", { silent = true })
+      vim.keymap.set("n", "s", "<Plug>(leap-forward)", { silent = true })
+      vim.keymap.set("x", "z", "<Plug>(leap-forward)", { silent = true })
+      vim.keymap.set("o", "z", "<Plug>(leap-forward)", { silent = true })
+      vim.keymap.set("n", "S", "<Plug>(leap-backward)", { silent = true })
+      vim.keymap.set("x", "Z", "<Plug>(leap-backward)", { silent = true })
+      vim.keymap.set("o", "Z", "<Plug>(leap-backward)", { silent = true })
       vim.keymap.set("x", "x", "<Plug>(leap-forward-till)", { silent = true })
       vim.keymap.set("o", "x", "<Plug>(leap-forward-till)", { silent = true })
       vim.keymap.set("x", "X", "<Plug>(leap-backward-till)", { silent = true })
