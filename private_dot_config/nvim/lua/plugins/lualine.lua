@@ -18,6 +18,7 @@ local function not_excluded_filetype()
     "grapple",
     "harpoon",
     "help",
+    "json.kulala_ui",
     "lab",
     "lazy",
     "lir",
@@ -34,6 +35,7 @@ local function not_excluded_filetype()
     "snacks_picker_list",
     "spectre_panel",
     "startify",
+    "text.kulala_ui",
     "toggleterm",
   }, vim.api.nvim_get_option_value("filetype", {}))
 end

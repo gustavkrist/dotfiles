@@ -143,16 +143,10 @@ return {
             args = { "$FILENAME" },
             cwd = require("conform.util").root_file({ "pyproject.toml" }),
           },
-          kulala = {
-            command = "kulala-fmt",
-            args = { "format", "$FILENAME" },
-            stdin = false,
-          },
         },
         formatters_by_ft = {
           fsharp = { "fantomas" },
           graphql = { "prettier" },
-          http = { "kulala" },
           json = { "jq" },
           lua = { "stylua" },
           markdown = { "injected" },

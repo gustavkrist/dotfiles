@@ -208,6 +208,39 @@ return {
       vim.g.slime_target = "wezterm"
       vim.g.slime_default_config = { pane_direction = "right" }
     end,
+    keys = {
+      { "<localleader><cr>", "<Plug>SlimeCellsSendAndGoToNext", desc = "Send cell and go next", ft = { "python" } },
+      { "<localleader><cr>", "<Plug>SlimeMotionSend", desc = "Send cell", ft = { "markdown" } },
+      { "<localleader>j", "<Plug>SlimeCellsNext", desc = "Next cell", ft = { "python" } },
+      { "<localleader>k", "<Plug>SlimeCellsPrev", desc = "Prev cell", ft = { "python" } },
+      { "<localleader> ", "<Plug>SlimeLineSend", desc = "Send line", ft = { "markdown", "python" } },
+      {
+
+        "<localleader><localleader>",
+        "<Plug>SlimeLineSend<cr>",
+        desc = "Send line and go next",
+        ft = { "markdown", "python" },
+      },
+      { "x", "<localleader><cr>", "<Plug>SlimeRegionSend", desc = "Send selection", ft = { "markdown", "python" } },
+      { "<localleader>s", "<Plug>SlimeMotionSend", desc = "Send motion", ft = { "markdown", "python" } },
+      { "<localleader>c", "<Plug>SlimeConfig", desc = "Vim-slime config", ft = { "markdown", "python" } },
+      {
+        "<localleader>o",
+        function()
+          require("util.vim-slime").add_cell_below("#%%")
+        end,
+        desc = "New cell below",
+        ft = { "python" },
+      },
+      {
+        "<localleader>O",
+        function()
+          require("util.vim-slime").add_cell_above("#%%")
+        end,
+        desc = "New cell above",
+        ft = { "python" },
+      },
+    },
   },
   {
     "folke/trouble.nvim",
@@ -258,8 +291,15 @@ return {
     "xzbdmw/clasp.nvim",
     opts = {},
     keys = {
-      { "<c-l>", function() require("clasp").wrap("next") end, mode = { "i" }, desc = "Increment wrap" },
-    }
+      {
+        "<c-l>",
+        function()
+          require("clasp").wrap("next")
+        end,
+        mode = { "i" },
+        desc = "Increment wrap",
+      },
+    },
   },
   {
     "chrisgrieser/nvim-scissors",

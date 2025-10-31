@@ -145,6 +145,20 @@ return {
     opts = {},
     version = "*",
     ft = { "markdown" },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "markdown",
+        callback = function()
+          require("which-key").add({ "<localleader>o", buffer = 0, group = "Otter" })
+          vim.keymap.set("n", "<localleader>oa", function()
+            require("otter").activate()
+          end, { desc = "Activate otter", buffer = 0 })
+          vim.keymap.set("n", "<localleader>od", function()
+            require("otter").deactivate()
+          end, { desc = "Deactivate otter", buffer = 0 })
+        end,
+      })
+    end,
   },
   {
     "dhruvasagar/vim-table-mode",
