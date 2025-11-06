@@ -221,7 +221,7 @@ return {
         desc = "Send line and go next",
         ft = { "markdown", "python" },
       },
-      { "x", "<localleader><cr>", "<Plug>SlimeRegionSend", desc = "Send selection", ft = { "markdown", "python" } },
+      { "<localleader><cr>", "<Plug>SlimeRegionSend", desc = "Send selection", ft = { "markdown", "python" }, mode = "x" },
       { "<localleader>s", "<Plug>SlimeMotionSend", desc = "Send motion", ft = { "markdown", "python" } },
       { "<localleader>c", "<Plug>SlimeConfig", desc = "Vim-slime config", ft = { "markdown", "python" } },
       {
