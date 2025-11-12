@@ -153,12 +153,7 @@ map(
   "<cmd>lua vim.lsp.codelens.run()<cr>",
   { desc = "CodeLens Action", silent = true, noremap = true }
 )
-map(
-  "n",
-  "<leader>lq",
-  "<cmd>lua vim.diagnostic.setloclist()<cr>",
-  { desc = "Quickfix", silent = true, noremap = true }
-)
+map("n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<cr>", { desc = "Quickfix", silent = true, noremap = true })
 map("n", "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", { desc = "Rename", silent = true, noremap = true })
 
 -- Commenting

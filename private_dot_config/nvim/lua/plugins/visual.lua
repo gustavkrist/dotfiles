@@ -2,12 +2,12 @@ return {
   {
     "catgoose/nvim-colorizer.lua",
     config = function(_, opts)
-      require("colorizer").setup(#opts > 0 and opts or nil)
+      require("colorizer").setup(opts)
     end,
-    opts = {},
+    opts = { filetypes = { "css", "html" } },
     event = "BufReadPre",
     keys = {
-      { "<leader>uc", "<cmd>ColorizerToggle<cr>", desc = "Toggle Colorizer" },
+      { "<leader>uC", "<cmd>ColorizerToggle<cr>", desc = "Toggle Colorizer" },
     },
   },
   {

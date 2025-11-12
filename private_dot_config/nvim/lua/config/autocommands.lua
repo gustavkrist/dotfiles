@@ -136,9 +136,9 @@ local definitions = {
         if require("util.os").is_macos() then
           vim.b.copilot_suggestion_hidden = true
         end
-      end
-    }
-  }
+      end,
+    },
+  },
 }
 
 -- Taken from LunarVim

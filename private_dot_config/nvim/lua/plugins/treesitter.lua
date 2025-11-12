@@ -1,7 +1,7 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    lazy = vim.fn.argc(-1) == 0,  -- load treesitter early when opening a file from the cmdline
+    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
     event = { "User FileOpened", "VeryLazy" },
     cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
     branch = "main",
@@ -9,7 +9,7 @@ return {
     build = function()
       vim.cmd.TSUpdate()
     end,
-    opts_extend = {" ensure_installed" },
+    opts_extend = { "ensure_installed" },
     opts = {
       ensure_installed = {
         "bash",
@@ -39,7 +39,7 @@ return {
         "vue",
         "xml",
         "yaml",
-      }
+      },
     },
     config = function(_, opts)
       local parsers = require("nvim-treesitter.parsers")
@@ -80,7 +80,7 @@ return {
       vim.api.nvim_create_autocmd("FileType", {
         callback = function()
           pcall(vim.treesitter.start)
-        end
+        end,
       })
     end,
   },
@@ -147,7 +147,7 @@ return {
     end,
     opts = {
       multiline_threshold = 8,
-      separator = "─"
+      separator = "─",
     },
     keys = {
       {

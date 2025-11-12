@@ -19,7 +19,14 @@ return {
     end,
     ft = { "scala" },
     keys = {
-      { "<localleader>h", function() require("metals").hover_worksheet() end, desc = "Hover worksheet", ft = "scala" },
+      {
+        "<localleader>h",
+        function()
+          require("metals").hover_worksheet()
+        end,
+        desc = "Hover worksheet",
+        ft = "scala",
+      },
     },
   },
 }

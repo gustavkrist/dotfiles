@@ -1,7 +1,7 @@
 return {
-	settings = {
-		basedpyright = {
-			disableOrganizeImport = true,
-		},
-	},
+  settings = {
+    basedpyright = {
+      disableOrganizeImport = true,
+    },
+  },
 }

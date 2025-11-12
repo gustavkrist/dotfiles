@@ -244,7 +244,7 @@ return {
       })
       require("mini.pairs").setup({
         mappings = {
-          ["["] =  {
+          ["["] = {
             action = "open",
             pair = "[]",
             neigh_pattern = ".[%s%z%)}%]]",
