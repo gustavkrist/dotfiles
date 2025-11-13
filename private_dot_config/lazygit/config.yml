@@ -1,0 +1,7 @@
+os:
+  editPreset: "nvim-remote"
+git:
+  pagers:
+    - pager: delta --dark --paging=never
+gui:
+  nerdFontsVersion: "3"
