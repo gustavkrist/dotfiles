@@ -21,6 +21,7 @@ return {
       },
       dim = { enabled = no_vscode() },
       explorer = { enabled = true },
+      gh = { enabled = true },
       image = {
         enabled = true,
         doc = { enabled = true, inline = true, float = true },
