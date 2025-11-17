@@ -128,6 +128,7 @@ return {
               lang_to_ext = {
                 bash = "sh",
                 c_sharp = "cs",
+                erlang = "erl",
                 fsharp = "fs",
                 javascript = "js",
                 latex = "tex",
@@ -145,6 +146,7 @@ return {
           },
         },
         formatters_by_ft = {
+          erlang = { "erlfmt" },
           fsharp = { "fantomas" },
           graphql = { "prettier" },
           json = { "jq" },
