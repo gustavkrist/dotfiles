@@ -1,5 +1,17 @@
-from pygments.token import Token
 # Configuration file for ipython.
+from pygments.token import Token
+
+c = get_config()  #noqa
+
+# ------------------------------------------------------------------------------
+# Theme
+# ------------------------------------------------------------------------------
+from IPython.utils.PyColorize import linux_theme, theme_table
+from copy import deepcopy
+
+nord = deepcopy(linux_theme)
+nord.base = "nord"
+theme_table["nord"] = nord
 
 # ------------------------------------------------------------------------------
 # InteractiveShellApp(Configurable) configuration
@@ -215,7 +227,7 @@ from pygments.token import Token
 #  See also: Application.log_level
 # c.BaseIPythonApplication.log_level = 30
 
-## 
+##
 #  See also: Application.logging_config
 # c.BaseIPythonApplication.logging_config = {}
 
@@ -279,7 +291,7 @@ from pygments.token import Token
 #  See also: BaseIPythonApplication.extra_config_file
 # c.TerminalIPythonApp.extra_config_file = ''
 
-## 
+##
 #  See also: InteractiveShellApp.extra_extensions
 # c.TerminalIPythonApp.extra_extensions = []
 
@@ -312,7 +324,7 @@ from pygments.token import Token
 #  Default: 'IPython.terminal.interactiveshell.TerminalInteractiveShell'
 # c.TerminalIPythonApp.interactive_shell_class = 'IPython.terminal.interactiveshell.TerminalInteractiveShell'
 
-## 
+##
 #  See also: BaseIPythonApplication.ipython_dir
 # c.TerminalIPythonApp.ipython_dir = ''
 
@@ -328,7 +340,7 @@ from pygments.token import Token
 #  See also: Application.log_level
 # c.TerminalIPythonApp.log_level = 30
 
-## 
+##
 #  See also: Application.logging_config
 # c.TerminalIPythonApp.logging_config = {}
 
@@ -431,16 +443,10 @@ from pygments.token import Token
 #  Default: 1000
 # c.InteractiveShell.cache_size = 1000
 
-## Use colors for displaying information about objects. Because this information
-#  is passed through a pager (like 'less'), and some pagers get confused with
-#  color codes, this capability can be turned off.
-#  Default: True
-c.InteractiveShell.color_info = True
-
 ## Set the color scheme (NoColor, Neutral, Linux, or LightBG).
 #  Choices: any of ['Neutral', 'NoColor', 'LightBG', 'Linux'] (case-insensitive)
 #  Default: 'Neutral'
-c.InteractiveShell.colors = "Linux"
+c.InteractiveShell.colors = "nord"
 
 #  Default: False
 # c.InteractiveShell.debug = False
@@ -533,7 +539,7 @@ c.InteractiveShell.colors = "Linux"
 #  See also: InteractiveShell.ast_node_interactivity
 # c.TerminalInteractiveShell.ast_node_interactivity = 'last_expr'
 
-## 
+##
 #  See also: InteractiveShell.ast_transformers
 # c.TerminalInteractiveShell.ast_transformers = []
 
@@ -542,11 +548,11 @@ c.InteractiveShell.colors = "Linux"
 #  Default: False
 # c.TerminalInteractiveShell.auto_match = False
 
-## 
+##
 #  See also: InteractiveShell.autoawait
 # c.TerminalInteractiveShell.autoawait = True
 
-## 
+##
 #  See also: InteractiveShell.autocall
 # c.TerminalInteractiveShell.autocall = 0
 
@@ -554,11 +560,11 @@ c.InteractiveShell.colors = "Linux"
 #  Default: None
 # c.TerminalInteractiveShell.autoformatter = None
 
-## 
+##
 #  See also: InteractiveShell.autoindent
 # c.TerminalInteractiveShell.autoindent = True
 
-## 
+##
 #  See also: InteractiveShell.automagic
 # c.TerminalInteractiveShell.automagic = True
 
@@ -576,11 +582,11 @@ c.InteractiveShell.colors = "Linux"
 #  See also: InteractiveShell.banner2
 # c.TerminalInteractiveShell.banner2 = ''
 
-## 
+##
 #  See also: InteractiveShell.cache_size
 # c.TerminalInteractiveShell.cache_size = 1000
 
-## 
+##
 #  See also: InteractiveShell.color_info
 # c.TerminalInteractiveShell.color_info = True
 
@@ -622,7 +628,7 @@ c.TerminalInteractiveShell.editing_mode = "vi"
 
 ## Set the editor used by IPython (default to $EDITOR/vi/notepad).
 #  Default: 'nvim'
-c.TerminalInteractiveShell.editor = "nvim"
+# c.TerminalInteractiveShell.editor = "nvim"
 
 ## Add shortcuts from 'emacs' insert mode to 'vi' insert mode.
 #  Default: True
@@ -632,7 +638,7 @@ c.TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode = True
 #  Default: True
 # c.TerminalInteractiveShell.enable_history_search = True
 
-## 
+##
 #  See also: InteractiveShell.enable_html_pager
 # c.TerminalInteractiveShell.enable_html_pager = False
 
@@ -654,7 +660,7 @@ c.TerminalInteractiveShell.emacs_bindings_in_vi_insert_mode = True
 ## The name or class of a Pygments style to use for syntax
 #          highlighting. To see available styles, run `pygmentize -L styles`.
 #  Default: traitlets.Undefined
-c.TerminalInteractiveShell.highlighting_style = "nord"
+# c.TerminalInteractiveShell.highlighting_style = "nord"
 
 ## Override highlighting format for specific tokens
 #  Default: {}
@@ -674,22 +680,22 @@ c.TerminalInteractiveShell.highlighting_style_overrides = {
 #  See also: InteractiveShell.history_length
 # c.TerminalInteractiveShell.history_length = 10000
 
-## 
+##
 #  See also: InteractiveShell.history_load_length
 # c.TerminalInteractiveShell.history_load_length = 1000
 
 #  See also: InteractiveShell.ipython_dir
 # c.TerminalInteractiveShell.ipython_dir = ''
 
-## 
+##
 #  See also: InteractiveShell.logappend
 # c.TerminalInteractiveShell.logappend = ''
 
-## 
+##
 #  See also: InteractiveShell.logfile
 # c.TerminalInteractiveShell.logfile = ''
 
-## 
+##
 #  See also: InteractiveShell.logstart
 # c.TerminalInteractiveShell.logstart = False
 
@@ -714,7 +720,7 @@ c.TerminalInteractiveShell.modal_cursor = True
 #  See also: InteractiveShell.object_info_string_level
 # c.TerminalInteractiveShell.object_info_string_level = 0
 
-## 
+##
 #  See also: InteractiveShell.pdb
 # c.TerminalInteractiveShell.pdb = False
 
@@ -759,7 +765,7 @@ c.TerminalInteractiveShell.prompt_includes_vi_mode = True
 #  Default: 6
 # c.TerminalInteractiveShell.space_for_menu = 6
 
-## 
+##
 #  See also: InteractiveShell.sphinxify_docstring
 # c.TerminalInteractiveShell.sphinxify_docstring = False
 
@@ -783,7 +789,7 @@ c.TerminalInteractiveShell.prompt_includes_vi_mode = True
 #
 #              printf "\x1b[38;2;255;100;0mTRUECOLOR\x1b[0m\n"
 #  Default: False
-# c.TerminalInteractiveShell.true_color = False
+c.TerminalInteractiveShell.true_color = True
 
 ## The time in milliseconds that is waited for a key code
 #         to complete.
