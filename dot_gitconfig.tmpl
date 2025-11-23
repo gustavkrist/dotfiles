@@ -2,12 +2,17 @@
     pager = delta
 [interactive]
     diffFilter = delta --color-only
+{{ if eq .chezmoi.os "darwin" }}
 [credential "https://github.com"]
-	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+{{ else if eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu" }}
+[credential "https://github.com"]
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
 	helper = !/usr/bin/gh auth git-credential
+{{ end }}
 [user]
 	email = gustavkrist@gmail.com
 	name = Gustav Kristensen
