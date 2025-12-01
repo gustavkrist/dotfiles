@@ -1,7 +1,6 @@
 return {
   {
     "neovim/nvim-lspconfig",
-    -- event = { "User FileOpened" },
     firenvim = false,
     dependencies = {
       "mason.nvim",
@@ -16,7 +15,6 @@ return {
         codelldb = { enable = false, install = true },
         elp = { enable = true, install = true },
         fsautocomplete = { enable = true, install = true },
-        hls = { enable = true, install = false },
         jsonls = { enable = true, install = true },
         lua_ls = { enable = true, install = true },
         basedpyright = { enable = true, install = true },

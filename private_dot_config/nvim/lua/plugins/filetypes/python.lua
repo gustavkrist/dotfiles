@@ -151,22 +151,6 @@ return {
     },
   },
   {
-    "alexpasmantier/pymple.nvim",
-    firenvim = false,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      "nvim-tree/nvim-web-devicons",
-    },
-    build = ":PympleBuild",
-    config = function(_, opts)
-      require("pymple").setup(opts)
-    end,
-    opts = {},
-    keys = { "<localleader>li", "<cmd>PympleResolveImport<cr>", desc = "Resolve import under cursor", ft = "python" },
-    event = "VeryLazy",
-  },
-  {
     "Vimjas/vim-python-pep8-indent",
     ft = { "python" },
   },
