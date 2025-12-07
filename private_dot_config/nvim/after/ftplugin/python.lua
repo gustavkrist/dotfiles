@@ -21,15 +21,9 @@ local function toggle_basedpyright_settings()
   client:notify("workspace/didChangeConfiguration", { setting = nil })
 end
 
-vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("basedpyright_toggle", { clear = true }),
-  pattern = "python",
-  callback = function(ev)
-    vim.keymap.set(
-      "n",
-      "<localleader>up",
-      toggle_basedpyright_settings,
-      { desc = "Toggle BasedPyright Type Checking", buffer = ev.buf }
-    )
-  end,
-})
+vim.keymap.set(
+  "n",
+  "<localleader>up",
+  toggle_basedpyright_settings,
+  { desc = "Toggle BasedPyright Type Checking", buffer = 0 }
+)
