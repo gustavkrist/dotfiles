@@ -180,8 +180,8 @@ return {
     event = "User FileOpened",
   },
   {
-    "ggandor/leap.nvim",
-    config = function()
+    "https://codeberg.org/andyg/leap.nvim",
+    config = function(_, opts)
       vim.keymap.set("n", "s", "<Plug>(leap-forward)", { silent = true })
       vim.keymap.set("x", "z", "<Plug>(leap-forward)", { silent = true })
       vim.keymap.set("o", "z", "<Plug>(leap-forward)", { silent = true })
@@ -195,8 +195,13 @@ return {
       -- vim.keymap.set("n", "gs", "<Plug>(leap-cross-window)", { silent = true })
       -- vim.keymap.set("x", "gs", "<Plug>(leap-cross-window)", { silent = true })
       -- vim.keymap.set("o", "gs", "<Plug>(leap-cross-window)", { silent = true })
+      require("leap").setup(opts)
     end,
-    event = "VeryLazy",
+    opts = {
+      preview = function(ch0, ch1, ch2)
+        return not (ch1:match("%s") or (ch0:match("%a") and ch1:match("%a") and ch2:match("%a")))
+      end,
+    },
     vscode = true,
   },
   {
