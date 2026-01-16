@@ -26,6 +26,7 @@ return {
         ft_func = require("luasnip.extras.filetype_functions").from_pos_or_filetype,
         load_ft_func = require("luasnip.extras.filetype_functions").extend_load_ft({
           markdown = { "tex", "python", "sql", "vue" },
+          python = { "markdown", "tex" },
         }),
         ext_opts = {
           [types.choiceNode] = {
@@ -165,6 +166,9 @@ return {
           "snippets",
           "lazydev",
         },
+        per_filetype = {
+          python = { inherit_defaults = true, "neopyter" },
+        },
         providers = {
           lsp = {
             name = "[LSP]",
@@ -198,6 +202,11 @@ return {
             name = "[Lazydev]",
             module = "lazydev.integrations.blink",
             score_offset = 80,
+          },
+          neopyter = {
+            name = "[Neopyter]",
+            module = "neopyter.blink",
+            opts = {},
           },
         },
       },
