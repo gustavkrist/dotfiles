@@ -116,7 +116,7 @@ alias coa="conda activate"
 alias cod="conda deactivate"
 {{- end }}
 {{ if eq .chezmoi.os "darwin" }}
-alias ipyk="ipython3 -i -c \"import sys;sys.path.append('$LUNARVIM_RUNTIME_DIR/site/pack/packer/opt/vim-jukit/helpers');import matplotlib;import matplotlib.pyplot as plt;matplotlib.use('module://matplotlib-backend-kitty');plt.show.__annotations__['save_dpi'] = 150;import matplotlib.pyplot as plt;plt.style.use('$LUNARVIM_RUNTIME_DIR/site/pack/packer/opt/vim-jukit/helpers/matplotlib-backend-kitty/backend.mplstyle')\""
+alias ipyk="ipython3 -i -c \"import sys;sys.path.append('$XDG_DATA_HOME/nvim/lazy/vim-jukit/helpers');import matplotlib;import matplotlib.pyplot as plt;matplotlib.use('module://matplotlib-backend-kitty');plt.show.__annotations__['save_dpi'] = 150;import matplotlib.pyplot as plt;plt.style.use('$XDG_DATA_HOME/nvim/lazy/vim-jukit/helpers/matplotlib-backend-kitty/backend.mplstyle')\""
 alias icat="kitty +kitten icat"
 {{ end }}
 

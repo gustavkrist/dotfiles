@@ -87,7 +87,7 @@ return {
       new_notes_location = "current_dir",
       attachments = {
         confirm_img_paste = false,
-        img_folder = "./attachments",
+        folder = "./attachments",
       },
       completion = {
         blink = true,
@@ -186,7 +186,11 @@ return {
         MarkviewIcon4 = { bg = "#3B4252", fg = "#87C0CF" },
         MarkviewIcon5 = { bg = "#3B4252", fg = "#87C0CF" },
       },
-      preview = { hybrid_modes = { "n", "i" }, filetypes = { "codecompanion", "markdown" }, ignore_buftypes = {} },
+      preview = {
+        hybrid_modes = { "n", "i" },
+        filetypes = { "codecompanion", "markdown", "python" },
+        ignore_buftypes = {},
+      },
       markdown = {
         list_items = {
           shift_width = function(buffer, item)
@@ -208,9 +212,12 @@ return {
         },
       },
       latex = {
+        -- enable = function() return os.getenv("TERM"):find("kitty") == nil end,
+        enable = true,
+      },
+      html = {
         enable = false,
       },
     },
-    ft = { "codecompanion", "markdown" },
   },
 }

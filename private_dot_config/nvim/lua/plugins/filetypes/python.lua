@@ -8,10 +8,13 @@ return {
     end,
     init = function()
       local conda = os.getenv("CONDA_PREFIX") or (os.getenv("HOME") .. "/mambaforge")
+      vim.g.python3_host_prog = conda .. "/bin/python3"
       vim.g.jukit_mappings = 0
       vim.g.jukit_shell_cmd = conda .. "/bin/ipython3"
       vim.g.jukit_comment_mark = "# "
       vim.g.jukit_mpl_style = vim.fs.joinpath(os.getenv("HOME"), ".config/nvim/styles/backend.mplstyle")
+      vim.g.jukit_enable_textcell_bg_hl = 0
+      vim.g.jukit_enable_textcell_syntax = 1
       vim.g.jukit_layout = {
         split = "horizontal",
         p1 = 0.6,
@@ -154,4 +157,46 @@ return {
     "Vimjas/vim-python-pep8-indent",
     ft = { "python" },
   },
+  {
+    "SUSTech-data/neopyter",
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'AbaoFromCUG/websocket.nvim',  -- for mode='direct'
+    },
+    ---@type neopyter.Option
+    opts = {
+      mode = "direct",
+      remote_address = "127.0.0.1:9001",
+      file_pattern = { "*.ju.*" },
+      on_attach = function(bufnr)
+        local function map(mode, lhs, rhs, desc)
+          vim.keymap.set(mode, lhs, rhs, { desc = desc, buffer = bufnr })
+        end
+
+        map("n", "<C-CR>", "<cmd>Neopyter execute notebook:run-cell<cr>", "Run current cell")
+        map("n", "<localleader>X", "<cmd>Neopyter execute notebook:run-all-above<cr>", "Run all cells above")
+        map("n", "<S-CR>", "<cmd>Neopyter execute notebook:run-cell-and-select-next<cr>", "Run current cell and select next")
+        map("n", "<M-CR>", "<cmd>Neopyter execute notebook:run-cell-and-insert-below<cr>", "Run current cell and insert below")
+        map("n", "<F5>", "<cmd>Neopyter execute notebook:restart-run-all<cr>", "Restart kernel and run all cells")
+
+        vim.keymap.set({ "n", "o", "x" }, "]j", function()
+          require("nvim-treesitter-textobjects.move").goto_next_start("@cellcontent")
+        end, { desc = "Goto next start @cellcontent", buffer = bufnr })
+
+        vim.keymap.set({ "n", "o", "x" }, "[j", function()
+          require("nvim-treesitter-textobjects.move").goto_previous_start("@cellcontent")
+        end, { desc = "Goto previous start @cellcontent", buffer = bufnr })
+
+        local ai = require("mini.ai")
+        vim.b.miniai_config = {
+          custom_textobjects = {
+            ["j"] = ai.gen_spec.treesitter({
+              a = { "@cell" },
+              i = { "@cellcontent" },
+            }),
+          },
+        }
+      end,
+    },
+  }
 }

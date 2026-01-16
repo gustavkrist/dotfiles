@@ -14,6 +14,7 @@ return {
           vim.api.nvim_set_hl(0, "LspInlayHint", { link = "@comment" })
           vim.api.nvim_set_hl(0, "SnacksPickerPathHidden", { link = "Comment" })
           vim.api.nvim_set_hl(0, "SnacksPickerPathIgnored", { link = "Comment" })
+          vim.api.nvim_set_hl(0, "jukit_textcell_bg_colors", { bg = "#3B4252" })
           if vim.g.started_by_firenvim == nil then
             require("util.wezterm").set_term_background("#D8DEE9", "#2E3440", "#D8DEE9")
           end
