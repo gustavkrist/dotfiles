@@ -131,40 +131,6 @@ return {
     event = "VeryLazy",
   },
   {
-    "m4xshen/hardtime.nvim",
-    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-    firenvim = false,
-    config = function(_, opts)
-      require("hardtime").setup(opts)
-      vim.g.hardtime_disabled = false
-      Snacks.toggle({
-        id = "hardtime",
-        name = "Hardtime",
-        get = function()
-          return not vim.g.hardtime_disabled
-        end,
-        set = function(state)
-          if not state then
-            vim.cmd("Hardtime disable")
-          else
-            vim.cmd("Hardtime enable")
-          end
-          vim.g.hardtime_disabled = not state
-        end,
-      }):map("<leader>ut")
-    end,
-    event = "User FileOpened",
-    opts = {
-      disabled_keys = {
-        ["<Up>"] = {},
-        ["<Down>"] = {},
-        ["<Left>"] = {},
-        ["<Right>"] = {},
-      },
-      disable_mouse = false,
-    },
-  },
-  {
     "stevearc/quicker.nvim",
     event = "FileType qf",
     ---@module "quicker"

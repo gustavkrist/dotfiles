@@ -136,6 +136,9 @@ return {
             end
           end,
           "snippet_forward",
+          function() -- sidekick next edit suggestion
+            return require("sidekick").nes_jump_or_apply()
+          end,
           "select_next",
           "fallback",
         },
