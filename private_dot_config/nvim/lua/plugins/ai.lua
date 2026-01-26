@@ -34,6 +34,17 @@ return {
     event = "VeryLazy",
     config = function(_, opts)
       require("sidekick").setup(opts)
+      vim.g.sidekick_nes = not require("util.os").is_macos()
+      Snacks.toggle({
+        id = "nes",
+        name = "NES",
+        get = function()
+          return vim.g.sidekick_nes
+        end,
+        set = function(state)
+          vim.g.sidekick_nes = not state
+        end,
+      }):map("<leader>un")
     end,
     opts = {
       cli = {
