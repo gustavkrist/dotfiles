@@ -15,6 +15,9 @@ return {
             pathresolver = require("kulala.parser.jsonpath").parse,
           },
         },
+        lsp = {
+          filetypes = { "http" },
+        },
       }
     end,
     ft = { "http" },

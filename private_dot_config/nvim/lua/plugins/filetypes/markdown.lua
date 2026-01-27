@@ -13,7 +13,7 @@ return {
         ]])
         vim.g.mkdp_browserfunc = "ChromeUrl"
       end
-      vim.g.mkdp_filetypes = { "markdown", "pandoc" }
+      vim.g.mkdp_filetypes = { "markdown" }
       vim.cmd([[
       let g:mkdp_preview_options = {
           \ 'mkit': {},
@@ -53,7 +53,7 @@ return {
       ]])
       vim.g.mkdp_markdown_css = os.getenv("HOME") .. "/.config/nvim/styles/markdown-preview.css"
     end,
-    ft = { "markdown", "pandoc" },
+    ft = { "markdown" },
   },
   {
     "obsidian-nvim/obsidian.nvim",
@@ -104,33 +104,6 @@ return {
         order = { " ", "x" },
       },
     },
-  },
-  {
-    "vim-pandoc/vim-pandoc",
-    enabled = false,
-    init = function()
-      vim.g["pandoc#filetypes#pandoc_markdown"] = 0
-      vim.g["pandoc#filetypes#handled"] = { "pandoc", "markdown" }
-      vim.g["pandoc#folding#fold_yaml"] = 1
-      vim.g["pandoc#folding#fold_fenced_codeblocks"] = 1
-      vim.g["pandoc#folding#fastfolds"] = 1
-      vim.g["pandoc#folding#fdc"] = 0
-      -- vim.g["pandoc#modules#enabled"] = { "keyboard" }
-      -- vim.g["pandoc#modules#disabled"] = { "formatting", "folding", "hypertext" }
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "markdown",
-        callback = function()
-          -- vim.call("pandoc#command#Init")
-          -- vim.call("pandoc#compiler#Init")
-          -- vim.call("pandoc#folding#Init")
-          -- vim.call("pandoc#keyboard#Init")
-          -- vim.call("pandoc#formatting#Init")
-          -- vim.call("pandoc#spell#Init")
-          vim.call("pandoc#toc#Init")
-          vim.call("pandoc#yaml#Init")
-        end,
-      })
-    end,
   },
   {
     "bullets-vim/bullets.vim",

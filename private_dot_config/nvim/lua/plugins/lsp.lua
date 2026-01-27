@@ -266,7 +266,7 @@ return {
     end,
     event = "User FileOpened",
   },
-  { "justinsgithub/wezterm-types", lazy = true },
+  { "DrKJeff16/wezterm-types", lazy = true },
   {
     "folke/lazydev.nvim",
     ft = "lua",
