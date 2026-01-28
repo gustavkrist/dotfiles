@@ -6,7 +6,6 @@ currspace=$(yabai -m query --spaces --space | /opt/homebrew/bin/jq '.index')
 
 padding=$(expr $(cat ~/.local/share/yabai/padding.txt))
 spadding=$((38 + $padding))
-echo $spadding > ~/.config/skhd/scripts/spadding.txt
 
 [[ "$number_of_windows" -eq 1 ]] && padding=$padding
 [[ "$number_of_stacked" = 0 ]] && spadding=$padding

@@ -61,6 +61,7 @@ yabai -m rule --add app="^JetBrains Toolbox$" manage=off
 # If I close the active window, focus on any other visible window.
 yabai -m signal --add event=window_destroyed action="bash -c '~/.config/yabai/scripts/window-focus-on-destroy.sh | ~/.config/yabai/scripts/refresh.sh'"
 yabai -m signal --add event=window_created action="~/.config/yabai/scripts/refresh.sh"
+yabai -m signal --add event=window_moved action="~/.config/yabai/scripts/refresh.sh"
 yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
 
 borders active_color=0x8081a1c1 inactive_color=0x00ffffff width=5.0 &

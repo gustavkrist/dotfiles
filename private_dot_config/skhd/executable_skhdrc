@@ -110,9 +110,9 @@ shift + lalt + lcmd + ctrl + ralt - tab : /Users/gustavkristensen/.config/skhd/s
 ctrl + alt + cmd + lshift - return : yabai -m window --focus stack.next || yabai -m window --focus stack.first
 
 ## toggle space management
-shift + alt - f : yabai -m space --layout float
-shift + alt - d : yabai -m space --layout bsp
-shift + alt - s : yabai -m space --layout stack
+shift + alt - f : yabai -m space --layout float && /Users/gustavkristensen/.config/yabai/scripts/refresh.sh
+shift + alt - d : yabai -m space --layout bsp && /Users/gustavkristensen/.config/yabai/scripts/refresh.sh
+shift + alt - s : yabai -m space --layout stack && /Users/gustavkristensen/.config/yabai/scripts/refresh.sh
 
 ## Toggle active window border
 hyper - b : bash -c 'if [[ "$(yabai -m config window_border)" = "on" ]]; then yabai -m config window_border off; else yabai -m config window_border on; fi'
