@@ -111,7 +111,6 @@ return {
       vim.g.bullets_outline_levels = { "ROM", "ABC", "num", "abc", "rom", "std-" }
       vim.g.bullets_checkbox_markers = " ox"
     end,
-    ft = "markdown",
   },
   {
     "jmbuhr/otter.nvim",

@@ -160,8 +160,8 @@ return {
   {
     "SUSTech-data/neopyter",
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      'AbaoFromCUG/websocket.nvim',  -- for mode='direct'
+      "nvim-lua/plenary.nvim",
+      "AbaoFromCUG/websocket.nvim", -- for mode='direct'
     },
     ft = "python",
     ---@type neopyter.Option
@@ -184,20 +184,23 @@ return {
             require("nvim-treesitter-textobjects.move").goto_previous_start("@cell")
           end
           local line = vim.api.nvim_win_get_cursor(0)[1]
-          if not below then line = line - 1 end
+          if not below then
+            line = line - 1
+          end
           if type == "markdown" then
             content = {
               "# %% [markdown]",
               'r"""',
-              '',
+              "",
               '"""',
             }
-            new_pos = {line + 3, 0}
+            new_pos = { line + 3, 0 }
           else
             content = {
-              "# %%", ""
+              "# %%",
+              "",
             }
-            new_pos = {line + 2, 0}
+            new_pos = { line + 2, 0 }
           end
           vim.api.nvim_buf_set_lines(0, line, line, false, content)
           vim.api.nvim_win_set_cursor(0, new_pos)
@@ -205,13 +208,31 @@ return {
 
         map("n", "<C-CR>", "<cmd>Neopyter execute notebook:run-cell<cr>", "Run current cell")
         map("n", "<localleader>X", "<cmd>Neopyter execute notebook:run-all-above<cr>", "Run all cells above")
-        map("n", "<S-CR>", "<cmd>Neopyter execute notebook:run-cell-and-select-next<cr>", "Run current cell and select next")
-        map("n", "<M-CR>", "<cmd>Neopyter execute notebook:run-cell-and-insert-below<cr>", "Run current cell and insert below")
+        map(
+          "n",
+          "<S-CR>",
+          "<cmd>Neopyter execute notebook:run-cell-and-select-next<cr>",
+          "Run current cell and select next"
+        )
+        map(
+          "n",
+          "<M-CR>",
+          "<cmd>Neopyter execute notebook:run-cell-and-insert-below<cr>",
+          "Run current cell and insert below"
+        )
         map("n", "<F5>", "<cmd>Neopyter execute notebook:restart-run-all<cr>", "Restart kernel and run all cells")
-        map("n", "<localleader>co", function() insert_cell("code") end, "Insert code cell below")
-        map("n", "<localleader>cO", function() insert_cell("code", false) end, "Insert code cell above")
-        map("n", "<localleader>ct", function() insert_cell("markdown") end, "Insert markdown cell below")
-        map("n", "<localleader>cT", function() insert_cell("markdown", false) end, "Insert markdown cell above")
+        map("n", "<localleader>co", function()
+          insert_cell("code")
+        end, "Insert code cell below")
+        map("n", "<localleader>cO", function()
+          insert_cell("code", false)
+        end, "Insert code cell above")
+        map("n", "<localleader>ct", function()
+          insert_cell("markdown")
+        end, "Insert markdown cell below")
+        map("n", "<localleader>cT", function()
+          insert_cell("markdown", false)
+        end, "Insert markdown cell above")
 
         vim.keymap.set({ "n", "o", "x" }, "]j", function()
           require("nvim-treesitter-textobjects.move").goto_next_start("@cellcontent")
@@ -232,5 +253,5 @@ return {
         }
       end,
     },
-  }
+  },
 }

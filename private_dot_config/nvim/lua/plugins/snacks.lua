@@ -23,7 +23,7 @@ return {
           bo = { filetype = "snacks_notif_history", modifiable = false },
           wo = { winhighlight = "Normal:SnacksNotifierHistory" },
           keys = { q = "close" },
-        }
+        },
       },
       bigfile = { enabled = true },
       dashboard = {
@@ -308,7 +308,7 @@ return {
           {
             "<leader>ls",
             function()
-              Snacks.picker.lsp_symbols({ layout = { preset = "vscode", preview = "main" } })
+              Snacks.picker.lsp_symbols({ layout = { preset = "vscode", preview = "main", hidden = {} } })
             end,
             desc = "Document Symbols",
           },

@@ -10,15 +10,16 @@ return {
     },
     config = function()
       local servers = {
+        basedpyright = { enable = true, install = true },
         bashls = { enable = true, install = true },
         clangd = { enable = true, install = true },
         codelldb = { enable = false, install = true },
+        ctags_lsp = { enable = true, install = false },
         elp = { enable = true, install = true },
         fsautocomplete = { enable = true, install = true },
+        jdtls = { enable = true, install = false },
         jsonls = { enable = true, install = true },
         lua_ls = { enable = true, install = true },
-        basedpyright = { enable = true, install = true },
-        jdtls = { enable = true, install = false },
         ruff = { enable = true, install = true },
         rust_analyzer = { enable = true, install = false },
         taplo = { enable = true, install = true },
@@ -49,7 +50,7 @@ return {
           if
             not (
               vim.api.nvim_get_option_value("filetype", { buf = ev.buf }) == "vue"
-              or vim.list_contains({ "copilot", "ruff", "obsidian-ls" }, client.name)
+              or vim.list_contains({ "copilot", "ruff", "obsidian-ls", "ctags_lsp" }, client.name)
             )
           then
             require("nvim-navic").attach(client, ev.buf)
