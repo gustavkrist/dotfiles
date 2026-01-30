@@ -118,6 +118,7 @@ alias kex="kubectl exec -it"
 {{ if eq .chezmoi.os "darwin" }}
 alias ipyk="ipython3 -i -c \"import sys;sys.path.append('$XDG_DATA_HOME/nvim/lazy/vim-jukit/helpers');import matplotlib;import matplotlib.pyplot as plt;matplotlib.use('module://matplotlib-backend-kitty');plt.show.__annotations__['save_dpi'] = 150;import matplotlib.pyplot as plt;plt.style.use('$XDG_DATA_HOME/nvim/lazy/vim-jukit/helpers/matplotlib-backend-kitty/backend.mplstyle')\""
 alias icat="kitty +kitten icat"
+alias ctags="/opt/homebrew/bin/ctags"
 {{ end }}
 
 # -- PLUGIN CONFIG ------------------------------------------------------------
@@ -450,6 +451,14 @@ else
     start_agent;
 fi
 
+# -- OPAM ---------------------------------------------------------------------
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+test -r '/Users/gustavkristensen/.opam/opam-init/init.sh' && . '/Users/gustavkristensen/.opam/opam-init/init.sh' > /dev/null 2> /dev/null || true
+# END opam configuration
 # -- MISC ---------------------------------------------------------------------
 
 eval "$(zoxide init zsh)"
