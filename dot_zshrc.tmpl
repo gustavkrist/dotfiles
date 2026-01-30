@@ -405,29 +405,45 @@ ypad() {
 #     conda deactivate
 #     conda activate base
 # fi
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+test -r '/Users/gustavkristensen/.opam/opam-init/init.sh' && . '/Users/gustavkristensen/.opam/opam-init/init.sh' > /dev/null 2> /dev/null || true
+# END opam configuration
 {{- else if and (eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu") (eq .chezmoi.hostname "Gustav-PC") }}
 # -- CONDA --------------------------------------------------------------------
 
-__conda_setup="$('/home/gustav/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/gustav/mambaforge/etc/profile.d/conda.sh" ]; then
-        . "/home/gustav/mambaforge/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/gustav/mambaforge/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+# __conda_setup="$('/home/gustav/mambaforge/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/gustav/mambaforge/etc/profile.d/conda.sh" ]; then
+#         . "/home/gustav/mambaforge/etc/profile.d/conda.sh"
+#     else
+#         export PATH="/home/gustav/mambaforge/bin:$PATH"
+#     fi
+# fi
+# unset __conda_setup
+#
+# if [ -f "/home/gustav/mambaforge/etc/profile.d/mamba.sh" ]; then
+#     . "/home/gustav/mambaforge/etc/profile.d/mamba.sh"
+# fi
+#
+# if [[ $TMUX ]]; then
+#     conda deactivate
+#     conda activate base
+# fi
 
-if [ -f "/home/gustav/mambaforge/etc/profile.d/mamba.sh" ]; then
-    . "/home/gustav/mambaforge/etc/profile.d/mamba.sh"
-fi
-
-if [[ $TMUX ]]; then
-    conda deactivate
-    conda activate base
-fi
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+test -r '/home/gustav/.opam/opam-init/init.sh' && . '/home/gustav/.opam/opam-init/init.sh' > /dev/null 2> /dev/null || true
+# END opam configuration
 {{- end }}
 
 # -- SSH-AGENT ----------------------------------------------------------------
@@ -451,14 +467,6 @@ else
     start_agent;
 fi
 
-# -- OPAM ---------------------------------------------------------------------
-# BEGIN opam configuration
-# This is useful if you're using opam as it adds:
-#   - the correct directories to the PATH
-#   - auto-completion for the opam binary
-# This section can be safely removed at any time if needed.
-test -r '/Users/gustavkristensen/.opam/opam-init/init.sh' && . '/Users/gustavkristensen/.opam/opam-init/init.sh' > /dev/null 2> /dev/null || true
-# END opam configuration
 # -- MISC ---------------------------------------------------------------------
 
 eval "$(zoxide init zsh)"
