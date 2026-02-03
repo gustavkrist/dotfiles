@@ -42,7 +42,7 @@ return {
           return vim.g.sidekick_nes
         end,
         set = function(state)
-          vim.g.sidekick_nes = not state
+          vim.g.sidekick_nes = state
         end,
       }):map("<leader>un")
     end,
