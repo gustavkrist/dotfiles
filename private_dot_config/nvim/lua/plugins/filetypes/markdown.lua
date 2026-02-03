@@ -184,8 +184,7 @@ return {
         },
       },
       latex = {
-        -- enable = function() return os.getenv("TERM"):find("kitty") == nil end,
-        enable = true,
+        enable = (os.getenv("TERM") or ""):find("kitty") == nil,
       },
       html = {
         enable = false,

@@ -39,7 +39,7 @@ local function disable_matrix_bindings()
 end
 
 local function expand_surrounding_delims()
-  local delims = vim.fn["vimtex#delim#get_surrounding"]("delim_modq_math")
+  local delims = vim.fn["vimtex#delim#get_surrounding"]("delim_math_modq")
   local left = delims[1]
   local right = delims[2]
   local cursor = vim.api.nvim_win_get_cursor(0)

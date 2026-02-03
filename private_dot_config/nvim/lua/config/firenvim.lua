@@ -1,4 +1,4 @@
-vim.o.guifont = "FiraCode Nerd Font:h14"
+vim.o.guifont = "JetBrainsMono NF:h26"
 vim.o.cmdheight = 0
 vim.g.firenvim_config = {
   globalSettings = {},
