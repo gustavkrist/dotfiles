@@ -49,7 +49,7 @@ local snippets = {
     f(function()
       return string.rep("#", tsutil.get_header_level()) .. " "
     end),
-    i(1),
+    i(0),
   }),
   s({
     trig = "nh",
@@ -58,7 +58,7 @@ local snippets = {
     f(function()
       return string.rep("#", tsutil.get_header_level() + 1) .. " "
     end),
-    i(1),
+    i(0),
   }),
   s({
     trig = "ph",
@@ -67,7 +67,7 @@ local snippets = {
     f(function()
       return string.rep("#", tsutil.get_header_level() - 1) .. " "
     end),
-    i(1),
+    i(0),
   }),
   s({
     trig = "li",

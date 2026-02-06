@@ -21,7 +21,7 @@ return {
         jsonls = { enable = true, install = true },
         lua_ls = { enable = true, install = true },
         ruff = { enable = true, install = true },
-        rust_analyzer = { enable = true, install = false },
+        rust_analyzer = { enable = false, install = false },
         taplo = { enable = true, install = true },
         texlab = { enable = true, install = true },
         ts_ls = { enable = true, install = true },
