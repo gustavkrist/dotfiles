@@ -1,0 +1,156 @@
+(defcfg
+  macos-dev-names-include ("Apple Internal Keyboard / Trackpad")
+  process-unmapped-keys yes
+  concurrent-tap-hold yes
+  chords-v2-min-idle 120
+)
+
+(defvirtualkeys
+  fasttypingstate XX
+)
+
+#|
+(deflayer name
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
+|#
+
+(defsrc
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    ret
+  caps a    s    d    f    g    h    j    k    l    ;    '    \
+  lsft 102d z    x    c    v    b    n    m    ,    .    /    rsft up
+  fn   lctl lalt lmet           spc            rmet ralt      left down rght
+)
+
+(defvar
+  tot 220  ;; tot=time out tap
+)
+
+(deftemplate type (action)
+  (multi
+    (fork
+      (hold-for-duration 55 fasttypingstate)
+      XX
+      (lctl rctl lalt ralt lmet rmet)
+    )
+    $action
+  )
+)
+
+(deftemplate homerowmod (timeouttap timeouthold keytap keyhold)
+  (switch
+    ((input virtual fasttypingstate)) (t! type $keytap) break
+    () (tap-hold $timeouttap $timeouthold
+         (t! type $keytap)
+         $keyhold
+       ) break
+  )
+)
+
+(defalias
+  .fn (layer-while-held function)
+  hyp (multi lctl lalt lmet lsft)
+  cln (switch
+    ((base-layer base)) (layer-switch clean) break
+    ((base-layer clean)) (layer-switch base) break
+  )
+
+  sft (
+    tap-hold
+    $tot
+    160
+    (fork
+      (one-shot 1000 rsft)
+      (caps-word-custom-toggle
+        2000
+        (a b c d e f g h i j k l m n o p q r s t u v w x y z)
+        (lsft rsft - bspc del)
+      )
+      (rsft)
+    )
+    rsft)
+)
+
+(defchordsv2
+  (e r) = 30 all-released (clean)
+  (c v) S-= 50 all-released (clean)
+  (u i) - 30 all-released (clean)
+  (m ,) S-- 50 all-released (clean)
+  (r t) lbrc 50 all-released (clean)
+  (y u) rbrc 50 all-released (clean)
+  (f g) S-9 50 all-released (clean)
+  (h j) S-0 50 all-released (clean)
+  (v b) S-lbrc 50 all-released (clean)
+  (n m) S-rbrc 50 all-released (clean)
+  (k l) bksl 50 all-released (clean)
+  (l ;) ; 50 all-released (clean)
+)
+
+(deflayermap (base)
+  ;; define home row mods
+  f (t! homerowmod $tot 160 f lsft)
+  j (t! homerowmod $tot 160 j rsft)
+  d (t! homerowmod $tot 160 d lctl)
+  k (t! homerowmod $tot 160 k rctl)
+  s (t! homerowmod $tot 160 s lalt)
+  l (t! homerowmod $tot 160 l ralt)
+  a (t! homerowmod $tot 160 a lmet)
+  ; (t! homerowmod $tot 160 ' rmet)
+  m (t! homerowmod $tot 160 m @hyp)
+  caps (tap-hold $tot 160 esc lctl)
+  lmet (tap-hold $tot 160 M-tab (layer-while-held nav))
+  rmet (layer-while-held nums)
+  rsft @sft
+  ;; define each letter
+  q (t! type q) w (t! type w) e (t! type e) r (t! type r) t (t! type t)
+  y (t! type y) u (t! type u) i (t! type i) o (t! type o) p (t! type p)
+  ;; a (t! type a) s (t! type s) d (t! type d) f (t! type f)
+  g (t! type g) h (t! type h)
+  ;;  j (t! type j) k (t! typek) l (t! type l)
+  z (t! type z) x (t! type x) c (t! type c) v (t! type v) b (t! type b)
+  n (t! type n) ;; m (t! type m)
+  fn @.fn
+)
+
+(deflayer function
+  @cln brdn brup lpad mctl bldn blup prev pp   next mute vold volu
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    lrld _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _              _              _    _    _    _    _
+)
+
+(deflayer nums
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    lbrc 7    8    9    rbrc _    _    _    _    _    _    _    _
+  _    scln 4    5    6    eql  _    rsft rctl lalt rmet _    _
+  _    _    grv  1    2    3    bksl _    @hyp _    _    _    _    _
+  _    _    _    0              _              _    _    _    _    _
+)
+
+(deflayer nav
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    M-y  M-v  M-c  M-x  M-z  _    _    _
+  _    lmet ralt rctl rsft _    lft  down up   rght _    _    _
+  _    _    _    _    _    _    _    _    home pgup pgdn end  _    _
+  _    _    _    _              _              _    _    _    _    _
+)
+
+(deflayer clean
+  esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+  grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+  tab  q    w    e    r    t    y    u    i    o    p    [    ]    ret
+  caps a    s    d    f    g    h    j    k    l    ;    '    \
+  lsft 102d z    x    c    v    b    n    m    ,    .    /    rsft up
+  @.fn lctl lalt lmet           spc            rmet ralt      left down rght
+)
