@@ -280,7 +280,6 @@ return {
       snippetSelection = {
         picker = "snacks",
       },
-      jsonFormatter = "jq",
       backdrop = {
         enabled = false,
       },
