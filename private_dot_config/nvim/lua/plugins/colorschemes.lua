@@ -21,6 +21,7 @@ return {
           require("util.plugins").on_load("lualine.nvim", function()
             require("util.lualine").load_lualine_custom_nord()
           end)
+          vim.g.markview_dark_bg = "#2E3440"
         end,
       })
       vim.cmd("colorscheme nord")

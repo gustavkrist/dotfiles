@@ -151,50 +151,52 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
-    opts = {
-      highlight_groups = {
-        MarkviewCode = { bg = "#3B4252" },
-        MarkviewCodeFg = { fg = "#3B4252" },
-        MarkviewCodeInfo = { bg = "#3B4252", fg = "#616E88" },
-        MarkviewInlineCode = { bg = "#3B4252" },
-        MarkviewIcon0 = { bg = "#3B4252", fg = "#606E87" },
-        MarkviewIcon1 = { bg = "#3B4252", fg = "#87C0CF" },
-        MarkviewIcon2 = { bg = "#3B4252", fg = "#87C0CF" },
-        MarkviewIcon3 = { bg = "#3B4252", fg = "#87C0CF" },
-        MarkviewIcon4 = { bg = "#3B4252", fg = "#87C0CF" },
-        MarkviewIcon5 = { bg = "#3B4252", fg = "#87C0CF" },
-      },
-      preview = {
-        hybrid_modes = { "n", "i" },
-        filetypes = { "codecompanion", "markdown", "python" },
-        ignore_buftypes = {},
-      },
-      markdown = {
-        list_items = {
-          shift_width = function(buffer, item)
-            --- Reduces the `indent` by 1 level.
-            ---
-            ---         indent                      1
-            --- ------------------------- = 1 ÷ --------- = new_indent
-            --- indent * (1 / new_indent)       new_indent
-            ---
-            local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth)
-
-            return item.indent * (1 / (parent_indnet * 2))
-          end,
-          marker_minus = {
-            add_padding = function(_, item)
-              return item.indent > 1
-            end,
-          },
+    opts = function()
+      local presets = require("markview.presets")
+      return {
+        preview = {
+          hybrid_modes = { "n", "i" },
+          filetypes = { "codecompanion", "markdown", "python" },
+          ignore_buftypes = {},
         },
-      },
-      latex = {
-        enable = (os.getenv("TERM") or ""):find("kitty") == nil,
-      },
-      html = {
-        enable = false,
-      },
-    },
+        markdown = {
+          list_items = {
+            shift_width = function(buffer, item)
+              --- Reduces the `indent` by 1 level.
+              ---
+              ---         indent                      1
+              --- ------------------------- = 1 ÷ --------- = new_indent
+              --- indent * (1 / new_indent)       new_indent
+              ---
+              local parent_indnet = math.max(1, item.indent - vim.bo[buffer].shiftwidth)
+
+              return item.indent * (1 / (parent_indnet * 2))
+            end,
+            marker_minus = {
+              add_padding = function(_, item)
+                return item.indent > 1
+              end,
+            },
+          },
+          headings = presets.headings.glow,
+          block_quotes = presets.block_quotes.obsidian,
+        },
+        latex = {
+          enable = (os.getenv("TERM") or ""):find("kitty") == nil,
+        },
+        markdown_inline = {
+          tags = {
+            default = {
+                hl = "MarkviewCodeInfo",
+                padding_left = "",
+                padding_left_hl = "MarkviewCodeFg",
+                padding_right = "",
+                padding_right_hl = "MarkviewCodeFg"
+            },
+            enable = true
+          }
+        }
+      }
+    end,
   },
 }
