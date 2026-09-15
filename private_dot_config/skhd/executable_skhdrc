@@ -43,6 +43,10 @@ hyper - 3 : yabai -m window --space 3 --focus
 hyper - 4 : yabai -m window --space 4 --focus
 hyper - 5 : yabai -m window --space 5 --focus
 hyper - 6 : yabai -m window --space 6 --focus
+hyper - 7 : yabai -m window --space 7 --focus
+hyper - 8 : yabai -m window --space 8 --focus
+hyper - 9 : yabai -m window --space 9 --focus
+hyper - 0 : yabai -m window --space 10 --focus
 
 # send window to display
 shift + alt + ctrl - 1 : bash -c "DISPLAY=1 ~/.config/skhd/scripts/move_display_and_follow.sh"

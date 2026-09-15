@@ -1,8 +1,10 @@
+;; vim:ft=scheme
 (defcfg
   macos-dev-names-include ("Apple Internal Keyboard / Trackpad")
   process-unmapped-keys yes
   concurrent-tap-hold yes
   chords-v2-min-idle 120
+  movemouse-smooth-diagonals yes
 )
 
 (defvirtualkeys
@@ -61,6 +63,26 @@
     ((base-layer base)) (layer-switch clean) break
     ((base-layer clean)) (layer-switch base) break
   )
+  off (switch
+    ((base-layer base)) (layer-switch disabled) break
+    ((base-layer disabled)) (layer-switch base) break
+  )
+
+  mml (movemouse-left 4 4)
+  mmr (movemouse-right 4 4)
+  mmd (movemouse-down 4 4)
+  mmu (movemouse-up 4 4)
+  msl (movemouse-left 2 2)
+  msr (movemouse-right 2 2)
+  msd (movemouse-down 2 2)
+  msu (movemouse-up 2 2)
+  scl (mwheel-left 50 120)
+  scr (mwheel-right 50 120)
+  scd (mwheel-down 50 120)
+  scu (mwheel-up 50 120)
+  fst (movemouse-speed 200)
+  slw (movemouse-speed 50)
+  vsl (movemouse-speed 25)
 
   sft (
     tap-hold
@@ -79,18 +101,24 @@
 )
 
 (defchordsv2
-  (e r) = 30 all-released (clean)
-  (c v) S-= 50 all-released (clean)
-  (u i) - 30 all-released (clean)
-  (m ,) S-- 50 all-released (clean)
-  (r t) lbrc 50 all-released (clean)
-  (y u) rbrc 50 all-released (clean)
-  (f g) S-9 50 all-released (clean)
-  (h j) S-0 50 all-released (clean)
-  (v b) S-lbrc 50 all-released (clean)
-  (n m) S-rbrc 50 all-released (clean)
-  (k l) bksl 50 all-released (clean)
-  (l ;) ; 50 all-released (clean)
+  (e r) = 30 all-released (clean disabled mouse)
+  (c v) S-= 50 all-released (clean disabled mouse)
+  (u i) - 30 all-released (clean disabled mouse)
+  (m ,) S-- 50 all-released (clean disabled mouse)
+  (r t) lbrc 50 all-released (clean disabled mouse)
+  (y u) rbrc 50 all-released (clean disabled mouse)
+  (f g) S-9 50 all-released (clean disabled mouse)
+  (h j) S-0 50 all-released (clean disabled mouse)
+  (v b) S-lbrc 50 all-released (clean disabled mouse)
+  (n m) S-rbrc 50 all-released (clean disabled mouse)
+  (i o) bksl 30 all-released (clean disabled mouse)
+  (, .) S-bksl 50 all-released (clean disabled mouse)
+  (w e) ; 30 all-released (clean disabled mouse)
+  (x c) S-; 50 all-released (clean disabled mouse)
+  (q w) grv 50 all-released (clean disabled mouse)
+  (z x) S-1 50 all-released (clean disabled mouse)
+  (o p) S-6 50 all-released (clean disabled mouse)
+  (. /) S-4 50 all-released (clean disabled mouse)
 )
 
 (deflayermap (base)
@@ -99,14 +127,16 @@
   j (t! homerowmod $tot 160 j rsft)
   d (t! homerowmod $tot 160 d lctl)
   k (t! homerowmod $tot 160 k rctl)
-  s (t! homerowmod $tot 160 s lalt)
-  l (t! homerowmod $tot 160 l ralt)
+  s (t! homerowmod $tot 180 s lalt)
+  l (t! homerowmod $tot 160 l lalt)
   a (t! homerowmod $tot 160 a lmet)
   ; (t! homerowmod $tot 160 ' rmet)
-  m (t! homerowmod $tot 160 m @hyp)
+  n (t! homerowmod $tot 160 n @hyp)
   caps (tap-hold $tot 160 esc lctl)
   lmet (tap-hold $tot 160 M-tab (layer-while-held nav))
   rmet (layer-while-held nums)
+  lalt (layer-while-held mouse)
+  ralt (layer-while-held syms)
   rsft @sft
   ;; define each letter
   q (t! type q) w (t! type w) e (t! type e) r (t! type r) t (t! type t)
@@ -115,13 +145,14 @@
   g (t! type g) h (t! type h)
   ;;  j (t! type j) k (t! typek) l (t! type l)
   z (t! type z) x (t! type x) c (t! type c) v (t! type v) b (t! type b)
-  n (t! type n) ;; m (t! type m)
+  ;; n (t! type n)
+  m (t! type m)
   fn @.fn
 )
 
 (deflayer function
   @cln brdn brup lpad mctl bldn blup prev pp   next mute vold volu
-  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    @off
   _    _    _    _    lrld _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
@@ -133,17 +164,44 @@
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    lbrc 7    8    9    rbrc _    _    _    _    _    _    _    _
   _    scln 4    5    6    eql  _    rsft rctl lalt rmet _    _
-  _    _    grv  1    2    3    bksl _    @hyp _    _    _    _    _
-  _    _    _    0              _              _    _    _    _    _
+  _    _    grv  1    2    3    bksl @hyp _    _    _    _    _    _
+  _    _    _    _              0              _    _    _    _    _
+)
+
+(deflayer syms
+  _    _      _     _    _    _      _      _    _    _    _    _    _
+  _    _      _     _    _    _      _      _    _    _    _    _    _    _
+  _    S-lbrc S-7   S-8  S-9  S-rbrc _      _    _    _    _    _    _    _
+  _    S-scln S-4   S-5  S-6  S-eql  _      rsft rctl lalt rmet _    _
+  _    _      S-grv S-1  S-2  S-3    S-bksl @hyp _    _    _    _    _    _
+  _    _      _     _                S-0              _    _    _    _    _
 )
 
 (deflayer nav
   _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    _    _    _    _    _    _    _    _
   _    _    _    _    _    _    M-y  M-v  M-c  M-x  M-z  _    _    _
-  _    lmet ralt rctl rsft _    lft  down up   rght _    _    _
+  _    lmet lalt lctl lsft _    lft  down up   rght _    _    _
   _    _    _    _    _    _    _    _    home pgup pgdn end  _    _
   _    _    _    _              _              _    _    _    _    _
+)
+
+(deflayer mouse
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    _    @mml @mmd @mmu @mmr _    _    _
+  _    lmet lalt lctl lsft _    _    @msl @msd @msu @msr _    _
+  _    _    _    @fst @slw @vsl _    _    @scl @scd @scu @scr _    _
+  _    _    _    _              _              _    _    _    _    _
+)
+
+(deflayer disabled
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX   XX
+  @.fn XX   XX   XX             XX             XX   XX   XX   XX   XX
 )
 
 (deflayer clean
