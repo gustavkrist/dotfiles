@@ -304,14 +304,14 @@ return {
           },
           tags = {
             default = {
-                hl = "MarkviewCodeInfo",
-                padding_left = "",
-                padding_left_hl = "MarkviewCodeFg",
-                padding_right = "",
-                padding_right_hl = "MarkviewCodeFg"
+              hl = "MarkviewCodeInfo",
+              padding_left = "",
+              padding_left_hl = "MarkviewCodeFg",
+              padding_right = "",
+              padding_right_hl = "MarkviewCodeFg",
             },
-            enable = true
-          }
+            enable = true,
+          },
         },
         latex = {
           enable = (os.getenv("TERM") or ""):find("kitty") == nil,
