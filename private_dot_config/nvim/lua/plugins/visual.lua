@@ -173,4 +173,8 @@ return {
       end,
     },
   },
+  {
+    "Galicarnax/vim-regex-syntax",
+    lazy = false,
+  },
 }

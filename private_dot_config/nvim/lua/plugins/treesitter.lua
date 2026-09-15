@@ -40,6 +40,11 @@ return {
         "xml",
         "yaml",
       },
+      highlight = {
+        enable = true,
+        disable = { "latex" },
+        additional_vim_regex_highlighting = { "latex", "markdown" },
+      },
     },
     config = function(_, opts)
       local parsers = require("nvim-treesitter.parsers")

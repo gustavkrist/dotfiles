@@ -19,11 +19,13 @@ return {
         fsautocomplete = { enable = true, install = true },
         jdtls = { enable = true, install = false },
         jsonls = { enable = true, install = true },
+        langium_ls = { enable = true, install = false },
         lua_ls = { enable = true, install = true },
         ruff = { enable = true, install = true },
         rust_analyzer = { enable = false, install = false },
         taplo = { enable = true, install = true },
         texlab = { enable = true, install = true },
+        tinymist = { enable = true, install = true },
         ts_ls = { enable = true, install = true },
         vimls = { enable = true, install = true },
         vue_ls = { enable = true, install = true },
@@ -68,6 +70,7 @@ return {
         return servers[key].enable
       end, vim.tbl_keys(servers))
 
+      vim.lsp.config("tinymist", { settings = { formatterMode = "typstyle", formatterPrintWidth = 100 } })
       vim.lsp.config("bashls", { filetypes = { "bash", "sh", "zsh" } })
       vim.lsp.config(
         "ts_ls",
@@ -153,6 +156,7 @@ return {
           markdown = { "injected" },
           rust = { "rustfmt" },
           sh = { "beautysh" },
+          typescript = { "prettier" },
           vue = { "eslint_d" },
           zsh = { "beautysh" },
         },

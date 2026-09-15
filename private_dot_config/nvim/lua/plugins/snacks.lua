@@ -39,7 +39,33 @@ return {
       gh = { enabled = true },
       image = {
         enabled = true,
-        doc = { enabled = true, inline = true, float = true },
+        doc = {
+          enabled = true,
+          inline = true,
+          float = true,
+          max_height = 16,
+          conceal = function()
+            return false
+          end,
+        },
+        convert = {
+          magick = {
+            math = {
+              "-density",
+              "600",
+              "{src}[{page}]",
+              "-trim",
+              "+repage",
+              "-scale",
+              "200%", -- change to 150, 200, 250, etc.
+            },
+          },
+        },
+        math = {
+          latex = {
+            font_size = "tiny",
+          },
+        },
       },
       indent = { animate = { enabled = false }, enabled = no_vscode() },
       lazygit = {

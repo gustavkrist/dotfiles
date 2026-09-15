@@ -15,3 +15,7 @@ vim.b.miniai_config = {
     }),
   },
 }
+
+vim.o.conceallevel = 2
+vim.bo.formatoptions = "rqnjl"
+vim.bo.shiftwidth = 2

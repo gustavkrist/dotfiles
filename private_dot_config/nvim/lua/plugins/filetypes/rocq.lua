@@ -12,6 +12,20 @@ return {
     dependecies = {
       "whonore/Coqtail",
     },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "coq-goals", "coq-infos" },
+        group = vim.api.nvim_create_augroup("vsrocq_wrap", { clear = true }),
+        callback = function(ev)
+          vim.defer_fn(function()
+            local win = vim.tbl_filter(function(win)
+              return vim.api.nvim_win_get_buf(win) == ev.buf
+            end, vim.api.nvim_list_wins())[1]
+            vim.wo[win].wrap = true
+          end, 1000)
+        end,
+      })
+    end,
     opts = {
       vsrocq = {
         proof = {

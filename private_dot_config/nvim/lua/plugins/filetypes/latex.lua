@@ -10,13 +10,12 @@ return {
           vim.g.vimtex_view_method = "zathura"
         end
       elseif vim.loop.os_uname().sysname == "Darwin" then
-        vim.g.vimtex_view_method = "skim"
+        vim.g.vimtex_view_method = "sioyek"
       end
       vim.g.vimtex_format_enabled = 1
       vim.g.vimtex_delim_stopline = 500
       vim.g.vimtex_delim_timeout = 300
       vim.g.vimtex_delim_insert_timeout = 60
     end,
-    ft = { "markdown", "latex", "tex" },
   },
 }

@@ -285,4 +285,10 @@ return {
       },
     },
   },
+  {
+    "bezlant/unused.nvim",
+    priority = 10000,
+    lazy = false,
+    config = true,
+  },
 }

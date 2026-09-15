@@ -146,4 +146,11 @@ return {
     end,
     lazy = true,
   },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    opts = {
+      auto_integrations = true,
+    },
+  },
 }

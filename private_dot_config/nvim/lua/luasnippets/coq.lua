@@ -60,14 +60,11 @@ local snippets = {
     { trig = "dest", desc = "Destruct" },
     fmt(
       [[
-        destruct {} as [| {}' ] eqn:E{}.
-        - {}
-        - 
+        destruct ({}) eqn:E{}.{}
       ]],
       {
         i(1, "n"),
-        dl(2, l._1, 1),
-        dl(2, l._1, 1),
+        i(2, "1"),
         i(0),
       }
     )
@@ -84,12 +81,27 @@ local snippets = {
         i(1),
         i(2),
         i(0),
-      })
+      }
+    )
   ),
 }
 
 local autosnippets = {
+  s({ trig = "di.", desc = "Discriminate" }, t("discriminate.")),
+  s(
+    { trig = "dih.", desc = "Discriminate" },
+    fmt(
+      [[
+      discriminate {}.{}
+    ]],
+      {
+        i(1, "H"),
+        i(0),
+      }
+    )
+  ),
   s({ trig = "ref.", desc = "Reflexivity" }, t("reflexivity.")),
+  s({ trig = "si.", desc = "Simplify" }, t("simpl.")),
   s(
     { trig = "rwl.", desc = "[R]e[w]rite [L]eft" },
     fmt(
@@ -107,6 +119,18 @@ local autosnippets = {
     fmt(
       [[
         rewrite -> {}.{}
+      ]],
+      {
+        i(1, "H"),
+        i(0),
+      }
+    )
+  ),
+  s(
+    { trig = "rw.", desc = "[R]e[w]rite" },
+    fmt(
+      [[
+        rewrite {}.{}
       ]],
       {
         i(1, "H"),

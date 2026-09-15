@@ -304,6 +304,8 @@ return {
       })
       vim.api.nvim_exec_autocmds("FileType", { group = "_splitjoin_filetype" })
 
+      require("mini.misc").setup_restore_cursor()
+
       -- Sessions
       vim.api.nvim_create_autocmd({ "BufEnter" }, {
         callback = function()
