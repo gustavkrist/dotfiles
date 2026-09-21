@@ -188,7 +188,7 @@ return {
         preview = {
           modes = { "n", "no", "c", "i" },
           hybrid_modes = { "n", "i" },
-          filetypes = { "codecompanion", "markdown", "python" },
+          filetypes = { "codecompanion", "markdown", "python", "ipynb" },
           ignore_buftypes = {},
         },
         markdown = {

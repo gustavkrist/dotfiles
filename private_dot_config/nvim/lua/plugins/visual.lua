@@ -165,6 +165,9 @@ return {
         hl = "DiagnosticSignWarn",
       },
       autocmd = { enabled = true },
+      ignore = {
+        clients = { "obsidian-ls" },
+      },
       filter = function(_, result)
         return not vim.tbl_contains({
           "source.fixAll.ruff",
