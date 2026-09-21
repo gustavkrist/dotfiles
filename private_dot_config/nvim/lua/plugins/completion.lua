@@ -169,9 +169,9 @@ return {
           "snippets",
           "lazydev",
         },
-        per_filetype = {
-          python = { inherit_defaults = true, "neopyter" },
-        },
+        -- per_filetype = {
+        --   python = { inherit_defaults = true, "neopyter" },
+        -- },
         providers = {
           lsp = {
             name = "[LSP]",
@@ -206,11 +206,11 @@ return {
             module = "lazydev.integrations.blink",
             score_offset = 80,
           },
-          neopyter = {
-            name = "[Neopyter]",
-            module = "neopyter.blink",
-            opts = {},
-          },
+          -- neopyter = {
+          --   name = "[Neopyter]",
+          --   module = "neopyter.blink",
+          --   opts = {},
+          -- },
         },
       },
     },

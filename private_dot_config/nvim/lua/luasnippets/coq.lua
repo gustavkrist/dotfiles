@@ -27,7 +27,7 @@ local snippets = {
       [[
         induction {} as [| {}' IH{}'].
         - {}
-        - 
+        -
       ]],
       {
         i(1, "n"),
@@ -43,8 +43,8 @@ local snippets = {
       [[
         induction {} as [| {}' IH{}' | {}' IH{}'].
         - {}
-        - 
-        - 
+        -
+        -
       ]],
       {
         i(1, "n"),
@@ -81,25 +81,21 @@ local snippets = {
         i(1),
         i(2),
         i(0),
-      }
-    )
+      })
   ),
 }
 
 local autosnippets = {
   s({ trig = "di.", desc = "Discriminate" }, t("discriminate.")),
-  s(
-    { trig = "dih.", desc = "Discriminate" },
-    fmt(
-      [[
+  s({ trig = "dih.", desc = "Discriminate" }, fmt(
+    [[
       discriminate {}.{}
     ]],
-      {
-        i(1, "H"),
-        i(0),
-      }
-    )
-  ),
+    {
+      i(1, "H"),
+      i(0),
+    }
+  )),
   s({ trig = "ref.", desc = "Reflexivity" }, t("reflexivity.")),
   s({ trig = "si.", desc = "Simplify" }, t("simpl.")),
   s(
