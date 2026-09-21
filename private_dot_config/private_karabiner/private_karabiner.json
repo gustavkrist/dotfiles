@@ -11,6 +11,7 @@
                 "rules": [
                     {
                         "description": "Right CMD → Hyper Key (⌃⌥⇧⌘)",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": { "key_code": "right_command" },
@@ -26,6 +27,7 @@
                     },
                     {
                         "description": "Both Shifts to CAPS",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -53,6 +55,7 @@
                     },
                     {
                         "description": "CTRL to ESC if left alone",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -67,6 +70,7 @@
                     },
                     {
                         "description": "Left CMD to CMD+TAB",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": { "key_code": "left_command" },
@@ -83,6 +87,7 @@
                     },
                     {
                         "description": "Avoid starting sysdiagnose with the built-in macOS shortcut cmd+shift+option+ctrl+,",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -96,6 +101,7 @@
                     },
                     {
                         "description": "Avoid starting sysdiagnose with the built-in macOS shortcut cmd+shift+option+ctrl+.",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -109,6 +115,7 @@
                     },
                     {
                         "description": "Avoid starting sysdiagnose with the built-in macOS shortcut cmd+shift+option+ctrl+backslash",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -122,6 +129,7 @@
                     },
                     {
                         "description": "Hyper navigation keys (i/j/k/l/$/0)",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "from": {
@@ -143,6 +151,7 @@
                     },
                     {
                         "description": "i-mode insert",
+                        "enabled": false,
                         "manipulators": [
                             {
                                 "conditions": [
@@ -201,14 +210,18 @@
                     }
                 ]
             },
-            "name": "Default",
-            "selected": true,
-            "simple_modifications": [
+            "devices": [
                 {
-                    "from": { "key_code": "caps_lock" },
-                    "to": [{ "key_code": "left_control" }]
+                    "disable_built_in_keyboard_if_exists": true,
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 24926,
+                        "vendor_id": 7504
+                    }
                 }
             ],
+            "name": "Default",
+            "selected": true,
             "virtual_hid_keyboard": {
                 "country_code": 0,
                 "keyboard_type_v2": "iso"
