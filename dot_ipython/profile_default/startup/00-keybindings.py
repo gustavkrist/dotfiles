@@ -23,4 +23,7 @@ def setup_keybindings():
         event.cli.vi_state.input_mode = InputMode.NAVIGATION
 
 
-setup_keybindings()
+try:
+    setup_keybindings()
+except Exception:
+    pass
