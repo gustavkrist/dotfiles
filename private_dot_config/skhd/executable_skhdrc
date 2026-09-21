@@ -126,4 +126,4 @@ hyper - b : bash -c 'if [[ "$(yabai -m config window_border)" = "on" ]]; then ya
 # cmd - return : osascript /Users/gustavkristensen/iterm_scripts/launch_iterm.scpt
 
 # launch jukit kitty terminal
-hyper - v : bash -c 'kitty --listen-on=unix:/tmp/kitty_"$(date +%s%N)" -d ~ -1'
+hyper - v : kitten quick-access-terminal
