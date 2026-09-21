@@ -1949,6 +1949,57 @@ local autosnippets = {
       },
     },
   }),
+  s({
+    trig = "ul",
+    name = "Underline",
+    wordTrig = false,
+  }, {
+    t("\\underline{"),
+    d(1, function(_, snip)
+      local res, env = {}, snip.env
+      if env.LS_SELECT_RAW[1] ~= nil then
+        for _, ele in ipairs(env.LS_SELECT_RAW) do
+          table.insert(res, ele)
+        end
+        return sn(nil, t(res))
+      end
+      return sn(nil, i(1))
+    end),
+    t("}"),
+  }, {
+    condition = in_mathzone,
+  }),
+  s({
+    trig = "sc",
+    name = "SmallCaps",
+    wordTrig = false,
+  }, {
+    t("\\textsc{"),
+    d(1, function(_, snip)
+      local res, env = {}, snip.env
+      if env.LS_SELECT_RAW[1] ~= nil then
+        for _, ele in ipairs(env.LS_SELECT_RAW) do
+          table.insert(res, ele)
+        end
+        return sn(nil, t(res))
+      end
+      return sn(nil, i(1))
+    end),
+    t("}"),
+  }, {
+    condition = in_mathzone,
+  }),
+  s(
+    {
+      trig = "vd",
+      name = "\\vdash",
+      wordTrig = false,
+    },
+    t("\\vdash"),
+    {
+      condition = in_mathzone,
+    }
+  ),
 }
 
 -- At signs
