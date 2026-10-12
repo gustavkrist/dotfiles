@@ -38,7 +38,7 @@ yabai -m config external_bar all:40:0
 
 # -- Rules --------------------------------------------------------------------
 
-# float system preferences. Most of these just diable Yabai form resizing them.
+# float system preferences. Most of these just disable Yabai from resizing them.
 yabai -m rule --add app="^System Preferences$" sticky=on sub-layer=above manage=off
 yabai -m rule --add app="^Karabiner-Elements$" sticky=on sub-layer=above manage=off
 yabai -m rule --add app="^Karabiner-EventViewer$" sticky=on sub-layer=above manage=off
@@ -54,6 +54,7 @@ yabai -m rule --add app="^Notes$" manage=off
 yabai -m rule --add app="^python$" manage=off
 yabai -m rule --add app="^NordVPN$" manage=off
 yabai -m rule --add app="^JetBrains Toolbox$" manage=off
+# yabai -m rule --add app="^Obsidian$" title="^Dropdown$" manage=off grid="10:1:0:0:1:5"
 
 # -- Misc ---------------------------------------------------------------------
 
@@ -63,6 +64,8 @@ yabai -m signal --add event=window_destroyed action="bash -c '~/.config/yabai/sc
 yabai -m signal --add event=window_created action="~/.config/yabai/scripts/refresh.sh"
 yabai -m signal --add event=window_moved action="~/.config/yabai/scripts/refresh.sh"
 yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+yabai -m signal --add app='^Obsidian$' event='window_title_changed' action="yabai -m rule --apply label=$(uuidgen) app='^Obsidian$' title='^Dropdown$' manage=off grid='10:1:0:0:1:5'"
+yabai -m signal --add app='^Obsidian$' event='window_title_changed' action="yabai -m rule --apply label=$(uuidgen) app='^Obsidian$' title!='^Dropdown$' manage=on"
 
 borders active_color=0x8081a1c1 inactive_color=0x00ffffff width=5.0 &
 echo "yabai configuration loaded.."

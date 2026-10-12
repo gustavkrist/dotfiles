@@ -37,16 +37,26 @@ shift + alt - p : yabai -m window --focus stack.prev || yabai -m window --focus 
 shift + alt - n : yabai -m window --focus stack.next || yabai -m window --focus next || yabai -m window --focus first
 
 # send window to space
-hyper - 1 : yabai -m window --space 1 --focus
-hyper - 2 : yabai -m window --space 2 --focus
-hyper - 3 : yabai -m window --space 3 --focus
-hyper - 4 : yabai -m window --space 4 --focus
-hyper - 5 : yabai -m window --space 5 --focus
-hyper - 6 : yabai -m window --space 6 --focus
-hyper - 7 : yabai -m window --space 7 --focus
-hyper - 8 : yabai -m window --space 8 --focus
-hyper - 9 : yabai -m window --space 9 --focus
-hyper - 0 : yabai -m window --space 10 --focus
+# hyper - 1 : yabai -m window --space 1 --focus
+# hyper - 2 : yabai -m window --space 2 --focus
+# hyper - 3 : yabai -m window --space 3 --focus
+# hyper - 4 : yabai -m window --space 4 --focus
+# hyper - 5 : yabai -m window --space 5 --focus
+# hyper - 6 : yabai -m window --space 6 --focus
+# hyper - 7 : yabai -m window --space 7 --focus
+# hyper - 8 : yabai -m window --space 8 --focus
+# hyper - 9 : yabai -m window --space 9 --focus
+# hyper - 0 : yabai -m window --space 10 --focus
+hyper - 1 : bash -c "SPACE=1 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 2 : bash -c "SPACE=2 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 3 : bash -c "SPACE=3 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 4 : bash -c "SPACE=4 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 5 : bash -c "SPACE=5 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 6 : bash -c "SPACE=6 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 7 : bash -c "SPACE=7 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 8 : bash -c "SPACE=8 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 9 : bash -c "SPACE=9 ~/.config/skhd/scripts/move_space_and_follow.sh"
+hyper - 0 : bash -c "SPACE=10 ~/.config/skhd/scripts/move_space_and_follow.sh"
 
 # send window to display
 shift + alt + ctrl - 1 : bash -c "DISPLAY=1 ~/.config/skhd/scripts/move_display_and_follow.sh"
@@ -56,10 +66,22 @@ shift + alt + ctrl - 2 : bash -c "DISPLAY=2 ~/.config/skhd/scripts/move_display_
 shift + alt - 1 : yabai -m display --focus 1
 shift + alt - 2 : yabai -m display --focus 2
 
+# focus spaces
+ctrl - 1 : yabai -m space --focus 1
+ctrl - 2 : yabai -m space --focus 2
+ctrl - 3 : yabai -m space --focus 3
+ctrl - 4 : yabai -m space --focus 4
+ctrl - 5 : yabai -m space --focus 5
+ctrl - 6 : yabai -m space --focus 6
+ctrl - 7 : yabai -m space --focus 7
+ctrl - 8 : yabai -m space --focus 8
+ctrl - 9 : yabai -m space --focus 9
+ctrl - 0 : yabai -m space --focus 10
+
 # -- Size ---------------------------------------------------------------------
 
 # make floating window fill screen or center
-shift + lalt + lcmd + ctrl + ralt - f : yabai -m window --grid 1:1:0:0:1:1
+# shift + lalt + lcmd + ctrl + ralt - f : yabai -m window --grid 1:1:0:0:1:1
 shift + lalt + lcmd + ctrl + ralt - c : yabai -m window --grid 9:9:2:1:5:7
 
 # resize floating window
@@ -127,3 +149,7 @@ hyper - b : bash -c 'if [[ "$(yabai -m config window_border)" = "on" ]]; then ya
 
 # launch jukit kitty terminal
 hyper - v : kitten quick-access-terminal
+
+# dropdown terminal (aka "quade mode")
+# see additional config in ~/.config/yabai/yabairc
+hyper - o : /Users/gustavkristensen/.local/bin/obsidian-dropdown
