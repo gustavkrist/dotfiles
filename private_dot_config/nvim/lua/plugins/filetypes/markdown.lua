@@ -317,7 +317,7 @@ return {
           enable = (os.getenv("TERM") or ""):find("kitty") == nil,
         },
         html = {
-          enable = false,
+          enable = true,
         },
       }
     end,
