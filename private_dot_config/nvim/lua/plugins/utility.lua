@@ -291,4 +291,52 @@ return {
     lazy = false,
     config = true,
   },
+  {
+    "FrancescoDerme/tuna.nvim",
+    init = function()
+      require("which-key").add({
+        { "<localleader>t", group = "Tuna" },
+        { "<localleader>tt", group = "Testcases" },
+        { "<localleader>td", group = "Download" },
+        { "<localleader>tg", group = "Go to" },
+      })
+    end,
+    opts = {
+      template_file = { "~/cpro/templates/template.$(JUDGE).$(FEXT)", "~/cpro/templates/template.$(FEXT)" },
+      template_cursor = { pattern = "^def main", offset = 1 },
+      downloaded_files_extension = "py",
+      downloaded_problems_path = "$(HOME)/cpro/problems/$(JUDGE)/$(PROBLEM)/solution.$(FEXT)",
+      downloaded_contests_directory = "$(HOME)/cpro/contests/$(JUDGE)/$(CONTEST)",
+      downloaded_contests_problems_path = "$(PROBLEM)/solution.$(FEXT)",
+      scratch = {
+        file = vim.fn.stdpath("cache") .. "/tuna_scratch.$(FEXT)",
+        extension = "py", -- language of the scratch when no solution buffer says otherwise
+        download = "contest", -- "contest" | "problem"
+      },
+      submit = {
+        command = 'cd ~/cpro && submitter "$(URL)" "$(LANG)" "$(FABSPATH)"',
+        -- log_file = "~/.local/state/nvim/tuna/submit.log",
+        verdict_highlight = {
+          pending = { fg = "#EBCB8B" },
+          accepted = { fg = "#A3BE8C" },
+          partial = { fg = "#EBCB8B" },
+          rejected = { fg = "#BF616A" },
+          error = { fg = "#BF616A" },
+        },
+      },
+      library = {
+        path = "~/cpro/snippets",
+      },
+      recent = {
+        ignored_directories = { "~/cpro/snippets" },
+      },
+      keymaps = {
+        preset = "<localleader>t",
+      },
+      popup_ui = {
+        total_width = 0.9,
+        total_height = 0.9,
+      },
+    },
+  },
 }

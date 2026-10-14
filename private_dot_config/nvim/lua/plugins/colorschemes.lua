@@ -22,6 +22,11 @@ return {
             require("util.lualine").load_lualine_custom_nord()
           end)
           vim.g.markview_dark_bg = "#2E3440"
+          vim.api.nvim_set_hl(0, "TunaEditable", { fg = "#B48EAD", update = true })
+          vim.api.nvim_set_hl(0, "TunaEditableBorder", { fg = "#B48EAD", update = true })
+          vim.api.nvim_set_hl(0, "TunaWrong", {fg = "#BF616A", update = true })
+          vim.api.nvim_set_hl(0, "TunaCorrect", {fg = "#A3BE8C", update = true })
+          vim.api.nvim_set_hl(0, "TunaWarning", {fg = "#D08770", update = true })
         end,
       })
       vim.cmd("colorscheme nord")

@@ -260,6 +260,15 @@ return {
           color = {},
           cond = nil,
         },
+        tuna_download = {
+          function() return require("tuna").lualine_component() end,
+          cond = function() return require("tuna.download").is_downloading() end,
+        },
+        tuna_submitting = {
+          function() return require("tuna.submit").status() end,
+          cond = function() return require("tuna.submit").is_submitting() end,
+          color = function() return require("tuna.submit").status_hl() end,
+        },
       }
       local statusbar = {
         options = {
@@ -269,6 +278,7 @@ return {
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
           disabled_filetypes = { "ministarter", "snacks_dashboard", "dap-view", "dap-repl" },
+          ignore_focus = { "tuna" },
         },
         sections = {
           lualine_a = {
@@ -284,6 +294,8 @@ return {
           },
           lualine_x = {
             components.diagnostics,
+            components.tuna_download,
+            components.tuna_submitting,
             components.lsp,
             components.copilot,
             components.spaces,
@@ -369,6 +381,8 @@ return {
             color = function()
               return require("ipynb.kernel").statusline_color() end,
           },
+          components.tuna_download,
+          components.tuna_submitting,
           components.copilot,
           components.spaces,
           components.filetype,
