@@ -2,22 +2,28 @@
 import os
 import subprocess
 
-managed = subprocess.run(["chezmoi", "managed"], capture_output=True).stdout.decode()
+managed = subprocess.run(
+    ["chezmoi", "managed", "--path-style", "absolute"], capture_output=True, check=False
+).stdout.decode()
 files = [
     file
     for file in managed.splitlines()
-    if not os.path.isdir(f"{os.getenv('HOME')}/{file}")
+    if not os.path.isdir(file)
 ]
 fzf = subprocess.Popen(
     [
         "fzf",
         "-m",
         "--preview",
-        f"bat --theme Nord --style=numbers --color=always --line-range :500 '{os.getenv('HOME')}/{{}}'",
+        "bat --theme Nord --style=numbers --color=always --line-range :500 '{}'",
     ],
     stdin=subprocess.PIPE,
     stdout=subprocess.PIPE,
 )
 files_to_edit = fzf.communicate("\n".join(files).encode())[0].decode().splitlines()
 if files_to_edit:
-    subprocess.run(["chezmoi", "edit", "--apply"] + [f"{os.getenv('HOME')}/{file}" for file in files_to_edit])
+    _ = subprocess.run(
+        ["chezmoi", "edit", "--apply", "--watch"]
+        + files_to_edit,
+        check=False,
+    )

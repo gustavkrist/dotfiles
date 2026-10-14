@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+import os
+import subprocess
+
+cm_path = subprocess.run(
+    ["chezmoi", "source-path"], capture_output=True, check=False
+).stdout.decode().strip()
+reload = f"reload:rg --column --color=always --smart-case {{q}} {cm_path} || :"
+fzf = subprocess.Popen(
+    [
+        "fzf",
+        "--height",
+        "90%",
+        "--disabled",
+        "--ansi",
+        "--bind",
+        f"start:{reload}",
+        "--bind",
+        f"change:{reload}",
+        "--delimiter",
+        ":",
+        "--accept-nth",
+        "{1}|{2}",
+        "--freeze-right",
+        "1",
+        "--hscroll-off",
+        "50",
+        "--preview",
+        "bat --style=full --color=always --highlight-line {2} {1}",
+        "--preview-window",
+        "~4,+{2}+4/3,<80(up)",
+    ],
+    stdin=subprocess.PIPE,
+    stdout=subprocess.PIPE,
+)
+output = fzf.communicate()[0].decode().strip().split("|")
+if len(output) > 1:
+    file, line = output
+    os.environ["EDITOR"] = f"nvim +{line}"
+    file = subprocess.run(
+        ["chezmoi", "target-path", file],
+        capture_output=True,
+        check=False,
+    ).stdout.decode().strip()
+    _ = subprocess.run(
+        ["chezmoi", "edit", "--apply", "--watch", file],
+        check=False,
+    )

@@ -153,6 +153,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type d --hidden --follow --exclude .git"
 export FZF_ALT_C_OPTS="--preview 'tree -L 1 -C --dirsfirst {} | head -200'"
 export FZF_TMUX_OPTS="-p 70%"
+export FZF_MARKS_JUMP="^F"
 
 # Use fd for fuzzy completion
 _fzf_compgen_path() {
@@ -253,6 +254,12 @@ _cmedit() {
 }
 zle -N _cmedit
 bindkey "^O" _cmedit
+
+_cmgrep() {
+  $HOME/.local/bin/cmgrep
+}
+zle -N _cmgrep
+bindkey "^G" _cmgrep
 
 {{ if eq .chezmoi.hostname "Puzzel-PF3M3GAA" }}
 _kubectl_get_resource_fzf () {
