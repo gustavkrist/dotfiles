@@ -81,6 +81,31 @@ local snippets = {
   ),
 }
 
+local cpro = {
+  s(
+    { trig = "skl", desc = "Skip line in stdin" },
+    t("_ = stdin.readline()")
+  ),
+  s(
+    { trig = "1int", desc = "Read 1 integer from stdin" },
+    t("n = int(stdin.readline())")
+  ),
+  s(
+    { trig = "2int", desc = "Read 2 comma separated integers from stdin" },
+    t("n, m = map(int, stdin.readline().strip().split())")
+  ),
+  s(
+    { trig = "1fl", desc = "Read 1 float from stdin" },
+    t("n = float(stdin.readline())")
+  ),
+  s(
+    { trig = "2fl", desc = "Read 2 comma separated floats from stdin" },
+    t("n, m = map(float, stdin.readline().strip().split())")
+  ),
+}
+
+vim.list_extend(snippets, cpro)
+
 local autosnippets = {
   s({
     trig = "ifmain",
