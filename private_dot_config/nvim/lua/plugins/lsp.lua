@@ -10,7 +10,6 @@ return {
     },
     config = function()
       local servers = {
-        basedpyright = { enable = true, install = true },
         bashls = { enable = true, install = true },
         clangd = { enable = true, install = true },
         codelldb = { enable = false, install = true },
@@ -27,6 +26,7 @@ return {
         texlab = { enable = true, install = true },
         tinymist = { enable = true, install = true },
         ts_ls = { enable = true, install = true },
+        ty = { enable = true, install = false },
         vimls = { enable = true, install = true },
         vue_ls = { enable = true, install = true },
         yamlls = { enable = true, install = true },
@@ -190,7 +190,6 @@ return {
     config = function()
       local linters_by_ft = {
         lua = { "stylua" },
-        python = { "mypy" },
         vue = { "eslint" },
       }
       local executable_linters = {}
