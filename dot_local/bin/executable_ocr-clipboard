@@ -1,0 +1,71 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.15"
+# dependencies = [
+#     "markdownify",
+#     "openai",
+#     "Pillow",
+#     "pyperclip",
+# ]
+# ///
+
+
+import base64
+import io
+import subprocess
+
+import openai
+import pyperclip
+from markdownify import markdownify as md
+from PIL import ImageGrab
+from PIL.Image import Image
+
+client = openai.Client(base_url="http://127.0.0.1:8000/v1", api_key="1234")
+
+clipboard_image = ImageGrab.grabclipboard()
+if isinstance(clipboard_image, Image):
+    buffer = io.BytesIO()
+    clipboard_image.save(buffer, format="PNG")
+    img_bytes = buffer.getvalue()
+    base64_img = base64.b64encode(img_bytes)
+    base64_img_str = base64_img.decode("utf-8")
+
+    response = client.responses.create(
+        model="glm-ocr",
+        input=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "input_image",
+                        "image_url": f"data:image/png;base64,{base64_img_str}",
+                    },
+                ],
+            }
+        ],
+    )
+    text = response.output_text
+    if "</table>" in text:
+        text = md(
+            text,
+            escape_asterisks=False,
+            escape_underscores=False,
+            escape_misc=False,
+            strip_document=None,
+            strip_pre=None,
+            table_infer_header=True,
+        )
+    pyperclip.copy(text)
+    _ = subprocess.run(
+        ["osascript", "-e", 'display notification "OCR Done" with title "OCR done"'],
+        check=False,
+    )
+else:
+    _ = subprocess.run(
+        [
+            "osascript",
+            "-e",
+            'display notification "No image" with title "No image in clipboard"',
+        ],
+        check=False,
+    )

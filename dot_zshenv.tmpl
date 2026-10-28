@@ -44,6 +44,13 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
 {{- if eq .chezmoi.os "darwin" }}
 export PATH=$PATH:$HOME/.npm-global-bin
+
+# oMLX: CLI shim path begin
+case ":$PATH:" in
+  *":$HOME/.omlx/bin:"*) ;;
+  *) export PATH="$HOME/.omlx/bin:$PATH" ;;
+esac
+# oMLX: CLI shim path end
 {{- else if eq (substr 0 6 (env "WSL_DISTRO_NAME")) "Ubuntu" }}
 export PATH=$PATH:$HOME/.npm-global/bin
 export PATH="$PATH:/usr/local/cuda/bin"
@@ -63,8 +70,7 @@ export PATH="/mnt/c/Windows:$PATH"
 export PATH="$PYENV_ROOT/bin:$PATH"
 {{- end }}
 {{- end }}
-export PATH=$PATH:$HOME/.ghcup/bin
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.ghcup/bin"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$HOME/.dotnet"
 export PATH="$PATH:$HOME/.dotnet/tools"

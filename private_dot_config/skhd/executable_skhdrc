@@ -152,4 +152,6 @@ hyper - v : kitten quick-access-terminal
 
 # dropdown terminal (aka "quade mode")
 # see additional config in ~/.config/yabai/yabairc
-hyper - o : /Users/gustavkristensen/.local/bin/obsidian-dropdown
+# hyper - o : /Users/gustavkristensen/.local/bin/obsidian-dropdown
+
+hyper - o : /Users/gustavkristensen/.local/bin/ocr-clipboard
