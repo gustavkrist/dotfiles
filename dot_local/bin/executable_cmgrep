@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
 import os
+import re
 import subprocess
 
-cm_path = subprocess.run(
-    ["chezmoi", "source-path"], capture_output=True, check=False
-).stdout.decode().strip()
-reload = f"reload:rg --column --color=always --smart-case {{q}} {cm_path} || :"
+cm_path = (
+    subprocess.run(["chezmoi", "source-path"], capture_output=True, check=False)
+    .stdout.decode()
+    .strip()
+)
+cm_abbrev = "/" + "/".join(re.findall(r"/(\.?\w)", cm_path))
+reload = f"reload:rg --column --color=always --smart-case {{q}} {cm_path} | sed 's:{cm_path}:{cm_abbrev}:g; s:/private_dot_config/:/.config/:g'|| :"
 fzf = subprocess.Popen(
     [
         "fzf",
@@ -26,9 +30,9 @@ fzf = subprocess.Popen(
         "--hscroll-off",
         "50",
         "--preview",
-        "bat --style=full --color=always --highlight-line {2} {1}",
+        f'bat --style=full --color=always --highlight-line {{2}} $(echo {{1}} | sed "s:{cm_abbrev}:{cm_path}:; s:/.config/:/private_dot_config/:")',
         "--preview-window",
-        "~4,+{2}+4/3,<80(up)",
+        "~4,+{2}+4/3,<80(down)",
     ],
     stdin=subprocess.PIPE,
     stdout=subprocess.PIPE,
@@ -36,12 +40,18 @@ fzf = subprocess.Popen(
 output = fzf.communicate()[0].decode().strip().split("|")
 if len(output) > 1:
     file, line = output
+    file = file.replace(cm_abbrev, cm_path)
+    file = file.replace("/.config/", "/private_dot_config/")
     os.environ["EDITOR"] = f"nvim +{line}"
-    file = subprocess.run(
-        ["chezmoi", "target-path", file],
-        capture_output=True,
-        check=False,
-    ).stdout.decode().strip()
+    file = (
+        subprocess.run(
+            ["chezmoi", "target-path", file],
+            capture_output=True,
+            check=False,
+        )
+        .stdout.decode()
+        .strip()
+    )
     _ = subprocess.run(
         ["chezmoi", "edit", "--apply", "--watch", file],
         check=False,

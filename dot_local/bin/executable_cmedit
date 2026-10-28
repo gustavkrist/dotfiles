@@ -14,8 +14,12 @@ fzf = subprocess.Popen(
     [
         "fzf",
         "-m",
+        "--height",
+        "90%",
         "--preview",
         "bat --theme Nord --style=numbers --color=always --line-range :500 '{}'",
+        "--preview-window",
+        "~4,+{2}+4/3,<80(down)",
     ],
     stdin=subprocess.PIPE,
     stdout=subprocess.PIPE,
