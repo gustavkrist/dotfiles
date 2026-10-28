@@ -292,7 +292,7 @@ return {
     config = true,
   },
   {
-    "gustavkrist/tuna.nvim",
+    "FrancescoDerme/tuna.nvim",
     init = function()
       require("which-key").add({
         { "<leader>t", group = "Tuna" },
@@ -300,6 +300,23 @@ return {
         { "<leader>td", group = "Download" },
         { "<leader>tg", group = "Go to" },
       })
+    end,
+    config = function(_, opts)
+      require("tuna").setup(opts)
+      utils = require("tuna.utils")
+      local template = require("tuna.workspace.scaffold").template
+      require("tuna.workspace.scaffold").template = function(role, ext, cfg, filepath, task)
+        local file_extension = vim.fn.fnamemodify(filepath, ":e")
+        if cfg.init_command[file_extension] then
+          local cmd = utils.eval_command(filepath, cfg.init_command[file_extension])
+          if cmd then
+            local argv = vim.list_extend({ cmd.exec }, cmd.args)
+            utils.ensure_directory(vim.fn.fnamemodify(filepath, ":h"))
+            vim.system(argv, { cwd = vim.fn.fnamemodify(filepath, ":h") }):wait()
+          end
+        end
+        return template(role, ext, cfg, filepath, task)
+      end
     end,
     opts = {
       scaffold = {
@@ -325,10 +342,10 @@ return {
         end
         return line
       end,
-      downloaded_files_extension = "py",
-      downloaded_problems_path = "$(HOME)/cpro/problems/$(JUDGE)/$(PROBLEM)/solution.$(FEXT)",
+      downloaded_files_extension = "fs",
+      downloaded_problems_path = "$(HOME)/cpro/problems/$(JUDGE)/$(PROBLEM)/Program.$(FEXT)",
       downloaded_contests_directory = "$(HOME)/cpro/contests/$(JUDGE)/$(CONTEST)",
-      downloaded_contests_problems_path = "$(PROBLEM)/solution.$(FEXT)",
+      downloaded_contests_problems_path = "$(PROBLEM)/Program.$(FEXT)",
       scratch = {
         file = vim.fn.stdpath("cache") .. "/tuna_scratch.$(FEXT)",
         extension = "py", -- language of the scratch when no solution buffer says otherwise
