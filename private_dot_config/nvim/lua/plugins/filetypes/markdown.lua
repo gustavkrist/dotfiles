@@ -111,6 +111,7 @@ return {
       vim.g.bullets_checkbox_markers = " ox"
       vim.g.bullets_enabled_file_types = { "markdown", "text", "typst" }
       vim.g.bullets_set_mappings = 0
+      vim.g.bullets_renumber_on_change = 0
       vim.g.bullets_custom_mappings = {
         { "imap", "<cr>", "<Plug>(bullets-newline)" },
         { "inoremap", "<C-cr>", "<cr>" },
@@ -120,7 +121,7 @@ return {
         { "vmap", "gN", "<Plug>(bullets-renumber)" },
         { "nmap", "gN", "<Plug>(bullets-renumber)" },
 
-        { "nmap", "<leader>x", "<Plug>(bullets-toggle-checkbox)" },
+        -- { "nmap", "<leader>x", "<Plug>(bullets-toggle-checkbox)" },
 
         { "imap", "<C-t>", "<Plug>(bullets-demote)" },
         -- { 'nmap', '>>', '<Plug>(bullets-demote)' },
@@ -209,6 +210,22 @@ return {
                 return item.indent > 1
               end,
             },
+            marker_dot = {
+              text = function (_, item)
+                return item.marker
+              end,
+              hl = "@markup.list.markdown",
+              add_padding = true,
+              conceal_on_checkboxes = true
+            },
+            marker_parenthesis = {
+              text = function (_, item)
+                return item.marker
+              end,
+              hl = "@markup.list.markdown",
+              add_padding = true,
+              conceal_on_checkboxes = true
+            }
           },
           horizontal_rules = {
             parts = {

@@ -28,7 +28,6 @@ return {
           { "<leader>og", group = "Open in GitHub.." },
           { "<leader>q", group = "Quickfix" },
           { "<leader>s", group = "Search" },
-          { "<leader>t", group = "Terminal" },
           { "<leader>u", group = "Toggles" },
         },
       }

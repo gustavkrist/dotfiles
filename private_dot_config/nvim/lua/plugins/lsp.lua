@@ -16,7 +16,7 @@ return {
         codelldb = { enable = false, install = true },
         ctags_lsp = { enable = true, install = false },
         elp = { enable = true, install = true },
-        fsautocomplete = { enable = true, install = true },
+        fsautocomplete = { enable = false, install = true },
         jdtls = { enable = true, install = false },
         jsonls = { enable = true, install = true },
         langium_ls = { enable = true, install = false },
@@ -149,7 +149,6 @@ return {
         },
         formatters_by_ft = {
           erlang = { "erlfmt" },
-          fsharp = { "fantomas" },
           graphql = { "prettier" },
           json = { "jq" },
           lua = { "stylua" },

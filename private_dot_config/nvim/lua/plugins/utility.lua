@@ -292,18 +292,39 @@ return {
     config = true,
   },
   {
-    "FrancescoDerme/tuna.nvim",
+    "gustavkrist/tuna.nvim",
     init = function()
       require("which-key").add({
-        { "<localleader>t", group = "Tuna" },
-        { "<localleader>tt", group = "Testcases" },
-        { "<localleader>td", group = "Download" },
-        { "<localleader>tg", group = "Go to" },
+        { "<leader>t", group = "Tuna" },
+        { "<leader>tt", group = "Testcases" },
+        { "<leader>td", group = "Download" },
+        { "<leader>tg", group = "Go to" },
       })
     end,
     opts = {
-      template_file = { "~/cpro/templates/template.$(JUDGE).$(FEXT)", "~/cpro/templates/template.$(FEXT)" },
-      template_cursor = { pattern = "^def main", offset = 1 },
+      scaffold = {
+        templates = {
+          solution = { "~/cpro/templates/template.$(JUDGE).$(FEXT)", "~/cpro/templates/template.$(FEXT)" },
+        }
+      },
+      template_cursor = function(bufnr)
+        local ft = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+        local patterns = {
+          python = { pattern = "^def main", offset = 1 },
+          fsharp = { pattern = "^let main", offset = 1 },
+        }
+        local line = 0
+        if patterns[ft] then
+          local spec = patterns[ft]
+          for i, l in ipairs(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)) do
+              if l:match(spec.pattern) then
+                  line = i + spec.offset
+                  break
+              end
+          end
+        end
+        return line
+      end,
       downloaded_files_extension = "py",
       downloaded_problems_path = "$(HOME)/cpro/problems/$(JUDGE)/$(PROBLEM)/solution.$(FEXT)",
       downloaded_contests_directory = "$(HOME)/cpro/contests/$(JUDGE)/$(CONTEST)",
@@ -312,6 +333,15 @@ return {
         file = vim.fn.stdpath("cache") .. "/tuna_scratch.$(FEXT)",
         extension = "py", -- language of the scratch when no solution buffer says otherwise
         download = "contest", -- "contest" | "problem"
+      },
+      init_command = {
+        fs = { exec = "dotnet", args = { "new", "console", "-lang", "F#" } },
+      },
+      compile_command = {
+        fsharp = { exec = "dotnet", args = { "build", "--no-restore", "--configuration", "Release", "--framework", "net10.0" } },
+      },
+      run_command = {
+        fsharp = { exec = "./bin/Release/net10.0/$(DIRNAME)" }
       },
       submit = {
         command = 'cd ~/cpro && submitter "$(URL)" "$(LANG)" "$(FABSPATH)"',
@@ -323,6 +353,7 @@ return {
           rejected = { fg = "#BF616A" },
           error = { fg = "#BF616A" },
         },
+        languages = { python = "Python 3", fsharp = "F#" },
       },
       library = {
         path = "~/cpro/snippets",
@@ -331,7 +362,8 @@ return {
         ignored_directories = { "~/cpro/snippets" },
       },
       keymaps = {
-        preset = "<localleader>t",
+        preset = "<leader>t",
+        filetypes = { "python", "fsharp" },
       },
       popup_ui = {
         total_width = 0.9,
