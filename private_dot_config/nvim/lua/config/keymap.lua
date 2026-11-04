@@ -162,9 +162,12 @@ map("n", "gcO", "O<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Commen
 map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })
 map("v", "<leader>/", "gc", { desc = "Toggle Comment", silent = true, remap = true })
 
-if (os.getenv("TERM") or ""):find("wezterm") ~= nil then
+if (vim.env.TERM or ""):find("wezterm") ~= nil then
   require("util.wezterm").setup()
 end
-if (os.getenv("TERM") or ""):find("kitty") ~= nil then
+if (vim.env.TERM or ""):find("kitty") ~= nil then
   require("util.kitty").setup()
+end
+if (vim.env.TERM or ""):find("rex") ~= nil then
+  require("util.rex").setup()
 end
