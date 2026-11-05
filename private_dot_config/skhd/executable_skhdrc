@@ -155,3 +155,5 @@ hyper - v : kitten quick-access-terminal
 # hyper - o : /Users/gustavkristensen/.local/bin/obsidian-dropdown
 
 hyper - o : /Users/gustavkristensen/.local/bin/ocr-clipboard
+
+cmd - tab: recent_space=`yabai -m query --windows --window recent | jq '.space'` && recent_window=`yabai -m query --windows --window recent | jq '.id'` && yabai -m space --focus "${recent_space}" && yabai -m window --focus "${recent_window}"
