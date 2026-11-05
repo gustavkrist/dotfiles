@@ -21,13 +21,26 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
+[diff]
+	tool = nvim_diffbandit
+[difftool]
+	prompt = false
+[difftool "nvim_diffbandit"]
+	cmd = "nvim -c \"DiffBandit \"$LOCAL\" \"$REMOTE\""
 [merge]
-	tool = vimdiff
+	tool = nvim_diffbandit
 [mergetool]
-  keepBackup = false
-  prompt = false
-[mergetool "vimdiff"]
-  cmd = "nvim -d \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" -c 'wincmd J | wincmd ='"
+	keepBackup = false
+	prompt = false
+[mergetool "nvim_diffbandit"]
+	cmd = "nvim -c ''"
+; [merge]
+; 	tool = vimdiff
+; [mergetool]
+;   keepBackup = false
+;   prompt = false
+; [mergetool "vimdiff"]
+;   cmd = "nvim -d \"$MERGED\" \"$LOCAL\" \"$BASE\" \"$REMOTE\" -c 'wincmd J | wincmd ='"
 [safe]
 	directory = /home/swuser/supwiz
 [delta]

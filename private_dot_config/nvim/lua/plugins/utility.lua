@@ -322,7 +322,7 @@ return {
       scaffold = {
         templates = {
           solution = { "~/cpro/templates/template.$(JUDGE).$(FEXT)", "~/cpro/templates/template.$(FEXT)" },
-        }
+        },
       },
       template_cursor = function(bufnr)
         local ft = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
@@ -334,10 +334,10 @@ return {
         if patterns[ft] then
           local spec = patterns[ft]
           for i, l in ipairs(vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)) do
-              if l:match(spec.pattern) then
-                  line = i + spec.offset
-                  break
-              end
+            if l:match(spec.pattern) then
+              line = i + spec.offset
+              break
+            end
           end
         end
         return line
@@ -355,10 +355,13 @@ return {
         fs = { exec = "dotnet", args = { "new", "console", "-lang", "F#" } },
       },
       compile_command = {
-        fsharp = { exec = "dotnet", args = { "build", "--no-restore", "--configuration", "Release", "--framework", "net10.0" } },
+        fsharp = {
+          exec = "dotnet",
+          args = { "build", "--no-restore", "--configuration", "Release", "--framework", "net10.0" },
+        },
       },
       run_command = {
-        fsharp = { exec = "./bin/Release/net10.0/$(DIRNAME)" }
+        fsharp = { exec = "./bin/Release/net10.0/$(DIRNAME)" },
       },
       submit = {
         command = 'cd ~/cpro && submitter "$(URL)" "$(LANG)" "$(FABSPATH)"',
@@ -383,9 +386,33 @@ return {
         filetypes = { "python", "fsharp" },
       },
       popup_ui = {
-        total_width = 0.9,
-        total_height = 0.9,
+        width = 0.9,
+        height = 0.9,
       },
+    },
+  },
+  {
+    "CoreyKaylor/diffbandit.nvim",
+    opts = {
+      actions = {
+        keys = {
+          toggle_stage = "<leader>gs",
+        },
+      },
+      ui = {
+        theme = {
+          background = "#2E3440",
+        }
+      }
+    },
+    cmd = {
+      "DiffBandit",
+      "DiffBanditFolderDiff",
+      "DiffBanditGit",
+      "DiffBanditGitBuffers",
+      "DiffBanditGitCurrent",
+      "DiffBanditLaunch",
+      "DiffBanditMerge",
     },
   },
 }
