@@ -8,9 +8,65 @@ rex.bind(mod .. "h", "client.tab.previous")
 rex.bind(mod .. ",", "client.tab.move.backward")
 rex.bind(mod .. ".", "client.tab.move.forward")
 
+local function selected_session_pref()
+  local result = rex.exec(
+    { "/usr/bin/defaults", "read", "com.superlogical.rex", "Workspace.lastFocusedSession" },
+    { timeout = 2 }
+  )
+  if result == nil or not result.ok then
+    return nil
+  end
+  return (result.stdout:gsub("%s+$", ""))
+end
+
+rex.action({
+  name = "session_switch_collapse",
+  title = "Change Session and Collapse Others",
+  description = "Open the session switcher, wait for a session to be chosen, then fold every other session.",
+  run = function(ctx, args)
+    if ctx.client_id == nil then
+      error("Run this action from Rex, not the command line", 0)
+    end
+    --
+    local before = selected_session_pref()
+    if before == nil then
+      -- The app's preference isn't readable here, which happens on a remote
+      -- host. Fall back to opening the switcher alone.
+      rex.client.queue("session.switch")
+      return
+    end
+
+    -- The app answers as soon as it presents the switcher, so watch its
+    -- recorded selection instead of waiting on the action itself.
+    local performed, err = rex.call("client.perform", {
+      client_id = ctx.client_id,
+      action = "session.switch",
+      origin = "key",
+      timeout_ms = 10000,
+    })
+    if performed == nil then
+      error(err, 0)
+    end
+
+    local poll = table.concat({
+      "before=$1",
+      "for _ in $(seq 1 110); do",
+      '  now=$(/usr/bin/defaults read com.superlogical.rex "Workspace.lastFocusedSession" 2>/dev/null) || exit 2',
+      '  [ "$now" != "$before" ] && exit 0',
+      "  /bin/sleep 0.2",
+      "done",
+      "exit 3",
+    }, "\n")
+    local result = rex.exec({ "/bin/sh", "-c", poll, "sh", before }, { timeout = 26 })
+    if result ~= nil and result.ok then
+      rex.client.queue("session.collapse_others")
+    end
+  end,
+})
+
 rex.bind(mod .. "s>n", "session.new")
-rex.bind(mod .. "s>s", "session.switch")
-rex.bind(mod .. "s>" .. mod .. "s", "session.switch")
+rex.bind(mod .. "s>s", "session_switch_collapse")
+rex.bind(mod .. "s>" .. mod .. "s", "session_switch_collapse")
 rex.bind(mod .. "s>r", "session.rename")
 rex.bind(mod .. "s>" .. mod .. "r", "session.rename")
 rex.bind(mod .. "s>x", "session.close")
