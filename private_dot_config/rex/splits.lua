@@ -17,7 +17,33 @@ local function is_vim(ctx)
       return true
     end
   end
-  return false
+  for _, ancestor in ipairs(proc.ancestors or {}) do
+    if ancestor.name:match("^n?vim") then
+      return true
+    end
+  end
+  if not fg.pid then
+    return false
+  end
+  local result = rex.exec({ 'ps', '-A', '-o', 'pid=', '-o', 'pgid=', '-o', 'state=', '-o', 'comm=' }, {
+    timeout = 0.5,
+  })
+  if not result or not result.ok or result.timed_out then
+    return false
+  end
+  local groups, editors = {}, {}
+  for line in result.stdout:gmatch('[^\r\n]+') do
+    local pid, group, state, command = line:match('^%s*(%d+)%s+(%d+)%s+(%S+)%s+(.+)$')
+    if pid then
+      group = tonumber(group)
+      groups[tonumber(pid)] = group
+      local name = command:gsub('%s+$', ''):match('([^/]+)$')
+      if not state:match('^[TXZtxz]') and name:match("^n?vim") then
+        editors[group] = true
+      end
+    end
+  end
+  return editors[groups[fg.pid]] == true
 end
 
 rex.action({
@@ -50,7 +76,7 @@ rex.action({
 ---@param action "resize" | "focus"
 ---@param dir "right" | "left" | "up" | "down"
 function M.bind(key, action, dir)
-  rex.bind(key, "smart_splits", { key=key, action=action, dir=dir })
+  rex.bind(key, "smart_splits", { key = key, action = action, dir = dir })
 end
 
 return M
