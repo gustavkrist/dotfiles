@@ -153,6 +153,7 @@ return {
           json = { "jq" },
           lua = { "stylua" },
           markdown = { "injected" },
+          -- python = { "ruff" },
           rust = { "rustfmt" },
           sh = { "beautysh" },
           typescript = { "prettier" },

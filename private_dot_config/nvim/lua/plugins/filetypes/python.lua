@@ -264,44 +264,44 @@ return {
     opts = {
       keymaps = {
         -- Navigation (Notebook mode)
-        next_cell = "]]",              -- jump to next cell
-        prev_cell = "[[",              -- jump to previous cell
+        next_cell = "]]", -- jump to next cell
+        prev_cell = "[[", -- jump to previous cell
         -- Navigation (both Notebook mode and Cell mode)
-        jump_to_cell = "<localleader>kj",   -- open cell picker
+        jump_to_cell = "<localleader>kj", -- open cell picker
         -- Cell operations (Notebook mode)
-        cut_cell = "dd",               -- cut cell to register
-        paste_cell_below = "p",        -- paste cell below
-        paste_cell_above = "P",        -- paste cell above
-        move_cell_down = "<M-j>",      -- move cell down
-        move_cell_up = "<M-k>",        -- move cell up
+        cut_cell = "dd", -- cut cell to register
+        paste_cell_below = "p", -- paste cell below
+        paste_cell_above = "P", -- paste cell above
+        move_cell_down = "<M-j>", -- move cell down
+        move_cell_up = "<M-k>", -- move cell up
         -- Cell operations (both Notebook mode and Cell mode)
         add_cell_above = "<localleader>ka", -- insert cell above
         add_cell_below = "<localleader>kb", -- insert cell below
-        make_markdown = "<localleader>km",  -- convert to markdown cell
-        make_code = "<localleader>ky",      -- convert to code cell
-        make_raw = "<localleader>kr",       -- convert to raw cell
-        fold_toggle = "<localleader>kf",    -- toggle cell fold
+        make_markdown = "<localleader>km", -- convert to markdown cell
+        make_code = "<localleader>ky", -- convert to code cell
+        make_raw = "<localleader>kr", -- convert to raw cell
+        fold_toggle = "<localleader>kf", -- toggle cell fold
         -- Execution (both Notebook mode and Cell mode)
-        execute_cell = "<C-CR>",            -- execute cell, stay
-        execute_and_next = "<S-CR>",        -- execute cell, move to next
-        execute_and_insert = "<M-CR>",      -- execute cell, insert new below
-        execute_all_below = nil,            -- execute current and all below (unmapped)
-        menu_execute_cell = "<localleader>kx",   -- execute cell (menu, if <C-CR> conflicts)
+        execute_cell = "<C-CR>", -- execute cell, stay
+        execute_and_next = "<S-CR>", -- execute cell, move to next
+        execute_and_insert = "<M-CR>", -- execute cell, insert new below
+        execute_all_below = nil, -- execute current and all below (unmapped)
+        menu_execute_cell = "<localleader>kx", -- execute cell (menu, if <C-CR> conflicts)
         menu_execute_and_next = "<localleader>kX", -- execute and next (menu, if <S-CR> conflicts)
         -- Output (both Notebook mode and Cell mode)
-        open_output = "<localleader>ko",      -- open cell output in float (for copying)
-        clear_output = "<localleader>kc",     -- clear current cell output
+        open_output = "<localleader>ko", -- open cell output in float (for copying)
+        clear_output = "<localleader>kc", -- clear current cell output
         clear_all_outputs = "<localleader>kC", -- clear all outputs
         -- Kernel (both Notebook mode and Cell mode)
-        interrupt_kernel = "<C-c>",      -- interrupt execution
+        interrupt_kernel = "<C-c>", -- interrupt execution
         kernel_interrupt = "<localleader>ki", -- interrupt (menu)
-        kernel_restart = "<localleader>k0",   -- restart kernel
-        kernel_start = "<localleader>ks",     -- start kernel
-        kernel_shutdown = "<localleader>kS",  -- shutdown kernel
-        kernel_info = "<localleader>kn",      -- show kernel info
+        kernel_restart = "<localleader>k0", -- restart kernel
+        kernel_start = "<localleader>ks", -- start kernel
+        kernel_shutdown = "<localleader>kS", -- shutdown kernel
+        kernel_info = "<localleader>kn", -- show kernel info
         -- Inspector (both Notebook mode and Cell mode)
         variable_inspect = "<localleader>kh", -- inspect variable at cursor
-        cell_variables = "<localleader>kv",   -- show all variables in cell
+        cell_variables = "<localleader>kv", -- show all variables in cell
         toggle_auto_hover = "<localleader>kH", -- toggle auto-hover on CursorHold
         -- Note: i, a, I, A, o, O, <CR> enter Cell mode; <Esc> exits Cell mode
         -- Note: u, <C-r> perform global undo/redo across cells in both Notebook mode and Cell mode

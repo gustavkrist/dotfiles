@@ -261,13 +261,23 @@ return {
           cond = nil,
         },
         tuna_download = {
-          function() return require("tuna").lualine_component() end,
-          cond = function() return require("tuna.problem.download").is_downloading() end,
+          function()
+            return require("tuna").lualine_component()
+          end,
+          cond = function()
+            return require("tuna.problem.download").is_downloading()
+          end,
         },
         tuna_submitting = {
-          function() return require("tuna.problem.submit").status() end,
-          cond = function() return require("tuna.problem.submit").is_submitting() end,
-          color = function() return require("tuna.problem.submit").status_hl() end,
+          function()
+            return require("tuna.problem.submit").status()
+          end,
+          cond = function()
+            return require("tuna.problem.submit").is_submitting()
+          end,
+          color = function()
+            return require("tuna.problem.submit").status_hl()
+          end,
         },
       }
       local statusbar = {
@@ -379,7 +389,8 @@ return {
             end,
             cond = require("ipynb.kernel").statusline_visible,
             color = function()
-              return require("ipynb.kernel").statusline_color() end,
+              return require("ipynb.kernel").statusline_color()
+            end,
           },
           components.tuna_download,
           components.tuna_submitting,

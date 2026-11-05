@@ -211,21 +211,21 @@ return {
               end,
             },
             marker_dot = {
-              text = function (_, item)
+              text = function(_, item)
                 return item.marker
               end,
               hl = "@markup.list.markdown",
               add_padding = true,
-              conceal_on_checkboxes = true
+              conceal_on_checkboxes = true,
             },
             marker_parenthesis = {
-              text = function (_, item)
+              text = function(_, item)
                 return item.marker
               end,
               hl = "@markup.list.markdown",
               add_padding = true,
-              conceal_on_checkboxes = true
-            }
+              conceal_on_checkboxes = true,
+            },
           },
           horizontal_rules = {
             parts = {

@@ -24,9 +24,16 @@ return {
           vim.g.markview_dark_bg = "#2E3440"
           vim.api.nvim_set_hl(0, "TunaEditable", { fg = "#B48EAD", update = true })
           vim.api.nvim_set_hl(0, "TunaEditableBorder", { fg = "#B48EAD", update = true })
-          vim.api.nvim_set_hl(0, "TunaWrong", {fg = "#BF616A", update = true })
-          vim.api.nvim_set_hl(0, "TunaCorrect", {fg = "#A3BE8C", update = true })
-          vim.api.nvim_set_hl(0, "TunaWarning", {fg = "#D08770", update = true })
+          vim.api.nvim_set_hl(0, "TunaWrong", { fg = "#BF616A", update = true })
+          vim.api.nvim_set_hl(0, "TunaCorrect", { fg = "#A3BE8C", update = true })
+          vim.api.nvim_set_hl(0, "TunaWarning", { fg = "#D08770", update = true })
+          vim.api.nvim_set_hl(0, "CoqtailChecked", { bg = "#003200", update = true })
+          if opts.transparent then
+            vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none", update = true })
+            vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none", update = true })
+            vim.api.nvim_set_hl(0, "StatusLine", { bg = "none", update = true })
+            vim.api.nvim_set_hl(0, "TabLineFill", { bg = "none", update = true })
+          end
         end,
       })
       vim.cmd("colorscheme nord")

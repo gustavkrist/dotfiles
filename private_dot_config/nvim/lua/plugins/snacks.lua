@@ -150,7 +150,6 @@ return {
           git_signs = false,
           indent = false,
           copilot = false,
-          hardtime = false,
         },
         on_open = function()
           local lualine_ok, lualine = pcall(require, "lualine")
@@ -160,6 +159,9 @@ return {
             vim.o.laststatus = 0
           end
           require("util.wezterm").set_user_var("ZEN_MODE", "+3")
+          if require("util.rex").in_rex() then
+            require("util.rex").exec({ "do", "client.font.increase" })
+          end
         end,
         on_close = function()
           local lualine_ok, lualine = pcall(require, "lualine")
@@ -167,6 +169,9 @@ return {
             lualine.hide({ unhide = true, place = { "statusline", "tabline", "winbar" } })
           end
           require("util.wezterm").set_user_var("ZEN_MODE", "-1")
+          if require("util.rex").in_rex() then
+            require("util.rex").exec({ "do", "client.font.decrease" })
+          end
         end,
       },
     },
