@@ -1,0 +1,23 @@
+FROM node:24-bookworm-slim
+
+ARG PI_VERSION=latest
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends bash ca-certificates fd-find git ripgrep jq curl procps \
+    && ln -s /usr/bin/fdfind /usr/local/bin/fd \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g --ignore-scripts "@earendil-works/pi-coding-agent@${PI_VERSION}"
+RUN npm install -g ketch-cli
+RUN curl -fsSL https://pkgs.superlogical.com/rex/install.sh | sh
+
+RUN mkdir -p /home/node/workspace
+
+COPY --chown=node:node .agents /home/node/.agents
+COPY --chown=node:node .pi /home/node/.pi
+COPY docker-sandbox-pi/run.sh /home/node/run.sh
+
+USER node
+WORKDIR /home/node/workspace
+
+RUN rex terminfo setup

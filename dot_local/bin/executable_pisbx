@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PI_SESSION_DIR="$(pwd | gsed -s 's:\b/:-:g;s:/::;s:.*:--\0--:')"
+docker run -d -it -e NEURALWATT_API_KEY -v "$PWD:/home/node/workspace" -p 7297:7297 --name pi pi-agent:local 1>/dev/null
+mkdir -p "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/"
+docker cp "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/" pi:/home/node/.pi/agent/sessions/--home-node-workspace--/ 1>/dev/null
+docker exec -u root pi chown -R node:node /home/node/.pi/agent/sessions/--home-node-workspace--/ 1>/dev/null
+docker exec pi rex server start --extra-listen :7297 --allow-anonymous 1>/dev/null
+docker exec pi /home/node/run.sh
+docker cp pi:/home/node/.pi/agent/sessions/--home-node-workspace--/ "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/" 1>/dev/null
+mv "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/--home-node-workspace--"/* "$HOME/.pi/agent/sessions/$PI_SESSION_DIR" && rm -r "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/--home-node-workspace--" 1>/dev/null
+docker kill pi 1>/dev/null
+docker rm pi 1>/dev/null
