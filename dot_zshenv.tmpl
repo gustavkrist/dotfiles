@@ -83,10 +83,11 @@ fi
 eval "$(pyenv virtualenv-init -)"
 {{- end }}
 
-# -- CLAUDE -------------------------------------------------------------------
+# -- AI -----------------------------------------------------------------------
 
+export NEURALWATT_API_KEY={{ (bitwarden "item" "neuralwatt macbook").notes }}
 export ANTHROPIC_BASE_URL=https://api.neuralwatt.com
-export ANTHROPIC_AUTH_TOKEN={{ (bitwarden "item" "neuralwatt macbook").notes }}
+export ANTHROPIC_AUTH_TOKEN="$NEURALWATT_API_KEY"
 export ANTHROPIC_MODEL=deepseek-v4.1-flash
 export ANTHROPIC_DEFAULT_OPUS_MODEL=deepseek-v4.1-flash
 export ANTHROPIC_DEFAULT_SONNET_MODEL=deepseek-v4.1-flash
