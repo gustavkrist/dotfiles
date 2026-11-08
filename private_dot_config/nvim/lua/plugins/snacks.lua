@@ -94,6 +94,21 @@ return {
             filename_first = true,
           },
         },
+        actions = {
+          sidekick_send = function(...)
+            return require("sidekick.cli.picker.snacks").send(...)
+          end,
+        },
+        win = {
+          input = {
+            keys = {
+              ["<a-a>"] = {
+                "sidekick_send",
+                mode = { "n", "i" },
+              },
+            },
+          },
+        },
       },
       quickfile = { enabled = true },
       scratch = {
@@ -465,7 +480,7 @@ return {
             Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
             Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
             Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
-            Snacks.toggle.diagnostics():map("<leader>ud")
+            Snacks.toggle.diagnostics():map("<leader>uD")
             Snacks.toggle.line_number():map("<leader>ul")
             Snacks.toggle
               .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
@@ -478,12 +493,6 @@ return {
             require("util.plugins").on_load("which-key.nvim", function()
               require("which-key").add({ "<leader>og", group = "Open in GitHub..." })
             end)
-            vim.api.nvim_create_autocmd("User", {
-              pattern = "MiniFilesActionRename",
-              callback = function(event)
-                Snacks.rename.on_rename_file(event.data.from, event.data.to)
-              end,
-            })
           end
         end,
       })

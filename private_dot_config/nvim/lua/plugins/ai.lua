@@ -50,7 +50,17 @@ return {
       cli = {
         mux = {
           backend = "tmux",
-          enabled = true,
+          enabled = false,
+        },
+        win = {
+          split = {
+            width = 50,
+          },
+        },
+        tools = {
+          pisbx = {
+            cmd = { "pisbx", "--no-rex" },
+          },
         },
       },
     },
@@ -75,13 +85,6 @@ return {
         mode = { "n", "t", "i", "x" },
       },
       {
-        "<leader>aa",
-        function()
-          require("sidekick.cli").toggle()
-        end,
-        desc = "Sidekick Toggle CLI",
-      },
-      {
         "<leader>as",
         -- function() require("sidekick.cli").select() end,
         -- Or to select only installed tools:
@@ -89,13 +92,6 @@ return {
           require("sidekick.cli").select({ filter = { installed = true } })
         end,
         desc = "Select CLI",
-      },
-      {
-        "<leader>ad",
-        function()
-          require("sidekick.cli").close()
-        end,
-        desc = "Detach a CLI Session",
       },
       {
         "<leader>at",
@@ -128,11 +124,17 @@ return {
         mode = { "n", "x" },
         desc = "Sidekick Select Prompt",
       },
-      -- Example of a keybinding to open Claude directly
       {
         "<leader>ac",
         function()
           require("sidekick.cli").toggle({ name = "claude", focus = true })
+        end,
+        desc = "Sidekick Toggle Claude",
+      },
+      {
+        "<leader>aa",
+        function()
+          require("sidekick.cli").toggle({ name = "pisbx", focus = true })
         end,
         desc = "Sidekick Toggle Claude",
       },

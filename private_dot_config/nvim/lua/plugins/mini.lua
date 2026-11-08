@@ -194,14 +194,30 @@ return {
       end)
       if vim.g.vscode == nil then
         require("mini.cursorword").setup()
-        require("mini.files").setup({
-          windows = {
-            preview = true,
-            width_preview = 30,
+        local diff = require("mini.diff")
+        diff.setup({
+          source = {
+            diff.gen_source.git(),
+            diff.gen_source.save(),
           },
-          options = {
-            use_as_default_explorer = false,
-          },
+        })
+        Snacks.toggle({
+          id = "MiniDiff",
+          name = "MiniDiff",
+          get = function()
+            return not vim.b.minidiff_disable
+          end,
+          set = function(state)
+            vim.b.minidiff_disable = not state
+            MiniDiff.toggle()
+            MiniDiff.toggle_overlay()
+          end,
+        }):map("<leader>ud")
+        vim.api.nvim_create_autocmd("BufWinEnter", {
+          group = vim.api.nvim_create_augroup("minidiff_disable", { clear = true }),
+          callback = function(ev)
+            vim.b[ev.buf].minidiff_disable = true
+          end
         })
         require("util.plugins").on_very_lazy(function()
           require("mini.trailspace").setup()
@@ -348,20 +364,6 @@ return {
       keys = {}
       if vim.g.started_by_firenvim == nil and vim.g.vscode == nil then
         vim.list_extend(keys, {
-          -- {
-          --   "<leader>e",
-          --   function()
-          --     minifiles_open_cwd(false)
-          --   end,
-          --   desc = "File Explorer",
-          -- },
-          -- {
-          --   "<leader>E",
-          --   function()
-          --     minifiles_open_cwd(true)
-          --   end,
-          --   desc = "File Explorer (fresh)",
-          -- },
           { "<leader>Sn", write_new_session, desc = "New session" },
           { "<leader>Ss", "<cmd>lua MiniSessions.select()<cr>", desc = "Select a session" },
           { "<leader>Sw", "<cmd>lua MiniSessions.write()<cr>", desc = "Write current session" },
