@@ -63,7 +63,7 @@ rex.action({
       rex.client.queue("pane.send_key", { key = args.key })
     else
       if args.action == "focus" then
-        rex.session.focus_direction({ direction = args.dir })
+        rex.client.queue("pane.focus." .. args.dir)
       elseif args.action == "resize" then
         rex.client.queue("pane.resize", { direction = args.dir, amount = 3 })
       end

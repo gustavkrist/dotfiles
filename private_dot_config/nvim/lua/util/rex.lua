@@ -40,7 +40,7 @@ function M.setup()
       local opts = { text = true }
       if vim.system and M.in_rex() and win == vim.api.nvim_get_current_win() then
         local pane_dir = nav[dir]
-        vim.system({ rex_prog, "do", "pane.focus", "direction=" .. pane_dir }, opts, function(p)
+        vim.system({ rex_prog, "do", "pane.focus.".. pane_dir }, opts, function(p)
           if p.code ~= 0 then
             vim.notify(
               "Failed to move to pane " .. pane_dir .. "\n" .. p.stderr,
@@ -57,6 +57,8 @@ function M.setup()
   for key, dir in pairs(nav) do
     vim.keymap.set("n", "<C-" .. key .. ">", navigate(key), { desc = "Go to " .. dir .. " window" })
   end
+
+  vim.env.SNACKS_GHOSTTY = "true"
 end
 
 return M
