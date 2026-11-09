@@ -21,7 +21,3 @@ USER node
 WORKDIR /home/node/workspace
 
 RUN rex terminfo setup
-
-COPY --chown=node:node .agents /home/node/.agents
-COPY --chown=node:node .pi /home/node/.pi
-COPY docker-sandbox-pi/run.sh /home/node/run.sh
