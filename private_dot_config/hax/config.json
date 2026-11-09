@@ -1,0 +1,39 @@
+{
+    "no_subagents": true,
+    "theme": "ansi",
+    "providers": {
+        "neuralwatt": {
+            "display_name": "nw",
+            "api": "openai-completions",
+            "base_url": "https://api.neuralwatt.com/v1",
+            "api_key_env": "NEURALWATT_API_KEY",
+            "catalog_id": "neuralwatt"
+        }
+    },
+    "presets": {
+        "base": {
+            "description": "low cost, pretty good",
+            "provider": "neuralwatt",
+            "model": "deepseek-v4-flash",
+            "effort": "high"
+        },
+        "flex": {
+            "description": "slow, lower cost",
+            "provider": "neuralwatt",
+            "model": "deepseek-v4-flash-flex",
+            "effort": "high"
+        },
+        "smart": {
+            "description": "big smart model",
+            "provider": "neuralwatt",
+            "model": "kimi-k3",
+            "effort": "high"
+        },
+        "smart-flex": {
+            "description": "big smart model (slow, cheaper)",
+            "provider": "neuralwatt",
+            "model": "kimi-k3-flex",
+            "effort": "high"
+        }
+    }
+}
