@@ -32,17 +32,17 @@ if [ "$USE_REX" = 1 ]; then
     PORT_ARGS=(-p 7297:7297)
 fi
 
-docker run -d -it -e NEURALWATT_API_KEY -v "$PWD:/home/node/workspace" ${PORT_ARGS[@]+"${PORT_ARGS[@]}"} --name pi pi-agent:local 1>/dev/null
+CONTAINER=$(docker run -d -it -e NEURALWATT_API_KEY -v "$PWD:/home/node/workspace" ${PORT_ARGS[@]+"${PORT_ARGS[@]}"} pi-agent:local)
 mkdir -p "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/"
-docker cp "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/" pi:/home/node/.pi/agent/sessions/--home-node-workspace--/ 1>/dev/null
-docker exec -u root pi chown -R node:node /home/node/.pi/agent/sessions/--home-node-workspace--/ 1>/dev/null
+docker cp "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/" "$CONTAINER:/home/node/.pi/agent/sessions/--home-node-workspace--/" 1>/dev/null
+docker exec -u root "$CONTAINER" chown -R node:node /home/node/.pi/agent/sessions/--home-node-workspace--/ 1>/dev/null
 if [ "$USE_REX" = 1 ]; then
-    docker exec pi rex server start --extra-listen :7297 --allow-anonymous 1>/dev/null
-    docker exec pi /home/node/run.sh ${ARGS[@]+"${ARGS[@]}"}
+    docker exec "$CONTAINER" rex server start --extra-listen :7297 --allow-anonymous 1>/dev/null
+    docker exec "$CONTAINER" /home/node/run.sh ${ARGS[@]+"${ARGS[@]}"}
 else
-    docker exec -it pi pi ${ARGS[@]+"${ARGS[@]}"}
+    docker exec -it "$CONTAINER" pi ${ARGS[@]+"${ARGS[@]}"}
 fi
-docker cp pi:/home/node/.pi/agent/sessions/--home-node-workspace--/ "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/" 1>/dev/null
+docker cp "$CONTAINER:/home/node/.pi/agent/sessions/--home-node-workspace--/" "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/" 1>/dev/null
+docker kill "$CONTAINER" 1>/dev/null
+docker rm "$CONTAINER" 1>/dev/null
 mv "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/--home-node-workspace--"/* "$HOME/.pi/agent/sessions/$PI_SESSION_DIR" && rm -r "$HOME/.pi/agent/sessions/$PI_SESSION_DIR/--home-node-workspace--" 1>/dev/null
-docker kill pi 1>/dev/null
-docker rm pi 1>/dev/null
