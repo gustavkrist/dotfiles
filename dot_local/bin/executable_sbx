@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Run the rex server + run.sh by default; skip both with --no-rex or SBX_NO_REX.
+# Anything before `--` belongs to sbx; only args after `--` are forwarded.
+USE_REX=1
+ARGS=()
+SEEN_SEP=0
+for arg in "$@"; do
+    if [ "$SEEN_SEP" = 1 ]; then
+        ARGS+=("$arg")
+        continue
+    fi
+    case "$arg" in
+        --) SEEN_SEP=1 ;;
+        --no-rex) USE_REX=0 ;;
+        *)
+            echo "sbx: unexpected argument '$arg'; pass agent args after '--'" >&2
+            exit 2
+            ;;
+    esac
+done
+if [ -n "${SBX_NO_REX:-}" ]; then
+    USE_REX=0
+fi
+
+if [ "${#ARGS[@]}" -eq 0 ]; then
+    echo "sbx: no agent args given; pass them after '--'" >&2
+    exit 2
+fi
+
+# The rex port is only published when the in-container rex server runs.
+PORT_ARGS=()
+if [ "$USE_REX" = 1 ]; then
+    PORT_ARGS=(-p 7297:7297)
+fi
+
+# Mount the host .pi state only when the agent being launched is pi.
+MOUNT_ARGS=()
+if [ "${ARGS[0]:-}" = pi ]; then
+    PI_SESSION_DIR="$(pwd | gsed -s 's:\b/:-:g;s:/::;s:.*:--\0--:')"
+    MOUNT_ARGS+=(-v "$HOME/.pi:/home/node/.pi")
+    MOUNT_ARGS+=(-v "$HOME/.pi/agent/sessions/$PI_SESSION_DIR:/home/node/.pi/agent/sessions/--home-node-workspace--")
+fi
+
+if [ "${ARGS[0]:-}" = hax ]; then
+    HAX_PWD="$(pwd | gsed -s 's:\b/:-:g;s:/::')"
+    HAX_SESSION_DIR="$(fd "^$HAX_PWD\.\w+$" $HOME/.local/state/hax/sessions)"
+    HAX_DIR_BASENAME="$(basename "$HAX_SESSION_DIR")"
+    MOUNT_ARGS+=(-v "$HOME/.config/hax:/home/node/.config/hax")
+    MOUNT_ARGS+=(-v "$HOME/.config/hax-mcp:/home/node/.config/hax-mcp")
+    MOUNT_ARGS+=(-v "$HOME/.local/state/hax:/home/node/.local/state/hax")
+    MOUNT_ARGS+=(-v "$HAX_SESSION_DIR:/home/node/.local/state/hax/sessions/home-node-workspace.b802cdebdfe3c1de")
+    MOUNT_ARGS+=(-v "$HOME/.local/state/hax-mcp:/home/node/.local/state/hax-mcp")
+fi
+
+HOST_WORKDIR=$(pwd | gsed -s "s:$HOME:~:")
+
+CONTAINER=$(docker run -d -it -e HOST_WORKDIR="$HOST_WORKDIR" -e NEURALWATT_API_KEY -v "$PWD:/home/node/workspace" ${MOUNT_ARGS[@]+"${MOUNT_ARGS[@]}"} -v "$HOME/.agents:/home/node/.agents" ${PORT_ARGS[@]+"${PORT_ARGS[@]}"} agent-sbx:local)
+if [ "$USE_REX" = 1 ]; then
+    docker exec "$CONTAINER" rex server start --extra-listen :7297 --allow-anonymous 1>/dev/null
+    docker cp "$HOME/agent-sandbox/run.sh" "$CONTAINER:/home/node/run.sh" 1>/dev/null
+    sleep 0.5
+    docker exec "$CONTAINER" /home/node/run.sh ${ARGS[@]+"${ARGS[@]}"}
+else
+    docker exec -it "$CONTAINER" ${ARGS[@]+"${ARGS[@]}"}
+fi
+docker kill "$CONTAINER" 1>/dev/null
+docker rm "$CONTAINER" 1>/dev/null
