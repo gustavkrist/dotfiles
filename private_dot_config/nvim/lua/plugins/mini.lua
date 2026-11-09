@@ -209,8 +209,13 @@ return {
           end,
           set = function(state)
             vim.b.minidiff_disable = not state
-            MiniDiff.toggle()
-            MiniDiff.toggle_overlay()
+            if state then
+              MiniDiff.toggle()
+              MiniDiff.toggle_overlay()
+            else
+              MiniDiff.toggle_overlay()
+              MiniDiff.toggle()
+            end
           end,
         }):map("<leader>ud")
         vim.api.nvim_create_autocmd("BufWinEnter", {
