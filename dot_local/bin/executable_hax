@@ -20,4 +20,4 @@ $REX_CONTEXT"
 fi
 
 export HAX_SYSTEM_PROMPT_APPEND
-/opt/homebrew/bin/hax $@
+$HOME/programs/hax/build/hax $@

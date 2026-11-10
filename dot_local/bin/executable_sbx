@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Run the rex server + run.sh by default; skip both with --no-rex or SBX_NO_REX.
 # Anything before `--` belongs to sbx; only args after `--` are forwarded.
-USE_REX=1
+USE_REX=0
 ARGS=()
 SEEN_SEP=0
 for arg in "$@"; do
@@ -13,15 +13,16 @@ for arg in "$@"; do
     fi
     case "$arg" in
         --) SEEN_SEP=1 ;;
-        --no-rex) USE_REX=0 ;;
+        --rex) USE_REX=1 ;;
+        -r) USE_REX=1 ;;
         *)
             echo "sbx: unexpected argument '$arg'; pass agent args after '--'" >&2
             exit 2
             ;;
     esac
 done
-if [ -n "${SBX_NO_REX:-}" ]; then
-    USE_REX=0
+if [ -n "${SBX_REX:-}" ]; then
+    USE_REX=1
 fi
 
 if [ "${#ARGS[@]}" -eq 0 ]; then
@@ -67,3 +68,7 @@ else
 fi
 docker kill "$CONTAINER" 1>/dev/null
 docker rm "$CONTAINER" 1>/dev/null
+
+if [ "$USE_REX" = 1 ]; then
+    rex block focus "$REX_BLOCK"
+fi

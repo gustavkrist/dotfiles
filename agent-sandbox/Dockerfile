@@ -12,7 +12,7 @@ RUN curl -fsSL https://pkgs.superlogical.com/rex/install.sh | sh
 RUN npm install -g --ignore-scripts "@earendil-works/pi-coding-agent@${PI_VERSION}"
 RUN npm install -g ketch-cli
 
-RUN git clone https://github.com/OleksandrChekhovskyi/hax.git \
+RUN git clone https://github.com/gustavkrist/hax.git \
     && cd hax \
     && scripts/install_deps.sh \
     && make \
@@ -36,6 +36,6 @@ RUN git clone https://github.com/OleksandrChekhovskyi/hax-mcp \
 RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> .bashrc
 
 COPY .local/bin/hax /home/node/.local/bin/hax
-RUN sed -is 's:/opt/homebrew:/usr/local:' /home/node/.local/bin/hax
+RUN sed -is 's:$HOME/programs/hax/build:/usr/local/bin:' /home/node/.local/bin/hax
 
 WORKDIR /home/node/workspace
