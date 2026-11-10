@@ -3,7 +3,10 @@ set -euo pipefail
 
 # Run the rex server + run.sh by default; skip both with --no-rex or SBX_NO_REX.
 # Anything before `--` belongs to sbx; only args after `--` are forwarded.
+# API keys never enter the container: egress goes through a host mitmproxy that
+# injects real credentials (see sbx-proxy/inject_auth.py). Disable with --no-proxy.
 USE_REX=0
+USE_PROXY=1
 ARGS=()
 SEEN_SEP=0
 for arg in "$@"; do
@@ -15,6 +18,7 @@ for arg in "$@"; do
         --) SEEN_SEP=1 ;;
         --rex) USE_REX=1 ;;
         -r) USE_REX=1 ;;
+        --no-proxy) USE_PROXY=0 ;;
         *)
             echo "sbx: unexpected argument '$arg'; pass agent args after '--'" >&2
             exit 2
@@ -34,6 +38,73 @@ fi
 PORT_ARGS=()
 if [ "$USE_REX" = 1 ]; then
     PORT_ARGS=(-p 7297:7297)
+fi
+
+# --- credential proxy -------------------------------------------------------
+# The container gets no real API keys. It is pointed at a mitmproxy instance on
+# the host, which swaps the dummy Authorization header for the real secret for
+# allow-listed endpoints only (see sbx-proxy/inject_auth.py).
+PROXY_PORT="${SBX_PROXY_PORT:-8899}"
+MITM_CONF_DIR="${SBX_MITM_CONFDIR:-$HOME/.mitmproxy}"
+MITM_CA="$MITM_CONF_DIR/mitmproxy-ca-cert.pem"
+CA_BUNDLE="$MITM_CONF_DIR/sbx-ca-bundle.pem"
+CA_PATH_IN_CONTAINER=/home/node/.sbx/ca-bundle.pem
+PROXY_ARGS=()
+if [ "$USE_PROXY" = 1 ]; then
+    if ! command -v mitmdump >/dev/null 2>&1; then
+        echo "sbx: mitmdump not found (brew install mitmproxy), or pass --no-proxy" >&2
+        exit 2
+    fi
+    if ! nc -z 127.0.0.1 "$PROXY_PORT" 2>/dev/null; then
+        mkdir -p "$MITM_CONF_DIR"
+        nohup mitmdump --set flow_detail=0 --listen-host 0.0.0.0 --listen-port "$PROXY_PORT" \
+            -s "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/sbx-proxy/inject_auth.py" \
+            >>"$MITM_CONF_DIR/sbx-proxy.log" 2>&1 &
+        for _ in $(seq 1 50); do
+            nc -z 127.0.0.1 "$PROXY_PORT" 2>/dev/null && break
+            sleep 0.1
+        done
+        if ! nc -z 127.0.0.1 "$PROXY_PORT" 2>/dev/null; then
+            echo "sbx: proxy failed to start; see $MITM_CONF_DIR/sbx-proxy.log" >&2
+            exit 2
+        fi
+    fi
+    # mitm CA + public roots, so NO_PROXY hosts still verify against real CAs.
+    for roots in /etc/ssl/cert.pem /etc/ssl/certs/ca-certificates.crt; do
+        [ -f "$roots" ] && cat "$MITM_CA" "$roots" >"$CA_BUNDLE" && break
+    done
+    [ -f "$CA_BUNDLE" ] || cp "$MITM_CA" "$CA_BUNDLE"
+
+    PROXY_URL="http://host.docker.internal:$PROXY_PORT"
+    PROXY_ARGS+=(
+        -e HTTP_PROXY="$PROXY_URL" -e HTTPS_PROXY="$PROXY_URL"
+        -e http_proxy="$PROXY_URL" -e https_proxy="$PROXY_URL"
+        -e NO_PROXY=localhost,127.0.0.1,::1,host.docker.internal
+        -e no_proxy=localhost,127.0.0.1,::1,host.docker.internal
+        -e NODE_EXTRA_CA_CERTS="$CA_PATH_IN_CONTAINER"
+        -e SSL_CERT_FILE="$CA_PATH_IN_CONTAINER"
+        -e CURL_CA_BUNDLE="$CA_PATH_IN_CONTAINER"
+        -e REQUESTS_CA_BUNDLE="$CA_PATH_IN_CONTAINER"
+        -e GIT_SSL_CAINFO="$CA_PATH_IN_CONTAINER"
+        -v "$CA_BUNDLE:$CA_PATH_IN_CONTAINER:ro"
+    )
+    # Linux only: Docker Desktop resolves host.docker.internal on its own.
+    if [ "$(uname -s)" = Linux ]; then
+        PROXY_ARGS+=(--add-host host.docker.internal:host-gateway)
+    fi
+fi
+
+# The Rex server is detached: it keeps only a minimal environment (HOME, PATH,
+# proxy variables, ...) and drops the rest of the container's environment, so
+# every terminal it creates would lose these. Forward them explicitly.
+SERVER_ENV_ARGS=(--env HOST_WORKDIR --env NEURALWATT_API_KEY)
+if [ "$USE_PROXY" = 1 ]; then
+    SERVER_ENV_ARGS+=(
+        --env HTTP_PROXY --env HTTPS_PROXY --env http_proxy --env https_proxy
+        --env NO_PROXY --env no_proxy
+        --env NODE_EXTRA_CA_CERTS --env SSL_CERT_FILE --env CURL_CA_BUNDLE
+        --env REQUESTS_CA_BUNDLE --env GIT_SSL_CAINFO
+    )
 fi
 
 # Mount the host .pi state only when the agent being launched is pi.
@@ -57,9 +128,9 @@ fi
 
 HOST_WORKDIR=$(pwd | gsed -s "s:$HOME:~:")
 
-CONTAINER=$(docker run -d -it -e HOST_WORKDIR="$HOST_WORKDIR" -e NEURALWATT_API_KEY -v "$PWD:/home/node/workspace" ${MOUNT_ARGS[@]+"${MOUNT_ARGS[@]}"} -v "$HOME/.agents:/home/node/.agents" ${PORT_ARGS[@]+"${PORT_ARGS[@]}"} agent-sbx:local)
+CONTAINER=$(docker run -d -it ${PROXY_ARGS[@]+"${PROXY_ARGS[@]}"} -e HOST_WORKDIR="$HOST_WORKDIR" -e NEURALWATT_API_KEY=sbx-dummy -v "$PWD:/home/node/workspace" ${MOUNT_ARGS[@]+"${MOUNT_ARGS[@]}"} -v "$HOME/.agents:/home/node/.agents" ${PORT_ARGS[@]+"${PORT_ARGS[@]}"} agent-sbx:local)
 if [ "$USE_REX" = 1 ]; then
-    docker exec "$CONTAINER" rex server start --extra-listen :7297 --allow-anonymous 1>/dev/null
+    docker exec "$CONTAINER" rex server start --extra-listen :7297 --allow-anonymous ${SERVER_ENV_ARGS[@]+"${SERVER_ENV_ARGS[@]}"} 1>/dev/null
     docker cp "$HOME/agent-sandbox/run.sh" "$CONTAINER:/home/node/run.sh" 1>/dev/null
     sleep 0.5
     docker exec "$CONTAINER" /home/node/run.sh ${ARGS[@]+"${ARGS[@]}"}
