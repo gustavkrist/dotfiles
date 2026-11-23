@@ -1,0 +1,29 @@
+version: 1
+filesystem_policy:
+  include_workdir: true
+
+network_policies:
+  # allow_all_audit:
+  #   enforcement_mode: audit
+  #   endpoints:
+  #     - host: "*"
+  #       port: "*"
+  #   binaries:
+  #     - path: "*"
+  # allow_all_public:
+  #   endpoints:
+  #     - host: "*.github.com"
+  #       port: 443
+  #     - host: "pi.dev"
+  #       port: 443
+  #     - host: "www.superlogical.com"
+  #       port: 443
+  #   binaries:
+  #     - path: /usr/local/bin/node
+  rex:
+    endpoints:
+      - host: host.docker.internal
+        port: 7297
+        protocol: tcp
+    binaries:
+      - path: /usr/local/bin/rex

@@ -1,0 +1,26 @@
+FROM node:24-bookworm-slim
+
+ARG PI_VERSION=latest
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends bash ca-certificates fd-find git ripgrep jq \
+    && ln -s /usr/bin/fdfind /usr/local/bin/fd \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g --ignore-scripts "@earendil-works/pi-coding-agent@${PI_VERSION}"
+RUN npm install -g ketch-cli
+
+RUN mkdir -p /workspace
+
+COPY .config/openshell/sandbox-images/rex /usr/local/bin/rex
+COPY --chown node:node .agents /workspace/.agents
+COPY --chown node:node .pi /workspace/.pi
+
+RUN chown -R node:node /workspace
+
+USER node
+WORKDIR /workspace
+
+ENV PI_CODING_AGENT_DIR=/workspace/.pi/agent
+
+CMD ["pi"]

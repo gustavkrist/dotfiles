@@ -1,0 +1,5 @@
+[openshell]
+version = 2
+
+[openshell.drivers.docker]
+grpc_endpoint = "https://host.docker.internal:17670"
