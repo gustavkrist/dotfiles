@@ -69,3 +69,4 @@ else:
         ],
         check=False,
     )
+# vim: filetype=python
