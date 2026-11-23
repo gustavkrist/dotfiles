@@ -134,7 +134,7 @@ map(
   "<cmd>lua vim.lsp.buf.code_action()<cr>",
   { desc = "Code Action", silent = true, noremap = true }
 )
-map("n", "<leader>li", "<cmd>LspInfo<cr>", { desc = "Info", silent = true, noremap = true })
+map("n", "<leader>li", "<cmd>checkhealth vim.lsp<cr>", { desc = "Info", silent = true, noremap = true })
 map(
   "n",
   "<leader>lj",

@@ -58,8 +58,11 @@ return {
           },
         },
         tools = {
-          pisbx = {
-            cmd = { "pisbx", "--no-rex" },
+          psbx = {
+            cmd = { "sbx", "--", "pi" },
+          },
+          hsbx = {
+            cmd = { "sbx", "--", "hax" },
           },
         },
       },
@@ -134,7 +137,7 @@ return {
       {
         "<leader>aa",
         function()
-          require("sidekick.cli").toggle({ name = "pisbx", focus = true })
+          require("sidekick.cli").toggle({ name = "psbx", focus = true })
         end,
         desc = "Sidekick Toggle Claude",
       },
