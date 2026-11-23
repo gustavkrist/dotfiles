@@ -200,6 +200,22 @@ return {
             diff.gen_source.git(),
             diff.gen_source.save(),
           },
+          mappings = {
+            apply = '',
+
+            -- Reset hunks inside a visual/operator region
+            reset = '',
+
+            -- Hunk range textobject to be used inside operator
+            -- Works also in Visual mode if mapping differs from apply and reset
+            textobject = 'gh',
+
+            -- Go to hunk range in corresponding direction
+            goto_first = '[H',
+            goto_prev = '[h',
+            goto_next = ']h',
+            goto_last = ']H',
+          },
         })
         Snacks.toggle({
           id = "MiniDiff",
