@@ -1,5 +1,6 @@
 local SCRATCH_LABEL = "scratch"
 local SCRATCH_FLAVOR = "com.superlogical.terminal.shell"
+local TERMINAL_CREATOR = "com.superlogical.terminal"
 local TMUX_PREFIX = "rex-scratch-"
 
 -- Centered in the window, covering 90% of its width and height.
@@ -156,7 +157,42 @@ local function tmux_session_name(view)
   return TMUX_PREFIX .. (session_id:gsub("^session:", ""))
 end
 
-local function create_scratch(view, window)
+-- pwd reports a file:// URL when the shell used OSC 7, and a plain path otherwise.
+local function pwd_path(pwd)
+  local path = pwd:match("^file://[^/]*(/.*)$")
+  if path == nil then
+    return pwd
+  end
+
+  return (path:gsub("%%(%x%x)", function(hex)
+    return string.char(tonumber(hex, 16))
+  end))
+end
+
+-- Read the working directory of the pane the action ran in, preferring the
+-- foreground process over the directory the shell last reported.
+local function pane_cwd(block_id)
+  if block_id == nil then
+    return nil
+  end
+
+  local process = rex.block.call(TERMINAL_CREATOR, "process", { block_id = block_id })
+  if process ~= nil then
+    local foreground = process.foreground or process.child
+    if foreground ~= nil and foreground.cwd ~= nil and foreground.cwd ~= "" then
+      return foreground.cwd
+    end
+  end
+
+  local pwd = rex.block.call(TERMINAL_CREATOR, "pwd", { block_id = block_id })
+  if pwd ~= nil and pwd.pwd ~= nil and pwd.pwd ~= "" then
+    return pwd_path(pwd.pwd)
+  end
+
+  return nil
+end
+
+local function create_scratch(view, window, cwd)
   local session_name = tmux_session_name(view)
   if session_name == TMUX_PREFIX then
     error("Cannot determine the session ID for the scratch pane", 0)
@@ -167,6 +203,15 @@ local function create_scratch(view, window)
     error("The scratch pane needs tmux, but tmux was not found on this host", 0)
   end
 
+  local options = { shell = "none" }
+  if cwd ~= nil then
+    -- Start both the terminal and its tmux session in the pane's directory.
+    options.cwd = cwd
+    options.command = { tmux, "new-session", "-A", "-c", cwd, "-s", session_name }
+  else
+    options.command = { tmux, "new-session", "-A", "-s", session_name }
+  end
+
   local result, err = rex.session.new_layer({
     window_id = window.window_id,
     bounds = SCRATCH_BOUNDS,
@@ -174,10 +219,7 @@ local function create_scratch(view, window)
       block = {
         flavor = SCRATCH_FLAVOR,
         label = SCRATCH_LABEL,
-        options = {
-          command = { tmux, "new-session", "-A", "-s", session_name },
-          shell = "none",
-        },
+        options = options,
       },
     },
     focus = true,
@@ -208,7 +250,7 @@ rex.action({
     local scratch = find_scratch(view, window.window_id)
 
     if scratch == nil then
-      return create_scratch(view, window)
+      return create_scratch(view, window, pane_cwd(ctx.block_id or window.focused_block_id))
     end
 
     if scratch.window.window_id ~= window.window_id then

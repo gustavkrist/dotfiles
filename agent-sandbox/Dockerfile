@@ -23,6 +23,8 @@ RUN apt-get install -y --no-install-recommends fd-find git ripgrep jq procps pyt
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /home/node/workspace
+RUN mkdir -p /home/linuxbrew/.linuxbrew
+RUN chown node:node /home/linuxbrew/.linuxbrew
 
 USER node
 WORKDIR /home/node
@@ -35,7 +37,14 @@ RUN git clone https://github.com/OleksandrChekhovskyi/hax-mcp \
     && ./install.sh
 RUN echo 'export PATH=$HOME/.local/bin:$PATH' >> .bashrc
 
+RUN bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+RUN echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> .bashrc
+RUN echo 'export HOMEBREW_NONINTERACTIVE=1' >> .bashrc
+RUN echo 'export EDITOR=nvim' >> .bashrc
+
 COPY .local/bin/hax /home/node/.local/bin/hax
 RUN sed -is 's:$HOME/programs/hax/build:/usr/local/bin:' /home/node/.local/bin/hax
+
+RUN bash -c "/home/linuxbrew/.linuxbrew/bin/brew install neovim"
 
 WORKDIR /home/node/workspace
