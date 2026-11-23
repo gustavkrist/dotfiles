@@ -70,7 +70,19 @@ return {
         return servers[key].enable
       end, vim.tbl_keys(servers))
 
-      vim.lsp.config("tinymist", { settings = { formatterMode = "typstyle", formatterPrintWidth = 100 } })
+      vim.lsp.config("tinymist", {
+        settings = {
+          compileStatus = "enable",
+          exportPdf = "onSave",
+          formatterMode = "typstyle",
+          formatterPrintWidth = 100,
+          lint = {
+            enabled = true,
+            when = "onSave",
+          },
+          projectResolution = "lockDatabase",
+        },
+      })
       vim.lsp.config("bashls", { filetypes = { "bash", "sh", "zsh" } })
       vim.lsp.config(
         "ts_ls",
@@ -138,13 +150,6 @@ return {
                 python = "py",
               },
             },
-          },
-          pyupgrade = {
-            command = "pyupgrade",
-            exit_codes = { 0, 1 },
-            stdin = false,
-            args = { "$FILENAME" },
-            cwd = require("conform.util").root_file({ "pyproject.toml" }),
           },
         },
         formatters_by_ft = {

@@ -279,6 +279,26 @@ return {
             return require("tuna.problem.submit").status_hl()
           end,
         },
+        typst_doc_stats = {
+          function()
+            if vim.g.tinymist_compile_status == "error" then
+              return "Compilation Error"
+            end
+            return ("%d Words | %d Chars"):format(vim.g.tinymist_word_count or 0, vim.g.tinymist_char_count or 0)
+          end,
+          cond = function()
+            return vim.bo.filetype == "typst"
+          end,
+          color = function()
+            if vim.g.tinymist_compile_status == "error" then
+              return "DiagnosticError"
+            elseif vim.g.tinymist_compile_status == "compiling" then
+              return "DiagnosticInfo"
+            elseif vim.g.tinymist_compile_status == "success" then
+              return "DiagnosticInfo"
+            end
+          end,
+        },
       }
       local statusbar = {
         options = {
@@ -304,6 +324,7 @@ return {
           },
           lualine_x = {
             components.diagnostics,
+            components.typst_doc_stats,
             components.tuna_download,
             components.tuna_submitting,
             components.lsp,
@@ -381,6 +402,9 @@ return {
       if require("util.plugins").has("ipynb.nvim") then
         statusbar.sections.lualine_x = {
           components.diagnostics,
+          components.typst_doc_stats,
+          components.tuna_download,
+          components.tuna_submitting,
           components.lsp,
           {
             function()
@@ -392,8 +416,6 @@ return {
               return require("ipynb.kernel").statusline_color()
             end,
           },
-          components.tuna_download,
-          components.tuna_submitting,
           components.copilot,
           components.spaces,
           components.filetype,
