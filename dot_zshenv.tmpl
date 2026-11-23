@@ -32,6 +32,7 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export DOTNET_ROOT="$HOME/.dotnet"
+export DOTNET_CLI_TELEMETRY_OPTOUT="1"
 command -v luarocks 2>&1 >/dev/null && eval $(luarocks path --bin)
 {{- if eq .chezmoi.hostname "Puzzel-PF3M3GAA" }}
 export PYENV_ROOT="$HOME/.pyenv"
@@ -72,6 +73,7 @@ export PATH="$PYENV_ROOT/bin:$PATH"
 {{- end }}
 {{- end }}
 export PATH="$PATH:$HOME/.ghcup/bin"
+export PATH="$PATH:$HOME/.dotnetup"
 export PATH="$PATH:$HOME/go/bin"
 export PATH="$PATH:$HOME/.dotnet"
 export PATH="$PATH:$HOME/.dotnet/tools"
@@ -83,6 +85,12 @@ if command -v pyenv 1>/dev/null 2>&1; then
 fi
 eval "$(pyenv virtualenv-init -)"
 {{- end }}
+
+# dotnetup: begin
+if [ -x "$HOME/.dotnetup/dotnetup" ]; then
+    eval "$("$HOME/.dotnetup/dotnetup" env script --shell zsh --dotnet --dotnetup)"
+fi
+# dotnetup: end
 
 # -- AI -----------------------------------------------------------------------
 
