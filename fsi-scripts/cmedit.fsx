@@ -2,7 +2,6 @@
 #r "nuget: UnMango.CliWrap.FSharp"
 #load "lib/CliHelpers.fsx"
 
-open System.IO
 open CliWrap
 open UnMango.CliWrap.FSharp
 open CliHelpers
