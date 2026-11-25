@@ -207,3 +207,38 @@ rex.action({
     end
   end,
 })
+
+rex.action({
+  name = "changelog",
+  title = "Show Rex changelog",
+  args = { num_logs = "number?" },
+  run = function(ctx, args)
+    local cmd
+    if args.num_logs then
+      cmd = { "rex-changelog", tostring(num_logs) }
+    else
+      cmd = { "rex-changelog" }
+    end
+
+    if ctx.block_id == nil then
+      error("Run this action from a terminal block", 0)
+    end
+    local result, err = rex.session.new_layer({
+      session_id = ctx.session_id,
+      bounds = { 0.05, 0.05, 0.9, 0.9 },
+      focus = true,
+      layout = {
+        block = {
+          flavor = "com.superlogical.terminal.shell",
+          options = {
+            command = cmd,
+          },
+        },
+      },
+    })
+    if result == nil then
+      error(err, 0)
+    end
+    return result
+  end
+})

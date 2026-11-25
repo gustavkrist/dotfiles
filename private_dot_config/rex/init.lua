@@ -1,14 +1,18 @@
 local mod = "ctrl+shift+"
 
 -- Plugins
+local fingers_bin = os.getenv("HOME") .. "/.config/rex/plugins/rex-fingers/bin/rex-fingers"
 local fingers = require("plugins.rex-fingers.lua.rex-fingers")
 fingers.setup{
-  binary = os.getenv("HOME") .. "/go/bin/rex-fingers",
+  binary = fingers_bin,
   key = mod .. "space",
+  window_key = mod .. "alt+space",
   overlay = "pane",
+  flash = true,
+  follow_scroll = false,
 }
 
-require("rex-actions")
+require("actions")
 
 rex.bind(mod .. "p", "client.palette.toggle")
 
@@ -17,6 +21,8 @@ rex.bind(mod .. "l", "client.tab.next")
 rex.bind(mod .. "h", "client.tab.previous")
 rex.bind(mod .. ",", "client.tab.move.backward")
 rex.bind(mod .. ".", "client.tab.move.forward")
+rex.bind(mod .. "i", "client.navigate.forward")
+rex.bind(mod .. "o", "client.navigate.back")
 
 rex.bind(mod .. "s>n", "session.new")
 rex.bind(mod .. "s>c", "session.collapse_others")
@@ -29,7 +35,7 @@ rex.bind(mod .. "s>x", "session.close")
 rex.bind(mod .. "enter", "pane.split.auto")
 rex.bind(mod .. "-", "pane.split.down")
 rex.bind(mod .. "\\", "pane.split.right")
-rex.bind(mod .. "z", "pane.zoom")
+rex.bind(mod .. "m", "pane.zoom")
 rex.bind(mod .. "c", "pane.copy")
 rex.bind(mod .. "v", "pane.paste")
 rex.bind(mod .. "j", "client.scroll.page_down")
