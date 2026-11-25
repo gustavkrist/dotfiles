@@ -94,7 +94,7 @@ fi
 
 # -- AI -----------------------------------------------------------------------
 
-export NEURALWATT_API_KEY={{ (bitwarden "item" "neuralwatt macbook").notes }}
+export NEURALWATT_API_KEY="$(cat $HOME/.neuralwatt)"
 export ANTHROPIC_BASE_URL=https://api.neuralwatt.com
 export ANTHROPIC_AUTH_TOKEN="$NEURALWATT_API_KEY"
 export ANTHROPIC_MODEL=deepseek-v4.1-flash
