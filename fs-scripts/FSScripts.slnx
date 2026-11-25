@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Shared/Shared.fsproj" />
+    <Project Path="src/ChezmoiEdit/ChezmoiEdit.fsproj" />
+    <Project Path="src/ChezmoiGrep/ChezmoiGrep.fsproj" />
+    <Project Path="src/RexChangelog/RexChangelog.fsproj" />
+  </Folder>
+</Solution>

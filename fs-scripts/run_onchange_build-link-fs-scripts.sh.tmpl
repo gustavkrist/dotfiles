@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euxo pipefail
+
+# hash: {{ include (joinPath .chezmoi.sourceDir (dir .chezmoi.sourceFile) "src" "ChezmoiGrep" "Program.fs") | sha256sum }}
+# hash: {{ include (joinPath .chezmoi.sourceDir (dir .chezmoi.sourceFile) "src" "ChezmoiEdit" "Program.fs") | sha256sum }}
+# hash: {{ include (joinPath .chezmoi.sourceDir (dir .chezmoi.sourceFile) "src" "RexChangelog" "Program.fs") | sha256sum }}
+# hash: {{ include (joinPath .chezmoi.sourceDir (dir .chezmoi.sourceFile) "src" "Shared" "Library.fs") | sha256sum }}
+# hash: {{ include (joinPath .chezmoi.sourceDir (dir .chezmoi.sourceFile) "src" "Shared" "Shared.fsproj") | sha256sum }}
+
+cd "{{ dir .chezmoi.targetFile }}"
+dotnet build --configuration Release
+ln -nfs {{ dir .chezmoi.targetFile -}}/bin/Release/cmgrep $HOME/.local/bin/cmgrep
+ln -nfs {{ dir .chezmoi.targetFile -}}/bin/Release/cmedit $HOME/.local/bin/cmedit
+ln -nfs {{ dir .chezmoi.targetFile -}}/bin/Release/rex-changelog $HOME/.local/bin/rex-changelog

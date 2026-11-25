@@ -1,22 +1,6 @@
-#r "nuget: CliWrap"
-#r "nuget: UnMango.CliWrap.FSharp"
-#load "lib/CliHelpers.fsx"
-
-open CliWrap
+﻿open CliWrap
 open UnMango.CliWrap.FSharp
-open CliHelpers
-
-let args =
-#if COMPILED
-    System.Environment.GetCommandLineArgs() |> Array.tail
-#else
-    fsi.CommandLineArgs |> Array.tail
-#endif
-
-let initialInput =
-    match args with
-    | [| s |] -> s
-    | _ -> ""
+open Shared
 
 let cmManaged =
     command "chezmoi" {
@@ -24,7 +8,7 @@ let cmManaged =
         buffered
     }
 
-let fzf =
+let fzf initialInput =
     command "fzf" {
         args
             [
@@ -50,15 +34,13 @@ let cmEdit fileArgs =
         execNoRedirect
     }
 
-let task =
+let getTask initialInput =
     task {
         let! managedResult = cmManaged
 
-        let files =
-            managedResult.StandardOutput.Split "\n"
-            |> String.concat "\n"
+        let files = managedResult.StandardOutput.Split "\n" |> String.concat "\n"
 
-        let! fzfResult = PipeSource.FromString(files) |>> fzf |> Cli.execBuffered
+        let! fzfResult = PipeSource.FromString(files) |>> fzf initialInput |> Cli.execBuffered
 
         let fileArgs =
             fzfResult.StandardOutput.Trim().Split "\n"
@@ -72,4 +54,13 @@ let task =
             return 0
     }
 
-exit task.Result
+
+[<EntryPoint>]
+let main argv =
+    let initialInput =
+        match argv with
+        | [| s |] -> s
+        | _ -> ""
+
+    let task = getTask initialInput
+    task.Result
