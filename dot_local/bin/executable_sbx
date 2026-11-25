@@ -110,13 +110,13 @@ fi
 # Mount the host .pi state only when the agent being launched is pi.
 MOUNT_ARGS=()
 if [ "${ARGS[0]:-}" = pi ]; then
-    PI_SESSION_DIR="$(pwd | gsed -s 's:\b/:-:g;s:/::;s:.*:--\0--:')"
+    PI_SESSION_DIR="$(pwd | sed 's:\b/:-:g;s:/::;s:.*:--\0--:')"
     MOUNT_ARGS+=(-v "$HOME/.pi:/home/node/.pi")
     MOUNT_ARGS+=(-v "$HOME/.pi/agent/sessions/$PI_SESSION_DIR:/home/node/.pi/agent/sessions/--home-node-workspace--")
 fi
 
 if [ "${ARGS[0]:-}" = hax ]; then
-    HAX_PWD="$(pwd | gsed -s 's:\b/:-:g;s:/::')"
+    HAX_PWD="$(pwd | sed 's:\b/:-:g;s:/::')"
     HAX_SESSION_DIR="$(fd "^$HAX_PWD\.\w+$" $HOME/.local/state/hax/sessions)"
     HAX_DIR_BASENAME="$(basename "$HAX_SESSION_DIR")"
     MOUNT_ARGS+=(-v "$HOME/.config/hax:/home/node/.config/hax")
@@ -126,7 +126,7 @@ if [ "${ARGS[0]:-}" = hax ]; then
     MOUNT_ARGS+=(-v "$HOME/.local/state/hax-mcp:/home/node/.local/state/hax-mcp")
 fi
 
-HOST_WORKDIR=$(pwd | gsed -s "s:$HOME:~:")
+HOST_WORKDIR=$(pwd | sed "s:$HOME:~:")
 
 CONTAINER=$(docker run -d -it ${PROXY_ARGS[@]+"${PROXY_ARGS[@]}"} -e HOST_WORKDIR="$HOST_WORKDIR" -e NEURALWATT_API_KEY=sbx-dummy -v "$PWD:/home/node/workspace" ${MOUNT_ARGS[@]+"${MOUNT_ARGS[@]}"} -v "$HOME/.agents:/home/node/.agents" ${PORT_ARGS[@]+"${PORT_ARGS[@]}"} agent-sbx:local)
 if [ "$USE_REX" = 1 ]; then
