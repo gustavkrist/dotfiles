@@ -1,9 +1,8 @@
 local M = {}
 
 function M.in_rex()
-  local session = vim.env.REX_SESSION
   local block = vim.env.REX_BLOCK
-  return session ~= nil and session ~= "" and block ~= nil and block ~= ""
+  return block ~= nil and block ~= ""
 end
 
 local rex_picker = function(items, opts, on_choice)
