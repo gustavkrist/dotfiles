@@ -26,3 +26,4 @@ endpoints:
 
 binaries:
   - /usr/local/bin/node
+  - /usr/local/bin/hax
