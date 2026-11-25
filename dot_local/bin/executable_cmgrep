@@ -2,6 +2,12 @@
 import os
 import re
 import subprocess
+import sys
+
+if len(sys.argv) > 0:
+    initial_input = sys.argv[1]
+else:
+    initial_input = ""
 
 cm_path = (
     subprocess.run(["chezmoi", "source-path"], capture_output=True, check=False)
@@ -13,6 +19,8 @@ reload = f"reload:rg --column --color=always --smart-case {{q}} {cm_path} | sed 
 fzf = subprocess.Popen(
     [
         "fzf",
+        "-q",
+        initial_input,
         "--height",
         "90%",
         "--disabled",

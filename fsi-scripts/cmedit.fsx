@@ -6,6 +6,17 @@ open CliWrap
 open UnMango.CliWrap.FSharp
 open CliHelpers
 
+let args =
+#if COMPILED
+    System.Environment.GetCommandLineArgs() |> Array.tail
+#else
+    fsi.CommandLineArgs |> Array.tail
+#endif
+
+let initialInput =
+    match args with
+    | [| s |] -> s
+    | _ -> ""
 
 let cmManaged =
     command "chezmoi" {
@@ -17,6 +28,8 @@ let fzf =
     command "fzf" {
         args
             [
+                "-q"
+                initialInput
                 "-m"
                 "--height"
                 "90%"

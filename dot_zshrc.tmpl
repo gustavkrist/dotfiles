@@ -252,13 +252,19 @@ fi
 }
 
 _cmedit() {
-  $HOME/.local/bin/cmedit
+  $HOME/.local/bin/cmedit "$BUFFER"
+  BUFFER=""
+  CURSOR=0
+  zle reset-prompt
 }
 zle -N _cmedit
 bindkey "^O" _cmedit
 
 _cmgrep() {
-  $HOME/.local/bin/cmgrep
+  $HOME/.local/bin/cmgrep "$BUFFER"
+  BUFFER=""
+  CURSOR=0
+  zle reset-prompt
 }
 zle -N _cmgrep
 bindkey "^G" _cmgrep
