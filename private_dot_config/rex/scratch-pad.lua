@@ -1,15 +1,12 @@
 local SCRATCH_LABEL = "scratch"
 local SCRATCH_FLAVOR = "com.superlogical.terminal.shell"
 local TERMINAL_CREATOR = "com.superlogical.terminal"
-local TMUX_PREFIX = "rex-scratch-"
 
 -- Centered in the window, covering 90% of its width and height.
 local SCRATCH_BOUNDS = { 0.05, 0.05, 0.9, 0.9 }
 
-local tmux_path = nil
-
 -- Find the scratch block in any layer, preferring a match in the given window.
--- The scratch pane is unique to the session rather than to a window.
+-- The scratch block is unique to the session rather than to a window.
 local function find_scratch(view, window_id)
   local fallback = nil
 
@@ -31,6 +28,23 @@ local function find_scratch(view, window_id)
   end
 
   return fallback
+end
+
+-- Find the detached scratch block, which is hidden but still running. A
+-- placement this call doesn't know counts as detached.
+local function find_detached_scratch(session_id)
+  local result, err = rex.session.list_blocks({ session_id = session_id })
+  if result == nil then
+    error(err, 0)
+  end
+
+  for _, block in ipairs(result.blocks or {}) do
+    if block.label == SCRATCH_LABEL and block.placement ~= "placed" then
+      return block
+    end
+  end
+
+  return nil
 end
 
 -- Pick the window that holds the block the action ran in, falling back to the
@@ -59,7 +73,7 @@ local function window_for_block(view, block_id)
   return nil
 end
 
--- Pick a block in the window's tiled layout to move the scratch pane beside.
+-- Pick a block in the window's tiled layout to move the scratch block beside.
 -- A floating anchor would place the scratch block inside its floating layer.
 local function tiled_block(window, preferred_block_id)
   local fallback = nil
@@ -98,21 +112,8 @@ local function set_layer_state(layer_id, state, focus)
   end
 end
 
--- Move the scratch block into the window and float it there again. Moving the
--- block keeps its program, and with it the tmux client attached to the shell.
-local function move_scratch_to_window(scratch, anchor_block_id)
-  local block_id = scratch.block.block_id
-
-  local moved, move_err = rex.session.move_block({
-    block_id = block_id,
-    anchor_block_id = anchor_block_id,
-    direction = "horizontal",
-    side = "after",
-  })
-  if moved == nil then
-    error(move_err, 0)
-  end
-
+-- Float the block over the window and focus it.
+local function float_scratch(block_id)
   local floated, float_err = rex.session.float_block({
     block_id = block_id,
     bounds = SCRATCH_BOUNDS,
@@ -125,36 +126,25 @@ local function move_scratch_to_window(scratch, anchor_block_id)
   return floated.layer_id
 end
 
--- Resolve the tmux program to an absolute path, since the terminal starts the
--- command directly, without a shell to set up PATH.
-local function find_tmux()
-  if tmux_path ~= nil then
-    return tmux_path
+-- Put a block that is detached or in another window beside a tiled block here,
+-- and float it there. Placing the block keeps its shell running.
+local function place_scratch(window, block_id, preferred_block_id)
+  local anchor_block_id = tiled_block(window, preferred_block_id)
+  if anchor_block_id == nil or anchor_block_id == block_id then
+    error("Cannot show the scratch block in this window: it has no other tiled pane", 0)
   end
 
-  for _, path in ipairs({ "/opt/homebrew/bin/tmux", "/usr/local/bin/tmux", "/usr/bin/tmux", "/bin/tmux" }) do
-    local result = rex.exec({ path, "-V" }, { timeout = 2 })
-    if result ~= nil and result.ok then
-      tmux_path = path
-      return path
-    end
+  local moved, move_err = rex.session.move_block({
+    block_id = block_id,
+    anchor_block_id = anchor_block_id,
+    direction = "horizontal",
+    side = "after",
+  })
+  if moved == nil then
+    error(move_err, 0)
   end
 
-  local result = rex.exec({ "/bin/sh", "-c", "command -v tmux" }, { timeout = 2 })
-  if result ~= nil and result.ok then
-    local path = result.stdout:gsub("%s+$", "")
-    if path ~= "" then
-      tmux_path = path
-      return path
-    end
-  end
-
-  return nil
-end
-
-local function tmux_session_name(view)
-  local session_id = view.session_id or ""
-  return TMUX_PREFIX .. (session_id:gsub("^session:", ""))
+  return float_scratch(block_id)
 end
 
 -- pwd reports a file:// URL when the shell used OSC 7, and a plain path otherwise.
@@ -192,24 +182,20 @@ local function pane_cwd(block_id)
   return nil
 end
 
-local function create_scratch(view, window, cwd)
-  local session_name = tmux_session_name(view)
-  if session_name == TMUX_PREFIX then
-    error("Cannot determine the session ID for the scratch pane", 0)
+-- Whether the scratch block is the block the action ran in, or the block that
+-- has focus in the active window.
+local function scratch_focused(view, window, block_id, origin_block_id)
+  if origin_block_id == block_id then
+    return true
   end
 
-  local tmux = find_tmux()
-  if tmux == nil then
-    error("The scratch pane needs tmux, but tmux was not found on this host", 0)
-  end
+  return view.active_window_id == window.window_id and window.focused_block_id == block_id
+end
 
-  local options = { shell = "none" }
+local function create_scratch(window, cwd)
+  local options = {}
   if cwd ~= nil then
-    -- Start both the terminal and its tmux session in the pane's directory.
     options.cwd = cwd
-    options.command = { tmux, "new-session", "-A", "-c", cwd, "-s", session_name }
-  else
-    options.command = { tmux, "new-session", "-A", "-s", session_name }
   end
 
   local result, err = rex.session.new_layer({
@@ -234,8 +220,8 @@ end
 rex.action({
   name = "scratch_pad_toggle",
   title = "Toggle Scratch Pad",
-  description = "Show or hide a tmux-backed floating scratch terminal, closing the pane when hidden and bringing it into the current tab.",
-  keywords = "scratch pad floating terminal tmux toggle",
+  description = "Show or hide a floating scratch terminal, which keeps its shell and scrollback while it is hidden.",
+  keywords = "scratch pad floating terminal toggle",
   run = function(ctx, args)
     local view, err = rex.session.view({})
     if view == nil then
@@ -244,53 +230,63 @@ rex.action({
 
     local window = window_for_block(view, ctx.block_id)
     if window == nil then
-      error("Cannot open the scratch pane: the session has no window", 0)
+      error("Cannot open the scratch block: the session has no window", 0)
     end
 
     local scratch = find_scratch(view, window.window_id)
 
+    -- Hide the scratch block while it has focus. Detaching keeps the shell
+    -- running, so it comes back with its scrollback.
+    if scratch ~= nil and scratch_focused(view, window, scratch.block.block_id, ctx.block_id) then
+      local detached, detach_err = rex.session.detach_block({ block_id = scratch.block.block_id })
+      if detached == nil then
+        error(detach_err, 0)
+      end
+
+      return { block_id = scratch.block.block_id, visible = false, created = false, detached = true }
+    end
+
     if scratch == nil then
-      return create_scratch(view, window, pane_cwd(ctx.block_id or window.focused_block_id))
+      local detached = find_detached_scratch(view.session_id)
+      if detached ~= nil then
+        local layer_id = place_scratch(window, detached.block_id, ctx.block_id)
+        return {
+          layer_id = layer_id,
+          block_id = detached.block_id,
+          visible = true,
+          created = false,
+          attached = true,
+        }
+      end
+
+      return create_scratch(window, pane_cwd(ctx.block_id or window.focused_block_id))
     end
 
     if scratch.window.window_id ~= window.window_id then
-      -- The scratch pane lives in another tab: bring it here and focus it.
-      local anchor_block_id = tiled_block(window, ctx.block_id)
-      if anchor_block_id == nil then
-        error("Cannot move the scratch pane into this window: it has no tiled pane", 0)
-      end
-
-      local layer_id = move_scratch_to_window(scratch, anchor_block_id)
-      return { layer_id = layer_id, block_id = scratch.block.block_id, visible = true, created = false, moved = true }
-    end
-
-    if scratch.layer.kind == "floating" and scratch.layer.state == "minimized" then
-      set_layer_state(scratch.layer.layer_id, "normal", true)
-      return { layer_id = scratch.layer.layer_id, block_id = scratch.block.block_id, visible = true, created = false }
+      -- The scratch block lives in another tab: bring it here and focus it.
+      local layer_id = place_scratch(window, scratch.block.block_id, ctx.block_id)
+      return {
+        layer_id = layer_id,
+        block_id = scratch.block.block_id,
+        visible = true,
+        created = false,
+        moved = true,
+      }
     end
 
     if scratch.layer.kind == "tiled" then
-      -- The pane was taken out of its floating layer: float it again.
-      local floated, float_err = rex.session.float_block({
-        block_id = scratch.block.block_id,
-        bounds = SCRATCH_BOUNDS,
-      })
-      if floated == nil then
-        error(float_err, 0)
-      end
-      set_layer_state(floated.layer_id, "normal", true)
-      return { layer_id = floated.layer_id, block_id = scratch.block.block_id, visible = true, created = false }
+      -- The block was taken out of its floating layer: float it again.
+      local layer_id = float_scratch(scratch.block.block_id)
+      return { layer_id = layer_id, block_id = scratch.block.block_id, visible = true, created = false }
     end
 
-    -- Hide the scratch pane. The tmux session keeps the shell and scrollback.
-    local result, close_err = rex.call("block.close", {
-      session_id = view.session_id,
+    -- The block is already floating here, so raise it and focus it.
+    set_layer_state(scratch.layer.layer_id, "normal", true)
+    return {
+      layer_id = scratch.layer.layer_id,
       block_id = scratch.block.block_id,
-    })
-    if result == nil then
-      error(close_err, 0)
-    end
-
-    return { block_id = scratch.block.block_id, visible = false, created = false }
+      visible = true,
+      created = false,
+    }
   end,
 })
